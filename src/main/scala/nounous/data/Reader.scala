@@ -13,7 +13,6 @@ abstract class Reader {
     val filesChosen: List[File] = fileChooser.showOpenMultipleDialog(null).toList
     read(filesChosen)
   }
-
   def read(fileName: String): Source = read(new File(fileName))
   def read(file: File): Source
 

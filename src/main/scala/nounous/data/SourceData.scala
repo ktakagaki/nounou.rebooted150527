@@ -97,8 +97,16 @@ abstract class SourceData extends Source {
     if (det == 0) return data(det)(fr)
     else return 0
   }
-   
-    
+  /**Reads a single data trace in internal integer scaling (for one detector),
+   * and should return a defensive clone.
+   * @param det detector (pixel, channel) specification
+   */
+  def readDataTrace(det: Int): Array[Int] = {
+    val res = new Array[Int](dataRange. length)
+    for(fr <- dataRange) res(fr) = readDataPoint(det, fr)
+    res
+  }
+
 }
 
 
