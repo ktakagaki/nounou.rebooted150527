@@ -3,6 +3,7 @@ package nounous.data
 import java.io.File
 import nounous.io.RandomAccessFileLE
 import scala.collection.mutable.ArrayBuffer
+import data.SourceDataArray
 
 /**Reads in single NEX files. Partial implementation, with only waveforms processed. 
  *
@@ -12,15 +13,11 @@ class ReaderNEX() extends Reader {
   
   def read(file: File): Source = readImpl(file)
   
-//  //ToDo remove once dialog box programmed in Reader
-//  def read() = List(read(null))
- 
-  
   private def readImpl(file: File): Source = {
 
     val fHand = new RandomAccessFileLE(file, "r")
     
-    var tempret: Source = null
+    var tempRet: Source = null
     var data: Array[Int] = null
   
 
@@ -65,37 +62,37 @@ class ReaderNEX() extends Reader {
         //case 0 //neurons 
         //case 1 //events
         //case 2 //intervals 
-        case 5 => {
-        	
+        case 5 => { //continuous data
             val extraBits = 1024
             
-        	fHand.seek(offset)
+          	fHand.seek(offset)
             fHand.skipBytes(n*4) //timestamps, discard
             fHand.skipBytes(n*4) //fragmetStarts, discard
-        	data = Array.fill(NPointsWave){fHand.readShort.toInt * extraBits}
-            
-            class SourceDataNEX extends SourceData {
-              val channelCount = 1 //ToDo !!!
-              override var _extraBits = extraBits;
-            	override var _extraBitsD = _extraBits.toDouble
-            	override val absoluteGain = ADtoMV / _extraBitsD
-                override val absoluteUnit = "mV"
-                override var  _absoluteOffset = MVOffset
-        	    override var  _samplingRate = wFrequency
-        	    override var  _channelNames = Array(name)   
-        	    override var _startTime =  nexFileTBeg
 
-        	    data = this.data
+          	data = Array.fill(NPointsWave){fHand.readShort.toInt * extraBits}
+            
+            class SourceDataNEX extends SourceDataArray {
+              val channelCount = 1 //ToDo !!!
+              override val xBits = extraBits
+            	override val absGain = ADtoMV / xBitsD
+              override val absUnit = "mV"
+              override val absOffset = MVOffset
+        	    override val sampling = wFrequency
+        	    override var channelNames = Array(name)
+        	    override val start =  nexFileTBeg
+              override val length = NPointsWave
+
+        	    val data = this.data
             }
             
             val tempretSD = new SourceDataNEX()
-        	tempret =  tempretSD
+          tempRet =  tempretSD
          }/*case 5*/
        } /*recType match*/
 //    } /*for(i <- 1 to nexFileNVar)*/
-        
-  tempret   
-  }//readImpl
+
+    tempRet
+  }//read
   
 
 }

@@ -2,12 +2,18 @@ package nounous.data
  
 import java.awt.Rectangle
 
-abstract class DataLayout {
+abstract class Layout {
 
-    /**Checks whether the input is a valid channel value.*/
-    def isValidChannel(channel: Int): Boolean
+  /**Checks whether the input is a valid channel value.
+   */
+  def isValidChannel(channel: Int): Boolean = (0 <= channel && channel < channelCount)
+  private def checkChannel(channel: Int): Unit = require(isValidChannel(channel), "detector: " + channel + " out of range!")
+  /**The total number of detectors in the data array.
+   */
+  def channelCount: Int
 
-    /** The bounding rectangle of the detector field.*/
+    /** The bounding rectangle of the detector field.
+     */
     def field: Rectangle
     /** X origin of the bounding rectangle of the detector field.*/
     def fieldX: Int
@@ -18,32 +24,28 @@ abstract class DataLayout {
     /** Height of the bounding rectangle of the detector field.*/
     def fieldHeight: Int
     
-
-    private def checkDetector(det: Int): Unit = require(0 <= det && det < detectorCount, "detector: " + det + " out of range!")
-      
-    /**The total number of detectors in the data array.*/
-    def detectorCount: Int
     /** Center coordinate of chosen detector (or channel,
-     *  if it is designated a part of the field for display.*/
-    def detectorCoordinates(det: Int): Array[Int] = {
-      checkDetector(det);
-      detectorCoordinatesImpl(det)
+     *  if it is designated a part of the field for display.
+     */
+    def channelCoordinates(ch: Int): Array[Int] = {
+      checkChannel(ch);
+      channelCoordinatesImpl(ch)
     }
-    protected def detectorCoordinatesImpl(det: Int): Array[Int]
+    protected def channelCoordinatesImpl(ch: Int): Array[Int]
     
     /** X coordinate of chosen detector (or channel,
      *  if it is designated a part of the field for display.*/
-    final def detectorX(detector: Int): Int = detectorCoordinates(detector)(0)
+    final def channelX(ch: Int): Int = channelCoordinates(ch)(0)
     /** Y coordinate of chosen detector (or channel,
      *  if it is designated a part of the field for display.*/
-    final def detectorY(detector: Int): Int = detectorCoordinates(detector)(1)
+    final def channelY(ch: Int): Int = channelCoordinates(ch)(1)
     
     
     /** Detector which covers the chosen coordinates.*/
-    final def coordinateDetector(coordinates: Array[Int]): Int = coordinateDetector(coordinates(0), coordinates(1))
+    final def coordinateChannel(coordinates: Array[Int]): Int = coordinateChannel(coordinates(0), coordinates(1))
     /** Detector which covers the chosen coordinates.*/
-    def coordinateDetector(x: Int, y: Int): Int   
+    def coordinateChannel(x: Int, y: Int): Int
     /** Geometric radius of detectors.*/
-    def detectorRadius(): Int
+    def channelRadius(): Int
   
 }
