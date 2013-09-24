@@ -19,5 +19,6 @@ abstract class Source {
 
 
   def isCompatible(that: Source): Boolean
+///  def :::(target: Source): Source
 
 }

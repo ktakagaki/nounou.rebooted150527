@@ -11,13 +11,12 @@ import data.SourceDataArray
  */
 class ReaderNEX() extends Reader {
   
-  def read(file: File): Source = readImpl(file)
-  
-  private def readImpl(file: File): Source = {
+  override def read(file: File): List[Source] = {
 
     val fHand = new RandomAccessFileLE(file, "r")
     
-    var tempRet: Source = null
+    var tempRet: List[Source] = List[Source]()
+
     var data: Array[Int] = null
   
 
@@ -86,7 +85,7 @@ class ReaderNEX() extends Reader {
             }
             
             val tempretSD = new SourceDataNEX()
-          tempRet =  tempretSD
+          tempRet =  tempretSD ::: tempretSD
          }/*case 5*/
        } /*recType match*/
 //    } /*for(i <- 1 to nexFileNVar)*/
