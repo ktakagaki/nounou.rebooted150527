@@ -15,8 +15,8 @@ abstract class Reader {
     val filesChosen: List[File] = fileChooser.showOpenMultipleDialog(null).toList
     read(filesChosen)
   }
-  def read(fileName: String): Source = read(new File(fileName))
-  def read(file: File): Source
+  def read(file: File): List[Source] = readImpl(file)
+  def read(fileName: String): List[Source] = read(new File(fileName))
 
   //ToDo solve erasure problem and reinstate
   //def read(fileNames: List[String]): List[Source] = read( fileNames.map( new File(_) ) )
@@ -28,26 +28,13 @@ abstract class Reader {
     if(files.isEmpty || files(0) == null ){
       throw new Exception("called with empty file list!")
     } else {
-      tempret = read( files(0) ) :: tempret
+      for(f <- files) tempret = tempret ::: readImpl( f )
     }
 
     tempret
   }
+
+  def readImpl(file: File): List[Source]
   
   
 }
-
-
-//    def readAndCompare(rest: List[File]): List[File] = {
-//      if(rest.isEmpty) rest
-//      else {
-//        val newSource = read( rest.head )
-//
-//        if(tempret.head.isCompatible(newSource)) {
-//          tempret = newSource :: tempret
-//          readAndCompare(rest.tail)
-//        } else {
-//          throw new Error (rest.head + " is not compatible with the previously read files!")
-//        }
-//      }
-//    }

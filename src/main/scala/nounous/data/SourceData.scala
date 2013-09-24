@@ -15,15 +15,17 @@ abstract class SourceData extends Source {
     * */
   val start : Double
 
-  /**Timestamp of frame (in seconds).
-    * */
+  /**
+   * Timestamp of frame (in seconds).
+   */
   def frameToTime(frame:Int): Double = frame.toDouble*samplingInv + start
   /**Closest frame to the given timestamp.
     * @param time in seconds
     * */
   def timeToFrame(time: Double): Int = scala.math.round( (time - start) * sampling ).toInt // /1000D
-  /**Total number of frames contained.
-  */
+  /**
+   * Total number of frames contained.
+   */
   val length: Int
 
 
@@ -64,12 +66,15 @@ abstract class SourceData extends Source {
         if(this.absOffset != t.absOffset) tempRet=false; println("compatibility check failed, different absoluteOffset!")
         if(this.absGain != t.absUnit) tempRet=false; println("compatibility check failed, different absoluteUnit!")
         if(this.length != t.length) tempRet=false; println("compatibility check failed, different length!")
+        if(this.start != t.start) tempRet=false; println("compatibility check failed, different start!")
+        if(this.sampling != t.sampling) tempRet=false; println("compatibility check failed, different sampling!")
       }
       case _ => tempRet=false; println("compatibility check failed, different class type!")
     }
 
     tempRet
   }
+
   
     
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
