@@ -137,8 +137,8 @@ class RandomAccessFileLETest extends FunSuite {
     try{
       stream.readUInt64
     }catch{
-      case e:IOException => assert(true)
-      case _ => assert(false)
+      case e: IOException => assert(true)
+      case _: Throwable => assert(false)
     }
     stream.close
   }

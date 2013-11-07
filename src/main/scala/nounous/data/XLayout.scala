@@ -2,7 +2,7 @@ package nounous.data
  
 import java.awt.Rectangle
 
-abstract class Layout {
+abstract class XLayout extends X {
 
   /**Checks whether the input is a valid channel value.
    */
@@ -27,24 +27,24 @@ abstract class Layout {
     /** Center coordinate of chosen detector (or channel,
      *  if it is designated a part of the field for display.
      */
-    def channelCoordinates(ch: Int): Array[Int] = {
-      checkChannel(ch);
-      channelCoordinatesImpl(ch)
+    def channelToCoordinates(ch: Int): Array[Int] = {
+      checkChannel(ch)
+      channelToCoordinatesImpl(ch)
     }
-    protected def channelCoordinatesImpl(ch: Int): Array[Int]
+    protected def channelToCoordinatesImpl(ch: Int): Array[Int]
     
     /** X coordinate of chosen detector (or channel,
      *  if it is designated a part of the field for display.*/
-    final def channelX(ch: Int): Int = channelCoordinates(ch)(0)
+    final def channelX(ch: Int): Int = channelToCoordinates(ch)(0)
     /** Y coordinate of chosen detector (or channel,
      *  if it is designated a part of the field for display.*/
-    final def channelY(ch: Int): Int = channelCoordinates(ch)(1)
+    final def channelY(ch: Int): Int = channelToCoordinates(ch)(1)
     
     
     /** Detector which covers the chosen coordinates.*/
-    final def coordinateChannel(coordinates: Array[Int]): Int = coordinateChannel(coordinates(0), coordinates(1))
+    final def coordinateToChannel(coordinates: Array[Int]): Int = coordinateToChannel(coordinates(0), coordinates(1))
     /** Detector which covers the chosen coordinates.*/
-    def coordinateChannel(x: Int, y: Int): Int
+    def coordinateToChannel(x: Int, y: Int): Int
     /** Geometric radius of detectors.*/
     def channelRadius(): Int
   
