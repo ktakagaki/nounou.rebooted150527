@@ -1,24 +1,25 @@
 package nounous.data
 
-/** Base class for all sources
-  *
-  */
-abstract class Source {
+//import nounous.data.XData
+//import nounous.data.XLayout
 
-  //ToDo consider add: file name, pt info, rec info, rec start time/date, etc
-  //ToDo: toString based on name, comments, etc.
+/**
+ * Created with IntelliJ IDEA.
+ * User: takagaki
+ * Date: 18.09.13
+ * Time: 19:03
+ * To change this template use File | Settings | File Templates.
+ */
+abstract class Source{
 
+  def dat(): XData
+  def aux(): XData
+  def eve(): XEvents
+  def spk(): XSpikes
+  def lay(): XLayout
 
-
-//  /** Name of selected channel.*/
-//  def channelName(channel : Int) : String = _channelNames(channel)
-//  protected[Source] var _channelNames : Array[String]
-//
-//  /** Channel count.*/
-//  val channelCount : Int
-
-
-  def isCompatible(that: Source): Boolean
-///  def :::(target: Source): Source
+//  override def isCompatible(that: Source): Boolean = {
+//    data.isCompatible(that) && events.isCompatible(that) && spikes.isCompatible(that)
+//  }
 
 }

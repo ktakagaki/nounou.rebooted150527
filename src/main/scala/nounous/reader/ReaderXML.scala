@@ -1,14 +1,12 @@
-package data
-
-import nounous.data.Source
+package nounous.reader
 
 /**
  * Created with IntelliJ IDEA.
  * User: takagaki
- * Date: 23.09.13
- * Time: 13:12
+ * Date: 28.10.13
+ * Time: 18:10
  * To change this template use File | Settings | File Templates.
  */
-abstract class SourceDiscrete extends Source {
+class ReaderXML {
 
 }
