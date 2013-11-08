@@ -25,18 +25,31 @@ class RandomAccessFileLE(file: File, arg0: String = "r") extends RandomAccessFil
 
 
   ///// Int16 (Short) /////
-  /**
-   * Reads a signed 16-bit number from this file, but as Little-Endian.
-   *
-   * @see     java.io.RandomAccessFile#readShort()
-   */
-  @throws(classOf[IOException])
-  override def readInt16(): Short = {
-    val b1 = readByte()
-    val b2 = readByte()
-    bytesToInt16BE(b2, b1)//.shortValue()
-    //( (ch1 << 0) + (ch2 << 8) ).shortValue()
-  }
+//  /**
+//   * Reads a signed 16-bit number from this file, but as Little-Endian.
+//   *
+//   * @see     java.io.RandomAccessFile#readShort()
+//   */
+//  @throws(classOf[IOException])
+//  override def readInt16(): Short = {
+//    val b1 = readByte()
+//    val b2 = readByte()
+//    bytesToInt16(b1, b2)//.shortValue()
+//    //( (ch1 << 0) + (ch2 << 8) ).shortValue()
+//  }
+//  override def readShort(n: Int = 1): Array[Short] = {
+//    val ba = new Array[Byte](n*2)
+//    rafObj.read(ba)
+//
+//    val tr = new Array[Short](n)
+//    var c = 0
+//    while(c < n){
+//      tr(c) = bytesToInt16(ba(c), ba(c + 1))
+//      c += 1
+//    }
+//    //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
+//    tr
+//  }
 
 
   ///// UInt16 (Unsigned Short) /////
@@ -53,7 +66,7 @@ class RandomAccessFileLE(file: File, arg0: String = "r") extends RandomAccessFil
   override def readUInt16(): Int = {
     val b1 = readByte()
     val b2 = readByte()
-    bytesToUInt16BE(b2, b1)
+    bytesToUInt16(b1, b2)
   }
   ///// UInt16 (Char) /////
   /**
@@ -81,20 +94,20 @@ class RandomAccessFileLE(file: File, arg0: String = "r") extends RandomAccessFil
     val b2 = readByte()
     val b3 = readByte()
     val b4 = readByte()
-    bytesToInt32BE(b4, b3, b2, b1)
+    bytesToInt32(b1, b2, b3, b4)
 	//if ((ch1 | ch2 | ch3 | ch4) < 0) throw new EOFException();
   //  ((b4 << 24) + (b3 << 16) + (b2 << 8) + (b1 << 0));
   }
 
-  ///// UInt32 (Long) /////
-  @throws(classOf[IOException])
-  override def readUInt32(): Long = {
-    val b1 = readByte()
-    val b2 = readByte()
-    val b3 = readByte()
-    val b4 = readByte()
-    bytesToUInt32BE(b4, b3, b2, b1)
-  }//{ readInt32().toLong + 2147483648L }
+//  /// UInt32 (Long) /////
+//  @throws(classOf[IOException])
+//  override def readUInt32(): Long = {
+//    val b1 = readByte()
+//    val b2 = readByte()
+//    val b3 = readByte()
+//    val b4 = readByte()
+//    bytesToUInt32(b1, b2, b3, b4)
+//  }//{ readInt32().toLong + 2147483648L }
 
 
   ///// Int64 (Long) /////
@@ -114,7 +127,8 @@ class RandomAccessFileLE(file: File, arg0: String = "r") extends RandomAccessFil
     val bA6 = readByte()
     val bA7 = readByte()
 
-    bytesToUInt64BE(bA7, bA6, bA5, bA4, bA3, bA2, bA1, bA0)
+    bytesToUInt64(bA0, bA1, bA2, bA3, bA4, bA5, bA6, bA7)
+//    bytesToUInt64(bA7, bA6, bA5, bA4, bA3, bA2, bA1, bA0)
   }
 
   /**
@@ -132,8 +146,9 @@ class RandomAccessFileLE(file: File, arg0: String = "r") extends RandomAccessFil
     val bA5 = readByte()
     val bA6 = readByte()
     val bA7 = readByte()
-    
-  	bytesToInt64BE(bA7, bA6, bA5, bA4, bA3, bA2, bA1, bA0)
+
+    bytesToInt64(bA0, bA1, bA2, bA3, bA4, bA5, bA6, bA7)
+//  	bytesToInt64(bA7, bA6, bA5, bA4, bA3, bA2, bA1, bA0)
   }
 
 
@@ -162,7 +177,32 @@ class RandomAccessFileLE(file: File, arg0: String = "r") extends RandomAccessFil
   }
 
 
-   
+  override protected def bytesToInt16(b1: Byte, b2: Byte): Short  = {
+    //    b3 << 8 | b4
+    (b2 << 8 | b1 & 0xFF).toShort
+  }
+  override protected def bytesToUInt16(b1: Byte, b2: Byte): Int  = {
+    //    b3 << 8 | b4
+    (b2.toInt & 0xFF) << 8 | (b1.toInt & 0xFF)
+  }
+  override protected def bytesToInt32(b1: Byte, b2: Byte, b3: Byte, b4: Byte): Int  = {
+    b4.toInt << 24 | (b3 & 0xFF) << 16 | (b2 & 0xFF) << 8 | (b1 & 0xFF)
+  }
+  override protected def bytesToUInt32(b1: Byte, b2: Byte, b3: Byte, b4: Byte): Long  = {
+    (b4.toLong & 0xFFL) << 24 | (b3.toLong & 0xFFL) << 16 | (b2.toLong & 0xFFL) << 8 | (b1.toLong & 0xFFL)
+  }
+  override protected def bytesToUInt64(b1 : Byte, b2 : Byte, b3 : Byte, b4 : Byte, b5 : Byte, b6 : Byte, b7 : Byte, b8 : Byte): Long = {
+    if((b8.toInt & 0x80) != 0x00){
+      throw new IOException("UInt64 too big to read given limitations of Long format.")
+    }else{
+      (b8.toLong & 0xFFL) << 56 | (b7.toLong & 0xFFL) << 48  | (b6.toLong & 0xFFL) << 40 | (b5.toLong & 0xFFL) << 32 |
+        (b4.toLong & 0xFFL) << 24 | (b3.toLong & 0xFFL) << 16  | (b2.toLong & 0xFFL) << 8  | (b1.toLong & 0xFFL)
+    }
+  }
+  override protected def bytesToInt64(b1 : Byte, b2 : Byte, b3 : Byte, b4 : Byte, b5 : Byte, b6 : Byte, b7 : Byte, b8 : Byte): Long = {
+    (b8.toLong /*& 0xFFL*/) << 56 | (b7.toLong & 0xFFL) << 48  | (b6.toLong & 0xFFL) << 40 | (b5.toLong & 0xFFL) << 32 |
+      (b4.toLong & 0xFFL) << 24 | (b3.toLong & 0xFFL) << 16  | (b2.toLong & 0xFFL) << 8  | (b1.toLong & 0xFFL)
+  }
    
 //
 //  /**
