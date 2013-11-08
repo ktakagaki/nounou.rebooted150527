@@ -189,11 +189,8 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   ///// UInt32 (Long) /////
   @throws(classOf[IOException])
   def readUInt32(): Long = {
-    val b1 = readByte()
-    val b2 = readByte()
-    val b3 = readByte()
-    val b4 = readByte()
-    bytesToUInt32(b1, b2, b3, b4)
+    val ba = readByte(4)
+    bytesToUInt32(ba(0), ba(1), ba(2), ba(3))
   }
   @throws(classOf[IOException])
   final def readUInt32(n: Int) : Array[Long] = {
@@ -243,15 +240,8 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   ///// UInt64 (Long) /////
   @throws(classOf[IOException])
   def readUInt64(): Long = {
-    val b1 = readByte()
-    val b2 = readByte()
-    val b3 = readByte()
-    val b4 = readByte()
-    val b5 = readByte()
-    val b6 = readByte()
-    val b7 = readByte()
-    val b8 = readByte()
-    bytesToUInt64(b1, b2, b3, b4, b5, b6, b7, b8)
+    val ba = readByte(8)
+    bytesToUInt64(ba(0), ba(1), ba(2), ba(3), ba(4), ba(5), ba(6), ba(7))
   }
   @throws(classOf[IOException])
   final def readUInt64(n: Int) : Array[Long] = {

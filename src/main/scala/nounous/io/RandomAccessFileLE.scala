@@ -55,9 +55,8 @@ class RandomAccessFileLE(file: File, arg0: String = "r") extends RandomAccessFil
   ///// UInt16 (Unsigned Short) /////
   @throws(classOf[IOException])
   override def readUInt16(): Int = {
-    val b1 = readByte()
-    val b2 = readByte()
-    bytesToUInt16(b1, b2)
+    val ba = readByte(2)
+    bytesToUInt16(ba(0), ba(1))
   }
 
   ///// UInt16 (Char) /////
@@ -70,11 +69,8 @@ class RandomAccessFileLE(file: File, arg0: String = "r") extends RandomAccessFil
   ///// Int32 (Int) /////
   @throws(classOf[IOException])
   override def readInt32():Int = {
-    val b1 = readByte()
-    val b2 = readByte()
-    val b3 = readByte()
-    val b4 = readByte()
-    bytesToInt32(b1, b2, b3, b4)
+    val ba = readByte(4)
+    bytesToInt32(ba(0), ba(1), ba(2), ba(3))
 	//if ((ch1 | ch2 | ch3 | ch4) < 0) throw new EOFException();
   //  ((b4 << 24) + (b3 << 16) + (b2 << 8) + (b1 << 0));
   }
@@ -93,32 +89,16 @@ class RandomAccessFileLE(file: File, arg0: String = "r") extends RandomAccessFil
   ///// Int64 (Long) /////
   @throws(classOf[IOException])
   override def readUInt64(): Long = {
-    val bA0 = readByte()
-    val bA1 = readByte()
-    val bA2 = readByte()
-    val bA3 = readByte()
-    val bA4 = readByte()
-    val bA5 = readByte()
-    val bA6 = readByte()
-    val bA7 = readByte()
+    val ba = readByte(8)
 
-    bytesToUInt64(bA0, bA1, bA2, bA3, bA4, bA5, bA6, bA7)
+    bytesToUInt64(ba(0), ba(1), ba(2), ba(3), ba(4), ba(5), ba(6), ba(7))
 //    bytesToUInt64(bA7, bA6, bA5, bA4, bA3, bA2, bA1, bA0)
   }
 
   @throws(classOf[IOException])
   override def readInt64(): Long = {
-    val bA0 = readByte()
-    val bA1 = readByte()
-    val bA2 = readByte()
-    val bA3 = readByte()
-    val bA4 = readByte()
-    val bA5 = readByte()
-    val bA6 = readByte()
-    val bA7 = readByte()
-
-    bytesToInt64(bA0, bA1, bA2, bA3, bA4, bA5, bA6, bA7)
-//  	bytesToInt64(bA7, bA6, bA5, bA4, bA3, bA2, bA1, bA0)
+    val ba = readByte(8)
+    bytesToInt64(ba(0), ba(1), ba(2), ba(3), ba(4), ba(5), ba(6), ba(7))
   }
 
 
