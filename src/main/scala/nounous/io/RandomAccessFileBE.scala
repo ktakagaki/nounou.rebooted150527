@@ -1,7 +1,7 @@
 package nounous.io
 
-import java.io.{IOException, DataInput, File, RandomAccessFile}
-import scala.util.Try
+import java.io.{File, DataInput, RandomAccessFile, IOException}
+//import scala.util.Try
 
 /**Wrapper for {@link java.io.RandomAccessFile}.
   *The main differences are in the readXXX(n: Int) functions, which will try to read n samples from the file.
@@ -21,7 +21,7 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
 
   def this(filename: String, arg0: String) =  this(new File(filename), arg0)
 
-  protected val rafObj = new RandomAccessFile(file, arg0);
+  protected val rafObj = new RandomAccessFile(file, arg0)// = new FileInputStream(file)
   protected var fileEnded = false
 
   @deprecated
@@ -35,7 +35,10 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   final def readInt8(): Byte = rafObj.readByte()
   @throws(classOf[IOException])
   final def readInt8(n: Int): Array[Byte] = {
-    (for(i <- 0 until n ) yield readByte() ).toArray
+    val tempret = new Array[Byte](n)
+    rafObj.read(tempret)
+    //(for(i <- 0 until n ) yield readByte() ).toArray
+    tempret
   }
   //(for(i <- 0 until calculateN(n) ) yield readByte() ).toArray
   @throws(classOf[IOException])
@@ -68,38 +71,78 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
 
   ///// Int16 (Short) /////
   @throws(classOf[IOException])
-  def readInt16() = rafObj.readShort()
+  def readInt16(): Short = rafObj.readShort()
   @throws(classOf[IOException])
-  final def readInt16(n: Int) : Array[Short] =
-    (for(i <- 0 until n ) yield readInt16() ).toArray
+  def readInt16(n: Int): Array[Short] = {
+    val ba = new Array[Byte](n*2)
+    rafObj.read(ba)  //reading is much faster if many bytes are read simultaneously
+    val tr = new Array[Short](n)
+    //the following is a hack to avoid the heavier Scala for loop
+      var c = 0
+      while(c < n){
+        tr(c) = bytesToInt16(ba(c*2), ba(c*2 + 1))
+        c += 1
+      }
+      //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
+    tr
+  }
+//  final def readInt16(n: Int = 1) : Array[Short] =
+//    (for(i <- 0 until n ) yield readInt16() ).toArray
   @throws(classOf[IOException])
   final override def readShort() = readInt16()
   @throws(classOf[IOException])
-  final def readShort(n: Int) : Array[Short] = readInt16(n)
+  def readShort(n: Int) : Array[Short] = readInt16(n)
 
 
 
   ///// UInt16 (Unsigned Short) /////
   @throws(classOf[IOException])
   def readUInt16() : Int = rafObj.readUnsignedShort()
-  /**Tries to read n unsigned 16-bit Bytes as Int from the current getFilePointer().
-    */
   @throws(classOf[IOException])
-  final def readUInt16(n: Int) : Array[Int] =
-    (for(i <- 0 until n ) yield readUInt16() ).toArray
+  final def readUInt16(n: Int): Array[Int] = {
+    val ba = new Array[Byte](n*2)
+    rafObj.read(ba)  //reading is much faster if many bytes are read simultaneously
+    val tr = new Array[Int](n)
+    //the following is a hack to avoid the heavier Scala for loop
+    var c = 0
+    while(c < n){
+      tr(c) = bytesToUInt16(ba(c*2), ba(c*2 + 1))
+      c += 1
+    }
+    //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
+    tr
+  }
+//  @throws(classOf[IOException])
+//  final def readUInt16(n: Int) : Array[Int] =
+//    (for(i <- 0 until n ) yield readUInt16() ).toArray
   @throws(classOf[IOException])
   final override def readUnsignedShort() : Int = readUInt16()
   @throws(classOf[IOException])
   final def readUnsignedShort(n: Int) : Array[Int] = readUInt16(n)
+
   ///// UInt16 (Char) /////
   @throws(classOf[IOException])
-  override def readChar() : Char = readChar()
+  override def readChar() : Char = rafObj.readChar()
   /**Tries to read n unsigned 16-bit Bytes as Int from the current getFilePointer().
     * If file length() is shorter, will read to end of file
     */
   @throws(classOf[IOException])
-  final def readChar(n: Int) : Array[Char] =
-    (for(i <- 0 until n ) yield readChar ).toArray
+  final def readChar(n: Int): Array[Char] = {
+    val ba = new Array[Byte](n*2)
+    rafObj.read(ba)  //reading is much faster if many bytes are read simultaneously
+    val tr = new Array[Char](n)
+    //the following is a hack to avoid the heavier Scala for loop
+    var c = 0
+    while(c < n){
+      tr(c) = bytesToUInt16(ba(c*2), ba(c*2 + 1)).toChar
+      c += 1
+    }
+    //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
+    tr
+  }
+//  @throws(classOf[IOException])
+//  final def readChar(n: Int) : Array[Char] =
+//    (for(i <- 0 until n ) yield readChar ).toArray
 
 
   ///// Int32 (Int) /////
@@ -120,7 +163,7 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     val b2 = readByte()
     val b3 = readByte()
     val b4 = readByte()
-    bytesToUInt32BE(b1, b2, b3, b4)
+    bytesToUInt32(b1, b2, b3, b4)
   }//{ readInt32().toLong + 2147483648L }
   @throws(classOf[IOException])
   final def readUInt32(n: Int) : Array[Long] =
@@ -149,7 +192,7 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     val b6 = readByte()
     val b7 = readByte()
     val b8 = readByte()
-    bytesToUInt64BE(b1, b2, b3, b4, b5, b6, b7, b8)
+    bytesToUInt64(b1, b2, b3, b4, b5, b6, b7, b8)
   }
   @throws(classOf[IOException])
   final def readUInt64(n: Int) : Array[Long] =
@@ -167,21 +210,21 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     (for(i <- 0 until n ) yield readFloat).toArray
 
 
-  protected def bytesToInt16BE(b1: Byte, b2: Byte): Short  = {
+  protected def bytesToInt16(b1: Byte, b2: Byte): Short  = {
     //    b3 << 8 | b4
     (b1 << 8 | b2 & 0xFF).toShort
   }
-  protected def bytesToUInt16BE(b1: Byte, b2: Byte): Int  = {
+  protected def bytesToUInt16(b1: Byte, b2: Byte): Int  = {
     //    b3 << 8 | b4
     (b1.toInt & 0xFF) << 8 | (b2.toInt & 0xFF)
   }
-  protected def bytesToInt32BE(b1: Byte, b2: Byte, b3: Byte, b4: Byte): Int  = {
+  protected def bytesToInt32(b1: Byte, b2: Byte, b3: Byte, b4: Byte): Int  = {
     b1.toInt << 24 | (b2 & 0xFF) << 16 | (b3 & 0xFF) << 8 | (b4 & 0xFF)
   }
-  protected def bytesToUInt32BE(b1: Byte, b2: Byte, b3: Byte, b4: Byte): Long  = {
+  protected def bytesToUInt32(b1: Byte, b2: Byte, b3: Byte, b4: Byte): Long  = {
     (b1.toLong & 0xFFL) << 24 | (b2.toLong & 0xFFL) << 16 | (b3.toLong & 0xFFL) << 8 | (b4.toLong & 0xFFL)
   }
-  protected def bytesToUInt64BE(b1 : Byte, b2 : Byte, b3 : Byte, b4 : Byte, b5 : Byte, b6 : Byte, b7 : Byte, b8 : Byte): Long = {
+  protected def bytesToUInt64(b1 : Byte, b2 : Byte, b3 : Byte, b4 : Byte, b5 : Byte, b6 : Byte, b7 : Byte, b8 : Byte): Long = {
     if((b1.toInt & 0x80) != 0x00){
       throw new IOException("UInt64 too big to read given limitations of Long format.")
     }else{
@@ -189,7 +232,7 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
         (b5.toLong & 0xFFL) << 24 | (b6.toLong & 0xFFL) << 16  | (b7.toLong & 0xFFL) << 8  | (b8.toLong & 0xFFL)
     }
   }
-  protected def bytesToInt64BE(b1 : Byte, b2 : Byte, b3 : Byte, b4 : Byte, b5 : Byte, b6 : Byte, b7 : Byte, b8 : Byte): Long = {
+  protected def bytesToInt64(b1 : Byte, b2 : Byte, b3 : Byte, b4 : Byte, b5 : Byte, b6 : Byte, b7 : Byte, b8 : Byte): Long = {
     (b1.toLong /*& 0xFFL*/) << 56 | (b2.toLong & 0xFFL) << 48  | (b3.toLong & 0xFFL) << 40 | (b4.toLong & 0xFFL) << 32 |
       (b5.toLong & 0xFFL) << 24 | (b6.toLong & 0xFFL) << 16  | (b7.toLong & 0xFFL) << 8  | (b8.toLong & 0xFFL)
   }
