@@ -68,9 +68,17 @@ class ReaderNEX() extends Reader {
             fHand.skipBytes(n*4) //timestamps, discard
             fHand.skipBytes(n*4) //fragmetStarts, discard
 
-          	data = Array.fill(NPointsWave){fHand.readShort.toInt * extraBits}
+          	//data = Array.fill(NPointsWave){fHand.readShort.toInt * extraBits}
+            //data = fHand.readShort(NPointsWave) map ( _.toInt * extraBits)
+            val tempDataShort = fHand.readShort(NPointsWave)
+            data = new Array[Int](NPointsWave)
+            var c = 0
+            while(c < NPointsWave){
+              data(c) = tempDataShort(c).toInt * extraBits
+              c += 1
+            }
 
-            tempRet = new XDataArray(
+          tempRet = new XDataArray(
                   sampling = wFrequency,
                   start =  nexFileTBeg,
                   length = NPointsWave,
