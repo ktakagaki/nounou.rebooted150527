@@ -96,13 +96,25 @@ abstract class XData extends X {
     require( rangeCheck(range) )
     readTraceImpl(ch, range)
   }
+  def readTrace(ch: Int, range: (Int, Int), skip: Int ): Array[Int] = {
+    require( rangeCheck(range) )
+    readTraceImpl(ch, range, skip)
+  }
   final def readTraceAbs(ch: Int, range: (Int, Int)) = toAbs(readTrace(ch, range))
+  final def readTraceAbs(ch: Int, range: (Int, Int), skip: Int) = toAbs(readTrace(ch, range, skip))
   def rangeCheck(range: (Int, Int)) = (0 <= range._1 && range._1 <= range._2 && range._2 <= length)
+
   private def readTraceImpl(ch: Int, range: (Int, Int) ): Array[Int] = {
     val res = new Array[Int](range._2 - range._1 +1)
     for(fr <- range._1 until range._2 + 1) res(fr - range._1) = readPoint(ch, fr)
     res
   }
+  private def readTraceImpl(ch: Int, range: (Int, Int), skip: Int = 1 ): Array[Int] = {
+    val res = new Array[Int]((range._2 - range._1)/skip + 1)
+    for(fr <- range._1 until range._2 + 1 by skip) res(fr - range._1) = readPoint(ch, fr)
+    res
+  }
+
   def readFrame(fr: Int): Array[Int] = {
     val res = new Array[Int](channelCount)
     for(ch <- 0 until channelCount) res(ch) = readPoint(ch, fr)
