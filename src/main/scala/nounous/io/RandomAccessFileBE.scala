@@ -58,8 +58,18 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   /**Tries to read n unsigned 8-bit Bytes as Int from the current getFilePointer().
     */
   @throws(classOf[IOException])
-  final def readUInt8(n: Int) : Array[Int] =
-    (for(i <- 0 until n ) yield readUnsignedByte() ).toArray
+  final def readUInt8(n: Int) : Array[Int] = {
+    val tr = new Array[Int](n)
+    //the following is a hack to avoid the heavier Scala for loop
+    var c = 0
+    while(c < n){
+      tr(c) = readUnsignedByte()
+      c += 1
+    }
+    //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
+    tr
+}
+//    (for(i <- 0 until n ) yield readUnsignedByte() ).toArray
   /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt8]]
     * @throws java.io.IOException
     */
