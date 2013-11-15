@@ -24,11 +24,6 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   protected val rafObj = new RandomAccessFile(file, arg0)// = new FileInputStream(file)
   protected var fileEnded = false
 
-  @deprecated
-  protected def calculateN(n: Int) = {
-    if( rafObj.getFilePointer + n >= rafObj.length ){ (rafObj.length - rafObj.getFilePointer).toInt }
-    else{ n }
-  }
 
   ///// Int8 (Byte) /////
   @throws(classOf[IOException])
@@ -37,15 +32,18 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   final def readInt8(n: Int): Array[Byte] = {
     val tempret = new Array[Byte](n)
     rafObj.read(tempret)
-    //(for(i <- 0 until n ) yield readByte() ).toArray
     tempret
   }
   //(for(i <- 0 until calculateN(n) ) yield readByte() ).toArray
+
   /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt8]]
+    * @throws java.io.IOException
     */
   @throws(classOf[IOException])
   final override def readByte(): Byte = readInt8()
+
   /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt8]]
+    * @throws java.io.IOException
     */
   @throws(classOf[IOException])
   final def readByte(n: Int): Array[Byte] = readInt8(n)
@@ -56,6 +54,7 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   @throws(classOf[IOException])
   final def readUInt8() = rafObj.readUnsignedByte()
   /**Tries to read n unsigned 8-bit Bytes as Int from the current getFilePointer().
+    * @throws java.io.IOException
     */
   @throws(classOf[IOException])
   final def readUInt8(n: Int) : Array[Int] = {
@@ -100,13 +99,15 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
       //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
     tr
   }
-//  final def readInt16(n: Int = 1) : Array[Short] =
-//    (for(i <- 0 until n ) yield readInt16() ).toArray
+
   /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt16]]
+    * @throws java.io.IOException
     */
   @throws(classOf[IOException])
   final override def readShort() = readInt16()
+
   /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt16]]
+    * @throws java.io.IOException
     */
   @throws(classOf[IOException])
   def readShort(n: Int) : Array[Short] = readInt16(n)
@@ -130,14 +131,14 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
     tr
   }
-//  @throws(classOf[IOException])
-//  final def readUInt16(n: Int) : Array[Int] =
-//    (for(i <- 0 until n ) yield readUInt16() ).toArray
+
   /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt16]]
+    * @throws java.io.IOException
     */
   @throws(classOf[IOException])
   final override def readUnsignedShort() : Int = readUInt16()
   /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt16]]
+    * @throws java.io.IOException
     */
   @throws(classOf[IOException])
   final def readUnsignedShort(n: Int) : Array[Int] = readUInt16(n)
@@ -147,6 +148,7 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   override def readChar() : Char = rafObj.readChar()
   /**Tries to read n unsigned 16-bit Bytes as Int from the current getFilePointer().
     * If file length() is shorter, will read to end of file
+    * @throws java.io.IOException
     */
   @throws(classOf[IOException])
   final def readChar(n: Int): Array[Char] = {
@@ -162,9 +164,6 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
     tr
   }
-//  @throws(classOf[IOException])
-//  final def readChar(n: Int) : Array[Char] =
-//    (for(i <- 0 until n ) yield readChar ).toArray
 
 
   ///// Int32 (Int) /////
@@ -184,14 +183,13 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
     tr
 }
-//  @throws(classOf[IOException])
-//  final def readInt32(n: Int) : Array[Int] =
-//    (for(i <- 0 until n ) yield readInt32 ).toArray
   /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt32]]
+    * @throws java.io.IOException
     */
   @throws(classOf[IOException])
   final override def readInt() = readInt32()
   /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt32]]
+    * @throws java.io.IOException
     */
   @throws(classOf[IOException])
   final def readInt(n: Int) : Array[Int] = readInt32(n)
@@ -216,7 +214,6 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
     tr
   }
-    //(for(i <- 0 until n ) yield readUInt32 ).toArray
 
 
   ///// Int64 (Int) /////
@@ -239,10 +236,12 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   }
 //    (for(i <- 0 until n ) yield readInt64).toArray
   /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt64]]
+    * @throws java.io.IOException
     */
   @throws(classOf[IOException])
   final override def readLong() = readInt64()
   /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt64]]
+    * @throws java.io.IOException
     */
   @throws(classOf[IOException])
   final def readLong(n: Int) : Array[Long] = readInt64(n)
@@ -268,7 +267,6 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
       //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
       tr
   }
-//    (for(i <- 0 until n ) yield readUInt64 ).toArray
 
 
   ///// Floating Point /////
@@ -291,7 +289,7 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
     tr
   }
-//    (for(i <- 0 until n ) yield readDouble).toArray
+
   @throws(classOf[IOException])
   final def readFloat(n: Int) : Array[Float] = {
     val ba = new Array[Byte](n*4)
@@ -309,15 +307,12 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
     tr
   }
-//    (for(i <- 0 until n ) yield readFloat).toArray
 
 
   def bytesToInt16(b1: Byte, b2: Byte): Short  = {
-    //    b3 << 8 | b4
     (b1 << 8 | b2 & 0xFF).toShort
   }
   def bytesToUInt16(b1: Byte, b2: Byte): Int  = {
-    //    b3 << 8 | b4
     (b1.toInt & 0xFF) << 8 | (b2.toInt & 0xFF)
   }
   def bytesToInt32(b1: Byte, b2: Byte, b3: Byte, b4: Byte): Int  = {

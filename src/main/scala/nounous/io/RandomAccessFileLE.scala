@@ -24,34 +24,6 @@ class RandomAccessFileLE(file: File, arg0: String = "r") extends RandomAccessFil
   // def readBoolean: Try[Boolean] = Try(rafObj.readBoolean())
 
 
-  ///// Int16 (Short) /////
-//  /**
-//   * Reads a signed 16-bit number from this file, but as Little-Endian.
-//   *
-//   * @see     java.io.RandomAccessFile#readShort()
-//   */
-//  @throws(classOf[IOException])
-//  override def readInt16(): Short = {
-//    val b1 = readByte()
-//    val b2 = readByte()
-//    bytesToInt16(b1, b2)//.shortValue()
-//    //( (ch1 << 0) + (ch2 << 8) ).shortValue()
-//  }
-//  override def readShort(n: Int = 1): Array[Short] = {
-//    val ba = new Array[Byte](n*2)
-//    rafObj.read(ba)
-//
-//    val tr = new Array[Short](n)
-//    var c = 0
-//    while(c < n){
-//      tr(c) = bytesToInt16(ba(c), ba(c + 1))
-//      c += 1
-//    }
-//    //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
-//    tr
-//  }
-
-
   ///// UInt16 (Unsigned Short) /////
   @throws(classOf[IOException])
   override def readUInt16(): Int = {
@@ -65,36 +37,15 @@ class RandomAccessFileLE(file: File, arg0: String = "r") extends RandomAccessFil
 
 
 
-
   ///// Int32 (Int) /////
   @throws(classOf[IOException])
   override def readInt32():Int = {
     val ba = readByte(4)
     bytesToInt32(ba(0), ba(1), ba(2), ba(3))
-	//if ((ch1 | ch2 | ch3 | ch4) < 0) throw new EOFException();
-  //  ((b4 << 24) + (b3 << 16) + (b2 << 8) + (b1 << 0));
   }
-
-//  /// UInt32 (Long) /////
-//  @throws(classOf[IOException])
-//  override def readUInt32(): Long = {
-//    val b1 = readByte()
-//    val b2 = readByte()
-//    val b3 = readByte()
-//    val b4 = readByte()
-//    bytesToUInt32(b1, b2, b3, b4)
-//  }//{ readInt32().toLong + 2147483648L }
 
 
   ///// Int64 (Long) /////
-  @throws(classOf[IOException])
-  override def readUInt64(): Long = {
-    val ba = readByte(8)
-
-    bytesToUInt64(ba(0), ba(1), ba(2), ba(3), ba(4), ba(5), ba(6), ba(7))
-//    bytesToUInt64(bA7, bA6, bA5, bA4, bA3, bA2, bA1, bA0)
-  }
-
   @throws(classOf[IOException])
   override def readInt64(): Long = {
     val ba = readByte(8)
