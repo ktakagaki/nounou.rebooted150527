@@ -24,7 +24,7 @@ import java.io.{File, DataInput, DataOutput, Closeable, RandomAccessFile, IOExce
   * </table>
  *
  */
-class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput with DataOutput with Closeable /*extends java.io.RandomAccessFile(file, arg0)*/ {
+class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*with DataOutput*/ with Closeable /*extends java.io.RandomAccessFile(file, arg0)*/ {
 
   def this(filename: String, arg0: String) =  this(new File(filename), arg0)
 

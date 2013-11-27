@@ -1,7 +1,6 @@
-package io
+package nounous.io
 
 import java.io.IOException
-import nounous.io.RandomAccessFileLE
 import org.scalatest.FunSuite
 
 /**

@@ -11,7 +11,7 @@ import java.io.RandomAccessFile
 
 val fileHead = "V:/docs/bb/nounous/src/test/scala/nounous/io"
 
-val file = new RandomAccessFile(new File(fileHead + "/SignedInt8.bin"), "r")
+val file = new RandomAccessFile(new File(fileHead + "/Int8.bin"), "r")
 file.length
 file.readByte()
 file.readByte()
