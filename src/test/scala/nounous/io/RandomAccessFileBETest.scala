@@ -1,9 +1,9 @@
-package io
+package nounous.io
 
-import nounous.io.RandomAccessFileBE
 import org.scalatest.FunSuite
 import java.io.IOException
 import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created with IntelliJ IDEA.

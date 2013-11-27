@@ -14,11 +14,11 @@ abstract class Source{
 
   def segmentCount(): Int
 
-  def dat(seg: Int = 0): XData
-  def aux(seg: Int = 0): XData
-  def eve(seg: Int = 0): XEvents
-  def spk(seg: Int = 0): XSpikes
-  def lay(seg: Int = 0): XLayout
+  def dat: XData
+  def aux: XData
+  def eve: XEvents
+  def spk: XSpikes
+  def lay: XLayout
   //ToDo: 3 video?
 
 //  override def isCompatible(that: Source): Boolean = {

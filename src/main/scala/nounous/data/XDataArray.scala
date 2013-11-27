@@ -26,8 +26,8 @@ class XDataArray(
 ) extends XData{
 
 
-  override def readPoint(ch: Int, fr: Int) = data(ch)(fr)
-  override def readTrace(ch: Int) = data(ch)
+  override def readPointImpl(seg: Int, ch: Int, fr: Int) = data(ch)(fr)
+  override def readTraceImpl(seg: Int, ch: Int) = data(ch)
 
 
   override def :::(that: X): X = {
