@@ -3,6 +3,7 @@ package io
 import nounous.io.RandomAccessFileBE
 import org.scalatest.FunSuite
 import java.io.IOException
+import org.junit.runner.RunWith
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,6 +12,7 @@ import java.io.IOException
  * Time: 6:22 PM
  * To change this template use File | Settings | File Templates.
  */
+@RunWith(classOf[JUnitRunner])
 class RandomAccessFileBETest extends FunSuite {
 
   val fileHead = "V:/docs/bb/nounous/src/test/scala/nounous/io"

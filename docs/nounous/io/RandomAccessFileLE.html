@@ -534,8 +534,8 @@ If this file has an associated channel then the channel is closed as well.</p></
         <span class="name">readByte</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">nounous.io.RandomAccessFileBE.readInt8</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">nounous.io.RandomAccessFileBE.readInt8</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">readInt8</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">readInt8</a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -555,8 +555,8 @@ If this file has an associated channel then the channel is closed as well.</p></
         <span class="name">readByte</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Byte">Byte</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">nounous.io.RandomAccessFileBE.readInt8</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">nounous.io.RandomAccessFileBE.readInt8</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">readInt8</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">readInt8</a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -576,18 +576,13 @@ If this file has an associated channel then the channel is closed as well.</p></
         <span class="name">readChar</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Char">Char</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Reads a char as specified by <code> java.io.RandomAccessFile#readChar()</code>, except
-using little-endian byte order.</p><div class="fullcomment"><div class="comment cmt"><p>Reads a char as specified by <code> java.io.RandomAccessFile#readChar()</code>, except
-using little-endian byte order.
-</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>the next two bytes of the input stream, interpreted as a
-        <span class="extype" name="scala.Char">scala.Char</span> in little-endian byte order</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileLE">RandomAccessFileLE</a> → <a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileLE">RandomAccessFileLE</a> → <a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
     </span>)</span>
               
-        </dd><dt>Exceptions thrown</dt><dd><span class="cmt">IOException<p>if an I/O error occurs
-</p></span></dd></dl></div>
+        </dd></dl></div>
     </li><li name="nounous.io.RandomAccessFileBE#readChar" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readChar(n:Int):Array[Char]"></a>
       <a id="readChar(Int):Array[Char]"></a>
@@ -600,8 +595,8 @@ using little-endian byte order.
         <span class="name">readChar</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Char">Char</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Tries to read n unsigned 16-bit Bytes as Int from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n unsigned 16-bit Bytes as Int from the current getFilePointer().
-If file length() is shorter, will read to end of file
+      <p class="shortcomment cmt">Tries to read n UInt16s from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n UInt16s from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -621,15 +616,13 @@ If file length() is shorter, will read to end of file
         <span class="name">readDouble</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Reads a <code>double</code> from this file, but as Little-Endian.</code></p><div class="fullcomment"><div class="comment cmt"><p>Reads a <code>double</code> from this file, but as Little-Endian.
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileLE">RandomAccessFileLE</a> → <a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileLE">RandomAccessFileLE</a> → <a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
     </span>)</span>
               
-        </dd><dt>See also</dt><dd><span class="cmt"><p>java.lang.Double#longBitsToDouble(long)
-</p></span><span class="cmt"><p>java.io.RandomAccessFile#readLong()</p></span><span class="cmt"><p>java.io.RandomAccessFile#readDouble()</p></span></dd></dl></div>
+        </dd></dl></div>
     </li><li name="nounous.io.RandomAccessFileBE#readDouble" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readDouble(n:Int):Array[Double]"></a>
       <a id="readDouble(Int):Array[Double]"></a>
@@ -642,7 +635,9 @@ If file length() is shorter, will read to end of file
         <span class="name">readDouble</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Double">Double</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n Doubles from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n Doubles from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -661,15 +656,13 @@ If file length() is shorter, will read to end of file
         <span class="name">readFloat</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Float">Float</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Reads a <code>float</code> from this file, but as Little-Endian.</code></p><div class="fullcomment"><div class="comment cmt"><p>Reads a <code>float</code> from this file, but as Little-Endian.
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileLE">RandomAccessFileLE</a> → <a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileLE">RandomAccessFileLE</a> → <a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
     </span>)</span>
               
-        </dd><dt>See also</dt><dd><span class="cmt"><p>java.lang.Float#intBitsToFloat(int)
-</p></span><span class="cmt"><p>java.io.RandomAccessFile#readInt()</p></span><span class="cmt"><p>java.io.RandomAccessFile#readFloat()</p></span></dd></dl></div>
+        </dd></dl></div>
     </li><li name="nounous.io.RandomAccessFileBE#readFloat" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readFloat(n:Int):Array[Float]"></a>
       <a id="readFloat(Int):Array[Float]"></a>
@@ -682,7 +675,9 @@ If file length() is shorter, will read to end of file
         <span class="name">readFloat</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n Floats from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n Floats from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -727,15 +722,14 @@ If file length() is shorter, will read to end of file
         <span class="name">readInt</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">nounous.io.RandomAccessFileBE.readUInt32</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">nounous.io.RandomAccessFileBE.readUInt32</a>
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">readUInt32</a></p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">readUInt32</a></p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
     </span>)</span>
               
-        </dd></dl></div>
+        </dd><dt>Exceptions thrown</dt><dd><span class="cmt">java.io.IOException<p>
+</p></span></dd></dl></div>
     </li><li name="nounous.io.RandomAccessFileBE#readInt" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readInt():Int"></a>
       <a id="readInt():Int"></a>
@@ -748,8 +742,8 @@ If file length() is shorter, will read to end of file
         <span class="name">readInt</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">nounous.io.RandomAccessFileBE.readUInt32</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">nounous.io.RandomAccessFileBE.readUInt32</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">readUInt32</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">readUInt32</a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -769,7 +763,9 @@ If file length() is shorter, will read to end of file
         <span class="name">readInt16</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Short">Short</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n Int16s from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n Int16s from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -807,14 +803,13 @@ If file length() is shorter, will read to end of file
         <span class="name">readInt32</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Reads a signed 32-bit integer from this file, but as Little-Endian.</p><div class="fullcomment"><div class="comment cmt"><p>Reads a signed 32-bit integer from this file, but as Little-Endian.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileLE">RandomAccessFileLE</a> → <a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileLE">RandomAccessFileLE</a> → <a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
     </span>)</span>
               
-        </dd><dt>See also</dt><dd><span class="cmt"><p>java.io.RandomAccessFile#readInt()
-</p></span></dd></dl></div>
+        </dd></dl></div>
     </li><li name="nounous.io.RandomAccessFileBE#readInt32" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readInt32(n:Int):Array[Int]"></a>
       <a id="readInt32(Int):Array[Int]"></a>
@@ -827,7 +822,9 @@ If file length() is shorter, will read to end of file
         <span class="name">readInt32</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n Int32s from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n Int32s from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -846,15 +843,13 @@ If file length() is shorter, will read to end of file
         <span class="name">readInt64</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Reads a signed 64-bit integer from this file, but as Little-Endian.</p><div class="fullcomment"><div class="comment cmt"><p>Reads a signed 64-bit integer from this file, but as Little-Endian.
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileLE">RandomAccessFileLE</a> → <a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileLE">RandomAccessFileLE</a> → <a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
     </span>)</span>
               
-        </dd><dt>See also</dt><dd><span class="cmt"><p>java.io.RandomAccessFile#readLong()
-</p></span></dd></dl></div>
+        </dd></dl></div>
     </li><li name="nounous.io.RandomAccessFileBE#readInt64" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readInt64(n:Int):Array[Long]"></a>
       <a id="readInt64(Int):Array[Long]"></a>
@@ -867,7 +862,9 @@ If file length() is shorter, will read to end of file
         <span class="name">readInt64</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Long">Long</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n Int64s from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n Int64s from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -886,7 +883,9 @@ If file length() is shorter, will read to end of file
         <span class="name">readInt8</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n Int8s (Bytes) from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n Int8s (Bytes) from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -937,8 +936,8 @@ If file length() is shorter, will read to end of file
         <span class="name">readLong</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Long">Long</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">nounous.io.RandomAccessFileBE.readInt64</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">nounous.io.RandomAccessFileBE.readInt64</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">readInt64</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">readInt64</a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -958,8 +957,8 @@ If file length() is shorter, will read to end of file
         <span class="name">readLong</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">nounous.io.RandomAccessFileBE.readInt64</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">nounous.io.RandomAccessFileBE.readInt64</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">readInt64</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">readInt64</a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -979,8 +978,8 @@ If file length() is shorter, will read to end of file
         <span class="name">readShort</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Short">Short</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">nounous.io.RandomAccessFileBE.readInt16</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">nounous.io.RandomAccessFileBE.readInt16</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">readInt16</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">readInt16</a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -1000,8 +999,8 @@ If file length() is shorter, will read to end of file
         <span class="name">readShort</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Short">Short</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">nounous.io.RandomAccessFileBE.readInt16</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">nounous.io.RandomAccessFileBE.readInt16</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">readInt16</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">readInt16</a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -1021,20 +1020,13 @@ If file length() is shorter, will read to end of file
         <span class="name">readUInt16</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Reads an unsigned short (UInt16) as specified by
-<code> DataInputStream#readUnsignedShort()</code>, except using little-endian
-byte order.</p><div class="fullcomment"><div class="comment cmt"><p>Reads an unsigned short (UInt16) as specified by
-<code> DataInputStream#readUnsignedShort()</code>, except using little-endian
-byte order.
-</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>the next two bytes of the input stream, interpreted as an
-        unsigned 16-bit integer in little-endian byte order</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileLE">RandomAccessFileLE</a> → <a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileLE">RandomAccessFileLE</a> → <a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
     </span>)</span>
               
-        </dd><dt>Exceptions thrown</dt><dd><span class="cmt">IOException<p>if an I/O error occurs
-</p></span></dd></dl></div>
+        </dd></dl></div>
     </li><li name="nounous.io.RandomAccessFileBE#readUInt16" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readUInt16(n:Int):Array[Int]"></a>
       <a id="readUInt16(Int):Array[Int]"></a>
@@ -1047,7 +1039,9 @@ byte order.
         <span class="name">readUInt16</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n UInt16s from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n UInt16s from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -1066,7 +1060,9 @@ byte order.
         <span class="name">readUInt32</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Long">Long</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n UInt32s from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n UInt32s from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -1092,27 +1088,6 @@ byte order.
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="nounous.io.RandomAccessFileLE#readUInt64" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="readUInt64():Long"></a>
-      <a id="readUInt64():Long"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">readUInt64</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Reads an unsigned 64-bit integer from this file, as Little-Endian.</p><div class="fullcomment"><div class="comment cmt"><p>Reads an unsigned 64-bit integer from this file, as Little-Endian.
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileLE">RandomAccessFileLE</a> → <a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
-                <span class="name">@throws</span><span class="args">(<span>
-      
-      <span class="symbol">classOf[IOException]</span>
-    </span>)</span>
-              
-        </dd><dt>See also</dt><dd><span class="cmt"><p>java.io.RandomAccessFile#readLong()
-</p></span></dd></dl></div>
     </li><li name="nounous.io.RandomAccessFileBE#readUInt64" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readUInt64(n:Int):Array[Long]"></a>
       <a id="readUInt64(Int):Array[Long]"></a>
@@ -1123,6 +1098,27 @@ byte order.
       </span>
       <span class="symbol">
         <span class="name">readUInt64</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Long">Long</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Tries to read n UInt64s from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n UInt64s from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[IOException]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="nounous.io.RandomAccessFileBE#readUInt64" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readUInt64():Long"></a>
+      <a id="readUInt64():Long"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readUInt64</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
@@ -1144,7 +1140,8 @@ byte order.
         <span class="name">readUInt8</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Tries to read n unsigned 8-bit Bytes as Int from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n unsigned 8-bit Bytes as Int from the current getFilePointer().
+      <p class="shortcomment cmt">Tries to read n UInt8s as Int from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n UInt8s as Int from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -1196,14 +1193,15 @@ byte order.
         <span class="name">readUnsignedByte</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">nounous.io.RandomAccessFileBE.readUInt8</a></p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">nounous.io.RandomAccessFileBE.readUInt8</a></p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">readUInt8</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">readUInt8</a>
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
     </span>)</span>
               
-        </dd><dt>Exceptions thrown</dt><dd><span class="cmt">java.io.IOException<p>
-</p></span></dd></dl></div>
+        </dd></dl></div>
     </li><li name="nounous.io.RandomAccessFileBE#readUnsignedByte" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readUnsignedByte():Int"></a>
       <a id="readUnsignedByte():Int"></a>
@@ -1216,14 +1214,15 @@ byte order.
         <span class="name">readUnsignedByte</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">nounous.io.RandomAccessFileBE.readUInt8</a></p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">nounous.io.RandomAccessFileBE.readUInt8</a></p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">readUInt8</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">readUInt8</a>
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
     </span>)</span>
               
-        </dd><dt>Exceptions thrown</dt><dd><span class="cmt">java.io.IOException<p>
-</p></span></dd></dl></div>
+        </dd></dl></div>
     </li><li name="nounous.io.RandomAccessFileBE#readUnsignedShort" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readUnsignedShort(n:Int):Array[Int]"></a>
       <a id="readUnsignedShort(Int):Array[Int]"></a>
@@ -1236,8 +1235,8 @@ byte order.
         <span class="name">readUnsignedShort</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">nounous.io.RandomAccessFileBE.readUInt16</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">nounous.io.RandomAccessFileBE.readUInt16</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">readUInt16</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">readUInt16</a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -1257,8 +1256,8 @@ byte order.
         <span class="name">readUnsignedShort</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">nounous.io.RandomAccessFileBE.readUInt16</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">nounous.io.RandomAccessFileBE.readUInt16</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">readUInt16</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="RandomAccessFileBE.html#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">readUInt16</a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -1404,26 +1403,7 @@ If n is negative, no bytes are skipped.</p></div><dl class="attributes block"> <
 
         
 
-        <div id="values" class="values members">
-              <h3>Deprecated Value Members</h3>
-              <ol><li name="nounous.io.RandomAccessFileBE#calculateN" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="calculateN(n:Int):Int"></a>
-      <a id="calculateN(Int):Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name deprecated" title="Deprecated: ">calculateN</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="RandomAccessFileBE.html" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a></dd><dt>Annotations</dt><dd>
-                <span class="name">@deprecated</span>
-              
-        </dd><dt>Deprecated</dt><dd class="cmt"></dd></dl></div>
-    </li></ol>
-            </div>
+        
         </div>
 
         <div id="inheritedMembers">

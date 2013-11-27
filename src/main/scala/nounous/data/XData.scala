@@ -82,6 +82,8 @@ abstract class XData extends X {
    */
   def readPoint(ch: Int, fr: Int): Int
   final def readPointAbs(ch: Int, fr: Int) = toAbs(readPoint(ch,fr))
+
+  //readTrace, readTraceAbs, readTraceImpl
   /**Reads a single data trace in internal integer scaling (for one detector),
    * and should return a defensive clone.
    * @param ch channel (pixel, detector) specification
@@ -109,7 +111,7 @@ abstract class XData extends X {
     for(fr <- range._1 until range._2 + 1) res(fr - range._1) = readPoint(ch, fr)
     res
   }
-  private def readTraceImpl(ch: Int, range: (Int, Int), skip: Int = 1 ): Array[Int] = {
+  private def readTraceImpl(ch: Int, range: (Int, Int), skip: Int ): Array[Int] = {
     val res = new Array[Int]((range._2 - range._1)/skip + 1)
     for(fr <- range._1 until range._2 + 1 by skip) res(fr - range._1) = readPoint(ch, fr)
     res
@@ -120,6 +122,7 @@ abstract class XData extends X {
     for(ch <- 0 until channelCount) res(ch) = readPoint(ch, fr)
     res
   }
+
   def read(): Array[Array[Int]] = {
     val res = new Array[Array[Int]](channelCount)
     for(ch <- 0 until channelCount) res(ch) = readTrace(ch)

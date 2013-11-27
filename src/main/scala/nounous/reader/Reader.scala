@@ -9,7 +9,7 @@ abstract class Reader {
 
   //ToDo: some sort of function to notify which file extensions can be read
 
-  def read(): List[X]   =  {
+  final def read(): List[X]   =  {
     val fileChooser = new scalafx.stage.FileChooser
     //val extFilter = new ExtensionFilter
     val window = new scalafx.stage.Popup
@@ -20,10 +20,10 @@ abstract class Reader {
   }
 
   //ToDo consolidate data where different channels are on different files
-  def read(files: List[File]):  List[X] = {
+  final def read(files: List[File]):  List[X] = {
     files.flatMap(read(_))
   }
-  def read(file: String): List[X] = read(new File(file))
+  final def read(file: String): List[X] = read(new File(file))
 
   def read(file: File): List[X]
 
