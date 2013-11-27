@@ -1,10 +1,19 @@
 package nounous.io
 
-import java.io.{File, DataInput, RandomAccessFile, IOException}
+import java.io.{File, DataInput, DataOutput, Closeable, RandomAccessFile, IOException}
 //import scala.util.Try
 
-/**Wrapper for {@link java.io.RandomAccessFile}.
-  *The main differences are in the readXXX(n: Int) functions, which will try to read n samples from the file.
+/**Wrapper for [[java.io.RandomAccessFile]].
+  *
+  *The main differences to [[java.io.RandomAccessFile]] are in the readXXX(n: Int) functions, which will try to read n samples from the file.
+  *Try to use these function instead of reading multiple times in a loop with readXXX(), as each read is costly
+  *in terms of performance.
+  *
+  * Of note, RandomAccessFileBE explicitly supports big endian reading/writing (as does [[java.io.RandomAccessFile]]).
+  * Use [[nounous.io.RandomAccessFileLE]] to read/write little endian.
+  *
+  * Each function throws a [[java.io.IOException]], which can be caught in Scala
+  * if necessary to detect ends of files, for example. Catching is obligatory in Java.
   *
   * <table border="2">
   * <tr><th>Type</th>                    <th>Java Type</th>    <th>Scala Type</th>   <th>Value Range</th> </tr>
@@ -14,10 +23,8 @@ import java.io.{File, DataInput, RandomAccessFile, IOException}
   * <tr><td>Unsigned 16-bit integer</td> <td>char</td>         <td>Char</td>        <td>[0, 65535]</td> </tr>
   * </table>
  *
- * @param file
- * @param arg0
  */
-class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*extends java.io.RandomAccessFile(file, arg0)*/ {
+class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput with DataOutput with Closeable /*extends java.io.RandomAccessFile(file, arg0)*/ {
 
   def this(filename: String, arg0: String) =  this(new File(filename), arg0)
 
@@ -26,8 +33,13 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
 
 
   ///// Int8 (Byte) /////
+  //Reading
   @throws(classOf[IOException])
   final def readInt8(): Byte = rafObj.readByte()
+
+  /**Tries to read n Int8s (Bytes) from the current getFilePointer().
+    * Will throw an exception if it encounters an end of file.
+    */
   @throws(classOf[IOException])
   final def readInt8(n: Int): Array[Byte] = {
     val tempret = new Array[Byte](n)
@@ -35,26 +47,43 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     tempret
   }
   //(for(i <- 0 until calculateN(n) ) yield readByte() ).toArray
+  //Writing
+  @throws(classOf[IOException])
+  final def writeInt8(v: Byte) { rafObj.write(v) }
 
-  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt8]]
-    * @throws java.io.IOException
+  /**Tries to read n Int8s (Bytes) from the current getFilePointer().
+    * Will throw an exception if it encounters an end of file.
+    */
+  @throws(classOf[IOException])
+  final def writeInt8(v: Array[Byte]) { rafObj.write(v) }
+  //Aliases
+  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt8 readInt8]]
     */
   @throws(classOf[IOException])
   final override def readByte(): Byte = readInt8()
 
-  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt8]]
-    * @throws java.io.IOException
+  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt8 readInt8]]
     */
   @throws(classOf[IOException])
   final def readByte(n: Int): Array[Byte] = readInt8(n)
 
+  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.writeInt8 writeInt8]]
+    */
+  @throws(classOf[IOException])
+  final def write(v: Byte) { writeInt8(v) }
+
+  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.writeInt8 writeInt8]]
+    */
+  @throws(classOf[IOException])
+  final def write(v: Array[Byte]) { writeInt8(v) }
 
 
   ///// UInt8 /////
+  //Reading
   @throws(classOf[IOException])
   final def readUInt8() = rafObj.readUnsignedByte()
-  /**Tries to read n unsigned 8-bit Bytes as Int from the current getFilePointer().
-    * @throws java.io.IOException
+  /**Tries to read n UInt8s as Int from the current getFilePointer().
+    * Will throw an exception if it encounters an end of file.
     */
   @throws(classOf[IOException])
   final def readUInt8(n: Int) : Array[Int] = {
@@ -67,15 +96,16 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     }
     //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
     tr
+    //    (for(i <- 0 until n ) yield readUnsignedByte() ).toArray
 }
-//    (for(i <- 0 until n ) yield readUnsignedByte() ).toArray
-  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt8]]
-    * @throws java.io.IOException
+  //Writing
+
+  //Aliases
+  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt8 readUInt8]]
     */
   @throws(classOf[IOException])
   final override def readUnsignedByte() = readUInt8()
-  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt8]]
-    * @throws java.io.IOException
+  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt8 readUInt8]]
     */
   @throws(classOf[IOException])
   final def readUnsignedByte(n: Int) : Array[Int] = readUInt8(n)
@@ -85,6 +115,9 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   ///// Int16 (Short) /////
   @throws(classOf[IOException])
   def readInt16(): Short = rafObj.readShort()
+  /**Tries to read n Int16s from the current getFilePointer().
+    * Will throw an exception if it encounters an end of file.
+    */
   @throws(classOf[IOException])
   def readInt16(n: Int): Array[Short] = {
     val ba = new Array[Byte](n*2)
@@ -100,14 +133,12 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     tr
   }
 
-  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt16]]
-    * @throws java.io.IOException
+  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt16 readInt16]]
     */
   @throws(classOf[IOException])
   final override def readShort() = readInt16()
 
-  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt16]]
-    * @throws java.io.IOException
+  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt16 readInt16]]
     */
   @throws(classOf[IOException])
   def readShort(n: Int) : Array[Short] = readInt16(n)
@@ -117,6 +148,9 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   ///// UInt16 (Unsigned Short) /////
   @throws(classOf[IOException])
   def readUInt16() : Int = rafObj.readUnsignedShort()
+  /**Tries to read n UInt16s from the current getFilePointer().
+    * Will throw an exception if it encounters an end of file.
+    */
   @throws(classOf[IOException])
   final def readUInt16(n: Int): Array[Int] = {
     val ba = new Array[Byte](n*2)
@@ -132,13 +166,11 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     tr
   }
 
-  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt16]]
-    * @throws java.io.IOException
+  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt16 readUInt16]]
     */
   @throws(classOf[IOException])
   final override def readUnsignedShort() : Int = readUInt16()
-  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt16]]
-    * @throws java.io.IOException
+  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt16 readUInt16]]
     */
   @throws(classOf[IOException])
   final def readUnsignedShort(n: Int) : Array[Int] = readUInt16(n)
@@ -146,9 +178,8 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   ///// UInt16 (Char) /////
   @throws(classOf[IOException])
   override def readChar() : Char = rafObj.readChar()
-  /**Tries to read n unsigned 16-bit Bytes as Int from the current getFilePointer().
-    * If file length() is shorter, will read to end of file
-    * @throws java.io.IOException
+  /**Tries to read n UInt16s from the current getFilePointer().
+    * Will throw an exception if it encounters an end of file.
     */
   @throws(classOf[IOException])
   final def readChar(n: Int): Array[Char] = {
@@ -169,6 +200,9 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   ///// Int32 (Int) /////
   @throws(classOf[IOException])
   def readInt32() = rafObj.readInt()
+  /**Tries to read n Int32s from the current getFilePointer().
+    * Will throw an exception if it encounters an end of file.
+    */
   @throws(classOf[IOException])
   final def readInt32(n: Int) : Array[Int] = {
     val ba = new Array[Byte](n*4)
@@ -183,13 +217,11 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     //for(c <- 0 until n) tr(c) = bytesToInt16(ba(c), ba(c + 1))
     tr
 }
-  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt32]]
-    * @throws java.io.IOException
+  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt32 readUInt32]]
     */
   @throws(classOf[IOException])
   final override def readInt() = readInt32()
-  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt32]]
-    * @throws java.io.IOException
+  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readUInt32 readUInt32]]
     */
   @throws(classOf[IOException])
   final def readInt(n: Int) : Array[Int] = readInt32(n)
@@ -200,6 +232,9 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     val ba = readByte(4)
     bytesToUInt32(ba(0), ba(1), ba(2), ba(3))
   }
+  /**Tries to read n UInt32s from the current getFilePointer().
+    * Will throw an exception if it encounters an end of file.
+    */
   @throws(classOf[IOException])
   final def readUInt32(n: Int) : Array[Long] = {
     val ba = new Array[Byte](n*4)
@@ -219,6 +254,9 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   ///// Int64 (Int) /////
   @throws(classOf[IOException])
   def readInt64() = rafObj.readLong()
+  /**Tries to read n Int64s from the current getFilePointer().
+    * Will throw an exception if it encounters an end of file.
+    */
   @throws(classOf[IOException])
   final def readInt64(n: Int) : Array[Long] = {
     val ba = new Array[Byte](n*8)
@@ -235,13 +273,11 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     tr
   }
 //    (for(i <- 0 until n ) yield readInt64).toArray
-  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt64]]
-    * @throws java.io.IOException
+  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt64 readInt64]]
     */
   @throws(classOf[IOException])
   final override def readLong() = readInt64()
-  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt64]]
-    * @throws java.io.IOException
+  /** Alias, in java style, for [[nounous.io.RandomAccessFileBE.readInt64 readInt64]]
     */
   @throws(classOf[IOException])
   final def readLong(n: Int) : Array[Long] = readInt64(n)
@@ -252,6 +288,9 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     val ba = readByte(8)
     bytesToUInt64(ba(0), ba(1), ba(2), ba(3), ba(4), ba(5), ba(6), ba(7))
   }
+  /**Tries to read n UInt64s from the current getFilePointer().
+    * Will throw an exception if it encounters an end of file.
+    */
   @throws(classOf[IOException])
   final def readUInt64(n: Int) : Array[Long] = {
       val ba = new Array[Byte](n*8)
@@ -272,6 +311,9 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   ///// Floating Point /////
   override def readDouble() = rafObj.readDouble()
   override def readFloat() = rafObj.readFloat()
+  /**Tries to read n Doubles from the current getFilePointer().
+    * Will throw an exception if it encounters an end of file.
+    */
   @throws(classOf[IOException])
   final def readDouble(n: Int) : Array[Double] = {
     val ba = new Array[Byte](n*8)
@@ -290,6 +332,9 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     tr
   }
 
+  /**Tries to read n Floats from the current getFilePointer().
+    * Will throw an exception if it encounters an end of file.
+    */
   @throws(classOf[IOException])
   final def readFloat(n: Int) : Array[Float] = {
     val ba = new Array[Byte](n*4)
@@ -300,7 +345,7 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     while(c < n){
       val c4 = c * 4
       tr(c) = java.lang.Float.intBitsToFloat(
-        bytesToInt32(ba(c4), ba(c4 + 1), ba(c4 + 2), ba(c4 + 3)).toInt
+        bytesToInt32(ba(c4), ba(c4 + 1), ba(c4 + 2), ba(c4 + 3))
       )
       c += 1
     }
@@ -330,7 +375,7 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     }
   }
   def bytesToInt64(b1 : Byte, b2 : Byte, b3 : Byte, b4 : Byte, b5 : Byte, b6 : Byte, b7 : Byte, b8 : Byte): Long = {
-    (b1.toLong /*& 0xFFL*/) << 56 | (b2.toLong & 0xFFL) << 48  | (b3.toLong & 0xFFL) << 40 | (b4.toLong & 0xFFL) << 32 |
+    b1.toLong << 56 | (b2.toLong & 0xFFL) << 48  | (b3.toLong & 0xFFL) << 40 | (b4.toLong & 0xFFL) << 32 |
       (b5.toLong & 0xFFL) << 24 | (b6.toLong & 0xFFL) << 16  | (b7.toLong & 0xFFL) << 8  | (b8.toLong & 0xFFL)
   }
 
@@ -351,7 +396,7 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
 
   /**Returns the current offset in this file.
     * @see     java.io.RandomAccessFile#getFilePointer   */
-  def getFilePointer: Long = rafObj.getFilePointer()
+  def getFilePointer: Long = rafObj.getFilePointer
   /**Sets the file-pointer offset, measured from the beginning of this file, at which the next read or write occurs.
     * The offset may be set beyond the end of the file. Setting the offset beyond the end of the file does not change
     * the file length. The file length will change only by writing after the offset has been set beyond the end of the file.
@@ -359,7 +404,7 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
   def seek(pos: Long): Unit = rafObj.seek(pos)
   /**Returns the length of this file.
     * @see     java.io.RandomAccessFile#length   */
-  def length: Long = rafObj.length()
+  def length: Long = rafObj.length
   /**Sets the length of this file. /n
     * If the present length of the file as returned by the length method is greater than the newLength argument
     * then the file will be truncated. In this case, if the file offset as returned by the getFilePointer method
@@ -372,9 +417,9 @@ class RandomAccessFileBE(file: File, arg0: String = "r") extends DataInput /*ext
     * A closed random access file cannot perform input or output operations and cannot be reopened./n
     * If this file has an associated channel then the channel is closed as well.
     * @see     java.io.RandomAccessFile#close   */
-  def close: Unit = rafObj.close()
-  def getChannel = rafObj.getChannel()
-  def getFD = rafObj.getFD()
+  def close: Unit = rafObj.close
+  def getChannel = rafObj.getChannel
+  def getFD = rafObj.getFD
 
 
 }

@@ -39,8 +39,10 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Wrapper for <code> java.io.RandomAccessFile</code>.
-The main differences are in the readXXX(n: Int) functions, which will try to read n samples from the file.</p><p><table border="2">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Wrapper for <code> java.io.RandomAccessFile</code>.</p><p>The main differences are in the readXXX(n: Int) functions, which will try to read n samples from the file.
+Try to use these function instead of reading multiple times in a loop with readXXX(), as each read is costly
+in terms of performance.</p><p>Each function throws a <span class="extype" name="java.io.IOException">java.io.IOException</span>, which can be caught in Scala
+if necessary to detect ends of files, for example. Catching is obligatory in Java.</p><p><table border="2">
 <tr><th>Type</th>                    <th>Java Type</th>    <th>Scala Type</th>   <th>Value Range</th> </tr>
 <tr><td>Signed 8-bit integer</td>    <td>byte</td>         <td>Byte</td>         <td>[-128, 127]</td>        </tr>
 <tr><td>Unsigned 8-bit integer</td>  <td>(int)</td>        <td>(Int)</td>        <td>[0, 255]</td> </tr>
@@ -542,8 +544,8 @@ If this file has an associated channel then the channel is closed as well.</p></
         <span class="name">readByte</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">nounous.io.RandomAccessFileBE.readInt8</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">nounous.io.RandomAccessFileBE.readInt8</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">readInt8</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">readInt8</a>
 </p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -563,8 +565,8 @@ If this file has an associated channel then the channel is closed as well.</p></
         <span class="name">readByte</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Byte">Byte</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">nounous.io.RandomAccessFileBE.readInt8</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">nounous.io.RandomAccessFileBE.readInt8</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">readInt8</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readInt8(n:Int):Array[Byte]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt8">readInt8</a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -584,8 +586,8 @@ If this file has an associated channel then the channel is closed as well.</p></
         <span class="name">readChar</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Char">Char</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Tries to read n unsigned 16-bit Bytes as Int from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n unsigned 16-bit Bytes as Int from the current getFilePointer().
-If file length() is shorter, will read to end of file
+      <p class="shortcomment cmt">Tries to read n UInt16s from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n UInt16s from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
 </p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -624,7 +626,9 @@ If file length() is shorter, will read to end of file
         <span class="name">readDouble</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Double">Double</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n Doubles from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n Doubles from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -656,7 +660,9 @@ If file length() is shorter, will read to end of file
         <span class="name">readFloat</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n Floats from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n Floats from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -714,15 +720,14 @@ If file length() is shorter, will read to end of file
         <span class="name">readInt</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">nounous.io.RandomAccessFileBE.readUInt32</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">nounous.io.RandomAccessFileBE.readUInt32</a>
-</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">readUInt32</a></p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">readUInt32</a></p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
     </span>)</span>
               
-        </dd></dl></div>
+        </dd><dt>Exceptions thrown</dt><dd><span class="cmt">java.io.IOException<p>
+</p></span></dd></dl></div>
     </li><li name="nounous.io.RandomAccessFileBE#readInt" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readInt():Int"></a>
       <a id="readInt():Int"></a>
@@ -735,8 +740,8 @@ If file length() is shorter, will read to end of file
         <span class="name">readInt</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">nounous.io.RandomAccessFileBE.readUInt32</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">nounous.io.RandomAccessFileBE.readUInt32</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">readUInt32</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">readUInt32</a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -756,7 +761,9 @@ If file length() is shorter, will read to end of file
         <span class="name">readInt16</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Short">Short</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n Int16s from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n Int16s from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -794,7 +801,9 @@ If file length() is shorter, will read to end of file
         <span class="name">readInt32</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n Int32s from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n Int32s from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -832,7 +841,9 @@ If file length() is shorter, will read to end of file
         <span class="name">readInt64</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Long">Long</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n Int64s from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n Int64s from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -870,7 +881,9 @@ If file length() is shorter, will read to end of file
         <span class="name">readInt8</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n Int8s (Bytes) from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n Int8s (Bytes) from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -921,8 +934,8 @@ If file length() is shorter, will read to end of file
         <span class="name">readLong</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Long">Long</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">nounous.io.RandomAccessFileBE.readInt64</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">nounous.io.RandomAccessFileBE.readInt64</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">readInt64</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">readInt64</a>
 </p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -942,8 +955,8 @@ If file length() is shorter, will read to end of file
         <span class="name">readLong</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">nounous.io.RandomAccessFileBE.readInt64</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">nounous.io.RandomAccessFileBE.readInt64</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">readInt64</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readInt64(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt64">readInt64</a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -963,8 +976,8 @@ If file length() is shorter, will read to end of file
         <span class="name">readShort</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Short">Short</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">nounous.io.RandomAccessFileBE.readInt16</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">nounous.io.RandomAccessFileBE.readInt16</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">readInt16</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">readInt16</a>
 </p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -984,8 +997,8 @@ If file length() is shorter, will read to end of file
         <span class="name">readShort</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Short">Short</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">nounous.io.RandomAccessFileBE.readInt16</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">nounous.io.RandomAccessFileBE.readInt16</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">readInt16</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readInt16(n:Int):Array[Short]" class="extmbr" name="nounous.io.RandomAccessFileBE#readInt16">readInt16</a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -1005,7 +1018,9 @@ If file length() is shorter, will read to end of file
         <span class="name">readUInt16</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n UInt16s from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n UInt16s from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -1043,7 +1058,9 @@ If file length() is shorter, will read to end of file
         <span class="name">readUInt32</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Long">Long</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n UInt32s from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n UInt32s from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -1081,7 +1098,9 @@ If file length() is shorter, will read to end of file
         <span class="name">readUInt64</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Long">Long</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Tries to read n UInt64s from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n UInt64s from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
@@ -1119,7 +1138,8 @@ If file length() is shorter, will read to end of file
         <span class="name">readUInt8</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Tries to read n unsigned 8-bit Bytes as Int from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n unsigned 8-bit Bytes as Int from the current getFilePointer().
+      <p class="shortcomment cmt">Tries to read n UInt8s as Int from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n UInt8s as Int from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
 </p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -1171,14 +1191,15 @@ If file length() is shorter, will read to end of file
         <span class="name">readUnsignedByte</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">nounous.io.RandomAccessFileBE.readUInt8</a></p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">nounous.io.RandomAccessFileBE.readUInt8</a></p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">readUInt8</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">readUInt8</a>
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
     </span>)</span>
               
-        </dd><dt>Exceptions thrown</dt><dd><span class="cmt">java.io.IOException<p>
-</p></span></dd></dl></div>
+        </dd></dl></div>
     </li><li name="nounous.io.RandomAccessFileBE#readUnsignedByte" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readUnsignedByte():Int"></a>
       <a id="readUnsignedByte():Int"></a>
@@ -1191,14 +1212,15 @@ If file length() is shorter, will read to end of file
         <span class="name">readUnsignedByte</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">nounous.io.RandomAccessFileBE.readUInt8</a></p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">nounous.io.RandomAccessFileBE.readUInt8</a></p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">readUInt8</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readUInt8(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt8">readUInt8</a>
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
     </span>)</span>
               
-        </dd><dt>Exceptions thrown</dt><dd><span class="cmt">java.io.IOException<p>
-</p></span></dd></dl></div>
+        </dd></dl></div>
     </li><li name="nounous.io.RandomAccessFileBE#readUnsignedShort" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readUnsignedShort(n:Int):Array[Int]"></a>
       <a id="readUnsignedShort(Int):Array[Int]"></a>
@@ -1211,8 +1233,8 @@ If file length() is shorter, will read to end of file
         <span class="name">readUnsignedShort</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">nounous.io.RandomAccessFileBE.readUInt16</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">nounous.io.RandomAccessFileBE.readUInt16</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">readUInt16</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">readUInt16</a>
 </p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -1232,8 +1254,8 @@ If file length() is shorter, will read to end of file
         <span class="name">readUnsignedShort</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">nounous.io.RandomAccessFileBE.readUInt16</a>
-</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">nounous.io.RandomAccessFileBE.readUInt16</a>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">readUInt16</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readUInt16(n:Int):Array[Int]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt16">readUInt16</a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → DataInput</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -1379,26 +1401,7 @@ If n is negative, no bytes are skipped.</p></div><dl class="attributes block"> <
 
         
 
-        <div id="values" class="values members">
-              <h3>Deprecated Value Members</h3>
-              <ol><li name="nounous.io.RandomAccessFileBE#calculateN" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="calculateN(n:Int):Int"></a>
-      <a id="calculateN(Int):Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name deprecated" title="Deprecated: ">calculateN</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Annotations</dt><dd>
-                <span class="name">@deprecated</span>
-              
-        </dd><dt>Deprecated</dt><dd class="cmt"></dd></dl></div>
-    </li></ol>
-            </div>
+        
         </div>
 
         <div id="inheritedMembers">
