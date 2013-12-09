@@ -35,12 +35,13 @@ abstract class Source {
   //ToDo: 3 video?
 
 
-  def read(file: File) = read( Array(file) )
+  def read(file: File): Unit = read( Array(file) )
   def read(files: Array[File]): Unit = files.flatMap( readImpl(_) )
   def readImpl(file: File): List[X] = {
     file.getName.toLowerCase match {
       case n: String if n.endsWith(".nex") => ReaderNEX.read( file )
       case n => throw new IllegalArgumentException("File format for " + n + " is not supported yet.")
+    }
   }
 
   def clearData = {

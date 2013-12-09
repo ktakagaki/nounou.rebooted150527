@@ -34,7 +34,7 @@ object ReaderNEX extends Reader {
       HeaderElements("nexFileFreq", nexFileFreq),
       HeaderElements("nexFileTBeg", nexFileTBeg),
       HeaderElements("nexFileTEnd", nexFileTEnd),
-      HeaderElements("nexFileNVar", nexFileNVar),
+      HeaderElements("nexFileNVar", nexFileNVar)
     )
   )
 
@@ -88,18 +88,13 @@ object ReaderNEX extends Reader {
               c += 1
             }
 
-          tempRet = new XDataArray( Vector[Vector[Int]](data.toVector) ){
-                  override val sampleRate = wFrequency
-
-                  override val startFrames = Vector(0)
-                  override val startTimestamps =  Vector[Long](nexFileTBeg.toLong) //TODO 1: Must fix this placeholder!!!
-                  override val absGain = ADtoMV / extraBits
-                  override val absUnit = "mV"
-                  override val absOffset = MVOffset
-
-                  override val channelCount = 1
-                  override val channelNames = Vector(name)
-          } :: tempRet
+          tempRet = new XDataArray(
+            Vector(Vector(data.toVector)),
+            Vector[Long](nexFileTBeg.toLong), //TODO 1: Must fix this placeholder!!!
+            nexFileFreq,
+            Vector(name),
+            extraBits, ADtoMV / extraBits, MVOffset, "mV"
+          ) :: tempRet
 
          }/*case 5*/
        } /*recType match*/
@@ -110,15 +105,3 @@ object ReaderNEX extends Reader {
 
 
 }
-
-//        } catch {
-//    case ex: FileNotFoundException => {
-//      println("File name " + fileName + " was not found! Loading failed")
-//      ex.printStackTrace()
-//      //DataSourceEmpty
-//    }
-//    case ex: Throwable => {
-//      println("Non-handled exception was thrown on load: " + ex.toString())
-//      //DataSourceEmpty
-//    }
-//  }
