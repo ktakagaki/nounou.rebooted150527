@@ -8,64 +8,26 @@ import scala.collection.immutable.Vector
   * Each trace of data must share the following variables:
   * sampling, start, length, xBits, absGain, absOffset, absUnit
   */
-abstract class XData extends X {
+abstract class XDataFilter( upstream: XData ) extends XData {
 
-  /** Number of segments.
-    */
-  final lazy val segments: Int = startFrames.length-1
+  override def segmentLength(seg: Int): Int = upstream.segmentLength(seg)
 
-  /**
-   * Total number of frames contained.
-   */
-  def segmentLength(seg: Int): Int = {
-    if(segmentLengthBuffer(seg) == 0){
-      segmentLengthBuffer(seg) = startFrames(seg+1) - startFrames(seg) + 1
-    }
-    segmentLengthBuffer(seg)
-  }
-  private val segmentLengthBuffer = Array[Int](segments)
+  def length: Int = upstream.length
 
-  /** OVERRIDE: Maximum frame index +1.
-    */
-  val length: Int
-
-  
   // frames
-  /** OVERRIDE: List of starting frames for each segment.
-    * The first segment must begin with frame 0, and the last value, startFrames(segment), should be length+1.
-    */
-  val startFrames: Vector[Int]
-  /** List of ending frames for each segment.
-    */
-  lazy val endFrames: Vector[Int] =
-    ( for(seg <- 0 until segments) yield startFrames(seg) + segmentLengths(seg) -1).toVector
-  lazy val segmentLengths: Vector[Int] =
-    ( for(seg <- 0 until segments) yield startFrames(seg+1)-startFrames(seg) ).toVector
-  /** Is this frame valid?
-    */
-  final def isValidFrame(frame: Int) = (0 < frame && frame < length)
+  override def startFrames: Vector[Int] = upstream.startFrames
+  override def endFrames: Vector[Int] = upstream.endFrames
+  override def segmentLengths: Vector[Int] = upstream.segmentLengths
 
   // timestamps
-  /** OVERRIDE: List of starting timestamps for each segment.
-     */
-  val startTimestamps: Vector[Long]
-  /** List of ending timestamps for each segment.
-    */
-  lazy val endTimestamps: Vector[Long] =
-    ( for(seg <- 0 until segments) yield startTimestamps(seg) + (segmentLengths(seg)*timestampsPerFrame).toLong ).toVector
+  override def startTimestamps: Vector[Long] = upstream.startTimestamps
+  override def endTimestamps: Vector[Long] = upstream.endTimestamps
 
   // sampling rate information
-  /**OVERRIDE: Sampling rate of frame data in Hz
-    */
-  val sampleRate: Double
-  /**Buffered inverse of sampling, in seconds: Double
-    */
-  final lazy val sampleInterval = 1.0/sampleRate
-  /**Buffered timestamps (microseconds) between frames.
-    */
+  override def sampleRate: Double = upstream.sampleRate
+  override def sampleInterval: Double = 1.0/sampleRate
+
   final lazy val timestampsPerFrame = sampleInterval * 1000000D
-  /**Buffered frames between timestamps (microseconds).
-    */
   final lazy val framesPerTimestamp = 1D/timestampsPerFrame
 
   // frameToTimestamp, timestampToFrame
@@ -123,9 +85,8 @@ abstract class XData extends X {
 
   //channel information
   /**Get the name of a given channel.*/
-  def channelName(channel: Int): String = channelNames(channel)
-  val channelNames: Vector[String]
-  val channelCount: Int
+  override def channelNames: Vector[String] = upstream.channelNames
+  override def channelCount: Int = upstream.channelCount
   /** Is this channel valid?
     */
   final def isValidChannel(channel: Int) = (0 < channel && channel < channelCount)
@@ -243,7 +204,7 @@ abstract class XData extends X {
 
   override def isCompatible(that: X): Boolean = {
     that match {
-      case x: XData => {
+      case x: XDataFilter => {
         (this.absGain == x.absGain) && (this.absOffset == x.absOffset)&& (this.absUnit == x.absUnit) &&
           (this.length == x.length) &&
           (this.sampleRate == x.sampleRate) && (this.startFrames == x.startFrames) && (this.startTimestamps== x.startTimestamps) &&

@@ -35,23 +35,23 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <span class="name">RandomAccessFileBE</span><span class="result"> extends <span class="extype" name="java.io.DataInput">DataInput</span></span>
+        <span class="name">RandomAccessFileBE</span><span class="result"> extends <span class="extype" name="java.io.DataInput">DataInput</span> with <span class="extype" name="java.io.Closeable">Closeable</span></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Wrapper for <code> java.io.RandomAccessFile</code>.</p><p>The main differences are in the readXXX(n: Int) functions, which will try to read n samples from the file.
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Wrapper for <span class="extype" name="java.io.RandomAccessFile">java.io.RandomAccessFile</span>.</p><p>The main differences to <span class="extype" name="java.io.RandomAccessFile">java.io.RandomAccessFile</span> are in the readXXX(n: Int) functions, which will try to read n samples from the file.
 Try to use these function instead of reading multiple times in a loop with readXXX(), as each read is costly
-in terms of performance.</p><p>Each function throws a <span class="extype" name="java.io.IOException">java.io.IOException</span>, which can be caught in Scala
+in terms of performance.</p><p>Of note, RandomAccessFileBE explicitly supports big endian reading/writing (as does <span class="extype" name="java.io.RandomAccessFile">java.io.RandomAccessFile</span>).
+Use <a href="RandomAccessFileLE.html" class="extype" name="nounous.io.RandomAccessFileLE">nounous.io.RandomAccessFileLE</a> to read/write little endian.</p><p>Each function throws a <span class="extype" name="java.io.IOException">java.io.IOException</span>, which can be caught in Scala
 if necessary to detect ends of files, for example. Catching is obligatory in Java.</p><p><table border="2">
 <tr><th>Type</th>                    <th>Java Type</th>    <th>Scala Type</th>   <th>Value Range</th> </tr>
 <tr><td>Signed 8-bit integer</td>    <td>byte</td>         <td>Byte</td>         <td>[-128, 127]</td>        </tr>
 <tr><td>Unsigned 8-bit integer</td>  <td>(int)</td>        <td>(Int)</td>        <td>[0, 255]</td> </tr>
 <tr><td>Signed 16-bit integer</td>   <td>short</td>        <td>Short</td>        <td>[-32768, 32767]</td>        </tr>
 <tr><td>Unsigned 16-bit integer</td> <td>char</td>         <td>Char</td>        <td>[0, 65535]</td> </tr>
-</table>
-</p></div><div class="toggleContainer block">
+</table></p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><span class="extype" name="java.io.DataInput">DataInput</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="java.io.Closeable">Closeable</span>, <span class="extype" name="java.lang.AutoCloseable">AutoCloseable</span>, <span class="extype" name="java.io.DataInput">DataInput</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div><div class="toggleContainer block">
           <span class="toggle">Known Subclasses</span>
           <div class="subClasses hiddenContent"><a href="RandomAccessFileLE.html" class="extype" name="nounous.io.RandomAccessFileLE">RandomAccessFileLE</a></div>
@@ -72,7 +72,7 @@ if necessary to detect ends of files, for example. Catching is obligatory in Jav
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="nounous.io.RandomAccessFileBE"><span>RandomAccessFileBE</span></li><li class="in" name="java.io.DataInput"><span>DataInput</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="nounous.io.RandomAccessFileBE"><span>RandomAccessFileBE</span></li><li class="in" name="java.io.Closeable"><span>Closeable</span></li><li class="in" name="java.lang.AutoCloseable"><span>AutoCloseable</span></li><li class="in" name="java.io.DataInput"><span>DataInput</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -105,7 +105,7 @@ if necessary to detect ends of files, for example. Catching is obligatory in Jav
       </span>
       </h4>
       
-    </li><li name="nounous.io.RandomAccessFileBE#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="nounous.io.RandomAccessFileBE#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="&lt;init&gt;(file:java.io.File,arg0:String):nounous.io.RandomAccessFileBE"></a>
       <a id="&lt;init&gt;:RandomAccessFileBE"></a>
       <h4 class="signature">
@@ -117,8 +117,7 @@ if necessary to detect ends of files, for example. Catching is obligatory in Jav
         <span class="name">RandomAccessFileBE</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>, <span name="arg0">arg0: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;r&quot;</span></span>)</span>
       </span>
       </h4>
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">file</dt><dd class="cmt"></dd><dt class="param">arg0</dt><dd class="cmt"><p>
-</p></dd></dl></div>
+      
     </li></ol>
             </div>
 
@@ -304,20 +303,20 @@ if necessary to detect ends of files, for example. Catching is obligatory in Jav
               
         </dd></dl></div>
     </li><li name="nounous.io.RandomAccessFileBE#close" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="close:Unit"></a>
-      <a id="close:Unit"></a>
+      <a id="close():Unit"></a>
+      <a id="close():Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">close</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">close</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
       <p class="shortcomment cmt">Closes this random access file stream and releases any system resources associated with the stream.</p><div class="fullcomment"><div class="comment cmt"><p>Closes this random access file stream and releases any system resources associated with the stream.
 A closed random access file cannot perform input or output operations and cannot be reopened./n
-If this file has an associated channel then the channel is closed as well.</p></div><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p>java.io.RandomAccessFile#close</p></span></dd></dl></div>
+If this file has an associated channel then the channel is closed as well.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.io.RandomAccessFileBE">RandomAccessFileBE</a> → Closeable → AutoCloseable</dd><dt>See also</dt><dd><span class="cmt"><p>java.io.RandomAccessFile#close</p></span></dd></dl></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -720,14 +719,15 @@ Will throw an exception if it encounters an end of file.
         <span class="name">readInt</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Alias, in java style, for <a href="#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">readUInt32</a></p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">readUInt32</a></p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">readUInt32</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#readUInt32(n:Int):Array[Long]" class="extmbr" name="nounous.io.RandomAccessFileBE#readUInt32">readUInt32</a>
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[IOException]</span>
     </span>)</span>
               
-        </dd><dt>Exceptions thrown</dt><dd><span class="cmt">java.io.IOException<p>
-</p></span></dd></dl></div>
+        </dd></dl></div>
     </li><li name="nounous.io.RandomAccessFileBE#readInt" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readInt():Int"></a>
       <a id="readInt():Int"></a>
@@ -1396,6 +1396,88 @@ If n is negative, no bytes are skipped.</p></div><dl class="attributes block"> <
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="nounous.io.RandomAccessFileBE#write" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="write(v:Array[Byte]):Unit"></a>
+      <a id="write(Array[Byte]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">write</span><span class="params">(<span name="v">v: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="#writeInt8(v:Array[Byte]):Unit" class="extmbr" name="nounous.io.RandomAccessFileBE#writeInt8">writeInt8</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#writeInt8(v:Array[Byte]):Unit" class="extmbr" name="nounous.io.RandomAccessFileBE#writeInt8">writeInt8</a>
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[IOException]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="nounous.io.RandomAccessFileBE#write" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="write(v:Byte):Unit"></a>
+      <a id="write(Byte):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">write</span><span class="params">(<span name="v">v: <span class="extype" name="scala.Byte">Byte</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Alias, in java style, for <a href="#writeInt8(v:Array[Byte]):Unit" class="extmbr" name="nounous.io.RandomAccessFileBE#writeInt8">writeInt8</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>Alias, in java style, for <a href="#writeInt8(v:Array[Byte]):Unit" class="extmbr" name="nounous.io.RandomAccessFileBE#writeInt8">writeInt8</a>
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[IOException]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="nounous.io.RandomAccessFileBE#writeInt8" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="writeInt8(v:Array[Byte]):Unit"></a>
+      <a id="writeInt8(Array[Byte]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">writeInt8</span><span class="params">(<span name="v">v: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Tries to read n Int8s (Bytes) from the current getFilePointer().</p><div class="fullcomment"><div class="comment cmt"><p>Tries to read n Int8s (Bytes) from the current getFilePointer().
+Will throw an exception if it encounters an end of file.
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[IOException]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="nounous.io.RandomAccessFileBE#writeInt8" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="writeInt8(v:Byte):Unit"></a>
+      <a id="writeInt8(Byte):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">writeInt8</span><span class="params">(<span name="v">v: <span class="extype" name="scala.Byte">Byte</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[IOException]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
     </li></ol>
             </div>
 
@@ -1405,7 +1487,11 @@ If n is negative, no bytes are skipped.</p></div><dl class="attributes block"> <
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="java.io.DataInput">
+        <div class="parent" name="java.io.Closeable">
+              <h3>Inherited from <span class="extype" name="java.io.Closeable">Closeable</span></h3>
+            </div><div class="parent" name="java.lang.AutoCloseable">
+              <h3>Inherited from <span class="extype" name="java.lang.AutoCloseable">AutoCloseable</span></h3>
+            </div><div class="parent" name="java.io.DataInput">
               <h3>Inherited from <span class="extype" name="java.io.DataInput">DataInput</span></h3>
             </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>

@@ -1,35 +1,42 @@
 package nounous.reader
 
-import nounous.data.XDataArray
+import nounous.data._
 import java.io.File
-import nounous.data.{InvalidFileFormatException, X}
 import nounous.io.RandomAccessFileLE
 
 /**Reads in single NEX files. Partial implementation, with only waveforms processed.
 *
 * @author K. Takagaki
 */
-class ReaderNEX() extends Reader {
+object ReaderNEX extends Reader {
 
 
   override def read(file: File): List[X] = {
 
     val fHand = new RandomAccessFileLE(file, "r")
-
     var tempRet: List[X] = List[X]()
 
-    var data: Array[Int] = null
-
     val magic = fHand.readInt()
-
     if ( magic != 827868494 ) throw new InvalidFileFormatException("Invalid NEX file!", null)
 
-    val nexFileVersion: Int = fHand.readInt
-    val nexFileComment: String = new String(fHand.readByte(256))
-    val nexFileFreq: Double = fHand.readDouble
-    val nexFileTBeg: Double = fHand.readInt / nexFileFreq
-    val nexFileTEnd: Double = fHand.readInt / nexFileFreq
-    val nexFileNVar: Int = fHand.readInt
+      val nexFileVersion: Int = fHand.readInt
+      val nexFileComment: String = new String(fHand.readByte(256))
+      val nexFileFreq: Double = fHand.readDouble
+      val nexFileTBeg: Double = fHand.readInt / nexFileFreq
+      val nexFileTEnd: Double = fHand.readInt / nexFileFreq
+      val nexFileNVar: Int = fHand.readInt
+
+  val header = new XHeader(
+    "Neuroexplorer NEX",
+    Vector[HeaderElements](
+      HeaderElements("nexFileVersion", nexFileVersion),
+      HeaderElements("nexFileComment", nexFileComment),
+      HeaderElements("nexFileFreq", nexFileFreq),
+      HeaderElements("nexFileTBeg", nexFileTBeg),
+      HeaderElements("nexFileTEnd", nexFileTEnd),
+      HeaderElements("nexFileNVar", nexFileNVar),
+    )
+  )
 
     fHand.skipBytes(260)
 
@@ -57,11 +64,14 @@ class ReaderNEX() extends Reader {
       val MVOffset =	fHand.readDouble
       val filePosition =  fHand.getFilePointer
 
+      //TODO 3: Header again here
+
       recType match {
         //case 0 //neurons
         //case 1 //events
         //case 2 //intervals
         case 5 => { //continuous data
+            var data: Array[Int] = null
             val extraBits = 1024
 
           	fHand.seek(offset)
@@ -78,19 +88,18 @@ class ReaderNEX() extends Reader {
               c += 1
             }
 
-          tempRet = new XDataArray(
-                  sampling = wFrequency,
-                  start =  nexFileTBeg,
-                  length = NPointsWave,
-                  xBits = extraBits,
-                  absGain = ADtoMV / extraBits,
-                  absUnit = "mV",
-                  absOffset = MVOffset,
+          tempRet = new XDataArray( Vector[Vector[Int]](data.toVector) ){
+                  override val sampleRate = wFrequency
 
-                  data = Array[Array[Int]](data),
-                  channelCount = 1,
-                  channelNames = Array[String](name)
-            ) :: tempRet
+                  override val startFrames = Vector(0)
+                  override val startTimestamps =  Vector[Long](nexFileTBeg.toLong) //TODO 1: Must fix this placeholder!!!
+                  override val absGain = ADtoMV / extraBits
+                  override val absUnit = "mV"
+                  override val absOffset = MVOffset
+
+                  override val channelCount = 1
+                  override val channelNames = Vector(name)
+          } :: tempRet
 
          }/*case 5*/
        } /*recType match*/
