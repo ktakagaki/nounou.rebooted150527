@@ -10,244 +10,237 @@ import scala.collection.immutable.Vector
   */
 abstract class XData extends X {
 
+  //segments, length, and isValidFrame
   /** Number of segments.
     */
-  final lazy val segments: Int = startFrames.length-1
+  def segments: Int
 
-  /**
-   * Total number of frames contained.
+  /**Total number of frames in each segment.
    */
-  def segmentLength(seg: Int): Int = {
-    if(segmentLengthBuffer(seg) == 0){
-      segmentLengthBuffer(seg) = startFrames(seg+1) - startFrames(seg) + 1
-    }
-    segmentLengthBuffer(seg)
-  }
-  private val segmentLengthBuffer = Array[Int](segments)
+  def length: Vector[Int]
 
-  /** OVERRIDE: Maximum frame index +1.
-    */
-  val length: Int
-
-  
-  // frames
-  /** OVERRIDE: List of starting frames for each segment.
-    * The first segment must begin with frame 0, and the last value, startFrames(segment), should be length+1.
-    */
-  val startFrames: Vector[Int]
-  /** List of ending frames for each segment.
-    */
-  lazy val endFrames: Vector[Int] =
-    ( for(seg <- 0 until segments) yield startFrames(seg) + segmentLengths(seg) -1).toVector
-  lazy val segmentLengths: Vector[Int] =
-    ( for(seg <- 0 until segments) yield startFrames(seg+1)-startFrames(seg) ).toVector
   /** Is this frame valid?
     */
-  final def isValidFrame(frame: Int) = (0 < frame && frame < length)
+  final def isValidFrame(segment: Int, frame: Int) = (0 <= frame && frame < length(segment))
 
-  // timestamps
+  //timestamps
   /** OVERRIDE: List of starting timestamps for each segment.
      */
-  val startTimestamps: Vector[Long]
-  /** List of ending timestamps for each segment.
+  def startTimestamp: Vector[Long]
+  /** OVERRIDE: End timestamp for each segment. Implement by overriding _endTimestamp
     */
-  lazy val endTimestamps: Vector[Long] =
-    ( for(seg <- 0 until segments) yield startTimestamps(seg) + (segmentLengths(seg)*timestampsPerFrame).toLong ).toVector
+  def endTimestamp: Vector[Long]
 
-  // sampling rate information
+  //sampling rate information
   /**OVERRIDE: Sampling rate of frame data in Hz
     */
-  val sampleRate: Double
+  def sampleRate: Double
   /**Buffered inverse of sampling, in seconds: Double
     */
-  final lazy val sampleInterval = 1.0/sampleRate
+  def sampleInterval = 1.0/sampleRate
   /**Buffered timestamps (microseconds) between frames.
     */
-  final lazy val timestampsPerFrame = sampleInterval * 1000000D
+  def timestampsPerFrame = sampleInterval * 1000000D
   /**Buffered frames between timestamps (microseconds).
     */
-  final lazy val framesPerTimestamp = 1D/timestampsPerFrame
+  def framesPerTimestamp = 1D/timestampsPerFrame
 
-  // frameToTimestamp, timestampToFrame
+
+  //frameToTimestamp, timestampToFrame
   /** Timestamp of the given data frame index (in microseconds).
     */
-  def frameToTimestamp(frame:Int): Long = {
-    require( isValidFrame(frame) )
-    if(segments == 1){
-      (startTimestamps(0) + frame.toDouble * timestampsPerFrame).toLong
-    } else {
-      var tempret = 0L
-      var seg = 0
-      while(seg < segments - 1 && tempret == 0){
-        if( startFrames(seg) <= frame && frame < startFrames(seg+1) ){
-          tempret = startTimestamps(seg) + ((frame - startFrames(seg)).toDouble * timestampsPerFrame).toLong
-        } else {
-          seg += 1
-        }
-      }
-      if(tempret == 0){
-        startTimestamps(segments-1) + ((frame - startFrames(segments-1)).toDouble * timestampsPerFrame).toLong
-      }
-      tempret
-    }
+  final def frameToTimestamp(segment: Int, frame:Int): Long = {
+    require( isValidFrame(segment, frame) )
+    startTimestamp(segment) + (frame.toDouble * timestampsPerFrame).toLong
   }
   /** Closest frame index to the given timestamp. Will give beginning or end frames, if timestamp is
     * out of range.
     */
-  def timestampToFrame(timestamp: Long): Int = {
-    if(timestamp <= startTimestamps(0) ){
-      0
+  final def timestampToFrame(timestamp: Long): (Int, Int) = {
+    if(timestamp <= startTimestamp(0) ){
+      (0, 0)
     } else {
-      var tempret = 0
+      var tempret = (0, 0)
       var seg = 0
-      while(seg < segments - 1 && tempret == 0){
-        if( timestamp < endTimestamps(seg) ){
-          tempret = startFrames(seg) + ((timestamp-startTimestamps(seg)) * framesPerTimestamp).toInt
-        } else if(timestamp < startTimestamps(seg+1)) {
-          tempret = if(timestamp - endTimestamps(seg) < startTimestamps(seg+1) - timestamp) endFrames(seg) else startFrames(seg+1)
+      while(seg < segments - 1 && tempret == (0, 0)){
+        if( timestamp < endTimestamp(seg) ){
+          tempret = (seg, ((timestamp-startTimestamp(seg)) * framesPerTimestamp).toInt)
+        } else if(timestamp < startTimestamp(seg+1)) {
+          tempret = if(timestamp - endTimestamp(seg) < startTimestamp(seg+1) - timestamp) (seg, length(seg)-1) else (seg + 1, 0)
         } else {
           seg += 1
         }
       }
-      if(tempret == 0){
-        if(timestamp <= endTimestamps(segments -1)){
-          tempret = startFrames(segments-1) + ((timestamp-startTimestamps(segments-1)) * framesPerTimestamp).toInt
+      if(tempret == (0, 0)){
+        if(timestamp <= endTimestamp(segments -1)){
+          tempret = ( segments - 1, ((timestamp - startTimestamp(segments-1)) * framesPerTimestamp).toInt )
         } else {
-          tempret = endFrames(segments-1)
+          tempret = ( segments -1, length(segments-1)-1)
         }
       }
       tempret
     }
   }
 
-
   //channel information
   /**Get the name of a given channel.*/
-  def channelName(channel: Int): String = channelNames(channel)
-  val channelNames: Vector[String]
-  val channelCount: Int
+  def channelName: Vector[String]
+  def channelCount = channelName.length
+
   /** Is this channel valid?
     */
   final def isValidChannel(channel: Int) = (0 < channel && channel < channelCount)
 
-
-  //internal data scaling information and absolute
+  //internal data scaling and absolute
   /**The number (eg 1024) multiplied to original raw data from the recording instrument
    *(usu 14-16 bit) to obtain internal Int representation.
    */
-  val xBits : Int = 1024
+  def xBits = 1024
   /**(xBits:Int).toDouble buffered, since it will be used often.
    */
-  lazy val xBitsD: Double = xBits.toDouble
+  lazy val xBitsD = xBits.toDouble
 
   /**Used to calculate the absolute value (mV, etc) based on internal representation.<p>
    * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(absolute value)=(internal value)*dataAbsoluteGain + dataAbsoluteOffset
    * absoluteGain must take into account the extra bits used to pad Int values. 
    */
-  val absGain: Double
+  def absGain: Double
   
   /**Used to calculate the absolute value (mV, etc) based on internal representation.<p>
    * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(absolute value)=(internal value)*dataAbsoluteGain + dataAbsoluteOffset
    */
-  val absOffset: Double
+  def absOffset: Double
   
   /**The name of the absolute units, as a String (eg mv).
    */
-  val absUnit: String
+  def absUnit: String
 
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
    * absUnit (e.g. "mV")
    */
-  def toAbs(data: Int) = data.toDouble * absGain + absOffset
+  final def toAbs(data: Int) = data.toDouble * absGain + absOffset
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
    * absUnit (e.g. "mV")
    */
-  def toAbs(data: Vector[Int]): Vector[Double] = data.map( toAbs _ )
-  /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
-   * absUnit (e.g. "mV")
-   */
-  def toAbs(data: Vector[Vector[Int]]): Vector[Vector[Double]] = data.map( toAbs _ )
+  final def toAbs(data: Vector[Int]): Vector[Double] = data.map( toAbs _ )
+  //ToDo 3: toAbs erasure
+//  /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
+//   * absUnit (e.g. "mV")
+//   */
+//  final def toAbs(data: Vector[Vector[Int]]): Vector[Vector[Double]] = data.map( toAbs _ )
+//  /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
+//    * absUnit (e.g. "mV")
+//    */
+//  final def toAbs(data: Vector[Vector[Vector[Int]]]): Vector[Vector[Vector[Double]]] = data.map( toAbs _ )
+
 
 
   //reading a point
-  /** OVERRIDE: Read a single point from the data, in internal integer scaling.
+  /** Read a single point from the data, in internal integer scaling, after checking values.
+    * Implement via readPointImpl.
     */
-  final def readPoint(channel: Int, frame: Int): Int = {
+  final def readPoint(segment: Int, channel: Int, frame: Int): Int = {
     require(isValidChannel(channel), "Invalid channel: " + channel.toString)
-    require(isValidFrame(frame), "Invalid frame: " + frame.toString)
-    readPointImpl(channel, frame)
+    require(isValidFrame(segment, frame), "Invalid segment/frame: " + (segment, frame).toString)
+    readPointImpl(segment, channel, frame)
   }
+  /** Read a single point from segment 0 of the data, in internal integer scaling.
+    */
+  final def readPoint0(channel: Int, frame: Int): Int = readPoint(0, channel, frame)
   /** Read a single point from the data, in absolute unit scaling (as recorded).
     */
-  final def readPointAbs(channel: Int, frame: Int): Double = toAbs(readPoint(channel, frame))
+  final def readPointAbs(segment: Int, channel: Int, frame: Int): Double = toAbs(readPoint(segment, channel, frame))
+  /** Read a single point from segment 0 of the data, in absolute unit scaling (as recorded).
+    */
+  final def readPoint0Abs(channel: Int, frame: Int): Double = toAbs(readPoint0(channel, frame))
   /** MUST OVERRIDE: Read a single point from the data, in internal integer scaling.
     */
-  def readPointImpl(channel: Int, frame: Int): Int
+  def readPointImpl(segment: Int, channel: Int, frame: Int): Int
 
   //reading a trace
   /** Read a single trace from the data, in internal integer scaling.
     */
-  final def readTrace(channel: Int): Array[Int] = {
+  final def readTrace(segment: Int, channel: Int): Vector[Int] = {
     require(isValidChannel(channel), "Invalid channel: " + channel.toString)
-    readTraceImpl(channel)
+    readTraceImpl(segment, channel)
   }
+  /** Read a single trace from segment 0 of the data, in internal integer scaling.
+    */
+  final def readTrace0(channel: Int): Vector[Int] = readTrace(0, channel)
   /** Read a single trace (within the span) from the data, in internal integer scaling.
     */
-  final def readTrace(channel: Int, span: Span): Vector[Int] = {
+  final def readTrace(segment: Int, channel: Int, span: Span): Vector[Int] = {
     span match {
-      case Span.All => readTraceImpl(channel)
-      case _ => readTraceImpl(channel, span)
+      case Span.All => readTraceImpl(segment, channel)
+      case _ => readTraceImpl(segment, channel, span)
     }
   }
+  /** Read a single trace (within the span) from segment 0 of the data, in internal integer scaling.
+    */
+  final def readTrace0(channel: Int, span: Span) = readTrace(0, channel, span)
   /** Read a single trace (within the span) from the data, in absolute unit scaling (as recorded).
     */
-  final def readTraceAbs(channel: Int, span: Span = Span.All): Vector[Double] = toAbs(readTrace(channel, span))
+  final def readTraceAbs(segment: Int, channel: Int, span: Span = Span.All): Vector[Double] = toAbs(readTrace(segment, channel, span))
+  /** Read a single trace (within the span) from segment 0 of the data, in absolute unit scaling (as recorded).
+    */
+  final def readTrace0Abs(channel: Int, span: Span = Span.All): Vector[Double] = readTraceAbs(0, channel, span)
   /** CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
     * Should return a defensive clone.
     */
-  def readTraceImpl(channel: Int): Vector[Int] = {
-    val res = new Array[Int]( length )
-    forJava(0, res.length, 1, (c: Int) => (res(c) = readPointImpl(channel, c)))
-    res
+  def readTraceImpl(segment: Int, channel: Int): Vector[Int] = {
+    val res = new Array[Int]( length(segment) )
+    forJava(0, res.length, 1, (c: Int) => (res(c) = readPointImpl(segment, channel, c)))
+    res.toVector
   }
   /** CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
     * Should return a defensive clone.
     */
-  def readTraceImpl(channel: Int, span:Span): Vector[Int] = {
-    val range = span.getRange( length )
+  def readTraceImpl(segment: Int, channel: Int, span:Span): Vector[Int] = {
+    val range = span.getRange( length(segment) )
     val res = new Array[Int]( range.length )
-    forJava(range.start, range.end, range.step, (c: Int) => (res(c) = readPointImpl(channel, c)))
+    forJava(range.start, range.end, range.step, (c: Int) => (res(c) = readPointImpl(segment, channel, c)))
     res.toVector
   }
 
   //reading a frame
-  final def read(channels: Vector[Int], frame: Int): Vector[Int] = {
-    require(isValidFrame(frame), "Invalid frame: " + frame.toString)
+  /** Read a single frame from the data, in internal integer scaling, for just the specified channels.
+    */
+  final def readFrame(segment: Int, frame: Int, channels: Vector[Int]): Vector[Int] = {
+    require(isValidFrame(segment, frame), "Invalid segment/frame: " + (segment, frame).toString)
     require(channels.forall(isValidChannel), "Invalid channels: " + channels.toString)
-    readFrameImpl(channels, frame)
+    readFrameImpl(segment, frame, channels)
   }
-  final def read(frame: Int): Vector[Int] = {
-    require(isValidFrame(frame), "Invalid frame: " + frame.toString)
-    readFrameImpl(frame)
+  /** Read a single frame from the data, in internal integer scaling.
+    */
+  final def readFrame(segment: Int, frame: Int): Vector[Int] = {
+    require(isValidFrame(segment, frame), "Invalid segment/frame: " + (segment, frame).toString)
+    readFrameImpl(segment, frame)
   }
-  def readFrameImpl(frame: Int): Vector[Int] = {
+  /** CAN OVERRIDE: Read a single frame from the data, in internal integer scaling.
+    * Should return a defensive clone.
+    */
+  def readFrameImpl(segment: Int, frame: Int): Vector[Int] = {
     val res = new Array[Int](channelCount)
-    forJava(0, channelCount, 1, (channel: Int) => res(channel) = readPointImpl(channel, frame))
+    forJava(0, channelCount, 1, (channel: Int) => res(channel) = readPointImpl(segment, channel, frame))
     res.toVector
   }
-  def readFrameImpl(channels: Vector[Int], frame: Int): Vector[Int] = {
-    val res = new Array[Int]( channels.length)
-    forJava(0, channels.length, 1, (channel: Int) => res(channel) = readPointImpl(channel, frame))
+  /** CAN OVERRIDE: Read a single frame from the data, for just the specified channels, in internal integer scaling.
+    * Should return a defensive clone.
+    */
+  def readFrameImpl(segment: Int, frame: Int, channels: Vector[Int]): Vector[Int] = {
+    val res = new Array[Int]( channels.length )
+    forJava(0, channels.length, 1, (channel: Int) => res(channel) = readPointImpl(segment, channel, frame))
     res.toVector
   }
 
   override def isCompatible(that: X): Boolean = {
     that match {
       case x: XData => {
-        (this.absGain == x.absGain) && (this.absOffset == x.absOffset)&& (this.absUnit == x.absUnit) &&
-          (this.length == x.length) &&
-          (this.sampleRate == x.sampleRate) && (this.startFrames == x.startFrames) && (this.startTimestamps== x.startTimestamps) &&
-          (this.xBits == x.xBits)
+        (this.segments == x.segments) &&(this.length == x.length) &&
+          (this.startTimestamp == x.startTimestamp) &&
+          (this.sampleRate == x.sampleRate) &&
+          //not channel info
+          (this.xBits == x.xBits) && (this.absGain == x.absGain) && (this.absOffset == x.absOffset) && (this.absUnit == x.absUnit)
       }
       case _ => false
     }

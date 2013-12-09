@@ -10,33 +10,52 @@ package nounous.data
  * Time: 18:50
  * To change this template use File | Settings | File Templates.
  */
- abstract class XDataArray(val data: Vector[Vector[Int]]) extends XData{
+ class XDataArray (
+      val data: Vector[Vector[Vector[Int]]],
+      override val startTimestamp: Vector[Long],
+      override val sampleRate: Double,
+      override val channelName: Vector[String],
+      override val xBits: Int,
+      override val absGain: Double,
+      override val absOffset: Double,
+      override val absUnit: String                ) extends XData {
 
-  override val length = data(0).length
 
-  override def readPointImpl(ch: Int, fr: Int) = data(ch)(fr)
-  override def readTraceImpl(ch: Int) = data(ch)
+  //segments, length
+  override lazy val length: Vector[Int] = data(0).map(_.length)
+  override lazy val segments = data(0).length
+
+
+  //timestamps
+  override lazy val endTimestamp = ( for(seg <- 0 until segments) yield startTimestamp(seg) + ((length(seg)-1)*timestampsPerFrame).toLong ).toVector
+
+  //sampling rate information
+  override lazy val sampleInterval = 1.0/sampleRate
+  override lazy val timestampsPerFrame = sampleInterval * 1000000D
+  override lazy val framesPerTimestamp = 1D/timestampsPerFrame
+
+  //channel information
+  require(channelName.length == data.length,
+    "number of _channelName elements " + channelName.length + " does not match data.length " + data.length + "!")
+  override lazy val channelCount = channelName.length
+
+  //reading
+  override def readPointImpl(segment: Int, channel: Int, frame: Int) = data(segment)(channel)(frame)
+  override def readTraceImpl(segment: Int, channel: Int) = data(segment)(channel)
 
   override def :::(that: X): X = {
     that match {
       case t: XDataArray => {
         if(this.isCompatible(that)){
           val oriThis = this
-          new XDataArray( this.data ++ t.data ){
-            override val absGain = oriThis.absGain
-            override val absOffset = oriThis.absOffset
-            override val absUnit = oriThis.absUnit
+          new XDataArray(
+            oriThis.data ++ t.data,
+            oriThis.startTimestamp ++ t.startTimestamp,
+            oriThis.sampleRate,
+            oriThis.channelName ++ t.channelName,
+            oriThis.xBits, oriThis.absGain, oriThis.absOffset, oriThis.absUnit )
 
-            override val sampleRate = oriThis.sampleRate
-            override val startFrames = oriThis.startFrames
-            override val startTimestamps = oriThis.startTimestamps
-
-            override val xBits = oriThis.xBits
-
-            override val channelNames = oriThis.channelNames ++ t.channelNames
-            override val channelCount = oriThis.channelCount + t.channelCount
-          }
-        }else{
+        } else {
           throw new IllegalArgumentException("the two XDataArray types are not compatible, and cannot be concatenated.")
         }
       }

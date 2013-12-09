@@ -17,4 +17,4 @@ val instance = new B
 instance match {
   case x: A => println(x.hello)
   case _ => println("fell through")
-}
+}                                            // > HelloB

@@ -15,13 +15,13 @@ class ReaderNEXTest extends FunSuite{
   val fileString = "V:/data/disp/2013-11-05_15-15-06/SE-CSC-Ch1.nex"
 
   test("readTrace"){
-    val obj = new ReaderNEX
-    var readObj = obj.read(fileString)(0)
-    for(n<-1 to 500) readObj = obj.read(fileString)(0)
+    //val obj = new ReaderNEX
+    var readObj = ReaderNEX.read(fileString)(0)
+    for(n<-1 to 500) readObj = ReaderNEX.read(fileString)(0)
       readObj match {
       case xd: XData => {
-        println(xd.readPoint(0, 0))
-        println(xd.readTrace(0, Span(0, 1000)).length)
+        println(xd.readPoint(0, 0, 0))
+        println(xd.readTrace(0, 0, Span(0, 1000)).length)
       }
       case _ => println("Something's wrong!")
     }
