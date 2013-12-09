@@ -35,18 +35,17 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <span class="name">XData</span><span class="result"> extends <a href="X.html" class="extype" name="nounous.data.X">X</a></span>
+        <span class="name">XData</span><span class="result"> extends <span class="extype" name="nounous.data.X">X</span></span>
       </span>
       </h4>
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Base class for Sources encoding data as Int arrays.
+This object is immutable.
 Each trace of data must share the following variables:
-sampling, start, length, xBits, absGain, absOffset, absUnit</p></div><div class="toggleContainer block">
+sampling, start, length, xBits, absGain, absOffset, absUnit
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a href="X.html" class="extype" name="nounous.data.X">X</a>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
-        </div><div class="toggleContainer block">
-          <span class="toggle">Known Subclasses</span>
-          <div class="subClasses hiddenContent"><a href="XDataArray.html" class="extype" name="nounous.data.XDataArray">XDataArray</a></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="nounous.data.X">X</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -105,7 +104,7 @@ sampling, start, length, xBits, absGain, absOffset, absUnit</p></div><div class=
         <div id="values" class="values members">
               <h3>Abstract Value Members</h3>
               <ol><li name="nounous.data.X#:::" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
-      <a id=":::(target:nounous.data.X):nounous.data.X"></a>
+      <a id=":::(target:&lt;?&gt;):nounous.data.X"></a>
       <a id=":::(X):X"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -113,10 +112,10 @@ sampling, start, length, xBits, absGain, absOffset, absUnit</p></div><div class=
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span title="gt4s: $colon$colon$colon" class="name">:::</span><span class="params">(<span name="target">target: <a href="X.html" class="extype" name="nounous.data.X">X</a></span>)</span><span class="result">: <a href="X.html" class="extype" name="nounous.data.X">X</a></span>
+        <span title="gt4s: $colon$colon$colon" class="name">:::</span><span class="params">(<span name="target">target: <span class="extype" name="nounous.data.X">X</span></span>)</span><span class="result">: <span class="extype" name="nounous.data.X">X</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="X.html" class="extype" name="nounous.data.X">X</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>X</dd></dl></div>
     </li><li name="nounous.data.XData#absGain" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="absGain:Double"></a>
       <a id="absGain:Double"></a>
@@ -197,62 +196,62 @@ absoluteGain must take into account the extra bits used to pad Int values.
         <span class="name">length</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Total number of frames contained.</p>
-    </li><li name="nounous.data.XData#readPoint" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
-      <a id="readPoint(ch:Int,fr:Int):Int"></a>
-      <a id="readPoint(Int,Int):Int"></a>
+      <p class="shortcomment cmt">OVERRIDE: Maximum frame index +1.</p>
+    </li><li name="nounous.data.XData#readPointImpl" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="readPointImpl(channel:Int,frame:Int):Int"></a>
+      <a id="readPointImpl(Int,Int):Int"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">readPoint</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>, <span name="fr">fr: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+        <span class="name">readPointImpl</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Reads a single data point in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p>Reads a single data point in internal integer scaling.</p></div><dl class="paramcmts block"><dt class="param">ch</dt><dd class="cmt"><p>channel (pixel, detector) specification</p></dd><dt class="param">fr</dt><dd class="cmt"><p>frame specification
-</p></dd></dl></div>
-    </li><li name="nounous.data.XData#sampling" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="sampling:Double"></a>
-      <a id="sampling:Double"></a>
+      <p class="shortcomment cmt">MUST OVERRIDE: Read a single point from the data, in internal integer scaling.</p>
+    </li><li name="nounous.data.XData#sampleRate" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="sampleRate:Double"></a>
+      <a id="sampleRate:Double"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">sampling</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+        <span class="name">sampleRate</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Sampling rate of data in Hz
+      <p class="shortcomment cmt">OVERRIDE: Sampling rate of frame data in Hz
 </p>
-    </li><li name="nounous.data.XData#start" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="start:Double"></a>
-      <a id="start:Double"></a>
+    </li><li name="nounous.data.XData#startFrames" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="startFrames:scala.collection.immutable.Vector[Int]"></a>
+      <a id="startFrames:Vector[Int]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">start</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+        <span class="name">startFrames</span><span class="result">: <span class="extype" name="scala.collection.immutable.Vector">Vector</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Starting time of data (frame 0) in seconds.</p>
-    </li><li name="nounous.data.XData#xBits" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="xBits:Int"></a>
-      <a id="xBits:Int"></a>
+      <p class="shortcomment cmt">OVERRIDE: List of starting frames for each segment.</p><div class="fullcomment"><div class="comment cmt"><p>OVERRIDE: List of starting frames for each segment.
+The first segment must begin with frame 0, and the last value, startFrames(segment), should be length+1.
+</p></div></div>
+    </li><li name="nounous.data.XData#startTimestamps" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="startTimestamps:scala.collection.immutable.Vector[Long]"></a>
+      <a id="startTimestamps:Vector[Long]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">xBits</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+        <span class="name">startTimestamps</span><span class="result">: <span class="extype" name="scala.collection.immutable.Vector">Vector</span>[<span class="extype" name="scala.Long">Long</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">The number (eg 1024) multiplied to original raw data from the recording instrument
-(usu 14-16 bit) to obtain internal Int representation.</p>
+      <p class="shortcomment cmt">OVERRIDE: List of starting timestamps for each segment.</p>
     </li></ol>
             </div>
 
@@ -337,7 +336,7 @@ absoluteGain must take into account the extra bits used to pad Int values.
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="nounous.data.XData#channelName" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="channelName(ch:Int):String"></a>
+      <a id="channelName(channel:Int):String"></a>
       <a id="channelName(Int):String"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -345,7 +344,7 @@ absoluteGain must take into account the extra bits used to pad Int values.
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">channelName</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+        <span class="name">channelName</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       </h4>
       
@@ -368,6 +367,32 @@ absoluteGain must take into account the extra bits used to pad Int values.
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="nounous.data.XData#endFrames" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="endFrames:scala.collection.immutable.Vector[Int]"></a>
+      <a id="endFrames:Vector[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">endFrames</span><span class="result">: <span class="extype" name="scala.collection.immutable.Vector">Vector</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">List of ending frames for each segment.</p>
+    </li><li name="nounous.data.XData#endTimestamps" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="endTimestamps:scala.collection.immutable.Vector[Long]"></a>
+      <a id="endTimestamps:Vector[Long]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">endTimestamps</span><span class="result">: <span class="extype" name="scala.collection.immutable.Vector">Vector</span>[<span class="extype" name="scala.Long">Long</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">List of ending timestamps for each segment.</p>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -413,19 +438,32 @@ absoluteGain must take into account the extra bits used to pad Int values.
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="nounous.data.XData#frameToTime" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="frameToTime(frame:Int):Double"></a>
-      <a id="frameToTime(Int):Double"></a>
+    </li><li name="nounous.data.XData#frameToTimestamp" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="frameToTimestamp(frame:Int):Long"></a>
+      <a id="frameToTimestamp(Int):Long"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">frameToTime</span><span class="params">(<span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+        <span class="name">frameToTimestamp</span><span class="params">(<span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Timestamp of frame (in seconds).</p>
+      <p class="shortcomment cmt">Timestamp of the given data frame index (in microseconds).</p>
+    </li><li name="nounous.data.XData#framesPerTimestamp" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="framesPerTimestamp:Double"></a>
+      <a id="framesPerTimestamp:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">framesPerTimestamp</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Buffered frames between timestamps (microseconds).</p>
     </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
       <a id="getClass():Class[_]"></a>
@@ -461,10 +499,10 @@ absoluteGain must take into account the extra bits used to pad Int values.
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">isCompatible</span><span class="params">(<span name="that">that: <a href="X.html" class="extype" name="nounous.data.X">X</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+        <span class="name">isCompatible</span><span class="params">(<span name="that">that: <span class="extype" name="nounous.data.X">X</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.data.XData">XData</a> → <a href="X.html" class="extype" name="nounous.data.X">X</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounous.data.XData">XData</a> → X</dd></dl></div>
     </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <a id="isInstanceOf[T0]:Boolean"></a>
@@ -478,6 +516,34 @@ absoluteGain must take into account the extra bits used to pad Int values.
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="nounous.data.XData#isValidChannel" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="isValidChannel(channel:Int):Boolean"></a>
+      <a id="isValidChannel(Int):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isValidChannel</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Is this channel valid?
+</p>
+    </li><li name="nounous.data.XData#isValidFrame" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="isValidFrame(frame:Int):Boolean"></a>
+      <a id="isValidFrame(Int):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isValidFrame</span><span class="params">(<span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Is this frame valid?
+</p>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -517,47 +583,73 @@ absoluteGain must take into account the extra bits used to pad Int values.
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="nounous.data.XData#rangeCheck" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="rangeCheck(range:(Int,Int)):Boolean"></a>
-      <a id="rangeCheck((Int,Int)):Boolean"></a>
+    </li><li name="nounous.data.XData#read" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="read(frame:Int):Array[Int]"></a>
+      <a id="read(Int):Array[Int]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
-        <span class="modifier"></span>
+        <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">rangeCheck</span><span class="params">(<span name="range">range: (<span class="extype" name="scala.Int">Int</span>, <span class="extype" name="scala.Int">Int</span>)</span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+        <span class="name">read</span><span class="params">(<span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
       
     </li><li name="nounous.data.XData#read" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="read():Array[Array[Int]]"></a>
-      <a id="read():Array[Array[Int]]"></a>
+      <a id="read(channels:Array[Int],frame:Int):Array[Int]"></a>
+      <a id="read(Array[Int],Int):Array[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">read</span><span class="params">(<span name="channels">channels: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4>
+      
+    </li><li name="nounous.data.XData#readFrameImpl" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="readFrameImpl(channels:Array[Int],frame:Int):Array[Int]"></a>
+      <a id="readFrameImpl(Array[Int],Int):Array[Int]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">read</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]]</span>
+        <span class="name">readFrameImpl</span><span class="params">(<span name="channels">channels: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
       
-    </li><li name="nounous.data.XData#readFrame" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="readFrame(fr:Int):Array[Int]"></a>
-      <a id="readFrame(Int):Array[Int]"></a>
+    </li><li name="nounous.data.XData#readFrameImpl" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="readFrameImpl(frame:Int):Array[Int]"></a>
+      <a id="readFrameImpl(Int):Array[Int]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">readFrame</span><span class="params">(<span name="fr">fr: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+        <span class="name">readFrameImpl</span><span class="params">(<span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
       
+    </li><li name="nounous.data.XData#readPoint" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="readPoint(channel:Int,frame:Int):Int"></a>
+      <a id="readPoint(Int,Int):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readPoint</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">OVERRIDE: Read a single point from the data, in internal integer scaling.</p>
     </li><li name="nounous.data.XData#readPointAbs" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="readPointAbs(ch:Int,fr:Int):Double"></a>
+      <a id="readPointAbs(channel:Int,frame:Int):Double"></a>
       <a id="readPointAbs(Int,Int):Double"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -565,91 +657,132 @@ absoluteGain must take into account the extra bits used to pad Int values.
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">readPointAbs</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>, <span name="fr">fr: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+        <span class="name">readPointAbs</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Read a single point from the data, in absolute unit scaling (as recorded).</p>
     </li><li name="nounous.data.XData#readTrace" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="readTrace(ch:Int,range:(Int,Int),skip:Int):Array[Int]"></a>
-      <a id="readTrace(Int,(Int,Int),Int):Array[Int]"></a>
+      <a id="readTrace(channel:Int,span:nounous.data.Span):Array[Int]"></a>
+      <a id="readTrace(Int,Span):Array[Int]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
-        <span class="modifier"></span>
+        <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">readTrace</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>, <span name="range">range: (<span class="extype" name="scala.Int">Int</span>, <span class="extype" name="scala.Int">Int</span>)</span>, <span name="skip">skip: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+        <span class="name">readTrace</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="span">span: <span class="extype" name="nounous.data.Span">Span</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Read a single trace (within the span) from the data, in internal integer scaling.</p>
     </li><li name="nounous.data.XData#readTrace" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="readTrace(ch:Int,range:(Int,Int)):Array[Int]"></a>
-      <a id="readTrace(Int,(Int,Int)):Array[Int]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">readTrace</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>, <span name="range">range: (<span class="extype" name="scala.Int">Int</span>, <span class="extype" name="scala.Int">Int</span>)</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
-      </span>
-      </h4>
-      
-    </li><li name="nounous.data.XData#readTrace" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="readTrace(ch:Int):Array[Int]"></a>
+      <a id="readTrace(channel:Int):Array[Int]"></a>
       <a id="readTrace(Int):Array[Int]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTrace</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Read a single trace from the data, in internal integer scaling.</p>
+    </li><li name="nounous.data.XData#readTraceAbs" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="readTraceAbs(channel:Int,span:nounous.data.Span):Array[Double]"></a>
+      <a id="readTraceAbs(Int,Span):Array[Double]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTraceAbs</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="span">span: <span class="extype" name="nounous.data.Span">Span</span> = <span class="symbol">Span.All</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Double">Double</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Read a single trace (within the span) from the data, in absolute unit scaling (as recorded).</p>
+    </li><li name="nounous.data.XData#readTraceImpl" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTraceImpl(channel:Int,span:nounous.data.Span):Array[Int]"></a>
+      <a id="readTraceImpl(Int,Span):Array[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">readTrace</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+        <span class="name">readTraceImpl</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="span">span: <span class="extype" name="nounous.data.Span">Span</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Reads a single data trace in internal integer scaling (for one detector),
-and should return a defensive clone.</p><div class="fullcomment"><div class="comment cmt"><p>Reads a single data trace in internal integer scaling (for one detector),
-and should return a defensive clone.</p></div><dl class="paramcmts block"><dt class="param">ch</dt><dd class="cmt"><p>channel (pixel, detector) specification
-</p></dd></dl></div>
-    </li><li name="nounous.data.XData#readTraceAbs" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="readTraceAbs(ch:Int,range:(Int,Int),skip:Int):Array[Double]"></a>
-      <a id="readTraceAbs(Int,(Int,Int),Int):Array[Double]"></a>
+      <p class="shortcomment cmt">CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p>CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
+Should return a defensive clone.
+</p></div></div>
+    </li><li name="nounous.data.XData#readTraceImpl" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTraceImpl(channel:Int):Array[Int]"></a>
+      <a id="readTraceImpl(Int):Array[Int]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
-        <span class="modifier">final </span>
+        <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">readTraceAbs</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>, <span name="range">range: (<span class="extype" name="scala.Int">Int</span>, <span class="extype" name="scala.Int">Int</span>)</span>, <span name="skip">skip: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Double">Double</span>]</span>
+        <span class="name">readTraceImpl</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
-      
-    </li><li name="nounous.data.XData#readTraceAbs" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="readTraceAbs(ch:Int,range:(Int,Int)):Array[Double]"></a>
-      <a id="readTraceAbs(Int,(Int,Int)):Array[Double]"></a>
+      <p class="shortcomment cmt">CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p>CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
+Should return a defensive clone.
+</p></div></div>
+    </li><li name="nounous.data.XData#sampleInterval" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="sampleInterval:Double"></a>
+      <a id="sampleInterval:Double"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">sampleInterval</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Buffered inverse of sampling, in seconds: Double
+</p>
+    </li><li name="nounous.data.XData#segmentLength" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="segmentLength(seg:Int):Int"></a>
+      <a id="segmentLength(Int):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">readTraceAbs</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>, <span name="range">range: (<span class="extype" name="scala.Int">Int</span>, <span class="extype" name="scala.Int">Int</span>)</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Double">Double</span>]</span>
+        <span class="name">segmentLength</span><span class="params">(<span name="seg">seg: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Total number of frames contained.</p>
+    </li><li name="nounous.data.XData#segmentLengths" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="segmentLengths:scala.collection.immutable.Vector[Int]"></a>
+      <a id="segmentLengths:Vector[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">segmentLengths</span><span class="result">: <span class="extype" name="scala.collection.immutable.Vector">Vector</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4>
       
-    </li><li name="nounous.data.XData#readTraceAbs" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="readTraceAbs(ch:Int):Array[Double]"></a>
-      <a id="readTraceAbs(Int):Array[Double]"></a>
+    </li><li name="nounous.data.XData#segments" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="segments:Int"></a>
+      <a id="segments:Int"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
-        <span class="kind">def</span>
+        <span class="kind">lazy val</span>
       </span>
       <span class="symbol">
-        <span class="name">readTraceAbs</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Double">Double</span>]</span>
+        <span class="name">segments</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Number of segments.</p>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -663,20 +796,34 @@ and should return a defensive clone.</p></div><dl class="paramcmts block"><dt cl
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="nounous.data.XData#timeToFrame" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="timeToFrame(time:Double):Int"></a>
-      <a id="timeToFrame(Double):Int"></a>
+    </li><li name="nounous.data.XData#timestampToFrame" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="timestampToFrame(timestamp:Long):Int"></a>
+      <a id="timestampToFrame(Long):Int"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">timeToFrame</span><span class="params">(<span name="time">time: <span class="extype" name="scala.Double">Double</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+        <span class="name">timestampToFrame</span><span class="params">(<span name="timestamp">timestamp: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Closest frame to the given timestamp.</p><div class="fullcomment"><div class="comment cmt"><p>Closest frame to the given timestamp.</p></div><dl class="paramcmts block"><dt class="param">time</dt><dd class="cmt"><p>in seconds
-</p></dd></dl></div>
+      <p class="shortcomment cmt">Closest frame index to the given timestamp.</p><div class="fullcomment"><div class="comment cmt"><p>Closest frame index to the given timestamp. Will give beginning or end frames, if timestamp is
+out of range.
+</p></div></div>
+    </li><li name="nounous.data.XData#timestampsPerFrame" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="timestampsPerFrame:Double"></a>
+      <a id="timestampsPerFrame:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">timestampsPerFrame</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Buffered timestamps (microseconds) between frames.</p>
     </li><li name="nounous.data.XData#toAbs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="toAbs(data:Array[Array[Int]]):Array[Array[Double]]"></a>
       <a id="toAbs(Array[Array[Int]]):Array[Array[Double]]"></a>
@@ -795,6 +942,20 @@ absUnit (e.g. &quot;mV&quot;)
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="nounous.data.XData#xBits" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="xBits:Int"></a>
+      <a id="xBits:Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">xBits</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">The number (eg 1024) multiplied to original raw data from the recording instrument
+(usu 14-16 bit) to obtain internal Int representation.</p>
     </li><li name="nounous.data.XData#xBitsD" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="xBitsD:Double"></a>
       <a id="xBitsD:Double"></a>
@@ -819,7 +980,7 @@ absUnit (e.g. &quot;mV&quot;)
 
         <div id="inheritedMembers">
         <div class="parent" name="nounous.data.X">
-              <h3>Inherited from <a href="X.html" class="extype" name="nounous.data.X">X</a></h3>
+              <h3>Inherited from <span class="extype" name="nounous.data.X">X</span></h3>
             </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
             </div><div class="parent" name="scala.Any">

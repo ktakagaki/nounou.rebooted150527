@@ -127,41 +127,41 @@
       <p class="shortcomment cmt">The total number of detectors in the data array.</p><div class="fullcomment"><div class="comment cmt"><p>The total number of detectors in the data array.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
     </li><li name="nounous.data.XLayout#channelRadius" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
-      <a id="channelRadius():Int"></a>
-      <a id="channelRadius():Int"></a>
+      <a id="channelRadius():Double"></a>
+      <a id="channelRadius():Double"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">channelRadius</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+        <span class="name">channelRadius</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
       </span>
       </h4>
       <p class="shortcomment cmt">Geometric radius of detectors.</p><div class="fullcomment"><div class="comment cmt"><p>Geometric radius of detectors.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
-    </li><li name="nounous.data.XLayout#channelToCoordinatesImpl" visbl="prt" data-isabs="true" fullComment="yes" group="Ungrouped">
-      <a id="channelToCoordinatesImpl(ch:Int):Array[Int]"></a>
-      <a id="channelToCoordinatesImpl(Int):Array[Int]"></a>
+    </li><li name="nounous.data.XLayout#channelToCoordinatesImpl" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="channelToCoordinatesImpl(ch:Int):Array[Double]"></a>
+      <a id="channelToCoordinatesImpl(Int):Array[Double]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">channelToCoordinatesImpl</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+        <span class="name">channelToCoordinatesImpl</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Double">Double</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
-    </li><li name="nounous.data.XLayout#coordinateToChannel" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
-      <a id="coordinateToChannel(x:Int,y:Int):Int"></a>
-      <a id="coordinateToChannel(Int,Int):Int"></a>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
+    </li><li name="nounous.data.XLayout#coordinatesToChannel" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="coordinatesToChannel(x:Double,y:Double):Int"></a>
+      <a id="coordinatesToChannel(Double,Double):Int"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">coordinateToChannel</span><span class="params">(<span name="x">x: <span class="extype" name="scala.Int">Int</span></span>, <span name="y">y: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+        <span class="name">coordinatesToChannel</span><span class="params">(<span name="x">x: <span class="extype" name="scala.Double">Double</span></span>, <span name="y">y: <span class="extype" name="scala.Double">Double</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4>
       <p class="shortcomment cmt">Detector which covers the chosen coordinates.</p><div class="fullcomment"><div class="comment cmt"><p>Detector which covers the chosen coordinates.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
@@ -171,7 +171,7 @@
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
-        <span class="kind">def</span>
+        <span class="kind">val</span>
       </span>
       <span class="symbol">
         <span class="name">field</span><span class="result">: <span class="extype" name="java.awt.Rectangle">Rectangle</span></span>
@@ -179,58 +179,6 @@
       </h4>
       <p class="shortcomment cmt">The bounding rectangle of the detector field.</p><div class="fullcomment"><div class="comment cmt"><p>The bounding rectangle of the detector field.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
-    </li><li name="nounous.data.XLayout#fieldHeight" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
-      <a id="fieldHeight:Int"></a>
-      <a id="fieldHeight:Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">abstract </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">fieldHeight</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Height of the bounding rectangle of the detector field.</p><div class="fullcomment"><div class="comment cmt"><p>Height of the bounding rectangle of the detector field.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
-    </li><li name="nounous.data.XLayout#fieldWidth" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
-      <a id="fieldWidth:Int"></a>
-      <a id="fieldWidth:Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">abstract </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">fieldWidth</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Width of the bounding rectangle of the detector field.</p><div class="fullcomment"><div class="comment cmt"><p>Width of the bounding rectangle of the detector field.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
-    </li><li name="nounous.data.XLayout#fieldX" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
-      <a id="fieldX:Int"></a>
-      <a id="fieldX:Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">abstract </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">fieldX</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">X origin of the bounding rectangle of the detector field.</p><div class="fullcomment"><div class="comment cmt"><p>X origin of the bounding rectangle of the detector field.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
-    </li><li name="nounous.data.XLayout#fieldY" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
-      <a id="fieldY:Int"></a>
-      <a id="fieldY:Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">abstract </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">fieldY</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Y origin of the bounding rectangle of the detector field.</p><div class="fullcomment"><div class="comment cmt"><p>Y origin of the bounding rectangle of the detector field.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
     </li><li name="nounous.data.X#isCompatible" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="isCompatible(that:nounous.data.X):Boolean"></a>
       <a id="isCompatible(X):Boolean"></a>
@@ -328,51 +276,21 @@
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="nounous.data.XLayout#channelToCoordinates" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="channelToCoordinates(ch:Int):Array[Int]"></a>
-      <a id="channelToCoordinates(Int):Array[Int]"></a>
+      <a id="channelToCoordinates(ch:Int):Array[Double]"></a>
+      <a id="channelToCoordinates(Int):Array[Double]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
-        <span class="modifier"></span>
+        <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">channelToCoordinates</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+        <span class="name">channelToCoordinates</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Double">Double</span>]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Center coordinate of chosen detector (or channel,
  if it is designated a part of the field for display.</p><div class="fullcomment"><div class="comment cmt"><p>Center coordinate of chosen detector (or channel,
  if it is designated a part of the field for display.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
-    </li><li name="nounous.data.XLayout#channelX" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="channelX(ch:Int):Int"></a>
-      <a id="channelX(Int):Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">final </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">channelX</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">X coordinate of chosen detector (or channel,
- if it is designated a part of the field for display.</p><div class="fullcomment"><div class="comment cmt"><p>X coordinate of chosen detector (or channel,
- if it is designated a part of the field for display.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
-    </li><li name="nounous.data.XLayout#channelY" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="channelY(ch:Int):Int"></a>
-      <a id="channelY(Int):Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">final </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">channelY</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Y coordinate of chosen detector (or channel,
- if it is designated a part of the field for display.</p><div class="fullcomment"><div class="comment cmt"><p>Y coordinate of chosen detector (or channel,
- if it is designated a part of the field for display.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
     </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a>
       <a id="clone():AnyRef"></a>
@@ -392,19 +310,6 @@
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="nounous.data.XLayout#coordinateToChannel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="coordinateToChannel(coordinates:Array[Int]):Int"></a>
-      <a id="coordinateToChannel(Array[Int]):Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">final </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">coordinateToChannel</span><span class="params">(<span name="coordinates">coordinates: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Detector which covers the chosen coordinates.</p><div class="fullcomment"><div class="comment cmt"><p>Detector which covers the chosen coordinates.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -431,6 +336,58 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="nounous.data.XLayout#fieldHeight" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fieldHeight:Double"></a>
+      <a id="fieldHeight:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fieldHeight</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Height of the bounding rectangle of the detector field.</p><div class="fullcomment"><div class="comment cmt"><p>Height of the bounding rectangle of the detector field.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
+    </li><li name="nounous.data.XLayout#fieldWidth" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fieldWidth:Double"></a>
+      <a id="fieldWidth:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fieldWidth</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Width of the bounding rectangle of the detector field.</p><div class="fullcomment"><div class="comment cmt"><p>Width of the bounding rectangle of the detector field.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
+    </li><li name="nounous.data.XLayout#fieldX" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fieldX:Double"></a>
+      <a id="fieldX:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fieldX</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">X origin of the bounding rectangle of the detector field.</p><div class="fullcomment"><div class="comment cmt"><p>X origin of the bounding rectangle of the detector field.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
+    </li><li name="nounous.data.XLayout#fieldY" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fieldY:Double"></a>
+      <a id="fieldY:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fieldY</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Y origin of the bounding rectangle of the detector field.</p><div class="fullcomment"><div class="comment cmt"><p>Y origin of the bounding rectangle of the detector field.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="XLayout.html" class="extype" name="nounous.data.XLayout">XLayout</a></dd></dl></div>
     </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <a id="finalize():Unit"></a>

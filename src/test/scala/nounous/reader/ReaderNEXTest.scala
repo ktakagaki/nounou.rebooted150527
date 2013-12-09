@@ -1,6 +1,6 @@
 package nounous.reader
 
-import nounous.data.XData
+import nounous.data.{XData, Span}
 import org.scalatest.FunSuite
 
 /**
@@ -21,7 +21,7 @@ class ReaderNEXTest extends FunSuite{
       readObj match {
       case xd: XData => {
         println(xd.readPoint(0, 0))
-        println(xd.readTrace(0, (0,1000)).length)
+        println(xd.readTrace(0, Span(0, 1000)).length)
       }
       case _ => println("Something's wrong!")
     }

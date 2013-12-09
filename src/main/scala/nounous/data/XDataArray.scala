@@ -10,46 +10,37 @@ package nounous.data
  * Time: 18:50
  * To change this template use File | Settings | File Templates.
  */
-class XDataArray(
-    val sampling: Double,
-    val start: Double,
-    val length: Int,
-    val xBits: Int,
+ abstract class XDataArray(val data: Vector[Vector[Int]]) extends XData{
 
-    val absGain: Double,
-    val absOffset: Double,
-    val absUnit: String,
+  override val length = data(0).length
 
-    val data: Array[Array[Int]],
-    val channelNames: Array[String],
-    val channelCount: Int
-) extends XData{
-
-
-  override def readPointImpl(seg: Int, ch: Int, fr: Int) = data(ch)(fr)
-  override def readTraceImpl(seg: Int, ch: Int) = data(ch)
-
+  override def readPointImpl(ch: Int, fr: Int) = data(ch)(fr)
+  override def readTraceImpl(ch: Int) = data(ch)
 
   override def :::(that: X): X = {
-    if(this.isCompatible(that)){
-      val t = that.asInstanceOf[this.type]
-      val oriThis = this
-      new XDataArray(
-        sampling = oriThis.sampling,
-        start = oriThis.start,
-        length = oriThis.length,
-        xBits = oriThis.xBits,
+    that match {
+      case t: XDataArray => {
+        if(this.isCompatible(that)){
+          val oriThis = this
+          new XDataArray( this.data ++ t.data ){
+            override val absGain = oriThis.absGain
+            override val absOffset = oriThis.absOffset
+            override val absUnit = oriThis.absUnit
 
-        absGain = oriThis.absGain,
-        absOffset = oriThis.absOffset,
-        absUnit = oriThis.absUnit,
+            override val sampleRate = oriThis.sampleRate
+            override val startFrames = oriThis.startFrames
+            override val startTimestamps = oriThis.startTimestamps
 
-        data =  oriThis.data ++ t.data,
-        channelNames = oriThis.channelNames ++ t.channelNames,
-        channelCount = oriThis.channelCount + t.channelCount
-      )
-    } else {
-      this
+            override val xBits = oriThis.xBits
+
+            override val channelNames = oriThis.channelNames ++ t.channelNames
+            override val channelCount = oriThis.channelCount + t.channelCount
+          }
+        }else{
+          throw new IllegalArgumentException("the two XDataArray types are not compatible, and cannot be concatenated.")
+        }
+      }
+      case _ => throw new IllegalArgumentException("the two X types are not compatible, and cannot be concatenated.")
     }
   }
 
