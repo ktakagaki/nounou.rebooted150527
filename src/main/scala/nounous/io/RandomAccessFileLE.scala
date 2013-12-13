@@ -14,100 +14,75 @@ import scala.util.Try
   * @param file
   * @param arg0
   */
-class RandomAccessFileLE(file: File, arg0: String = "r") extends RandomAccessFileBE(file, arg0) {
+class RandomAccessFileLE(file: File, arg0: String = "r")  extends RandomAccessFileBE(file, arg0) {
+
+  override val converter: ByteConverter = nounous.io.LittleEndianByteConverter
 
   def this(filename: String, arg0: String) =  this(new File(filename), arg0)
-
-//ToDo implement write functions
-
-  // Defined in RandomAccessFileBE
-  // def readBoolean: Try[Boolean] = Try(rafObj.readBoolean())
-
 
   ///// UInt16 (Unsigned Short) /////
   @throws(classOf[IOException])
   override def readUInt16(): Int = {
     val ba = readByte(2)
-    bytesToUInt16(ba(0), ba(1))
+    converter.bytesToUInt16(ba(0), ba(1))
   }
 
   ///// UInt16 (Char) /////
   @throws(classOf[IOException])
   override def readChar(): Char = readUInt16().toChar
 
-
-
   ///// Int32 (Int) /////
   @throws(classOf[IOException])
   override def readInt32():Int = {
     val ba = readByte(4)
-    bytesToInt32(ba(0), ba(1), ba(2), ba(3))
+    converter.bytesToInt32(ba(0), ba(1), ba(2), ba(3))
   }
-
 
   ///// Int64 (Long) /////
   @throws(classOf[IOException])
   override def readInt64(): Long = {
     val ba = readByte(8)
-    bytesToInt64(ba(0), ba(1), ba(2), ba(3), ba(4), ba(5), ba(6), ba(7))
+    converter.bytesToInt64(ba(0), ba(1), ba(2), ba(3), ba(4), ba(5), ba(6), ba(7))
   }
 
-
-   @throws(classOf[IOException])
-   override def readFloat():Float = {
-    	java.lang.Float.intBitsToFloat(readInt())
-   }
+  ///// Floating Point /////
+  @throws(classOf[IOException])
+  override def readFloat():Float = {
+    java.lang.Float.intBitsToFloat(readInt())
+  }
 
   @throws(classOf[IOException])
   override def readDouble(): Double = {
 	  java.lang.Double.longBitsToDouble(readLong())
   }
+  override def writeDouble(v: Double) = {
+    writeInt64(java.lang.Double.doubleToLongBits(v))
+  }
+  override def writeFloat(v: Float) =  {
+    writeInt32(java.lang.Float.floatToIntBits(v))
+  }
 
+}
 
-  override def bytesToInt16(b1: Byte, b2: Byte): Short  = {
-    //    b3 << 8 | b4
-    (b2 << 8 | b1 & 0xFF).toShort
-  }
-  override def bytesToUInt16(b1: Byte, b2: Byte): Int  = {
-    //    b3 << 8 | b4
-    (b2.toInt & 0xFF) << 8 | (b1.toInt & 0xFF)
-  }
-  override def bytesToInt32(b1: Byte, b2: Byte, b3: Byte, b4: Byte): Int  = {
-    b4.toInt << 24 | (b3 & 0xFF) << 16 | (b2 & 0xFF) << 8 | (b1 & 0xFF)
-  }
-  override def bytesToUInt32(b1: Byte, b2: Byte, b3: Byte, b4: Byte): Long  = {
-    (b4.toLong & 0xFFL) << 24 | (b3.toLong & 0xFFL) << 16 | (b2.toLong & 0xFFL) << 8 | (b1.toLong & 0xFFL)
-  }
-  override def bytesToUInt64(b1 : Byte, b2 : Byte, b3 : Byte, b4 : Byte, b5 : Byte, b6 : Byte, b7 : Byte, b8 : Byte): Long = {
-    if((b8.toInt & 0x80) != 0x00){
-      throw new IOException("UInt64 too big to read given limitations of Long format.")
-    }else{
-      (b8.toLong & 0xFFL) << 56 | (b7.toLong & 0xFFL) << 48  | (b6.toLong & 0xFFL) << 40 | (b5.toLong & 0xFFL) << 32 |
-        (b4.toLong & 0xFFL) << 24 | (b3.toLong & 0xFFL) << 16  | (b2.toLong & 0xFFL) << 8  | (b1.toLong & 0xFFL)
-    }
-  }
-  override def bytesToInt64(b1 : Byte, b2 : Byte, b3 : Byte, b4 : Byte, b5 : Byte, b6 : Byte, b7 : Byte, b8 : Byte): Long = {
-    (b8.toLong /*& 0xFFL*/) << 56 | (b7.toLong & 0xFFL) << 48  | (b6.toLong & 0xFFL) << 40 | (b5.toLong & 0xFFL) << 32 |
-      (b4.toLong & 0xFFL) << 24 | (b3.toLong & 0xFFL) << 16  | (b2.toLong & 0xFFL) << 8  | (b1.toLong & 0xFFL)
-  }
-   
-//
-//  /**
-//   * Reads a byte from the input stream checking that the end of file (EOF)
-//   * has not been encountered.
-//   *
-//   * @return byte read from input
-//   * @throws IOException if an error is encountered while reading
-//   * @throws EOFException if the end of file (EOF) is encountered.
-//   */
-//  @throws(classOf[IOException])
-//  @throws(classOf[EOFException])
-//  private def readAndCheckByte():Byte = {
-//    val b1 = rafObj.read();
-//    if (-1 == b1) {
-//      throw new EOFException();
-//    }
-//    return b1.toByte;
-//  }
+object LittleEndianByteConverter extends ByteConverter  {
+
+  override def bytesToInt16(b0: Byte, b1: Byte)  = BigEndianByteConverter.bytesToInt16(b1, b0)
+  override def bytesToUInt16(b0: Byte, b1: Byte) = BigEndianByteConverter.bytesToUInt16(b1, b0)
+  override def bytesToInt32(b0: Byte, b1: Byte, b2: Byte, b3: Byte) = BigEndianByteConverter.bytesToInt32(b3, b2, b1, b0)
+  override def bytesToUInt32(b0: Byte, b1: Byte, b2: Byte, b3: Byte) = BigEndianByteConverter.bytesToUInt32(b3, b2, b1, b0)
+  override def bytesToInt64(b0: Byte, b1 : Byte, b2 : Byte, b3 : Byte, b4 : Byte, b5 : Byte, b6 : Byte, b7 : Byte)
+    = BigEndianByteConverter.bytesToInt64(b7, b6, b5, b4, b3, b2, b1, b0)
+  override def bytesToUInt64(b0: Byte, b1 : Byte, b2 : Byte, b3 : Byte, b4 : Byte, b5 : Byte, b6 : Byte, b7 : Byte)
+  = BigEndianByteConverter.bytesToUInt64(b7, b6, b5, b4, b3, b2, b1, b0)
+  override def bytesToUInt64Shifted(b0: Byte, b1 : Byte, b2 : Byte, b3 : Byte, b4 : Byte, b5 : Byte, b6 : Byte, b7 : Byte)
+  = BigEndianByteConverter.bytesToUInt64Shifted(b7, b6, b5, b4, b3, b2, b1, b0)
+
+  override def int16ToBytes(value: Short): Array[Byte]  = BigEndianByteConverter.int16ToBytes(value).reverse
+  override def uInt16ToBytes(value: Int): Array[Byte]   = BigEndianByteConverter.uInt16ToBytes(value).reverse
+  override def int32ToBytes(value: Int): Array[Byte]    = BigEndianByteConverter.int32ToBytes(value).reverse
+  override def uInt32ToBytes(value: Long): Array[Byte]  = BigEndianByteConverter.uInt32ToBytes(value).reverse
+  override def int64ToBytes(value: Long): Array[Byte]   = BigEndianByteConverter.int64ToBytes(value).reverse
+  override def uInt64ToBytes(value: Long): Array[Byte]  = BigEndianByteConverter.uInt64ToBytes(value).reverse
+  override def uInt64ShiftedToBytes(value: Long): Array[Byte] = BigEndianByteConverter.uInt64ShiftedToBytes(value).reverse
 
 }

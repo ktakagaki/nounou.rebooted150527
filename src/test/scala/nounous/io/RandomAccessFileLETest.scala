@@ -141,4 +141,16 @@ class RandomAccessFileLETest extends FunSuite {
     }
     stream.close
   }
+
+  test("readUInt64Shifted"){
+    stream = new RandomAccessFileLE(fileHead + "/UInt64LE.bin", "r")
+    val res = stream.readUInt64Shifted(5)
+    assert(res(0) ==  -9223372036854775808L)
+    assert(res(1) ==  -9223372036854775807L)
+    assert(res(2) ==  -9223372036854775807L)
+    assert(res(3) ==  -1L)
+    assert(res(4) ==  9223372036854775807L)
+    stream.close
+  }
+
 }
