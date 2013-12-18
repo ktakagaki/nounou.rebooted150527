@@ -1,5 +1,7 @@
 package nounous.data
 
+import nounous.data.traits.XConcatenatable
+
 //import nounous.data.X
 
 /**
@@ -9,7 +11,7 @@ package nounous.data
  * Time: 13:12
  * To change this template use File | Settings | File Templates.
  */
-abstract class XDiscrete extends X {
+abstract class XDiscrete extends X with XConcatenatable {
 
   override def isCompatible(that: X): Boolean = {
     var tempRet: Boolean = true
@@ -19,7 +21,7 @@ abstract class XDiscrete extends X {
     }
     else {
       val t = that.asInstanceOf[this.type]
-      //if(this.xBits != t.xBits)         tempRet=false; println("XData incompatible, different extraBits!")
+      //if(this.xBits != t.xBits)         tempRet=false; println("xdata incompatible, different extraBits!")
     }
 
     tempRet

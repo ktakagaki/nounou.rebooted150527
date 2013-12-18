@@ -24,4 +24,16 @@ trait XLayoutNeighbor extends XLayout {
   def isEdge(channel: Int): Boolean
   def isEdge(channel: Int, ring: Int): Boolean
 
+
+//  override def isCompatible(that: X): Boolean = {
+//    that match {
+//      case x: XLayoutNeighbor => {
+//        //not Channels
+//        (super[XLayout].isCompatible(x)) &&
+//        (this.field == x.field) && (this.channelRadius == x.channelRadius)
+//      }
+//      case _ => false
+//    }
+//  }
+
 }

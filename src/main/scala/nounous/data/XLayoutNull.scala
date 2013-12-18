@@ -10,9 +10,8 @@ import java.awt.Rectangle
  * To change this template use File | Settings | File Templates.
  */
 class XLayoutNull extends XLayout {
-  /** The total number of detectors in the data array.
-    */
-  def channelCount: Int = 0
+
+  override val channelName = Vector[String]("null layout")
 
   val field: Rectangle = new Rectangle()
 
@@ -23,7 +22,6 @@ class XLayoutNull extends XLayout {
 
   val channelRadius: Double = 0
 
-  def isCompatible(that: X): Boolean = false
+  override def isCompatible(that: X): Boolean = false
 
-  def :::(target: X): X = this
 }

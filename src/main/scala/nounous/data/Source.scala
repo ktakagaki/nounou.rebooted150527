@@ -3,8 +3,9 @@ package nounous.data
 import java.io.File
 import breeze.linalg.Axis._0
 import nounous.reader.ReaderNEX
+import nounous.data.xdata.XData
 
-//import nounous.data.XData
+//import nounous.data.xdata
 //import nounous.data.XLayout
 
 /**
