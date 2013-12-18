@@ -19,6 +19,5 @@ abstract class X {
 
 
   def isCompatible(that: X): Boolean
-  def :::(target: X): X
 
 }

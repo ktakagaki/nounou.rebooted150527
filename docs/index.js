@@ -1,1 +1,0 @@
-Index.PACKAGES = {"nounous" : [], "nounous.data" : [{"class" : "nounous\/data\/XData.html", "name" : "nounous.data.XData"}]};

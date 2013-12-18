@@ -6,11 +6,6 @@
         <option name="compilerLibraryLevel" value="Project" />
         <option name="compilerLibraryName" value="SBT: scala:2.10.3" />
         <option name="fsc" value="true" />
-        <option name="pluginPaths">
-          <array>
-            <option value="C:\Users\Kenta\.ivy2\cache\org.scala-lang.plugins\macro-paradise_2.10.3\jars\macro-paradise_2.10.3-2.0.0-SNAPSHOT.jar" />
-          </array>
-        </option>
       </configuration>
     </facet>
   </component>
@@ -59,11 +54,12 @@
     <orderEntry type="library" name="SBT: com.github.rwl:jtransforms:2.4.0" level="project" />
     <orderEntry type="library" name="SBT: junit:junit:4.8.2" level="project" />
     <orderEntry type="library" name="SBT: org.apache.commons:commons-math3:3.2" level="project" />
+    <orderEntry type="library" name="SBT: org.scalafx:scalafx_2.10:1.0.0-M6" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.scalacheck:scalacheck_2.10:1.10.0:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.scala-tools.testing:test-interface:0.5:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.scala-lang:scala-actors:2.10.1:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.scalatest:scalatest_2.10:2.0.M5b:test" level="project" />
-    <orderEntry type="library" name="scalafx_2.10-1.0.0-M4.jar" level="project" />
+    <orderEntry type="library" name="jfxrt.jar" level="project" />
   </component>
 </module>
 

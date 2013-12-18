@@ -1,16 +1,10 @@
 package nounous.data
  
 import java.awt.Rectangle
+import nounous.data.traits.{XChannelsImmutable, XChannels}
 
-abstract class XLayout extends X {
+abstract class XLayout extends X with XChannelsImmutable {
 
-  /**Checks whether the input is a valid channel value.
-   */
-  def isValidChannel(channel: Int): Boolean = (0 <= channel && channel < channelCount)
-  private def checkChannel(channel: Int): Unit = require(isValidChannel(channel), "detector: " + channel + " out of range!")
-  /**The total number of detectors in the data array.
-   */
-  def channelCount: Int
 
   // field bounding rectangle
   /** The bounding rectangle of the detector field.
@@ -30,7 +24,7 @@ abstract class XLayout extends X {
    *  if it is designated a part of the field for display.
    */
   final def channelToCoordinates(ch: Int): Array[Double] = {
-    checkChannel(ch)
+    require(isValidChannel(ch), "Invalid channel!")
     channelToCoordinatesImpl(ch)
   }
   def channelToCoordinatesImpl(ch: Int): Array[Double]
@@ -40,5 +34,15 @@ abstract class XLayout extends X {
   /** Geometric radius of detectors.*/
 
   val channelRadius: Double
-  
+
+  override def isCompatible(that: X): Boolean = {
+    that match {
+      case x: XLayout => {
+        //not Channels
+        (this.field == x.field) && (this.channelRadius == x.channelRadius)
+      }
+      case _ => false
+    }
+  }
+
 }
