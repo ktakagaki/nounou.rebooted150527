@@ -1,6 +1,6 @@
 package breeze.io
 
-import java.io.{File, DataInput, DataOutput, Closeable, RandomAccessFile, IOException}
+import java.io.{File, DataInput, DataOutput, Closeable, IOException}
 
 
 /** See [[breeze.io.RandomAccessFile]], reads big endian.

@@ -156,5 +156,4 @@ abstract class XData extends X with XFrames with XChannels with XAbsolute {
   * ++   val xBits: Int = 1024
   */
 abstract class XDataImmutable extends XData with XFramesImmutable with XChannelsImmutable with XAbsoluteImmutable {
-
 }

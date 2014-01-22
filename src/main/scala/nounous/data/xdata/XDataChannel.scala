@@ -39,17 +39,16 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
     span match {
       case Span.All => readTraceImpl(segment)
       case _ => readTraceImpl(segment, span)
-    }
+      }
   }
-  //</editor-fold>
+
+
+
   /** CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
     * Should return a defensive clone.
     */
-  def readTraceImpl(segment: Int): Vector[Int] = {
-    val res = new Array[Int]( length(segment) )
-    forJava(0, res.length, 1, (c: Int) => (res(c) = readPointImpl(segment, c)))
-    res.toVector
-  }
+  def readTraceImpl(segment: Int): Vector[Int] = readTraceImpl(segment, Span.All)
+
   /** CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
     * Should return a defensive clone.
     */

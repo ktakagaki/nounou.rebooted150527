@@ -7,9 +7,15 @@ import scala.collection.immutable.Vector
 /** Base class for classes taking an xdata object, modifying it in some way, and responding to queries for data with this
   * modified information. This class is mutable---the parent object can be changed, as can the internal data.
   * The default implementation is that all variables are just passed through from the parent object
-  * with buffering for simple variables. You just need to override the information that is changed.
+  * with buffering for simple variables, but not for data. You just need to override the information that is changed.
   */
-class XDataFilter( protected var upstream: XData ) extends XData {
+class XDataFilter( var _upstream: XData ) extends XData {
+
+  def upstream = _upstream
+  def upstream_= ( newUpstream: XData): Unit = {
+    _upstream =  newUpstream
+    flushBuffer
+  }
 
   def flushBuffer(): Unit = {
     //segments, length
@@ -63,7 +69,7 @@ class XDataFilter( protected var upstream: XData ) extends XData {
 
   //channel information
   override def channelName = _channelName
-  var _channelName: Vector[String] = _ // change from val to var
+  var _channelName: Vector[String] = _ // change from def to var
   override def channelCount = _channelCount
   protected var _channelCount: Int = _
 
