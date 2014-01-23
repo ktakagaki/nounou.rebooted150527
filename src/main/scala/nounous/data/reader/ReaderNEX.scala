@@ -2,7 +2,7 @@ package nounous.reader
 
 import nounous.data._
 import java.io.File
-import breeze.io.RandomAccessFileLE
+import breeze.io.{RandomAccessFile, ByteConverterLittleEndian}
 import nounous.data.xdata.XDataPreloaded
 
 /**Reads in single NEX files. Partial implementation, with only waveforms processed.
@@ -14,7 +14,7 @@ object ReaderNEX extends Reader {
 
   override def read(file: File): List[X] = {
 
-    val fHand = new RandomAccessFileLE(file, "r")
+    val fHand = new RandomAccessFile(file, "r")(ByteConverterLittleEndian)
     var tempRet: List[X] = List[X]()
 
     val magic = fHand.readInt()
