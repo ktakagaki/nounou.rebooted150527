@@ -1,7 +1,7 @@
 package nounous.data.reader
 
 import java.io.File
-import breeze.io.{RandomAccessFile, RandomAccessFileLE}
+import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
 import nounous.data.{Span, X}
 import nounous.data.xdata.XDataChannelFilestream
 
@@ -28,7 +28,7 @@ object XDataChannelNCS extends ReaderNLX {
 
   override def read(file: File): List[X] = {
 
-    val fHand = new RandomAccessFileLE(file, "r")
+    val fHand = new RandomAccessFile(file, "r")(ByteConverterLittleEndian)
 
     val tempNlxHeader = fHand.readChar(headerBytes).toString
 
