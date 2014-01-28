@@ -1,4 +1,4 @@
-package nounous.data.traits
+package nounous.data.xdata
 
 import scala.Vector
 

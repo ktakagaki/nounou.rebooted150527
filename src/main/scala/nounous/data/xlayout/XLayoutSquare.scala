@@ -1,4 +1,4 @@
-package nounous.data.x.xlayout
+package nounous.data.xlayout
 
 //import nounous.data.XLayout
 

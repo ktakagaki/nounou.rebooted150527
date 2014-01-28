@@ -1,8 +1,9 @@
 package nounous.reader
 
 import java.io.File
+import nounous.data.X
+
 //import scalafx.stage.FileChooser.ExtensionFilter
-import nounous.data.x.X
 
 trait FileLoader {
 

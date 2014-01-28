@@ -1,8 +1,6 @@
 package nounous.data.xdata
 
-import nounous.data.{Span}
-import nounous.data.traits.XConcatenatable
-import nounous.data.x.X
+import nounous.data.{XConcatenatable, X, Span}
 
 /**
  * Created by Kenta on 12/15/13.
@@ -32,7 +30,9 @@ import nounous.data.x.X
   override def readTraceImpl(segment: Int, channel: Int) = array(channel).readTraceImpl(segment)
   override def readTraceImpl(segment: Int, channel: Int, span:Span) = array(channel).readTraceImpl(segment, span)
 
-  override def :::(that: X): XDataChannelArray = {
+  // <editor-fold desc="XConcatenatable">
+
+   override def :::(that: X): XDataChannelArray = {
     that match {
       case t: XDataChannelArray => {
         if(this.isCompatible(that)){
@@ -47,5 +47,7 @@ import nounous.data.x.X
       case _ => throw new IllegalArgumentException("the two X types are not compatible, and cannot be concatenated.")
     }
   }
+
+  // </editor-fold>
 
 }

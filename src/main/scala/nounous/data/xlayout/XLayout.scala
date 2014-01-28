@@ -1,8 +1,8 @@
-package nounous.data.x.xlayout
+package nounous.data.xlayout
 
 import java.awt.Rectangle
-import nounous.data.traits.{XChannelsImmutable, XChannels}
-import nounous.data.x.X
+import nounous.data.X
+import nounous.data.xdata.XChannelsImmutable
 
 abstract class XLayout extends X with XChannelsImmutable {
 

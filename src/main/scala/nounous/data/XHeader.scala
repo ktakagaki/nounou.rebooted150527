@@ -1,12 +1,11 @@
-package nounous.data.x
-
-import nounous.data.HeaderElements
+package nounous.data
 
 /**
- * Created by Kenta on 12/6/13.
+ * @author ktakagaki
  */
 class XHeader(val formatName: String, val header: Vector[HeaderElements]) extends X {
 
+  // <editor-fold desc="XConcatenatable">
 
   override def isCompatible(that: X): Boolean = {
     that match {
@@ -14,6 +13,8 @@ class XHeader(val formatName: String, val header: Vector[HeaderElements]) extend
       case _ => false
     }
   }
+
+  // </editor-fold>
 
 }
 

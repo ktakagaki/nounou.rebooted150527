@@ -1,4 +1,4 @@
-package nounous.data.x
+package nounous.data
 
 /** Base class for all sources
   *
