@@ -1,10 +1,8 @@
 package nounous.data.xdata
 
-import nounous.data.traits._
-import nounous.data.{Span}
+import nounous.data.{X, Span}
 import nounous.util.forJava
 import scala.collection.immutable.Vector
-import nounous.data.x.X
 
 /** Base class for data encoded as Int arrays.
   * This object is mutable, to allow inheritance by XDataFIlter.

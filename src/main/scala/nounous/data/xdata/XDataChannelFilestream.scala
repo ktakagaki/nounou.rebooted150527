@@ -1,10 +1,7 @@
 package nounous.data.xdata
 
-import nounous.util._
 import nounous.data.Span
 import java.io.{DataInput, File}
-import breeze.io.RandomAccessFile
-import nounous.data.traits.XAbsoluteImmutable
 
 /**
  * Created by Kenta on 12/15/13.

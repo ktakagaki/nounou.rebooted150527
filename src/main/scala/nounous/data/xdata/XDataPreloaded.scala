@@ -1,7 +1,6 @@
 package nounous.data.xdata
 
-import nounous.data.traits.XConcatenatable
-import nounous.data.x.X
+import nounous.data.{XConcatenatable, X}
 
 /**xdata class with internal representation as data array
  * Created with IntelliJ IDEA.
@@ -35,6 +34,8 @@ import nounous.data.x.X
     override def readPointImpl(segment: Int, channel: Int, frame: Int) = data(segment)(channel)(frame)
     override def readTraceImpl(segment: Int, channel: Int) = data(segment)(channel)
 
+  // <editor-fold desc="XConcatenatable">
+
     override def :::(that: X): X = {
       that match {
         case t: XDataPreloaded => {
@@ -59,6 +60,7 @@ import nounous.data.x.X
       }
     }
 
+  // </editor-fold>
 
 
 }

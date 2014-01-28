@@ -1,10 +1,8 @@
 package nounous.data.xdata
 
-import nounous.data.traits.{XAbsoluteImmutable, XFramesImmutable}
-import nounous.data.{Span}
+import nounous.data.{X, Span}
 import nounous.util._
 import scala.Vector
-import nounous.data.x.X
 
 /**
  * Created by Kenta on 12/14/13.
@@ -59,7 +57,8 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
     res.toVector
   }
 
-
+  // <editor-fold desc="XConcatenatable">
+  // </editor-fold>
   override def isCompatible(that: X): Boolean = {
     that match {
       case x: XDataChannel => {

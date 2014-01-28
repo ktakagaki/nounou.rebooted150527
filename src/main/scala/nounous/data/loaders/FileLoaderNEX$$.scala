@@ -4,7 +4,6 @@ import nounous.data._
 import java.io.File
 import breeze.io.{RandomAccessFile, ByteConverterLittleEndian}
 import nounous.data.xdata.XDataPreloaded
-import nounous.data.x.{X, XHeader}
 
 /**Reads in single NEX files. Partial implementation, with only waveforms processed.
 *

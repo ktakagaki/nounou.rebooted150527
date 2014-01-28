@@ -1,7 +1,7 @@
-package nounous.data.traits
+package nounous.data.xdata
 
+import nounous.data.X
 import scala.Vector
-import nounous.data.x.X
 
 /**Encapsulates segment, frame, and sampling information for xdata and XDataChannel.
  */
@@ -79,6 +79,8 @@ trait XFrames extends X {
     }
   }
 
+  // <editor-fold desc="XConcatenatable">
+
   override def isCompatible(that: X): Boolean = {
     that match {
       case x: XFrames => {
@@ -89,6 +91,8 @@ trait XFrames extends X {
       case _ => false
     }
   }
+
+  // </editor-fold>
 
 
 }

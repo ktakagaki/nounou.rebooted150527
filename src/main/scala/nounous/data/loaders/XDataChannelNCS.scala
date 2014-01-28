@@ -2,9 +2,8 @@ package nounous.data.loaders
 
 import java.io.File
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
-import nounous.data.{Span}
+import nounous.data.{X, Span}
 import nounous.data.xdata.XDataChannelFilestream
-import nounous.data.x.X
 
 /**
  * Created by Kenta on 12/16/13.

@@ -1,6 +1,5 @@
-package nounous.data.x.xlayout
+package nounous.data.xlayout
 
-//import nounous.data.XLayout
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,7 +23,8 @@ trait XLayoutNeighbor extends XLayout {
   def isEdge(channel: Int): Boolean
   def isEdge(channel: Int, ring: Int): Boolean
 
-
+  // <editor-fold desc="XConcatenatable">
+  // </editor-fold>
 //  override def isCompatible(that: X): Boolean = {
 //    that match {
 //      case x: XLayoutNeighbor => {

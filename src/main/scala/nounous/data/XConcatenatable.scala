@@ -1,6 +1,5 @@
-package nounous.data.traits
+package nounous.data
 
-import nounous.data.x.X
 
 /**
  * Created by Kenta on 12/15/13.
