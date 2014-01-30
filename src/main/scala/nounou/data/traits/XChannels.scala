@@ -1,4 +1,4 @@
-package nounou.data.xdata
+package nounou.data.traits
 
 import scala.Vector
 
@@ -14,7 +14,7 @@ trait XChannels {
 
   /** Is this channel valid?
     */
-  final def isValidChannel(channel: Int) = (0 < channel && channel < channelCount)
+  final def isValidChannel(channel: Int) = (0 <= channel && channel < channelCount)
 
 }
 

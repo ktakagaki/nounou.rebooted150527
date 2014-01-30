@@ -1,6 +1,5 @@
-package nounou.data.xdata
+package nounou.data
 
-import nounou.data.{X, Span}
 import nounou.util.forJava
 import scala.collection.immutable.Vector
 
@@ -91,7 +90,7 @@ class XDataFilter( var _upstream: XData ) extends XData {
   override def readFrameImpl(frame: Int, segment: Int) = upstream.readFrameImpl(frame, segment)
   override def readFrameImpl(frame: Int, channels: Vector[Int], segment: Int) = upstream.readFrameImpl(frame, channels, segment)
 
-  def :::(target: X): X = {
+  override def :::(target: X): XData = {
     require(false, "cannot append an XDataFilter!")
     this
   }

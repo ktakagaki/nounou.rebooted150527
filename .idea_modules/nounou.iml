@@ -36,7 +36,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="scala-compiler" level="application" />
-    <orderEntry type="library" name="org.scalatest:scalatest_2.10.0-RC5:2.0.M5-B1" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.scalatest:scalatest_2.10.0-RC5:2.0.M5-B1" level="project" />
     <orderEntry type="library" name="org.scalafx:scalafx_2.10:1.0.0-M5" level="project" />
     <orderEntry type="library" name="org.scalanlp:breeze-macros_2.10:0.1" level="project" />
   </component>

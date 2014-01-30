@@ -1,9 +1,9 @@
-package nounou.data.xdata
+package nounou.data
 
-import nounou.data.{XConcatenatable, X, Span}
 import nounou.util._
 import scala.Vector
 import java.io.DataInput
+import nounou.data.traits.{XConcatenatable, XFramesImmutable, XAbsoluteImmutable}
 
 /**
  * Created by Kenta on 12/14/13.
@@ -70,7 +70,7 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
     }
   }
 
-  override def :::(that: X): X/*XDataChannelArray*/ = {
+  override def :::(that: X): XDataChannelArray = {
     that match {
       case t: XDataChannelArray => {
         if(this.isCompatible(t(0))){
@@ -79,7 +79,7 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
           throw new IllegalArgumentException("types are not compatible, and cannot be concatenated.")
         }
       }
-      case t: XDataChannelNull => this
+      case t: XDataChannelNull => new XDataChannelArray( this )
       case t: XDataChannel => {
         if(this.isCompatible(t)){
           new XDataChannelArray( Vector(this, t) )
