@@ -1,7 +1,8 @@
 package nounou.data.discrete
 
-import nounou.data.{XConcatenatable, X}
+import nounou.data.X
 import scala.collection.immutable.TreeMap
+import nounou.data.traits.XConcatenatable
 
 /**Immutable class to encapsulate marked events in data recording, with onset time and duration.
  *

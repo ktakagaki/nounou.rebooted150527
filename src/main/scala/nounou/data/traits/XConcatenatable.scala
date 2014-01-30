@@ -1,5 +1,6 @@
-package nounou.data
+package nounou.data.traits
 
+import nounou.data.X
 
 /**
  * Created by Kenta on 12/15/13.

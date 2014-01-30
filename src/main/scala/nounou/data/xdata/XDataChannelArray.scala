@@ -1,11 +1,13 @@
-package nounou.data.xdata
+package nounou.data
 
-import nounou.data.{XConcatenatable, X, Span}
+import nounou.data.traits.XConcatenatable
 
 /**
  * Created by Kenta on 12/15/13.
  */
  class XDataChannelArray(val array: Vector[XDataChannel]) extends XDataImmutable with XConcatenatable{
+
+  def this( dataChannel: XDataChannel ) = this( Vector[XDataChannel]( dataChannel ) )
 
   //require channel compatibility on initialization?
 
@@ -26,6 +28,15 @@ import nounou.data.{XConcatenatable, X, Span}
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int) = array(channel).readPointImpl(frame, segment)
   override def readTraceImpl(channel: Int, span:Span, segment: Int) = array(channel).readTraceImpl(span, segment)
+
+  def loadDataChannel(dataChannel: XDataChannel): XDataChannelArray = {
+    if(array(0).isCompatible(dataChannel)){
+      new XDataChannelArray( array :+ dataChannel )
+    } else {
+      sys.error("New data channel "+dataChannel+" is incompatible with the prior channels. Ignoring loadDataChannel()!")
+      this
+    }
+  }
 
   // <editor-fold desc="XConcatenatable">
 
@@ -52,6 +63,7 @@ import nounou.data.{XConcatenatable, X, Span}
 
   override def isCompatible(that: X): Boolean = {
     that match {
+        //ToDo 3: is this advisable?
       case x: XDataChannel => this(0).isCompatible(x)
       case x: XDataChannelArray => this(0).isCompatible(x(0))
       case _ => false

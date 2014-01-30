@@ -1,8 +1,7 @@
 package nounou.data.loaders
 
-import nounou.data.{xdata, Span}
+import nounou.data.{Span, XData}
 import org.scalatest.FunSuite
-import nounou.data.xdata.XData
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,7 +10,7 @@ import nounou.data.xdata.XData
  * Time: 3:30 PM
  * To change this template use File | Settings | File Templates.
  */
-class LoaderNEXTest extends FunSuite{
+class FileLoaderNEXTest extends FunSuite {
 
   val fileString = "V:/data/disp/2013-11-05_15-15-06/SE-CSC-Ch1.nex"
 
@@ -22,7 +21,7 @@ class LoaderNEXTest extends FunSuite{
       readObj match {
       case xd: XData => {
         println(xd.readPoint(0, 0, 0))
-        println(xd.readTrace(0, Span(0, 1000), 0).length)
+        println(xd.readTrace(0, Span.Seq(0, 1000), 0).length)
       }
       case _ => println("Something's wrong!")
     }

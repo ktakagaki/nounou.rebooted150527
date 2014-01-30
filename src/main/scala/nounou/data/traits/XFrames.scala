@@ -1,4 +1,4 @@
-package nounou.data.xdata
+package nounou.data.traits
 
 import nounou.data.X
 import scala.Vector
@@ -139,8 +139,8 @@ trait XFramesImmutable extends XFrames {
   /**Cumulative frame numbers for segment starts.
     */
   final lazy val segmentStartFrames: Vector[Int] = {
-    var sum = - segmentLengths(0)
-    ( for(seg <- 0 until segmentLengths.length) yield {sum += segmentLengths(seg); sum} ).toVector
+    var sum = 0
+    ( for(seg <- 0 until segmentLengths.length) yield {sum += segmentLengths(seg); sum} ).toVector.+:(0).dropRight(1)
   }
   //=  DenseVector( accumulate(DenseVector(length.toArray)).toArray.map( _ + 1 ).+:(0).take(length.length) ).toArray.toVector
 

@@ -1,8 +1,8 @@
-package nounou.data.xdata
+package nounou.data
 
-import nounou.data.{XConcatenatable, X, Span}
 import nounou.util.forJava
 import scala.collection.immutable.Vector
+import nounou.data.traits._
 
 /** Base class for data encoded as Int arrays.
   * This object is mutable, to allow inheritance by [[nounou.data.xdata.XDataFilter]].
@@ -46,25 +46,23 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   /** Read a single trace (within the span) from current segment (or segment 0 if not initialized), in internal integer scaling.
     */
-  final def readTrace(channel: Int, span: Span): Vector[Int] = {
-    require(isValidChannel(channel), "Invalid channel: " + channel.toString)
-    readTraceImpl(channel, span, currentSegment)
-  }
+  final def readTrace(channel: Int, span: Span): Vector[Int] = readTrace(channel, span, currentSegment)
 
   /** Read a single trace from the data, in internal integer scaling.
     */
   final def readTrace(channel: Int, span: Span, segment: Int): Vector[Int] = {
     require(isValidChannel(channel), "Invalid channel: " + channel.toString)
+    require(span.getMaxIndex(segmentLengths(segment))<=segmentLengths(segment), "Span is out of range!")
     readTraceImpl(channel, span, currentSegment = segment)
   }
-
-  /** Read a single trace (within the span) from the data, in absolute unit scaling (as recorded).
-    */
-  final def readTraceAbs(channel: Int, span: Span, segment: Int): Vector[Double] = toAbs(readTrace(channel, span, segment))
 
   /** Read a single trace (within the span) from current segment (or segment 0 if not initialized), in absolute unit scaling (as recorded).
     */
   final def readTraceAbs(channel: Int, span: Span = Span.All): Vector[Double] = toAbs(readTrace(channel, span))
+
+  /** Read a single trace (within the span) from the data, in absolute unit scaling (as recorded).
+    */
+  final def readTraceAbs(channel: Int, span: Span, segment: Int): Vector[Double] = toAbs(readTrace(channel, span, segment))
 
   //</editor-fold>
 
@@ -129,6 +127,8 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
 
 
+  // <editor-fold defaultstate="collapsed" desc="XConcatenatable">
+
   override def isCompatible(that: X): Boolean = {
     that match {
       case x: XData => {
@@ -138,6 +138,10 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
       case _ => false
     }
   }
+
+  override def :::(x: X): XData
+
+  // </editor-fold>
 
 }
 
@@ -178,7 +182,7 @@ object XDataNull extends XDataImmutable{
   override val sampleRate: Double = 1D
   override val channelNames: Vector[String] = Vector[String]()
 
-  override def :::(x: X) = x match {
+  override def :::(x: X): XDataImmutable = x match {
     case XDataNull => this
     case _ => require(false, "cannot append incompatible data types (XDataNull)"); this
   }

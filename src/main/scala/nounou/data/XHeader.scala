@@ -14,8 +14,8 @@ class XHeader(val formatName: String, val header: Vector[HeaderElements]) extend
     }
   }
 
+}
   // </editor-fold>
 
-}
 
 object XHeaderNull extends XHeader("Null Header", Vector[HeaderElements]())

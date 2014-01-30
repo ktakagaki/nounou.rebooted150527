@@ -1,4 +1,4 @@
-package nounou.data.xdata
+package nounou.data.traits
 
 import nounou.data.X
 

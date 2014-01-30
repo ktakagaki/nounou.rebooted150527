@@ -1,7 +1,7 @@
-package nounou.data.xdata
+package nounou.data
 
-import nounou.data.{Span, XConcatenatable, X}
 import nounou.util._
+import nounou.data.traits.XConcatenatable
 
 /**xdata class with internal representation as data array
  * Created with IntelliJ IDEA.
@@ -41,7 +41,7 @@ class XDataPreloaded(  val data: Vector[Vector[Vector[Int]]],
 
   // <editor-fold desc="XConcatenatable">
 
-    override def :::(that: X): X = {
+    override def :::(that: X): XData = {
       that match {
         case t: XDataPreloaded => {
           if(this.isCompatible(that)){
