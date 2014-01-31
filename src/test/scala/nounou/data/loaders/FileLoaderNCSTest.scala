@@ -19,7 +19,7 @@ class FileLoaderNCSTest extends FunSuite {
     d.reload( testFileTet4a )
     assert(d.data.segmentCount == 3, "Segment count " + d.data.segmentCount + " should be 3!" )
 
-    assert(d.data.readTrace(0, Span.All, 0).length == 3339265, "read whole segment length incorrect!")
+    assert(d.data.readTrace(0, Span.All, 0).length == 3339264, "read whole segment length incorrect!")
 
     val tempTrace1 = d.data.readTrace(0, Span.Seq(0, 5120, 1), 0)
     //println(Span.Seq(0, 5120, 1).length(3339265))

@@ -60,7 +60,7 @@ object FileLoaderNCS extends FileLoaderNLX {
       var thisRecTS = fHand.readUInt64Shifted()
       var lastRecTS = thisRecTS
       var tempStartTimestamps = Vector[Long]( lastRecTS )
-        var tempLengths = Vector[Int]() //tempLengths defined with -1 at head for looping convenience, will be dropped later
+        var tempLengths = Vector[Int]() //tempLengths defined with -1 at header for looping convenience, will be dropped later
         var tempSegmentStartFrame = 0
 
       //dwChannelNumber
@@ -173,14 +173,13 @@ class XDataChannelNCS
     fileHandle.readInt16 * xBits
   }
 
-  
   override def readTraceImpl(span: Span, segment: Int): Vector[Int] = {
-
     val range = span.getRange( segmentLengths( segment ) )
 
     var (currentRecord, currentIndex) = frameSegmentToRecordIndex( range.start, segment )
-    val (endReadRecord, endReadIndex) = frameSegmentToRecordIndex( range.end - 1, segment )
-//    println( "err eri " + (endReadRecord, endReadIndex) )
+    val (endReadRecord, endReadIndex) = frameSegmentToRecordIndex( range.end - 1, segment ) //range is exclusive of end
+    //println( range.start + " d " + range.end)
+    //println( "err eri " + (endReadRecord, endReadIndex) )
 
     val tempRet = ListBuffer[Int]()//var tempRet = Vector[Int]()
 

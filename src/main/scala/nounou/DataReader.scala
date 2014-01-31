@@ -14,7 +14,7 @@ import nounou.data.discrete.{XMaskNull, XMask, XEventsNull, XEvents}
 class DataReader {
 
   /**Header object covering the whole block.*/
-  var head: XHeader = XHeaderNull
+  var header: XHeader = XHeaderNull
   /**Main data output.*/
   var data: XData = XDataNull
   //insert downsample block, filter block, buffer block
@@ -113,9 +113,9 @@ class DataReader {
   private def loadImpl(x: X): Unit = {
     x match {
       case x0: XHeader => {
-        if( head == XHeaderNull || reloadFlagHead == 1 ) head = x0
+        if( header == XHeaderNull || reloadFlagHead == 1 ) header = x0
         else if( reloadFlagHead == 0 ) {
-          if( head.isCompatible(x0) ) {
+          if( header.isCompatible(x0) ) {
             //ToDo 3: implement concatenating/comparing header?
             println("Compatible header already loaded, ignoring new header " + x0 + ". Use clearHead first or reload() instead of load(), if this is unintended.")
           } else {
@@ -240,7 +240,7 @@ class DataReader {
 
   // <editor-fold defaultstate="collapsed" desc=" clearing ">
 
-  def clearHead: Unit = {head = XHeaderNull}
+  def clearHead: Unit = {header = XHeaderNull}
   def clearData: Unit = {data = XDataNull}
   def clearDataAux: Unit = {dataAux = XDataNull}
   def clearLayout: Unit = {layout = XLayoutNull}
