@@ -3,7 +3,7 @@ package nounou
 import java.io.File
 import nounou.data.{XDataChannelArray, XDataChannel, XDataNull, XData}
 import nounou.data.{XLayout, XLayoutNull}
-import nounou.data.loaders.{FileLoaderNCS, FileLoaderNEX}
+import nounou.data.loaders.{FileLoaderNEV, FileLoaderNCS, FileLoaderNEX}
 import nounou.data._
 import nounou.data.discrete.{XMaskNull, XMask, XEventsNull, XEvents}
 
@@ -26,7 +26,7 @@ class DataReader {
   /**Mask*/
   var mask: XMask = XMaskNull
   /**Events*/
-  var events = Vector[XEvents]()
+  var events: XEvents = XEventsNull
   //  override var spk: XSpikes
 
   // <editor-fold defaultstate="collapsed" desc=" Java accessors ">
@@ -60,6 +60,7 @@ class DataReader {
     val list = file.getName.toLowerCase match {
       case n: String if n.endsWith(".nex") => FileLoaderNEX.load( file )
       case n: String if n.endsWith(".ncs") => FileLoaderNCS.load( file )
+      case n: String if n.endsWith(".nev") => FileLoaderNEV.load( file )
       case n => throw new IllegalArgumentException("File format for " + n + " is not supported yet.")
     }
     list.map( loadImpl(_) )
@@ -148,28 +149,48 @@ class DataReader {
       }
       case x0: XDataChannel => {
         data match {
-          case XDataNull => {
-            data = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
-            if( reloadFlagData == 1 ) {
-              dataAux = XDataNull
-              reloadFlagDataAux = 1
-              reloadFlagData = 2
-            }
-          }
-          case data0: XDataChannelArray => {
-            if( reloadFlagData == 1 ) {
-              data = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
-              dataAux = XDataNull
-              reloadFlagDataAux = 1
-              reloadFlagData = 2
-            } else if ( data0(0).isCompatible(x0)  /*reloadFlagData == 0, 2*/) {
-              data = data0 ::: x0
-              //reloadFlagData = 2
-            } else { //not compatible with data, try dataAux
-              if( reloadFlagDataAux == 1 ) {
-                dataAux = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
-                reloadFlagDataAux = 2
-              } else {
+              case XDataNull => {
+                data = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
+                if( reloadFlagData == 1 ) {
+                  dataAux = XDataNull
+                  reloadFlagDataAux = 1
+                  reloadFlagData = 2
+                }
+              }
+              case data0: XDataChannelArray => {
+                if( reloadFlagData == 1 ) {
+                  data = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
+                  dataAux = XDataNull
+                  reloadFlagDataAux = 1
+                  reloadFlagData = 2
+                } else if ( data0(0).isCompatible(x0)  /*reloadFlagData == 0, 2*/) {
+                  data = data0 ::: x0
+                  //reloadFlagData = 2
+                } else { //not compatible with data, try dataAux
+                  if( reloadFlagDataAux == 1 ) {
+                    dataAux = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
+                    reloadFlagDataAux = 2
+                  } else {
+                      dataAux match {
+                        case dataAux0: XDataChannelArray => {
+                          if ( dataAux0.isCompatible(x0) /*reloadFlagDataAux == 0 or 2*/ ) {
+                            dataAux = dataAux0 ::: x0
+                          } else {
+                            println("Incompatible data already loaded in data and dataAux, ignoring new data " + x0 + ". Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.")
+                          }
+                        }
+                        case _ => {
+                          println("Incompatible data already loaded in data and dataAux, ignoring new data " + x0 + ". Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.")
+                        }
+                      }
+                  }
+                  }
+              }
+              case _ => {
+                if( reloadFlagDataAux == 1 ) {
+                  dataAux = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
+                  reloadFlagDataAux = 2
+                } else {
                   dataAux match {
                     case dataAux0: XDataChannelArray => {
                       if ( dataAux0.isCompatible(x0) /*reloadFlagDataAux == 0 or 2*/ ) {
@@ -182,53 +203,33 @@ class DataReader {
                       println("Incompatible data already loaded in data and dataAux, ignoring new data " + x0 + ". Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.")
                     }
                   }
-              }
-              }
-          }
-          case _ => {
-            if( reloadFlagDataAux == 1 ) {
-              dataAux = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
-              reloadFlagDataAux = 2
-            } else {
-              dataAux match {
-                case dataAux0: XDataChannelArray => {
-                  if ( dataAux0.isCompatible(x0) /*reloadFlagDataAux == 0 or 2*/ ) {
-                    dataAux = dataAux0 ::: x0
-                  } else {
-                    println("Incompatible data already loaded in data and dataAux, ignoring new data " + x0 + ". Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.")
-                  }
-                }
-                case _ => {
-                  println("Incompatible data already loaded in data and dataAux, ignoring new data " + x0 + ". Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.")
                 }
               }
-            }
-          }
         }
-      }
+        }
       case x0: XMask => sys.error("ToDo: have not implemented mask loading yet!")
       case x0: XEvents => {
-        if( events.length == 0 ) {
-          events = Vector[XEvents]( x0 )
-          if(reloadFlagEvents == 1) reloadFlagEvents = 2
-        } else {
-          reloadFlagEvents match {
-            case 0 => { //not reloading, but concatenating
-              if( events(0).isCompatible(x0) ) events = events :+ x0
-              else println("Incompatible event objects already loaded, ignoring new XEvent " + x0 + ". Use clearEvents first or reload() instead of load(), if this is unintended.")
-            }
-            case 1 => { //reloading, not cleared previous data yet
-              events = Vector[XEvents](x0)
-              reloadFlagEvents = 2
-            }
-            case 2 => { //reloading, has already cleared
-              if( events(0).isCompatible(x0) ) events = events :+ x0
-              else println("Trying to load incompatible event objects, ignoring further new XEvent " + x0 + ".")
+          if( events == XEventsNull ) {
+            events = x0
+            if(reloadFlagEvents == 1) reloadFlagEvents = 2
+          } else {
+            reloadFlagEvents match {
+              case 0 => { //not reloading, but concatenating
+                if( events.isCompatible(x0) ) events = events ::: x0
+                else println("Incompatible event objects already loaded, ignoring new XEvent " + x0 + ". Use clearEvents first or reload() instead of load(), if this is unintended.")
+              }
+              case 1 => { //reloading, not cleared previous data yet
+                events = x0
+                reloadFlagEvents = 2
+              }
+              case 2 => { //reloading, has already cleared
+                if( events.isCompatible(x0) ) events = events ::: x0
+                else println("Trying to load incompatible event objects, ignoring further new XEvent " + x0 + ".")
+              }
             }
           }
-        }
       }
-
+      case x0: X => sys.error("Loading of this type of " + x0 + " has not been implemented!")
     }
   }
 
@@ -244,7 +245,7 @@ class DataReader {
   def clearDataAux: Unit = {dataAux = XDataNull}
   def clearLayout: Unit = {layout = XLayoutNull}
   def clearMask: Unit = {mask = XMaskNull}
-  def clearEvents: Unit = {events = Vector[XEvents]()}
+  def clearEvents: Unit = {events = XEventsNull}
 
   def clearAll: Unit = {
     clearHead

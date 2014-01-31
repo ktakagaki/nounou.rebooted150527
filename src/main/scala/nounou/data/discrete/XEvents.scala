@@ -12,6 +12,16 @@ class XEvents(val events: TreeMap[Long, XEvent], val name: String ) extends  X w
 
   lazy val length: Int = events.size
   lazy val maxDuration: Long = events.map( _._2.duration).max
+  lazy val uniqueEventCodes = events.map(_._2.eventCode).toList.distinct.toVector
+  lazy val sortedEvents = new Array[TreeMap[Long,XEvent]]( uniqueEventCodes.length )
+
+  def getEventsByCode( eventCode: Int ): TreeMap[Long, XEvent] = {
+    val codeIndex = uniqueEventCodes.indexOf( eventCode )
+    if( sortedEvents(codeIndex) == null ){
+      sortedEvents(codeIndex) = events.filter( _._2.eventCode == eventCode )
+    }
+    sortedEvents(codeIndex)
+  }
 
   def apply(timeStamp: Long) = events.apply(timeStamp)
   //def nextEvent(timeStamp: Long): XEvent
