@@ -4,6 +4,7 @@ import java.io.File
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
 import breeze.linalg.{DenseVector, accumulate}
 import nounou.data.{X, Span, XDataChannelFilestream}
+import scala.collection.mutable.ListBuffer
 
 /**
  * @author ktakagaki
@@ -13,9 +14,9 @@ object FileLoaderNCS extends FileLoaderNLX {
   //Constants for NCS files
   //val headerBytes = 16384L FileLoaderNLX
   /**Size of each record, in bytes*/
-  val recordSize = 1044
+  override val recordBytes = 1044
   /**Number of samples per record*/
-  val recordLength= 512
+  val recordSampleCount= 512
   /**Sample rate, Hz*/
   val sampleRate = 32000D
   val absOffset = 0D
@@ -36,7 +37,7 @@ object FileLoaderNCS extends FileLoaderNLX {
       nlxHeaderLoad()
       val tempAcqEntName = nlxHeaderParserS("AcqEntName", "NoName")
       val tempRecordSize = nlxHeaderParserI("RecordSize", "0")
-        require(tempRecordSize == recordSize, "NCS file with non-standard record size: " + tempRecordSize)
+        require(tempRecordSize == recordBytes, "NCS file with non-standard record size: " + tempRecordSize)
       val tempSampleFreqD = nlxHeaderParserD("SamplingFrequency", "1")
         require(tempSampleFreqD == sampleRate, "NCS file with non-standard sampling frequency: " + tempSampleFreqD)
       val tempADBitVolts = nlxHeaderParserD("ADBitVolts", "1")
@@ -71,10 +72,10 @@ object FileLoaderNCS extends FileLoaderNLX {
 
       //dwNumValidSamples
       val dwNumValidSamples = fHand.readUInt32
-      require(dwNumValidSamples == recordLength, "Currently can only deal with records which are " + recordLength + " samples long.")
+      require(dwNumValidSamples == recordSampleCount, "Currently can only deal with records which are " + recordSampleCount + " samples long.")
 
       //snSamples
-      fHand.skipBytes(recordLength*2)
+      fHand.skipBytes(recordSampleCount*2)
 
 
       //ToDo 3: Implement cases where timestamps skip just a slight amount d/t DAQ problems
@@ -107,10 +108,10 @@ object FileLoaderNCS extends FileLoaderNLX {
 
         //dwNumValidSamples
         val dwNumValidSamples = fHand.readUInt32
-        require(dwNumValidSamples == recordLength, "Currently can only deal with records which are " + recordLength + " samples long.")
+        require(dwNumValidSamples == recordSampleCount, "Currently can only deal with records which are " + recordSampleCount + " samples long.")
 
         //snSamples
-        fHand.skipBytes(recordLength*2)
+        fHand.skipBytes(recordSampleCount*2)
       }
 
       //Last record cleanup
@@ -155,13 +156,13 @@ class XDataChannelNCS
     recordStartByte(record) + 20L + (index * 2)
   }
 
-  def recordStartByte(recNo: Int) = t.headerBytes + t.recordSize * recNo.toLong// + 1
+  def recordStartByte(recNo: Int) = t.headerBytes + t.recordBytes * recNo.toLong// + 1
 
   def frameSegmentToRecordIndex(frame: Int, segment: Int) = {
     val cumFrame = segmentStartFrames(segment) + frame
-//    println("cf " + cumFrame + " rl " + t.recordLength)
-//    println( ( cumFrame / t.recordLength, cumFrame % t.recordLength) )
-    ( cumFrame / t.recordLength, cumFrame % t.recordLength)
+//    println("cf " + cumFrame + " rl " + t.recordSampleCount)
+//    println( ( cumFrame / t.recordSampleCount, cumFrame % t.recordSampleCount) )
+    ( cumFrame / t.recordSampleCount, cumFrame % t.recordSampleCount)
   }
 
 
@@ -180,20 +181,22 @@ class XDataChannelNCS
     var (currentRecord, currentIndex) = frameSegmentToRecordIndex( range.start, segment )
     val (endReadRecord, endReadIndex) = frameSegmentToRecordIndex( range.end - 1, segment )
 //    println( "err eri " + (endReadRecord, endReadIndex) )
-    var tempRet = Vector[Int]()
+
+    val tempRet = ListBuffer[Int]()//var tempRet = Vector[Int]()
 
     while(currentRecord < endReadRecord){
       fileHandle.seek( dataByteLocationRI(currentRecord, currentIndex) )
-      tempRet = tempRet ++ fileHandle.readInt16(512 - currentIndex).map( _.toInt* xBits )
+      tempRet ++= fileHandle.readInt16(512 - currentIndex).map( _.toInt* xBits )
+      //tempRet = tempRet ++ fileHandle.readInt16(512 - currentIndex).map( _.toInt* xBits )
       currentRecord += 1
       currentIndex = 0
     }
     //if(currentIndex <= endReadIndex){
       fileHandle.seek( dataByteLocationRI(currentRecord, currentIndex) )
-      tempRet = tempRet ++ fileHandle.readInt16(endReadIndex - currentIndex + 1).map( _.toInt* xBits )
+      tempRet ++= fileHandle.readInt16(endReadIndex - currentIndex + 1).map( _.toInt* xBits )
     //}
 
-    tempRet
+    tempRet.toVector
 
 }
 
@@ -208,7 +211,7 @@ class XDataChannelNCS
   //      if(startRec == endRec){
   //        readRecord(startRec, startIndex, endIndex)
   //      } else {
-  //        val startRecData = readRecord(startRec, startIndex, t.recordSize - 1)
+  //        val startRecData = readRecord(startRec, startIndex, t.recordBytes - 1)
   //        val endRecData = readRecord(endRec, 0, endIndex )
   //
   //        if(startRec + 1 < endRec){
@@ -225,7 +228,7 @@ class XDataChannelNCS
 
 //  def readRecord(recNo: Int): Vector[Int] = {
 //    fileHandle.seek( recordStartByte(recNo) )
-//    fileHandle.readInt16(t.recordLength).toVector.map(_ * xBits)
+//    fileHandle.readInt16(t.recordSampleCount).toVector.map(_ * xBits)
 //  }
 //
 //  def readRecord(recNo: Int, startI: Int, endI: Int): Vector[Int] = {
