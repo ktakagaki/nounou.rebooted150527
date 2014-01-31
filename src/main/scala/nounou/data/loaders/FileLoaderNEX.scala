@@ -4,6 +4,8 @@ import nounou.data._
 import java.io.File
 import breeze.io.{RandomAccessFile, ByteConverterLittleEndian}
 import nounou.data.XDataPreloaded
+import scala.collection.immutable.HashMap
+import scala.collection.mutable.ArrayBuffer
 
 /**Reads in single NEX files. Partial implementation, with only waveforms processed.
 *
@@ -15,29 +17,34 @@ object FileLoaderNEX extends FileLoader {
   override def loadImpl(file: File): List[X] = {
 
     val fHand = new RandomAccessFile(file, "r")(ByteConverterLittleEndian)
-    var tempRet: List[X] = List[X]()
+    var tempRet: ArrayBuffer[X] = ArrayBuffer[X]()
 
     val magic = fHand.readInt()
     if ( magic != 827868494 ) throw new InvalidFileFormatException("Invalid NEX file!", null)
 
-      val nexFileVersion: Int = fHand.readInt
-      val nexFileComment: String = new String(fHand.readByte(256))
-      val nexFileFreq: Double = fHand.readDouble
-      val nexFileTBeg: Double = fHand.readInt / nexFileFreq
-      val nexFileTEnd: Double = fHand.readInt / nexFileFreq
-      val nexFileNVar: Int = fHand.readInt
+    // <editor-fold defaultstate="collapsed" desc=" header ">
 
-  val header = new XHeader(
-    "Neuroexplorer NEX",
-    Vector[HeaderElements](
-      HeaderElements("nexFileVersion", nexFileVersion),
-      HeaderElements("nexFileComment", nexFileComment),
-      HeaderElements("nexFileFreq", nexFileFreq),
-      HeaderElements("nexFileTBeg", nexFileTBeg),
-      HeaderElements("nexFileTEnd", nexFileTEnd),
-      HeaderElements("nexFileNVar", nexFileNVar)
+    val nexFileVersion: Int = fHand.readInt
+    val nexFileComment: String = new String(fHand.readByte(256))
+    val nexFileFreq: Double = fHand.readDouble
+    val nexFileTBeg: Double = fHand.readInt / nexFileFreq
+    val nexFileTEnd: Double = fHand.readInt / nexFileFreq
+    val nexFileNVar: Int = fHand.readInt
+
+    val header = new XHeaderNEX(
+      HashMap[String, HeaderValue](
+        "nexFileVersion" -> HeaderValue(nexFileVersion),
+        "nexFileComment" -> HeaderValue(nexFileComment),
+        "nexFileFreq" -> HeaderValue(nexFileFreq),
+        "nexFileTBeg" -> HeaderValue(nexFileTBeg),
+        "nexFileTEnd" -> HeaderValue(nexFileTEnd),
+        "nexFileNVar" -> HeaderValue(nexFileNVar)
+      )
     )
-  )
+
+    tempRet += header
+
+    // </editor-fold>
 
     fHand.skipBytes(260)
 
@@ -88,22 +95,22 @@ object FileLoaderNEX extends FileLoader {
               tempData(c) = tempDataShort(c).toInt * extraBits
               c += 1
             }
-          tempRet = new XDataPreloaded( data = Vector(Vector(tempData.toVector)),
+          tempRet += new XDataPreloaded( data = Vector(Vector(tempData.toVector)),
                                         xBits = extraBits,
                                         absGain = ADtoMV / extraBits,
                                         absOffset = MVOffset,
                                         absUnit = "mV",
                                         segmentStartTSs = Vector[Long](nexFileTBeg.toLong), //TODO 1: Must fix this placeholder!!!
                                         sampleRate = nexFileFreq,
-                                        channelNames = Vector[String]( name )  ) {
-          } :: tempRet
-
+                                        channelNames = Vector[String]( name )  )
          }/*case 5*/
        } /*recType match*/
 //    } /*for(i <- 1 to nexFileNVar)*/
 
-    tempRet.reverse
+    tempRet.toList
   }//loadImpl
 
 
 }
+
+class XHeaderNEX(override val header: Map[String, HeaderValue]) extends XHeader(header)
