@@ -12,6 +12,7 @@ trait FileLoaderNLX extends FileLoader {
   var fHand: RandomAccessFile = _
 
   val headerBytes = 16384
+  val recordBytes: Int
   //  val neuralynxTextHeader: String
 
   var nlxHeader: String = "Inital"

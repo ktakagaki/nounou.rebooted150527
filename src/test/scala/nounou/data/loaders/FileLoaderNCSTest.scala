@@ -12,7 +12,7 @@ import breeze.numerics.abs
  */
 class FileLoaderNCSTest extends FunSuite {
 
-  val testFileTet4a = new File( getClass.getResource("/_testFiles/t130911/Tet4a.ncs").getPath() )
+  val testFileTet4a = new File( getClass.getResource("/_testFiles/Neuralynx/t130911/Tet4a.ncs").getPath() )
 
   test("readTrace"){
     val d = new DataReader
@@ -30,10 +30,10 @@ class FileLoaderNCSTest extends FunSuite {
     assert(tempTrace1.length == 5121, "tempTrace1: trace read length incorrect!" )
 
     val tempTrace2 = d.data.readTraceAbs(0, Span.Seq(0, 10, 1), 0)
-    //println(Span.Seq(0, 5120, 1).length(3339265))
-    assert( abs(tempTrace1(0) - 271.000428) < 1.0E-6 , "tempTrace2-0: abs read value incorrect!")
-    assert( abs(tempTrace1(1) - 184.026555) < 1.0E-6 , "tempTrace2-1: abs read value incorrect!")
-    assert( abs(tempTrace1(2) - 32.654795) < 1.0E-6 , "tempTrace2-2: abs read value incorrect!")
+    //println(tempTrace2(0) + "  " + d.data.absGain + " " + d.data.absOffset )
+    assert( tempTrace2(0) + 27.1000428 < 1.0E-6 , "tempTrace2-0: abs read value incorrect!")
+    assert( tempTrace2(1) + 18.4026555 < 1.0E-6 , "tempTrace2-1: abs read value incorrect!")
+    assert( tempTrace2(2) + 3.2654795 < 1.0E-6 , "tempTrace2-2: abs read value incorrect!")
 
   }
 
