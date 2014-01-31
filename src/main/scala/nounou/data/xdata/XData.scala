@@ -53,7 +53,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   final def readTrace(channel: Int, span: Span, segment: Int): Vector[Int] = {
     require(isValidChannel(channel), "Invalid channel: " + channel.toString)
     require(span.getMaxIndex(segmentLengths(segment))<=segmentLengths(segment), "Span is out of range!")
-    readTraceImpl(channel, span, currentSegment = segment)
+    readTraceImpl(channel, span, (currentSegment = segment))
   }
 
   /** Read a single trace (within the span) from current segment (or segment 0 if not initialized), in absolute unit scaling (as recorded).

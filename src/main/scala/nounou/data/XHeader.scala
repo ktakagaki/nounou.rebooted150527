@@ -3,19 +3,25 @@ package nounou.data
 /**
  * @author ktakagaki
  */
-class XHeader(val formatName: String, val header: Vector[HeaderElements]) extends X {
+class XHeader(val header: Map[String, HeaderValue]) extends X {
+
+  override def toString = header.toString
+
+  def apply(key: String) = header(key)
 
   // <editor-fold desc="XConcatenatable">
 
   override def isCompatible(that: X): Boolean = {
     that match {
-      case t: XHeader => this.formatName == t.formatName && this.header == t.header
+      case t: XHeader => this.header == t.header
       case _ => false
     }
   }
 
-}
   // </editor-fold>
 
+}
 
-object XHeaderNull extends XHeader("Null Header", Vector[HeaderElements]())
+
+object XHeaderNull extends XHeader(Map[String, HeaderValue]())
+

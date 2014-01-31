@@ -33,7 +33,7 @@ class XDataPreloaded(  val data: Vector[Vector[Vector[Int]]],
       span match {
         case Span.All => data(channel)(segment)
         case _ => {
-          val slice = span.getActualStartEnd( segmentLengths(segment) )
+          val slice = span.getStartEndIndexes( segmentLengths(segment) )
           data(channel)(segment).slice(slice._1, slice._2)
         }
       }
