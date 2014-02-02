@@ -1,11 +1,11 @@
-package nounou.data.loaders
+package nounou.data.formats
 
 import java.io.File
 import nounou.data.X
 
 
 
-abstract class FileLoader {
+trait FileLoader {
   //ToDo 3: some sort of function to notify which file extensions can be loaded
 
   def loadImpl(file: File): List[X]
@@ -19,6 +19,7 @@ abstract class FileLoader {
   trait CanLoad[Input]{
     def apply(list: Input): List[X]
   }
+
   object CanLoad {
     implicit val canLoadFile: CanLoad[File] = new CanLoad[File] {
       def apply(file: File): List[X] = loadImpl(file)

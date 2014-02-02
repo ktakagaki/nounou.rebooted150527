@@ -4,12 +4,9 @@ import scala.collection.mutable.{ArrayBuffer, HashMap}
 import scala.math.min
 import nounou.data.Span
 
-/** Base class for classes taking an xdata object, modifying it in some way, and responding to queries for data with this
-  * modified information. This class is mutable---the parent object can be changed, as can the internal data.
-  * The default implementation is that all variables are just passed through from the parent object
-  * with buffering for simple variables, but not for data. You just need to override the information that is changed.
+/** Buffer filter, which will save intermediate calculation results for an XData object.
   */
-trait XDataFilterBufferTrace extends XDataFilter {
+trait XDataFilterBuffer extends XDataFilter {
 
   private val buffer: HashMap[(Int, Int, Int), Vector[Int]] = new ReadingHashMapBuffer()
   private val garbageQue: ArrayBuffer[(Int, Int, Int)] = new ArrayBuffer[(Int, Int, Int)]()
