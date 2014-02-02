@@ -1,4 +1,4 @@
-package nounou.data.loaders
+package nounou.data.formats
 
 import java.io.File
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
