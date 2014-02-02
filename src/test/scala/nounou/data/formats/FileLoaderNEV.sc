@@ -1,6 +1,6 @@
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
 import java.io.File
-import nounou.data.loaders.FileLoaderNCS
+import nounou.data.formats.FileLoaderNCS
 
 /**
  * @author ktakagaki

@@ -3,7 +3,7 @@ package nounou
 import java.io.File
 import nounou.data.{XDataChannelArray, XDataChannel, XDataNull, XData}
 import nounou.data.{XLayout, XLayoutNull}
-import nounou.data.loaders.{FileLoaderNEV, FileLoaderNCS, FileLoaderNEX}
+import nounou.data.formats.{FileLoaderNEV, FileLoaderNCS, FileLoaderNEX}
 import nounou.data._
 import nounou.data.discrete.{XMaskNull, XMask, XEventsNull, XEvents}
 

@@ -1,4 +1,4 @@
-package nounou.data.loaders
+package nounou.data.formats
 
 import breeze.io.RandomAccessFile
 
