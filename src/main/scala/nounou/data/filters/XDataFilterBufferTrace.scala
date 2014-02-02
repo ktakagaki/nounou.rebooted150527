@@ -1,5 +1,6 @@
-package nounou.data
+package nounou.data.filters
 
+import nounou.data.XData
 import scala.collection.immutable.{HashMap, Vector}
 import scala.collection.mutable
 

@@ -1,6 +1,6 @@
-package nounou.data
+package nounou.data.filters
 
-import nounou.util.forJava
+import nounou.data.{X, Span, XData}
 import scala.collection.immutable.Vector
 
 /** Base class for classes taking an xdata object, modifying it in some way, and responding to queries for data with this
