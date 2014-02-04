@@ -1,5 +1,6 @@
 package nounou.data
 
+import nounou._
 import nounou.util._
 import scala.Vector
 import java.io.DataInput
@@ -18,8 +19,8 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
     * Implement via readPointImpl.
     */
   final def readPoint(frame: Int, segment: Int): Int = {
-    require(isValidFrame(frame, segment), "Invalid frame/segment: " + (frame, segment).toString)
-    readPointImpl(frame, currentSegment = segment)
+    //require(isValidFrame(frame, segment), "Invalid frame/segment: " + (frame, segment).toString)
+    if( isValidFrame(frame, segment) ) readPointImpl(frame, currentSegment = segment) else 0
   }
   //</editor-fold>
 
@@ -31,12 +32,20 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
   /** Read a single trace from the data, in internal integer scaling.
     */
   final def readTrace(segment: Int): Vector[Int] = {
-    readTraceImpl(Span.All, currentSegment = segment)
+    readTraceImpl(FrameRange.All, currentSegment = segment)
   }
   /** Read a single trace (within the span) from the data, in internal integer scaling.
     */
-  final def readTrace(span: Span, segment: Int): Vector[Int] = {
-    readTraceImpl(span, currentSegment = segment)
+  final def readTrace(range: FrameRange, segment: Int): Vector[Int] = {
+
+    val segLen =  segmentLengths(segment)
+    val preLength = range.preLength( segLen )
+    val postLength = range.postLength( segLen )
+
+    vectZeros( preLength ) ++ readTraceImpl(range.validRange( segLen ), (currentSegment = segment)) ++ vectZeros( postLength )
+
+    //val span = range.getRangeWithoutNegativeIndexes( segmentLengths(segment) )
+    //readTraceImpl(span, currentSegment = segment)
 //    span match {
 //      case Span.All => readTraceImpl(currentSegment = segment)
 //      case _ => readTraceImpl(span, currentSegment = segment)
@@ -52,10 +61,11 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
   /** CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
     * Should return a defensive clone.
     */
-  def readTraceImpl(span:Span, segment: Int): Vector[Int] = {
-    val range = span.getRange( segmentLengths(segment) )
+  def readTraceImpl(range: FrameRange, segment: Int): Vector[Int] = {
+    //Impls only get real ranges
+    //val realRange = range.getRangeWithoutNegativeIndexes( segmentLengths(segment) )
     val res = new Array[Int]( range.length )
-    forJava(range.start, range.end, range.step, (c: Int) => (res(c) = readPointImpl(c, segment)))
+    forJava(range.start, range.last + 1, range.step, (c: Int) => (res(c) = readPointImpl(c, segment)))
     res.toVector
   }
 

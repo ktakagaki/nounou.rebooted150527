@@ -82,7 +82,7 @@ trait XFrames extends X {
   /** Closest frame/segment index to the given timestamp. Will give beginning or end frames, if timestamp is
     * out of range.
     */
-  final def tsToFrame(timestamp: Long): (Int, Int) = {
+  final def tsToFrame(timestamp: Long, negativeIfOOB: Boolean = false): (Int, Int) = {
     if(timestamp <= segmentStartTSs(0) ){
       (0, 0)
     } else {

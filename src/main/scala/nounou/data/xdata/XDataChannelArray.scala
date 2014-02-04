@@ -1,5 +1,6 @@
 package nounou.data
 
+import nounou._
 import nounou.data.traits.XConcatenatable
 
 /**
@@ -27,7 +28,7 @@ import nounou.data.traits.XConcatenatable
 
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int) = array(channel).readPointImpl(frame, segment)
-  override def readTraceImpl(channel: Int, span:Span, segment: Int) = array(channel).readTraceImpl(span, segment)
+  override def readTraceImpl(channel: Int, range: FrameRange, segment: Int) = array(channel).readTraceImpl(range, segment)
 
   def loadDataChannel(dataChannel: XDataChannel): XDataChannelArray = {
     if(array(0).isCompatible(dataChannel)){

@@ -1,12 +1,12 @@
 package nounou.data.filters
 
+import nounou._
+import breeze.linalg.RangeExtender
 import scala.collection.mutable.{ArrayBuffer, HashMap}
-import scala.math.min
-import nounou.data.Span
 
 /** Buffer filter, which will save intermediate calculation results for an XData object.
   */
-trait XDataFilterBuffer extends XDataFilter {
+trait XDataFilterTrBuffer extends XDataFilterTr {
 
   private val buffer: HashMap[(Int, Int, Int), Vector[Int]] = new ReadingHashMapBuffer()
   private val garbageQue: ArrayBuffer[(Int, Int, Int)] = new ArrayBuffer[(Int, Int, Int)]()
@@ -25,29 +25,29 @@ trait XDataFilterBuffer extends XDataFilter {
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = {
     buffer( (channel, getBufferPage(frame), segment) )( getBufferIndex(frame) )
   }
-  override def readTraceImpl(channel: Int, span: Span, segment: Int): Vector[Int] = {
+  override def readTraceImpl(channel: Int, range: FrameRange, segment: Int): Vector[Int] = {
     val tempret = ArrayBuffer[Int]()
-    val (startFrame, endFrame) = span.getStartEndIndexes( segmentLengths(segment) )
-    val startPage = getBufferPage(startFrame)
-    val startIndex = getBufferIndex(startFrame)
-    val endPage = getBufferPage(endFrame)
-    val endIndex = getBufferIndex(endFrame)
+      tempret.sizeHint(range.length)
+    val startPage = getBufferPage(range.start)
+    val startIndex = getBufferIndex(range.start)
+    val endPage = getBufferPage(range.last)
+    val endIndex = getBufferIndex(range.last)
 
     if(startPage == endPage) buffer( (channel, startPage, segment) ).slice(startIndex, endIndex)
     else {
-      tempret ++= buffer( (channel, startPage, segment) ).slice(startFrame, bufferPageLength-1)  //deal with startPage separately
+      tempret ++= buffer( (channel, startPage, segment) ).slice(startIndex, bufferPageLength-1)  //deal with startPage separately
       if( startPage + 1 <= endPage ) {
         for(page <- startPage + 1 to endPage - 1) {
           tempret ++= buffer( (channel, page, segment) )
         }
       }
-      tempret ++= buffer( (channel, endPage, segment) ).slice(0, endFrame)  //deal with endPage separately
+      tempret ++= buffer( (channel, endPage, segment) ).slice(0, endIndex)  //deal with endPage separately
       tempret.toVector
     }
   }
 
   //redirection function to deal with scope issues regarding super
-  private def tempTraceReader(ch: Int, span: Span, segment: Int) = super.readTraceImpl(ch, span, segment)
+  private def tempTraceReader(ch: Int, range: FrameRange, segment: Int) = super.readTraceImpl(ch, range, segment)
 
   class ReadingHashMapBuffer extends HashMap[(Int, Int, Int), Vector[Int]] {
 
@@ -56,7 +56,8 @@ trait XDataFilterBuffer extends XDataFilter {
       val endFramePlusOne: Int = scala.math.min( startFrame + bufferPageLength, segmentLengths( key._3 ) )
       if(garbageQue.size >= garbageQueBound ) garbageQue.drop(1)
       garbageQue.append( key )
-      tempTraceReader( key._1, new Span(startFrame, endFramePlusOne), key._3 )
+      tempTraceReader( key._1, startFrame to endFramePlusOne, key._3 )
     }
   }
+
 }
