@@ -1,10 +1,12 @@
 package nounou
 
 import java.io.File
+
+import nounou._
+import nounou.data._
 import nounou.data.{XDataChannelArray, XDataChannel, XDataNull, XData}
 import nounou.data.{XLayout, XLayoutNull}
 import nounou.data.formats.{FileLoaderNEV, FileLoaderNCS, FileLoaderNEX}
-import nounou.data._
 import nounou.data.discrete.{XMaskNull, XMask, XEventsNull, XEvents}
 
 
@@ -32,12 +34,12 @@ class DataReader {
   // <editor-fold defaultstate="collapsed" desc=" Java accessors ">
 
   def dataReadTrace(channel: Int): Array[Int] = data.readTrace(channel).toArray
-  def dataReadTrace(channel: Int, span: Span): Array[Int] = data.readTrace(channel, span).toArray
-  def dataReadTrace(channel: Int, span: Span, segment: Int): Array[Int] = data.readTrace(channel, span, segment).toArray
+  def dataReadTrace(channel: Int, range: FrameRange): Array[Int] = data.readTrace(channel, range).toArray
+  def dataReadTrace(channel: Int, range: FrameRange, segment: Int): Array[Int] = data.readTrace(channel, range, segment).toArray
 
   def dataReadTraceAbs(channel: Int): Array[Double] = data.readTraceAbs(channel).toArray
-  def dataReadTraceAbs(channel: Int, span: Span): Array[Double] = data.readTraceAbs(channel, span).toArray
-  def dataReadTraceAbs(channel: Int, span: Span, segment: Int): Array[Double] = data.readTraceAbs(channel, span, segment).toArray
+  def dataReadTraceAbs(channel: Int, range: FrameRange): Array[Double] = data.readTraceAbs(channel, range).toArray
+  def dataReadTraceAbs(channel: Int, range: FrameRange, segment: Int): Array[Double] = data.readTraceAbs(channel, range, segment).toArray
 
   // </editor-fold>
 

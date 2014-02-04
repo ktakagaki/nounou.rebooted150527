@@ -3,7 +3,6 @@ package nounou.data.formats
 import org.scalatest.FunSuite
 import java.io.File
 import nounou.DataReader
-import nounou.data.Span
 import breeze.numerics.pow
 
 /**

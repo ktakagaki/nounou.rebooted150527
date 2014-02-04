@@ -2,8 +2,8 @@ package nounou.data.formats
 
 import java.io.File
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
-import breeze.linalg.{DenseVector, accumulate}
-import nounou.data.{X, Span, XDataChannelFilestream}
+import nounou.data.{X, XDataChannelFilestream}
+import nounou._
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -173,11 +173,9 @@ class XDataChannelNCS
     fileHandle.readInt16 * xBits
   }
 
-  override def readTraceImpl(span: Span, segment: Int): Vector[Int] = {
-    val range = span.getRange( segmentLengths( segment ) )
-
+  override def readTraceImpl(range: FrameRange, segment: Int): Vector[Int] = {
     var (currentRecord, currentIndex) = frameSegmentToRecordIndex( range.start, segment )
-    val (endReadRecord, endReadIndex) = frameSegmentToRecordIndex( range.end - 1, segment ) //range is exclusive of end
+    val (endReadRecord, endReadIndex) = frameSegmentToRecordIndex( range.last, segment ) //range is exclusive of end
     //println( range.start + " d " + range.end)
     //println( "err eri " + (endReadRecord, endReadIndex) )
 
