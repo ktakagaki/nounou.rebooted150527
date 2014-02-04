@@ -1,5 +1,6 @@
 package nounou.data.formats
 
+import nounou._
 import nounou.data._
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
 
@@ -9,9 +10,9 @@ import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
  */
 object FileWriterKlustaDAT extends FileWriter {
 
-  override def write(fileName: String, data: List[X]) = write(fileName, data, 0, Span.All)
+  override def write(fileName: String, data: List[X]) = write(fileName, data, FrameRange.All,  0)
 
-  def write(fileName: String, data: List[X], segment: Int = 0, span: Span ): Unit = {
+  def write(fileName: String, data: List[X], range: FrameRange, segment: Int = 0 ): Unit = {
 
     val actualFileName = {
       if( fileName.toLowerCase.endsWith(".klusta.dat") ) fileName
@@ -33,13 +34,16 @@ object FileWriterKlustaDAT extends FileWriter {
 
     val fileObj = new RandomAccessFile(actualFileName, "w")(ByteConverterLittleEndian)
 
-    val (start: Int, end: Int) = span.getStartEndIndexes( actualXData.segmentLengths(segment) )
-    val tempArray: Array[Short] = new Array[Short]( (end-start +1) * actualXData.channelCount )
-    var index: Int = 0
+    //val realRangegetRangeWithoutNegativeIndexes( actualXData.segmentLengths(segment) )
+    val tempTraces: Array[Array[Short]] =
+            Array.tabulate(actualXData.channelCount)( (ch: Int) => actualXData.readTrace(ch, range, segment).map( (i: Int) => ( i / actualXData.xBits).toShort ).toArray  )
+    val tempArray: Array[Short] = new Array[Short]( range.length * actualXData.channelCount )
 
-    for(frame <- start to end){
+    var index: Int = 0
+    for(frame <- range ){
       for(channel <- 0 until actualXData.channelCount ){
-        tempArray(index) = (actualXData.readPointImpl( channel, frame, segment ) / actualXData.xBits).toShort
+        tempArray(index) = tempTraces(channel)(frame)
+        index += 1
       }
     }
 

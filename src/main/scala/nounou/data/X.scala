@@ -1,5 +1,7 @@
 package nounou.data
 
+import scala.collection.immutable.Vector
+
 /** Base class for all sources
   *
   */
@@ -19,5 +21,8 @@ abstract class X {
 
 
   def isCompatible(that: X): Boolean
+
+  protected def vectZeros(length: Int) = Vector.tabulate(length)( (i: Int) => 0 )
+
 
 }

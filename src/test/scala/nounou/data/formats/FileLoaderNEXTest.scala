@@ -1,6 +1,6 @@
 package nounou.data.formats
 
-import nounou.data.{Span, XData}
+import nounou.data.{XData}
 import org.scalatest.FunSuite
 import java.io.File
 import nounou.DataReader

@@ -1,6 +1,6 @@
 package nounou.data
 
-import nounou.util._
+import nounou._
 import nounou.data.traits.XConcatenatable
 
 /**xdata class with internal representation as data array
@@ -29,14 +29,14 @@ class XDataPreloaded(  val data: Vector[Vector[Vector[Int]]],
     //reading
     override def readPointImpl(channel: Int, frame: Int, segment: Int) = data(channel)(frame)(segment)
 
-    override def readTraceImpl(channel: Int, span: Span, segment: Int) = {
-      span match {
-        case Span.All => data(channel)(segment)
-        case _ => {
-          val slice = span.getStartEndIndexes( segmentLengths(segment) )
-          data(channel)(segment).slice(slice._1, slice._2)
-        }
-      }
+    override def readTraceImpl(channel: Int, range: FrameRange, segment: Int) = {
+//      range match {
+//        case Span.All => data(channel)(segment)
+//        case _ => {
+//          val slice = span.getStartEndIndexes( segmentLengths(segment) )
+          data(channel)(segment).slice(range.start, range.last)
+//        }
+//      }
     }
 
   // <editor-fold desc="XConcatenatable">
