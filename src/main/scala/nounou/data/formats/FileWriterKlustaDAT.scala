@@ -35,12 +35,14 @@ object FileWriterKlustaDAT extends FileWriter {
     val fileObj = new RandomAccessFile(actualFileName, "w")(ByteConverterLittleEndian)
 
     //val realRangegetRangeWithoutNegativeIndexes( actualXData.segmentLengths(segment) )
+
+    val totalLength = actualXData.segmentLengths(segment)
     val tempTraces: Array[Array[Short]] =
             Array.tabulate(actualXData.channelCount)( (ch: Int) => actualXData.readTrace(ch, range, segment).map( (i: Int) => ( i / actualXData.xBits).toShort ).toArray  )
-    val tempArray: Array[Short] = new Array[Short]( range.length * actualXData.channelCount )
+    val tempArray: Array[Short] = new Array[Short]( range.length( totalLength ) * actualXData.channelCount )
 
     var index: Int = 0
-    for(frame <- range ){
+    for(frame <- range.start to range.last( totalLength ) ){
       for(channel <- 0 until actualXData.channelCount ){
         tempArray(index) = tempTraces(channel)(frame)
         index += 1
