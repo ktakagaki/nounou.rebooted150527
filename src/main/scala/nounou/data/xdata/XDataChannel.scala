@@ -1,7 +1,6 @@
 package nounou.data
 
 import nounou._
-import nounou.util._
 import scala.Vector
 import java.io.DataInput
 import nounou.data.traits.{XConcatenatable, XFramesImmutable, XAbsoluteImmutable}
@@ -32,7 +31,8 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
   /** Read a single trace from the data, in internal integer scaling.
     */
   final def readTrace(segment: Int): Vector[Int] = {
-    readTraceImpl(FrameRange.All, currentSegment = segment)
+    val range = FrameRange.All.validRange( segmentLengths(segment) )
+    readTraceImpl(range, currentSegment = segment)
   }
   /** Read a single trace (within the span) from the data, in internal integer scaling.
     */
@@ -61,11 +61,12 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
   /** CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
     * Should return a defensive clone.
     */
-  def readTraceImpl(range: FrameRange, segment: Int): Vector[Int] = {
+  def readTraceImpl(range: Range.Inclusive, segment: Int): Vector[Int] = {
     //Impls only get real ranges
     //val realRange = range.getRangeWithoutNegativeIndexes( segmentLengths(segment) )
+    val totalLengths = segmentLengths( segment )
     val res = new Array[Int]( range.length )
-    forJava(range.start, range.last + 1, range.step, (c: Int) => (res(c) = readPointImpl(c, segment)))
+    forJava(range.start, range.end + 1, range.step, (c: Int) => (res(c) = readPointImpl(c, segment)))
     res.toVector
   }
 

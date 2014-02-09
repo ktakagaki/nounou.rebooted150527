@@ -1,7 +1,6 @@
 package nounou.data
 
 import nounou._
-import nounou.util.forJava
 import scala.collection.immutable.Vector
 import nounou.data.traits._
 
@@ -52,17 +51,21 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   /** Read a single trace from the data, in internal integer scaling.
     */
   final def readTrace(channel: Int, range: FrameRange, segment: Int): Vector[Int] = {
-
+    //println("v "+ range.start + " ")
     require(isValidChannel(channel), "Invalid channel: " + channel.toString)
 
     //val realRange = range.getRangeWithoutNegativeIndexes( segmentLengths(segment) )
 //    require(realRange.max < segmentLengths(segment), "Span is out of range, realRange.max >= segmentLengths(segment)!")
 //    require(realRange.min >= 0, "Span is out of range, realRange.min < 0 !")
-    val segLen =  segmentLengths(segment)
-    val preLength = range.preLength( segLen )
-    val postLength = range.postLength( segLen )
+    val totalLength =  segmentLengths(segment)
+        val preLength = range.preLength( totalLength )
+        val postLength = range.postLength( totalLength )
 
-    vectZeros( preLength ) ++ readTraceImpl(channel, range.validRange( segLen ), (currentSegment = segment)) ++ vectZeros( postLength )
+    //println("r " + range.start + " " + range.last( totalLength ) + " " + range.step + " " + segment)
+    val vr = range.validRange(totalLength)
+    //println("vr " + vr.start + " " + vr.end + " " + vr.step )
+    vectZeros( preLength ) ++ readTraceImpl(channel, vr, (currentSegment = segment)) ++ vectZeros( postLength )
+
   }
 
   /** Read a single trace (within the span) from current segment (or segment 0 if not initialized), in absolute unit scaling (as recorded).
@@ -87,13 +90,14 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   /** CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
     * Should return a defensive clone.
     */
-  def readTraceImpl(channel: Int, range: FrameRange, segment: Int): Vector[Int] = {
+  def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] = {
     //    span match {
     //      case Span.All => readTraceImpl(channel, segment)
     //      case _ => readTraceImpl(channel, span, segment)
     //    }
+//    val totalLengths = segmentLengths(segment)
     val res = new Array[Int]( range.length )
-    forJava(range.start, range.last + 1, range.step, (c: Int) => (res(c) = readPointImpl(channel, c, segment)))
+    forJava(range.start, range.end + 1, range.step, (c: Int) => (res(c) = readPointImpl(channel, c, segment)))
     res.toVector
   }
 

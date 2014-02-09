@@ -14,14 +14,21 @@ class FileLoaderNCSTest extends FunSuite {
   val testFileTet4a = new File( getClass.getResource("/_testFiles/Neuralynx/t130911/Tet4a.ncs").getPath() )
 
   test("readTrace"){
+
     val d = new DataReader
     d.reload( testFileTet4a )
     assert(d.data.segmentCount == 3, "Segment count " + d.data.segmentCount + " should be 3!" )
 
+    println(d.data.readTrace(0, FrameRange.All, 0).length)
+    println(d.data.readTrace(0, FrameRange.All, 1).length)
+
     assert(d.data.readTrace(0, FrameRange.All, 0).length == 3339264, "read whole segment length incorrect!")
 
     val tempTrace1 = d.data.readTrace(0, 0 to 5120, 0)
-    //println(Span.Seq(0, 5120, 1).length(3339265))
+
+//    println( tempTrace1.length )
+//    println( (0 to 5120) )
+
     val xBits = d.data.xBits
     assert(tempTrace1(0)/xBits == -888, "tempTrace1-0: read value incorrect!")
     assert(tempTrace1(1)/xBits == -603, "tempTrace1-1: read value incorrect!")

@@ -25,13 +25,14 @@ trait XDataFilterTrBuffer extends XDataFilterTr {
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = {
     buffer( (channel, getBufferPage(frame), segment) )( getBufferIndex(frame) )
   }
-  override def readTraceImpl(channel: Int, range: FrameRange, segment: Int): Vector[Int] = {
+  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] = {
+    val totalLength = segmentLengths(segment)
     val tempret = ArrayBuffer[Int]()
-      tempret.sizeHint(range.length)
-    val startPage = getBufferPage(range.start)
+      tempret.sizeHint(range.length )
+    val startPage =  getBufferPage( range.start)
     val startIndex = getBufferIndex(range.start)
-    val endPage = getBufferPage(range.last)
-    val endIndex = getBufferIndex(range.last)
+    val endPage =    getBufferPage( range.end )
+    val endIndex =   getBufferIndex(range.end )
 
     if(startPage == endPage) buffer( (channel, startPage, segment) ).slice(startIndex, endIndex)
     else {
@@ -47,7 +48,7 @@ trait XDataFilterTrBuffer extends XDataFilterTr {
   }
 
   //redirection function to deal with scope issues regarding super
-  private def tempTraceReader(ch: Int, range: FrameRange, segment: Int) = super.readTraceImpl(ch, range, segment)
+  private def tempTraceReader(ch: Int, range: Range.Inclusive, segment: Int) = super.readTraceImpl(ch, range, segment)
 
   class ReadingHashMapBuffer extends HashMap[(Int, Int, Int), Vector[Int]] {
 
@@ -56,7 +57,7 @@ trait XDataFilterTrBuffer extends XDataFilterTr {
       val endFramePlusOne: Int = scala.math.min( startFrame + bufferPageLength, segmentLengths( key._3 ) )
       if(garbageQue.size >= garbageQueBound ) garbageQue.drop(1)
       garbageQue.append( key )
-      tempTraceReader( key._1, startFrame to endFramePlusOne, key._3 )
+      tempTraceReader( key._1, new Range.Inclusive(startFrame, endFramePlusOne, 1), key._3  )
     }
   }
 

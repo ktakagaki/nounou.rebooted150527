@@ -26,7 +26,7 @@ class XDataFilterFIR( upstream: XData ) extends XDataFilter(upstream) {
       1
     }
 
-  override def readTraceImpl(channel: Int, range: FrameRange, segment: Int): Vector[Int] =
+  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] =
     if(kernel == null){
       upstream.readTraceImpl(channel, range, segment)
     } else {
