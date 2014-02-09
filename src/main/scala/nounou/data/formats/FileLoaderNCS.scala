@@ -173,9 +173,9 @@ class XDataChannelNCS
     fileHandle.readInt16 * xBits
   }
 
-  override def readTraceImpl(range: FrameRange, segment: Int): Vector[Int] = {
-    var (currentRecord, currentIndex) = frameSegmentToRecordIndex( range.start, segment )
-    val (endReadRecord, endReadIndex) = frameSegmentToRecordIndex( range.last, segment ) //range is exclusive of end
+  override def readTraceImpl(range: Range.Inclusive, segment: Int): Vector[Int] = {
+    var (currentRecord: Int, currentIndex: Int) = frameSegmentToRecordIndex( range.start, segment )
+    val (endReadRecord: Int, endReadIndex: Int) = frameSegmentToRecordIndex( range.end, segment ) //range is exclusive of last
     //println( range.start + " d " + range.end)
     //println( "err eri " + (endReadRecord, endReadIndex) )
 

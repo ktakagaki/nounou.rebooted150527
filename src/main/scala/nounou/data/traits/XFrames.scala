@@ -79,7 +79,7 @@ trait XFrames extends X {
     require( isValidFrame(frame, segment) )
     segmentStartTSs(segment) + (frame.toDouble * tsPerFrame).toLong
   }
-  /** Closest frame/segment index to the given timestamp. Will give beginning or end frames, if timestamp is
+  /** Closest frame/segment index to the given timestamp. Will give beginning or last frames, if timestamp is
     * out of range.
     */
   final def tsToFrame(timestamp: Long, negativeIfOOB: Boolean = false): (Int, Int) = {
