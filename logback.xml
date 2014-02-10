@@ -1,0 +1,51 @@
+<configuration>
+
+    <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- deny all events with a level below INFO, that is TRACE and DEBUG -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <!-- encoders are assigned the type
+              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{35} - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>nounou_log.txt</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>nounou_log.%d{yyyy-MM-dd}.txt</fileNamePattern>
+
+            <!-- keep 30 days' worth of history -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{35} - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+ <!--   <appender name="FILE" class="ch.qos.logback.core.FileAppender">     -->
+        <!--  <file>testFile.log</file> -->
+    <!--        <file>nounou_log-${bySecond}.txt</file>
+           <append>true</append>                                           -->
+           <!-- encoders are assigned the type
+                ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <!--      <encoder>
+             <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{35} - %msg%n</pattern>
+         </encoder>
+     </appender>  -->
+
+    <root level="TRACE">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT" />
+    </root>
+    <!-- <logger level="INFO" additivity="false">
+    </logger> -->
+
+
+</configuration>

@@ -2,10 +2,8 @@ package nounou
 
 import java.io.File
 
-import nounou._
+import com.typesafe.scalalogging.slf4j.Logging
 import nounou.data._
-import nounou.data.{XDataChannelArray, XDataChannel, XDataNull, XData}
-import nounou.data.{XLayout, XLayoutNull}
 import nounou.data.formats.{FileLoaderNEV, FileLoaderNCS, FileLoaderNEX}
 import nounou.data.discrete.{XMaskNull, XMask, XEventsNull, XEvents}
 
@@ -13,7 +11,7 @@ import nounou.data.discrete.{XMaskNull, XMask, XEventsNull, XEvents}
 /**
  * @author ktakagaki
  */
-class DataReader {
+class DataReader extends Logging {
 
   /**Header object covering the whole block.*/
   var header: XHeader = XHeaderNull
@@ -119,9 +117,9 @@ class DataReader {
         else if( reloadFlagHead == 0 ) {
           if( header.isCompatible(x0) ) {
             //ToDo 3: implement concatenating/comparing header?
-            println("Compatible header already loaded, ignoring new header " + x0 + ". Use clearHead first or reload() instead of load(), if this is unintended.")
+            logger.warn("Compatible header already loaded, ignoring new header {}. Use clearHead first or reload() instead of load(), if this is unintended.", x0)
           } else {
-            println("Incompatible header already loaded, ignoring new header " + x0 + ". Use clearHead first or reload() instead of load(), if this is unintended.")
+            logger.warn("Incompatible header already loaded, ignoring new header {}. Use clearHead first or reload() instead of load(), if this is unintended.", x0)
           }
         }
       }
@@ -145,7 +143,7 @@ class DataReader {
             } else if ( dataAux.isCompatible(x0) /*reloadFlagDataAux == 0 or 2*/ ) {
               dataAux = dataAux ::: x0
             } else {
-              println("Incompatible data already loaded in data and dataAux, ignoring new data " + x0 + ". Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.")
+              logger.warn("Incompatible data already loaded in data and dataAux, ignoring new data {}. Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.", x0)
             }
         }
       }
@@ -178,11 +176,11 @@ class DataReader {
                           if ( dataAux0.isCompatible(x0) /*reloadFlagDataAux == 0 or 2*/ ) {
                             dataAux = dataAux0 ::: x0
                           } else {
-                            println("Incompatible data already loaded in data and dataAux, ignoring new data " + x0 + ". Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.")
+                            logger.warn("Incompatible data already loaded in data and dataAux, ignoring new data {}. Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.", x0)
                           }
                         }
                         case _ => {
-                          println("Incompatible data already loaded in data and dataAux, ignoring new data " + x0 + ". Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.")
+                          logger.warn("Incompatible data already loaded in data and dataAux, ignoring new data {}}. Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.", x0)
                         }
                       }
                   }
@@ -198,11 +196,11 @@ class DataReader {
                       if ( dataAux0.isCompatible(x0) /*reloadFlagDataAux == 0 or 2*/ ) {
                         dataAux = dataAux0 ::: x0
                       } else {
-                        println("Incompatible data already loaded in data and dataAux, ignoring new data " + x0 + ". Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.")
+                        logger.warn("Incompatible data already loaded in data and dataAux, ignoring new data {}. Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.", x0)
                       }
                     }
                     case _ => {
-                      println("Incompatible data already loaded in data and dataAux, ignoring new data " + x0 + ". Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.")
+                      logger.warn("Incompatible data already loaded in data and dataAux, ignoring new data {}. Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.", x0)
                     }
                   }
                 }
@@ -218,7 +216,7 @@ class DataReader {
             reloadFlagEvents match {
               case 0 => { //not reloading, but concatenating
                 if( events.isCompatible(x0) ) events = events ::: x0
-                else println("Incompatible event objects already loaded, ignoring new XEvent " + x0 + ". Use clearEvents first or reload() instead of load(), if this is unintended.")
+                else logger.warn("Incompatible event objects already loaded, ignoring new XEvent {}. Use clearEvents first or reload() instead of load(), if this is unintended.", x0)
               }
               case 1 => { //reloading, not cleared previous data yet
                 events = x0
@@ -226,12 +224,12 @@ class DataReader {
               }
               case 2 => { //reloading, has already cleared
                 if( events.isCompatible(x0) ) events = events ::: x0
-                else println("Trying to load incompatible event objects, ignoring further new XEvent " + x0 + ".")
+                else logger.warn("Trying to load incompatible event objects, ignoring further new XEvent {}.", x0)
               }
             }
           }
       }
-      case x0: X => sys.error("Loading of this type of " + x0 + " has not been implemented!")
+      case x0: X => logger.warn("Loading of this type of {} has not been implemented!", x0)
     }
   }
 

@@ -3,13 +3,14 @@ package nounou.data
 import nounou._
 import scala.collection.immutable.Vector
 import nounou.data.traits._
+import com.typesafe.scalalogging.slf4j.Logging
 
 /** Base class for data encoded as Int arrays.
   * This object is mutable, to allow inheritance by [[nounou.data.filters.XDataFilter]].
   * Each trace of data must share the following variables:
   * sampling, start, length, xBits, absGain, absOffset, absUnit
   */
-abstract class XData extends X with XConcatenatable with XFrames with XChannels with XAbsolute {
+abstract class XData extends X with XConcatenatable with XFrames with XChannels with XAbsolute with Logging {
 
 
   //<editor-fold desc="reading a point">
