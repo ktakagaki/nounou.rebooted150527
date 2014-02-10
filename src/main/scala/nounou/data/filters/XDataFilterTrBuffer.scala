@@ -3,6 +3,7 @@ package nounou.data.filters
 import nounou._
 import breeze.linalg.RangeExtender
 import scala.collection.mutable.{ArrayBuffer, HashMap}
+import com.typesafe.scalalogging.slf4j.Logging
 
 /** Buffer filter, which will save intermediate calculation results for an XData object.
   */
@@ -14,7 +15,11 @@ trait XDataFilterTrBuffer extends XDataFilterTr {
   lazy val bufferPageLength: Int = (32768 / 2) //default page length will be 32 kB
   lazy val garbageQueBound: Int = 1073741824 / 8 / (bufferPageLength * 2)  //default buffer maximum size will be 128 MB
 
+  logger.debug("initialized XDataFilterTrBuffer w/ bufferPageLength={} and garbageQueBound={}", bufferPageLength.toString, garbageQueBound.toString)
+
+
   def flushBuffer(): Unit = {
+    logger.debug( "flushBuffer() pre, buffer.size={}, garbageQue.length={}", buffer.size.toString, garbageQue.length.toString )
     buffer.clear()
     garbageQue.clear()
   }

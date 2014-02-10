@@ -15,6 +15,7 @@ libraryDependencies ++= Seq(
   "org.scalanlp" %% "breeze-macros" % "0.2-SNAPSHOT" % "compile",
   "org.scalacheck" %% "scalacheck" % "1.10.0" % "test",
   "org.scalatest" %% "scalatest" % "2.0.M5b" % "test",
+  "com.typesafe" %% "scalalogging-slf4j" % "1.0.1",
   "org.scalafx" % "scalafx_2.10" % "1.0.0-M7"
   )
 

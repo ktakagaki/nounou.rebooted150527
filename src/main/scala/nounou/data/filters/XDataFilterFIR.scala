@@ -2,8 +2,9 @@ package nounou.data.filters
 
 import nounou._
 import nounou.data.{XData, X}
-import breeze.signal.support.FIRKernel1D
 import breeze.linalg.DenseVector
+import breeze.signal.support.FIRKernel1D
+import breeze.signal.{OptWindowFunction, designFilterFirwin}
 
 /**
  * @author ktakagaki
@@ -11,7 +12,20 @@ import breeze.linalg.DenseVector
  */
 class XDataFilterFIR( upstream: XData ) extends XDataFilter(upstream) {
 
-  var kernel: FIRKernel1D[Int] = null
+  var kernel: FIRKernel1D[Long] = null
+
+  def setFilter( omega0: Double, omega1: Double ): Unit = {
+    require(omega0>= 0 && omega1 > omega0 && omega1 <= 1,
+      logger.error("setFilter: Frequencies must be 0 <= omega0 < omega1 <= 1. omega0={}, omega1={}. Use setFilterHz if setting in Hz.", omega0.toString, omega1.toString) )
+    if(omega0 == 0d && omega1 == 1d) kernel = null
+    else kernel = designFilterFirwin[Long](sampleRate.toInt*2, DenseVector[Double](omega0, omega1), nyquist = 1d,
+                                          zeroPass = false, scale=true, multiplier = 1024d)
+  }
+
+  def setFilterHz( f0: Double, f1: Double ): Unit = {
+    require(f0 >= 0 && f1 > f0 && f1 <= sampleRate/2, logger.error("setFilterHz: Frequencies must be 0 <= f0 < f1 <= sampleRate/2. f0={}, f1={}", f0.toString, f1.toString) )
+    setFilter(f0/(sampleRate/2d), f1/(sampleRate/2d))
+  }
 
 
 
@@ -20,7 +34,7 @@ class XDataFilterFIR( upstream: XData ) extends XDataFilter(upstream) {
     if(kernel == null){
       upstream.readPointImpl(channel, frame, segment)
     } else {
-      val kernelLength = kernel.length
+//      val kernelLength = kernel.length
 //      upstream.readTraceImpl(channel, )
 //      convolve( )
       1

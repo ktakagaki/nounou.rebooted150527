@@ -3,6 +3,7 @@
   <component name="FacetManager">
     <facet type="scala" name="Scala">
       <configuration>
+        <option name="compileOrder" value="ScalaThenJava" />
         <option name="compilerLibraryLevel" value="Global" />
         <option name="compilerLibraryName" value="scala-compiler" />
         <option name="explainTypeErrors" value="true" />
@@ -37,8 +38,12 @@
     </orderEntry>
     <orderEntry type="library" name="scala-compiler" level="application" />
     <orderEntry type="library" scope="TEST" name="org.scalatest:scalatest_2.10.0-RC5:2.0.M5-B1" level="project" />
-    <orderEntry type="library" name="org.scalafx:scalafx_2.10:1.0.0-M5" level="project" />
     <orderEntry type="library" name="org.scalanlp:breeze-macros_2.10:0.1" level="project" />
+    <orderEntry type="library" name="com.typesafe:scalalogging-slf4j_2.10:1.1.0" level="project" />
+    <orderEntry type="library" name="org.slf4j:slf4j-api:1.7.6" level="project" />
+    <orderEntry type="library" name="ch.qos.logback:logback-classic:1.0.11" level="project" />
+    <orderEntry type="library" name="ch.qos.logback:logback-core:1.0.11" level="project" />
+    <orderEntry type="library" name="org.scalafx:scalafx_2.10:1.0.0-M7" level="project" />
   </component>
 </module>
 
