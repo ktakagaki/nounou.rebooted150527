@@ -23,4 +23,13 @@ The package has two goals:
 
 
 Many of Nounou's routines are based on the numerical processing library [breeze](http://github.com/scalanlp/breeze).
-See here for a list of comparable projects.
+
+
+Documentation
+- A list of comparable projects.
+- [Supported formats](/docs/formats.md)
+- Installing
+- Basic use examples
+    -   MATLAB
+    -   Mathematica
+- API
