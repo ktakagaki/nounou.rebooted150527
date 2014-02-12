@@ -1,3 +1,5 @@
+import breeze.linalg.DenseVector
+import breeze.macros.expand
 import nounou.data.XData
 import scala.math
 
@@ -16,6 +18,12 @@ package object nounou {
 //      xd.tsToFrame()
 //    }
   }
+
+//  Doesn't really work due to implicit definitions of the relevant functions, such as convolve
+//  @expand
+//  implicit def vectorToDenseVector[@expand.args(Int, Double, Long, Float) T]( vector: Vector[T] ): DenseVector[T] = {
+//    DenseVector[T]( vector.toArray )
+//  }
 
   implicit def rangeInclusiveToFrameRange(range: Range.Inclusive): FrameRange = {
     //require( range.isInclusive, "Exclusive indexing with 'until' is not permitted in nounou, use inclusive 'to'!" )
