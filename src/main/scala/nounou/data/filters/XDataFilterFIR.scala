@@ -4,7 +4,7 @@ import nounou._
 import nounou.data.{XData, X}
 import breeze.linalg.DenseVector
 import breeze.signal.support.FIRKernel1D
-import breeze.signal.{OptWindowFunction, designFilterFirwin}
+import breeze.signal._
 
 /**
  * @author ktakagaki
@@ -34,17 +34,20 @@ class XDataFilterFIR( upstream: XData ) extends XDataFilter(upstream) {
     if(kernel == null){
       upstream.readPointImpl(channel, frame, segment)
     } else {
-//      val kernelLength = kernel.length
-//      upstream.readTraceImpl(channel, )
-//      convolve( )
-      1
+      //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
+      val tempData = upstream.readTrace( channel, (frame - kernel.overhangPre) to (frame + kernel.overhangPost), segment)
+      val tempRet = convolve( DenseVector( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None )
+      require( tempRet.length == 1, "something is wrong with the convolution!" )
+      tempRet(0).toInt
     }
 
   override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] =
     if(kernel == null){
       upstream.readTraceImpl(channel, range, segment)
     } else {
-      null
+      //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
+      val tempData = upstream.readTrace( channel, (range.start - kernel.overhangPre) to (range.last + kernel.overhangPost), segment)
+      convolve( DenseVector( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None ).toArray.toVector.map(_.toInt)
     }
 
   override def readFrameImpl(frame: Int, segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame, segment)

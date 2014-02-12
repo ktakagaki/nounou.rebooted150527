@@ -30,14 +30,7 @@ class XDataPreloaded(  val data: Vector[Vector[Vector[Int]]],
     override def readPointImpl(channel: Int, frame: Int, segment: Int) = data(channel)(frame)(segment)
 
     override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int) = {
-//      range match {
-//        case Span.All => data(channel)(segment)
-//        case _ => {
-//          val slice = span.getStartEndIndexes( segmentLengths(segment) )
-      val totalLength = segmentLengths( segment )
-          data(channel)(segment).slice(range.start, range.end )
-//        }
-//      }
+      data(channel)(segment).slice(range.start, range.end )
     }
 
   // <editor-fold desc="XConcatenatable">
