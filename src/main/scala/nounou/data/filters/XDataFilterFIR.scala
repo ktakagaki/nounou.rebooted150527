@@ -14,12 +14,29 @@ class XDataFilterFIR( upstream: XData ) extends XDataFilter(upstream) {
 
   var kernel: FIRKernel1D[Long] = null
 
+  // <editor-fold defaultstate="collapsed" desc=" filter settings ">
+
+  def setFilterOff(): Unit = if(kernel == null){
+    logger.info( "XDataFilterFIR: filter is already off, not changing. ")
+  } else {
+    logger.info( "XDataFilterFIR: Turning filter kernel off." )
+    kernel = null
+  }
+
   def setFilter( omega0: Double, omega1: Double ): Unit = {
     require(omega0>= 0 && omega1 > omega0 && omega1 <= 1,
-      logger.error("setFilter: Frequencies must be 0 <= omega0 < omega1 <= 1. omega0={}, omega1={}. Use setFilterHz if setting in Hz.", omega0.toString, omega1.toString) )
-    if(omega0 == 0d && omega1 == 1d) kernel = null
-    else kernel = designFilterFirwin[Long](sampleRate.toInt*2, DenseVector[Double](omega0, omega1), nyquist = 1d,
-                                          zeroPass = false, scale=true, multiplier = 1024d)
+      logger.error(
+        "XDataFilterFIR.setFilter: Frequencies must be 0 <= omega0 < omega1 <= 1. omega0={}, omega1={}. Use setFilterHz if setting in Hz.",
+        omega0.toString, omega1.toString)
+    )
+
+    if(omega0 == 0d && omega1 == 1d)
+      setFilterOff()
+    else {
+      kernel = designFilterFirwin[Long](sampleRate.toInt*2, DenseVector[Double](omega0, omega1), nyquist = 1d,
+        zeroPass = false, scale=true, multiplier = 1024d)
+      logger.info( "XDataFilterFIR: set kernel to {}", kernel )
+    }
   }
 
   def setFilterHz( f0: Double, f1: Double ): Unit = {
@@ -27,7 +44,7 @@ class XDataFilterFIR( upstream: XData ) extends XDataFilter(upstream) {
     setFilter(f0/(sampleRate/2d), f1/(sampleRate/2d))
   }
 
-
+  // </editor-fold>
 
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =

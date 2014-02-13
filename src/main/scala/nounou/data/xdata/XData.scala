@@ -13,7 +13,7 @@ import com.typesafe.scalalogging.slf4j.Logging
 abstract class XData extends X with XConcatenatable with XFrames with XChannels with XAbsolute with Logging {
 
 
-  //<editor-fold desc="reading a point">
+  //<editor-fold defaultstate="collapsed" desc="reading a point">
   /** Read a single point from the data, in internal integer scaling, after checking values.
     * Implement via readPointImpl.
     */
@@ -39,7 +39,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   def readPointImpl(channel: Int, frame: Int, segment: Int): Int
 
 
-  //<editor-fold desc="reading a trace">
+  //<editor-fold defaultstate="collapsed" desc="reading a trace">
 
   /** Read a single trace from current segment (or segment 0 if not initialized), in internal integer scaling.
     */
@@ -69,6 +69,24 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   }
 
+  /** Read a single trace from the data, in internal integer scaling.
+    */
+  final def readTraceFromTS(channel: Int, ts: Long, preFrames: Int = 0, postFrames: Int = 0, nullIfOOB: Boolean = true): Vector[Int] = {
+    require(isValidChannel(channel), "Invalid channel: " + channel.toString)
+
+    val keyFrame = tsToFrameSegment(ts, negativeIfOOB = true)
+
+    if( nullIfOOB ){
+      if( keyFrame._1 - postFrames < 0 || keyFrame._1 + postFrames >= segmentLengths( keyFrame._2 ) ) null
+           //readTraceImpl will only read within range
+      else readTraceImpl( channel, (keyFrame._1 - postFrames) to (keyFrame._1 + postFrames), keyFrame._2 )
+    } else {
+      //readTrace pads with zeros if out of range
+      readTrace( channel, (keyFrame._1 - postFrames) to (keyFrame._1 + postFrames), keyFrame._2 )
+    }
+
+  }
+
   /** Read a single trace (within the span) from current segment (or segment 0 if not initialized), in absolute unit scaling (as recorded).
     */
   final def readTraceAbs(channel: Int, range: FrameRange = FrameRange.All): Vector[Double] = toAbs(readTrace(channel, range))
@@ -79,30 +97,16 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   //</editor-fold>
 
-//  /** CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
-//    * Should return a defensive clone.
-//    */
-//  def readTraceImpl(channel: Int, segment: Int): Vector[Int] = {
-//    val res = new Array[Int]( length(segment) )
-//    forJava(0, res.length, 1, (c: Int) => (res(c) = readPointImpl(channel, c, segment)))
-//    res.toVector
-//  }
-
   /** CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
-    * Should return a defensive clone.
+    * Should return a defensive clone. Assumes that channel and range are within the data range!
     */
   def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] = {
-    //    span match {
-    //      case Span.All => readTraceImpl(channel, segment)
-    //      case _ => readTraceImpl(channel, span, segment)
-    //    }
-//    val totalLengths = segmentLengths(segment)
     val res = new Array[Int]( range.length )
     forJava(range.start, range.end + 1, range.step, (c: Int) => (res(c) = readPointImpl(channel, c, segment)))
     res.toVector
   }
 
-  //<editor-fold desc="reading a frame">
+  //<editor-fold defaultstate="collapsed" desc="reading a frame">
 
   /** Read a single frame from the data, in internal integer scaling, for just the specified channels.
     */
@@ -126,7 +130,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   //</editor-fold>
 
   /** CAN OVERRIDE: Read a single frame from the data, in internal integer scaling.
-    * Should return a defensive clone.
+    * Should return a defensive clone. Assumes that frame is within the data range!
     */
   def readFrameImpl(frame: Int, segment: Int): Vector[Int] = {
     val res = new Array[Int](channelCount)
@@ -134,14 +138,13 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     res.toVector
   }
   /** CAN OVERRIDE: Read a single frame from the data, for just the specified channels, in internal integer scaling.
-    * Should return a defensive clone.
+    * Should return a defensive clone. Assumes that frame and channels are within the data range!
     */
   def readFrameImpl(frame: Int, channels: Vector[Int], segment: Int): Vector[Int] = {
     val res = new Array[Int]( channels.length )
     forJava(0, channels.length, 1, (channel: Int) => res(channel) = readPointImpl(channel, frame, segment))
     res.toVector
   }
-
 
 
   // <editor-fold defaultstate="collapsed" desc="XConcatenatable">
@@ -159,6 +162,10 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   override def :::(x: X): XData
 
   // </editor-fold>
+
+  override def toString() = {
+    "XData( " + channelCount + " channels, "+ segmentCount + " segments, with lengths " + segmentLengths + ", fs=" + sampleRate + ")"
+  }
 
 }
 

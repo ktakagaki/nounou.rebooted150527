@@ -58,7 +58,10 @@ class XEvents(val events: TreeMap[Long, XEvent], val name: String ) extends  X w
 
   // </editor-fold>
 
-
+  override def toString() = {
+    "XEvents( " + length + " events total, name=" + name + " )"
   }
+
+}
 
 object XEventsNull extends XEvents(TreeMap[Long, XEvent](), "Null events!")
