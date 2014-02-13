@@ -71,42 +71,85 @@ trait XFrames extends X {
   def framesPerTS = 1D/tsPerFrame
 
   // </editor-fold>
-  // <editor-fold desc="Sample Rate: frameToTS/tsToFrame">
+  // <editor-fold defaultstate="collapsed" desc="Sample Rate: frameToTS/tsToFrame">
 
   /** Timestamp of the given data frame index (in microseconds).
     */
-  final def frameToTS(frame:Int, segment: Int): Long = {
+  final def frameSegmentToTS(frame:Int, segment: Int): Long = {
     require( isValidFrame(frame, segment) )
     segmentStartTSs(segment) + (frame.toDouble * tsPerFrame).toLong
   }
   /** Closest frame/segment index to the given timestamp. Will give beginning or last frames, if timestamp is
     * out of range.
     */
-  final def tsToFrame(timestamp: Long, negativeIfOOB: Boolean = false): (Int, Int) = {
-    if(timestamp <= segmentStartTSs(0) ){
-      (0, 0)
+  final def tsToFrameSegment(timestamp: Long, negativeIfOOB: Boolean = true): (Int, Int) = {
+    var tempret: (Int, Int) = (0 , 0 )
+    var changed = false
+
+    if( /* TS cond */ timestamp <= segmentStartTSs(0) ){
+        if( negativeIfOOB )  tempret = ( ((timestamp-segmentStartTSs(0)) * framesPerTS).toInt, 0)
+        else tempret = (0, 0)
     } else {
-      var tempret = (0, 0)
+        var seg = 0
+        while(seg < segmentCount - 1 && !changed ){
+            if(        /* TS cond */  timestamp <= segmentEndTSs(seg) ){
+                tempret = ( ((timestamp-segmentStartTSs(seg)) * framesPerTS).toInt, seg)
+                changed = true
+            } else if( /* TS cond */ timestamp < segmentStartTSs(seg+1) ) {
+                if(    /* TS cond */ timestamp - segmentEndTSs(seg) < segmentStartTSs(seg+1) - timestamp){
+                    if( negativeIfOOB )  tempret = (((timestamp-segmentStartTSs(seg)) * framesPerTS).toInt, seg)
+                    else tempret = ( segmentLengths(seg) - 1, seg )
+                    changed = true
+                } else {
+                    if( negativeIfOOB )  tempret = (((timestamp-segmentStartTSs(seg + 1)) * framesPerTS).toInt, seg + 1)
+                    else tempret = (0, seg + 1)
+                    changed = true
+                }
+            } else {
+              seg += 1
+            }
+        }
+        if( !changed ){
+          if(timestamp <= segmentEndTSs(segmentCount -1)){
+              tempret = ( ((timestamp - segmentStartTSs(segmentCount-1)) * framesPerTS).toInt, segmentCount - 1 )
+          } else {
+              if( negativeIfOOB )  tempret = ( ((timestamp - segmentStartTSs(segmentCount-1)) * framesPerTS).toInt, segmentCount - 1 )
+              else tempret = ( segmentLengths(segmentCount-1)-1, segmentCount -1)
+          }
+        }
+    }
+
+    if( !negativeIfOOB )  require( tempret._1 >= 0 && tempret._1 < segmentLengths( tempret._2 ), "This must be a bug!")
+
+    tempret
+
+  }
+
+
+  /** Closest segment index to the given timestamp.
+    */
+  final def tsToClosestSegment(timestamp: Long): Int = {
+    if(timestamp <= segmentStartTSs(0) ){
+      0
+    } else {
+      var tempret = 0
       var seg = 0
-      while(seg < segmentCount - 1 && tempret == (0, 0)){
+      while(seg < segmentCount - 1 && tempret == 0){
         if( timestamp < segmentEndTSs(seg) ){
-          tempret = (((timestamp-segmentStartTSs(seg)) * framesPerTS).toInt, seg)
+          tempret = seg
         } else if(timestamp < segmentStartTSs(seg+1)) {
-          tempret = if(timestamp - segmentEndTSs(seg) < segmentStartTSs(seg+1) - timestamp) (segmentLengths(seg)-1, seg) else (0, seg + 1)
+          tempret = if(timestamp - segmentEndTSs(seg) < segmentStartTSs(seg+1) - timestamp) seg else seg + 1
         } else {
           seg += 1
         }
       }
-      if(tempret == (0, 0)){
-        if(timestamp <= segmentEndTSs(segmentCount -1)){
-          tempret = ( ((timestamp - segmentStartTSs(segmentCount-1)) * framesPerTS).toInt, segmentCount - 1 )
-        } else {
-          tempret = ( segmentLengths(segmentCount-1)-1, segmentCount -1)
-        }
+      if(tempret == 0){
+        tempret = segmentCount - 1
       }
       tempret
     }
   }
+
   // </editor-fold>
 
   // <editor-fold desc="XConcatenatable">

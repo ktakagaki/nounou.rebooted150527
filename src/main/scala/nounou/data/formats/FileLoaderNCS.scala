@@ -121,14 +121,15 @@ object FileLoaderNCS extends FileLoaderNLX {
 
 // </editor-fold>
 
-      List[X](
-        new XDataChannelNCS(fileHandle = fHand,
-                            absGain = 1.0E6 * tempADBitVolts / xBitsD,
-                            segmentLengths = tempLengths,
-                            segmentStartTSs = tempStartTimestamps,
-                            channelName = tempAcqEntName
-        )
-      )
+    val xDataChannelNCS = new XDataChannelNCS(fileHandle = fHand,
+      absGain = 1.0E6 * tempADBitVolts / xBitsD,
+      segmentLengths = tempLengths,
+      segmentStartTSs = tempStartTimestamps,
+      channelName = tempAcqEntName
+    )
+
+    logger.info( "FileLoaderNCS: loaded {}", xDataChannelNCS )
+    List[X]( xDataChannelNCS )
 
   }
 

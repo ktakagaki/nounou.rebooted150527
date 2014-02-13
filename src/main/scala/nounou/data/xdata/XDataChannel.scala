@@ -104,6 +104,10 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
 
   // </editor-fold>
 
+  override def toString() = {
+    "XDataChannel( " + segmentCount + " segments, with lengths " + segmentLengths + ", fs=" + sampleRate + ")"
+  }
+
 }
 
 abstract class XDataChannelFilestream extends XDataChannel {

@@ -59,7 +59,10 @@ object FileLoaderNEV extends FileLoaderNLX {
 
     // </editor-fold>
 
-    List[X]( new XEvents( TreeMap(eventMap.toArray:_*), file.getName ) )
+    val xEvents = new XEvents( TreeMap(eventMap.toArray:_*), file.getName )
+    logger.info( "FileLoaderNEV: loaded {} ", xEvents )
+
+    List[X]( xEvents )
   }
 
 }

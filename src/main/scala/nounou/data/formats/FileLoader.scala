@@ -2,10 +2,11 @@ package nounou.data.formats
 
 import java.io.File
 import nounou.data.X
+import com.typesafe.scalalogging.slf4j.Logging
 
 
 
-trait FileLoader {
+trait FileLoader extends Logging {
   //ToDo 3: some sort of function to notify which file extensions can be loaded
 
   def loadImpl(file: File): List[X]
