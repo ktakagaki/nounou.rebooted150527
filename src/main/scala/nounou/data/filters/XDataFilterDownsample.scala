@@ -12,7 +12,14 @@ import breeze.linalg.DenseVector
 class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter( upstream ) {
 
   def factor: Int = _factor
-  def factor_=( factor: Int ) = { _factor = factor }
+  def factor_=( factor: Int ) = {
+    if( factor == this.factor ){
+      logger.info( "factor is already {}}, not changing. ", factor.toString )
+    } else {
+      _factor = factor
+      logger.info( "changed factor to {}", factor.toString )
+      changedData()
+    }
   protected var  _factor: Int = 1
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
