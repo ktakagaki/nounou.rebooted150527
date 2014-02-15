@@ -17,7 +17,7 @@ class DataReader extends Logging {
   /**Header object covering the whole block.*/
   var header: XHeader = XHeaderNull
   /**Main data output.*/
-  var data: XData = XDataNull
+  def data(): XData = dataFIR
   val dataORI: XDataFilterHolder = new XDataFilterHolder()
   //insert downsample block, filter block, buffer block
   /**Auxiliary data, for instance, analog signals recorded with an optical trace.*/
