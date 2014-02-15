@@ -5,7 +5,9 @@ import nounou.data.{X, XData}
 
 /** A passthrough object, which is overriden and inherited with various XDataFilterTr traits to create a filter block.
   */
-class XDataFilter( var upstream: XData ) extends XData {
+class XDataFilter( val upstream: XData ) extends XData {
+
+  upstream.children += this
 
   override def channelNames: scala.Vector[String] = upstream.channelNames
 
