@@ -8,7 +8,7 @@ import nounou.data.traits.XConcatenatable
  *
  * @author ktakagaki
  */
-class XEvents(val events: TreeMap[Long, XEvent], val name: String ) extends  X with XConcatenatable {
+class XEvents(val events: TreeMap[Long, XEvent]) extends  X with XConcatenatable {
 
   lazy val length: Int = events.size
   lazy val maxDuration: Long = events.map( _._2.duration).max
@@ -37,8 +37,7 @@ class XEvents(val events: TreeMap[Long, XEvent], val name: String ) extends  X w
   override def :::(that: X): XEvents = {
     that match {
       case x: XEvents => {
-        val newName = if(name == x.name) name else name + " and " + x.name
-        new XEvents( this.events ++ x.events, newName )
+        new XEvents( this.events ++ x.events )
       }
       case _ => {
         require(false, "cannot concatenate different types!")
@@ -59,9 +58,11 @@ class XEvents(val events: TreeMap[Long, XEvent], val name: String ) extends  X w
   // </editor-fold>
 
   override def toString() = {
-    "XEvents( " + length + " events total, name=" + name + " )"
+    "XEvents( " + length + " events total" + " )"
   }
 
 }
 
-object XEventsNull extends XEvents(TreeMap[Long, XEvent](), "Null events!")
+object XEventsNull extends XEvents(TreeMap[Long, XEvent]()){
+  override def toString() = "XEventsNull"
+}

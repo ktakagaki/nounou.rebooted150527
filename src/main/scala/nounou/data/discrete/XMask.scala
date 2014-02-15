@@ -10,9 +10,11 @@ import nounou.data.X
 
   //ToDo 3: implement
   override def isCompatible(that: X): Boolean = false
+
+  override def toString() = "XMask.. not details programmed in yet"
 }
 
   object XMaskNull extends XMask {
 
-
+    override def toString() = "XMaskNull"
   }

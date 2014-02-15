@@ -24,4 +24,9 @@ class NN {
     }
 
 
+    public static final DataReader newReader() {
+        return new DataReader();
+    }
+
+
 }

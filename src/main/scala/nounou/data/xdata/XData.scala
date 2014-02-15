@@ -164,7 +164,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   // </editor-fold>
 
   override def toString() = {
-    "XData( " + channelCount + " channels, "+ segmentCount + " segments, with lengths " + segmentLengths + ", fs=" + sampleRate + ")"
+    "XData(" + channelCount + " channels, "+ segmentCount + " segments, with lengths " + segmentLengths + ", fs=" + sampleRate + ")"
   }
 
 }
@@ -210,4 +210,5 @@ object XDataNull extends XDataImmutable{
     case XDataNull => this
     case _ => require(false, "cannot append incompatible data types (XDataNull)"); this
   }
+  override def toString() = "XDataNull"
 }

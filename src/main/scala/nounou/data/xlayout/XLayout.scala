@@ -5,7 +5,6 @@ import nounou.data.traits.XChannelsImmutable
 
 abstract class XLayout extends X with XChannelsImmutable {
 
-
   // field bounding rectangle
   /** The bounding rectangle of the detector field.
    */
@@ -45,6 +44,8 @@ abstract class XLayout extends X with XChannelsImmutable {
     }
   }
 
+  override def toString() = "XLayout(fieldX="+fieldX+", fieldY="+fieldY+", fieldWidth="+fieldWidth+", fieldHeight="+fieldHeight+")"
+
 }
 
 object XLayoutNull extends XLayout {
@@ -62,4 +63,5 @@ object XLayoutNull extends XLayout {
 
   override def isCompatible(that: X): Boolean = false
 
+  override def toString() = "XLayoutNull"
 }
