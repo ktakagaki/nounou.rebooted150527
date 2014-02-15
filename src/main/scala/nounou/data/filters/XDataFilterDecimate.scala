@@ -18,8 +18,8 @@
 
 
     override def factor_= ( factor: Int ): Unit = {
-      require( factor < 16,
-        logger.error( "Downsample rate {} must be < 16." , factor.toString )
+      require( factor <= 16,
+        logger.error( "Downsample rate {} must be <= 16." , factor.toString )
       )
       if(factor == 1) setDecimateOff()
       else {
