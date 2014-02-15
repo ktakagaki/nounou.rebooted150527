@@ -4,13 +4,36 @@ import nounou._
 import scala.collection.immutable.Vector
 import nounou.data.traits._
 import com.typesafe.scalalogging.slf4j.Logging
+import nounou.data.filters.XDataFilter
 
 /** Base class for data encoded as Int arrays.
   * This object is mutable, to allow inheritance by [[nounou.data.filters.XDataFilter]].
+  * For that class, output results may change, depending upon upstream changes.
   * Each trace of data must share the following variables:
   * sampling, start, length, xBits, absGain, absOffset, absUnit
   */
 abstract class XData extends X with XConcatenatable with XFrames with XChannels with XAbsolute with Logging {
+
+  // <editor-fold defaultstate="collapsed" desc=" DataSource related ">
+
+  val children = scala.collection.mutable.Set[XData]()
+
+  /** Must be overriden and expanded, especially by buffering functions
+    * and functions which have an active update which must be updated.
+    */
+  def changedData(): Unit = for( child <- children ) child.changedData()
+  /** Must be overriden and expanded, especially by buffering functions
+    * and functions which have an active update which must be updated.
+    */
+  def changedData(channel: Int): Unit = for( child <- children ) child.changedData(channel)
+  def changedData(channels: Vector[Int]): Unit = for( channel <- channels ) changedData(channel)
+  /** Must be overriden and expanded, especially by buffering functions
+    * and functions which have an active update which must be updated.
+    * Covers sampleRate, segmentLengths, segmentEndTSs, segmentStartTSs, segmentCount
+    */
+  def changedTiming(): Unit = for( child <- children ) child.changedTiming()
+
+  // </editor-fold>
 
 
   //<editor-fold defaultstate="collapsed" desc="reading a point">
@@ -194,9 +217,19 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   * ++   val xBits: Int = 1024
   */
 abstract class XDataImmutable extends XData with XFramesImmutable with XChannelsImmutable with XAbsoluteImmutable {
+
+  // <editor-fold defaultstate="collapsed" desc=" DataSource related ">
+
+  override def changedData(): Unit = logger.error("this is an immutable data source, and changedData() should not be invoked!")
+  override def changedData(channel: Int): Unit = logger.error("this is an immutable data source, and changedData() should not be invoked!")
+  override def changedData(channels: Vector[Int]): Unit = logger.error("this is an immutable data source, and changedData() should not be invoked!")
+  override def changedTiming(): Unit = logger.error("this is an immutable data source, and changedTiming() should not be invoked!")
+
+  // </editor-fold>
+
 }
 
-object XDataNull extends XDataImmutable{
+object XDataNull extends XDataImmutable {
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = 0
   override val absGain: Double = 1D
   override val absOffset: Double = 0D

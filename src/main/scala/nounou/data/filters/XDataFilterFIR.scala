@@ -10,7 +10,7 @@ import breeze.signal._
  * @author ktakagaki
  * @date 2/4/14.
  */
-class XDataFilterFIR( upstream: XData ) extends XDataFilter(upstream) {
+class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstream ) {
 
   var kernel: FIRKernel1D[Long] = null
 
@@ -82,14 +82,5 @@ class XDataFilterFIR( upstream: XData ) extends XDataFilter(upstream) {
 //  override def segmentStartTSs: scala.Vector[Long] = upstream.segmentStartTSs
 //  override def segmentLengths: scala.Vector[Int] = upstream.segmentLengths
 //  override def segmentCount: Int = upstream.segmentCount
-
-}
-
-object XDataFilterFIR {
-
-  def apply( upstream: XData, buffer: Boolean = true ): XDataFilterFIR = {
-    if(buffer) new XDataFilterFIR(upstream) with XDataFilterTrBuffer
-    else new XDataFilterFIR(upstream)
-  }
 
 }

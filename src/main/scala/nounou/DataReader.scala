@@ -6,7 +6,7 @@ import com.typesafe.scalalogging.slf4j.Logging
 import nounou.data._
 import nounou.data.formats.{FileLoaderNEV, FileLoaderNCS, FileLoaderNEX}
 import nounou.data.discrete._
-import nounou.data.filters.{XDataFilterDecimate, XDataFilterFIR}
+import nounou.data.filters.{XDataFilterHolder, XDataFilterDecimate, XDataFilterFIR}
 
 
 /**
@@ -18,7 +18,7 @@ class DataReader extends Logging {
   var header: XHeader = XHeaderNull
   /**Main data output.*/
   var data: XData = XDataNull
-  var dataORI: XData = XDataNull
+  var dataORI: XDataFilterHolder = new XDataFilterHolder()
   //insert downsample block, filter block, buffer block
   /**Auxiliary data, for instance, analog signals recorded with an optical trace.*/
   def dataAux: XData = dataAuxORI //temporarily set to mirror
@@ -42,13 +42,13 @@ class DataReader extends Logging {
         dataDecimate = null
         dataFIR = null
         data = XDataNull
-        dataORI = XDataNull
+        dataORI.realData = XDataNull
       }
       case _ => {
-        dataORI = xdata
-        dataDecimate = XDataFilterDecimate( dataORI, true )
+        dataORI.realData = xdata
+        dataDecimate = new XDataFilterDecimate( dataORI )
           if(dataORI.sampleRate > 2000) dataDecimate.factor = (dataORI.sampleRate / 2000).toInt
-        dataFIR = XDataFilterFIR( dataDecimate, true )
+        dataFIR = new XDataFilterFIR( dataDecimate)
         data = dataFIR
       }
     }
@@ -161,10 +161,10 @@ class DataReader extends Logging {
           dataAuxORI = XDataNull
           reloadFlagDataAux = 1
           reloadFlagData = 2
-        } else if( dataORI == XDataNull /*reloadFlagData == 0*/) {
+        } else if( dataORI.realData == XDataNull /*reloadFlagData == 0*/) {
           setData(x0)
         } else if ( dataORI.isCompatible(x0)  /*reloadFlagData == 2*/) {
-          setData(dataORI ::: x0)
+          setData(dataORI.realData ::: x0)
           //reloadFlagData = 2
         } else { //not compatible with data, try dataAux
             if( reloadFlagDataAux == 1 ) {
@@ -180,7 +180,7 @@ class DataReader extends Logging {
         }
       }
       case x0: XDataChannel => {
-        dataORI match {
+        dataORI.realData match {
               case XDataNull => {
                 setData( new XDataChannelArray( Vector[XDataChannel]( x0 ) ) )
                 if( reloadFlagData == 1 ) {
