@@ -17,16 +17,17 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
   // <editor-fold defaultstate="collapsed" desc=" filter settings ">
 
   def setFilterOff(): Unit = if(kernel == null){
-    logger.info( "XDataFilterFIR: filter is already off, not changing. ")
+    logger.info( "filter is already off, not changing. ")
   } else {
-    logger.info( "XDataFilterFIR: Turning filter kernel off." )
+    logger.info( "Turning filter kernel off." )
     kernel = null
+    changedData()
   }
 
   def setFilter( omega0: Double, omega1: Double ): Unit = {
     require(omega0>= 0 && omega1 > omega0 && omega1 <= 1,
       logger.error(
-        "XDataFilterFIR.setFilter: Frequencies must be 0 <= omega0 < omega1 <= 1. omega0={}, omega1={}. Use setFilterHz if setting in Hz.",
+        "Frequencies must be 0 <= omega0 < omega1 <= 1. omega0={}, omega1={}. Use setFilterHz if setting in Hz.",
         omega0.toString, omega1.toString)
     )
 
@@ -36,6 +37,7 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
       kernel = designFilterFirwin[Long](2048, DenseVector[Double](omega0, omega1), nyquist = 1d,
         zeroPass = false, scale=true, multiplier = 1024L)
       logger.info( "set kernel to {}", kernel )
+      changedData()
     }
   }
 
