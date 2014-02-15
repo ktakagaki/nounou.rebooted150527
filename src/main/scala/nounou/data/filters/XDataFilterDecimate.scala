@@ -21,10 +21,14 @@
       require( factor <= 16,
         logger.error( "Downsample rate {} must be <= 16." , factor.toString )
       )
-      if(factor == 1) setDecimateOff()
+
+      if( factor == this.factor ){
+        logger.info( "factor is already {}}, not changing. ", factor.toString )
+      } else if(factor == 1) setDecimateOff()
       else {
         kernel = designFilterDecimation[ FIRKernel1D[Long] ](factor, multiplier = 1024L)
         this._factor = factor
+        changedData()
         logger.info( "set kernel to {}", kernel )
       }
     }
