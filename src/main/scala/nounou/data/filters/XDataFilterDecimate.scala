@@ -10,7 +10,7 @@
    * @author ktakagaki
    * @date 2/1314.
    */
-  class XDataFilterDecimate( upstream: XData ) extends XDataFilter(upstream) {
+  class XDataFilterDecimate(override val upstream: XData ) extends XDataFilter( upstream ) {
 
     var kernel: FIRKernel1D[Long] = null
     var factor: Int = 1
@@ -97,14 +97,5 @@
     private var currentSegLenBuffer = upstream.segmentLengths
 
     //  override def segmentCount: Int = upstream.segmentCount
-
-  }
-
-  object XDataFilterDecimate {
-
-    def apply( upstream: XData, buffer: Boolean = true ): XDataFilterDecimate = {
-      if(buffer) new XDataFilterDecimate(upstream) with XDataFilterTrBuffer
-      else new XDataFilterDecimate(upstream)
-    }
 
   }
