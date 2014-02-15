@@ -18,7 +18,7 @@ class DataReader extends Logging {
   var header: XHeader = XHeaderNull
   /**Main data output.*/
   var data: XData = XDataNull
-  var dataORI: XDataFilterHolder = new XDataFilterHolder()
+  val dataORI: XDataFilterHolder = new XDataFilterHolder()
   //insert downsample block, filter block, buffer block
   /**Auxiliary data, for instance, analog signals recorded with an optical trace.*/
   def dataAux: XData = dataAuxORI //temporarily set to mirror
@@ -34,25 +34,13 @@ class DataReader extends Logging {
   var spikes: XSpikes = XSpikesNull
 
   // <editor-fold defaultstate="collapsed" desc=" filters, setting data/dataORI and dataAux/dataAuxORI ">
-  var dataDecimate: XDataFilterDecimate = null
-  var dataFIR: XDataFilterFIR = null
-  def setData(xdata: XData) = {
-    xdata match {
-      case XDataNull => {
-        dataDecimate = null
-        dataFIR = null
-        data = XDataNull
-        dataORI.realData = XDataNull
-      }
-      case _ => {
-        dataORI.realData = xdata
-        dataDecimate = new XDataFilterDecimate( dataORI )
-          if(dataORI.sampleRate > 2000) dataDecimate.factor = (dataORI.sampleRate / 2000).toInt
-        dataFIR = new XDataFilterFIR( dataDecimate)
-        data = dataFIR
-      }
-    }
+  var dataDecimate: XDataFilterDecimate = new XDataFilterDecimate( dataORI )
+  var dataFIR: XDataFilterFIR = new XDataFilterFIR( dataDecimate )
+  def setData(x: XData): Unit = {
+    dataORI.realData = x
+    if(dataORI.sampleRate > 2000) dataDecimate.factor = math.min(16, (dataORI.sampleRate / 2000).toInt)
   }
+
 
   def setFilterHz(f0: Double, f1: Double) = dataFIR.setFilterHz(f0, f1)
   def setFilterOff() = dataFIR.setFilterOff()
