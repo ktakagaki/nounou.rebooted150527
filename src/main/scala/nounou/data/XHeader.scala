@@ -23,5 +23,9 @@ class XHeader(val header: Map[String, HeaderValue]) extends X {
 }
 
 
-object XHeaderNull extends XHeader(Map[String, HeaderValue]())
+object XHeaderNull extends XHeader(Map[String, HeaderValue]()){
+
+  override def toString() = "XHeaderNull"
+
+}
 

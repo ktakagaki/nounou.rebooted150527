@@ -5,7 +5,8 @@ import java.io.File
 import com.typesafe.scalalogging.slf4j.Logging
 import nounou.data._
 import nounou.data.formats.{FileLoaderNEV, FileLoaderNCS, FileLoaderNEX}
-import nounou.data.discrete.{XMaskNull, XMask, XEventsNull, XEvents}
+import nounou.data.discrete._
+import nounou.data.filters.{XDataFilterDecimate, XDataFilterFIR}
 
 
 /**
@@ -17,9 +18,11 @@ class DataReader extends Logging {
   var header: XHeader = XHeaderNull
   /**Main data output.*/
   var data: XData = XDataNull
+  var dataORI: XData = XDataNull
   //insert downsample block, filter block, buffer block
   /**Auxiliary data, for instance, analog signals recorded with an optical trace.*/
-  var dataAux: XData = XDataNull
+  def dataAux: XData = dataAuxORI //temporarily set to mirror
+  var dataAuxORI: XData = XDataNull
   //insert downsample block, filter block, buffer block
   /**Layout of data*/
   var layout: XLayout = XLayoutNull
@@ -27,21 +30,49 @@ class DataReader extends Logging {
   var mask: XMask = XMaskNull
   /**Events*/
   var events: XEvents = XEventsNull
-  //  override var spk: XSpikes
+  /**Spikes*/
+  var spikes: XSpikes = XSpikesNull
 
-  // <editor-fold defaultstate="collapsed" desc=" Java accessors ">
+  // <editor-fold defaultstate="collapsed" desc=" filters, setting data/dataORI and dataAux/dataAuxORI ">
+  var dataDecimate: XDataFilterDecimate = null
+  var dataFIR: XDataFilterFIR = null
+  def setData(xdata: XData) = {
+    xdata match {
+      case XDataNull => {
+        dataDecimate = null
+        dataFIR = null
+        data = XDataNull
+        dataORI = XDataNull
+      }
+      case _ => {
+        dataORI = xdata
+        dataDecimate = XDataFilterDecimate( dataORI, true )
+          if(dataORI.sampleRate > 2000) dataDecimate.factor = (dataORI.sampleRate / 2000).toInt
+        dataFIR = XDataFilterFIR( dataDecimate, true )
+        data = dataFIR
+      }
+    }
+  }
 
-  def dataReadTrace(channel: Int): Array[Int] = data.readTrace(channel).toArray
-  def dataReadTrace(channel: Int, range: FrameRange): Array[Int] = data.readTrace(channel, range).toArray
-  def dataReadTrace(channel: Int, range: FrameRange, segment: Int): Array[Int] = data.readTrace(channel, range, segment).toArray
-
-  def dataReadTraceAbs(channel: Int): Array[Double] = data.readTraceAbs(channel).toArray
-  def dataReadTraceAbs(channel: Int, range: FrameRange): Array[Double] = data.readTraceAbs(channel, range).toArray
-  def dataReadTraceAbs(channel: Int, range: FrameRange, segment: Int): Array[Double] = data.readTraceAbs(channel, range, segment).toArray
+  def setFilterHz(f0: Double, f1: Double) = dataFIR.setFilterHz(f0, f1)
+  def setFilterOff() = dataFIR.setFilterOff()
 
   // </editor-fold>
 
-  // <editor-fold defaultstate="collapsed" desc=" data loading ">
+
+  // <editor-fold defaultstate="collapsed" desc=" Java accessors ">
+
+  def readTrace(channel: Int): Array[Int] = data.readTrace(channel).toArray
+  def readTrace(channel: Int, range: FrameRange): Array[Int] = data.readTrace(channel, range).toArray
+  def readTrace(channel: Int, range: FrameRange, segment: Int): Array[Int] = data.readTrace(channel, range, segment).toArray
+
+  def readTraceAbs(channel: Int): Array[Double] = data.readTraceAbs(channel).toArray
+  def readTraceAbs(channel: Int, range: FrameRange): Array[Double] = data.readTraceAbs(channel, range).toArray
+  def readTraceAbs(channel: Int, range: FrameRange, segment: Int): Array[Double] = data.readTraceAbs(channel, range, segment).toArray
+
+  // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc=" load/reload ">
 
   //ToDo 1: java.lang.IllegalStateException: Not on FX application thread
   def load(): Unit   =  {
@@ -51,10 +82,10 @@ class DataReader extends Logging {
     fileChooser.showOpenDialog(window)
 
     val filesChosen: List[File] = fileChooser.showOpenMultipleDialog(null).toList
-    load(filesChosen.toArray)
+    filesChosen.map(load(_))
   }
 
-  def load(files: Array[File]): Unit = files.map(load(_))
+  def load(files: Array[String]): Unit = files.map( (fStr: String) => load( new File(fStr) ) )
 
   def load(file: File, reload: Boolean = false): Unit = {
     val list = file.getName.toLowerCase match {
@@ -80,7 +111,7 @@ class DataReader extends Logging {
   }
   def reload(files: Array[File]): Unit = {
     setReloadFlags(1)
-    load(files)
+    files.map(load(_))
     setReloadFlags(0)
   }
   def reload(file: File): Unit = {
@@ -107,6 +138,7 @@ class DataReader extends Logging {
     setReloadFlags(0)
   }
 
+  // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" loadImpl ">
 
     //ToDo 2: reorganize, refactor, rethink!
@@ -125,56 +157,56 @@ class DataReader extends Logging {
       }
       case x0: XData => {
         if( reloadFlagData == 1 ) {
-          data = x0
-          dataAux = XDataNull
+          setData(x0)
+          dataAuxORI = XDataNull
           reloadFlagDataAux = 1
           reloadFlagData = 2
-        } else if( data == XDataNull /*reloadFlagData == 0*/) {
-          data = x0
-        } else if ( data.isCompatible(x0)  /*reloadFlagData == 2*/) {
-          data = data ::: x0
+        } else if( dataORI == XDataNull /*reloadFlagData == 0*/) {
+          setData(x0)
+        } else if ( dataORI.isCompatible(x0)  /*reloadFlagData == 2*/) {
+          setData(dataORI ::: x0)
           //reloadFlagData = 2
         } else { //not compatible with data, try dataAux
             if( reloadFlagDataAux == 1 ) {
-              dataAux = x0
+              dataAuxORI = x0
               reloadFlagDataAux = 2
-            } else if ( dataAux == XDataNull  /*reloadFlagDataAux == 0*/ ) {
-              dataAux = x0
-            } else if ( dataAux.isCompatible(x0) /*reloadFlagDataAux == 0 or 2*/ ) {
-              dataAux = dataAux ::: x0
+            } else if ( dataAuxORI == XDataNull  /*reloadFlagDataAux == 0*/ ) {
+              dataAuxORI = x0
+            } else if ( dataAuxORI.isCompatible(x0) /*reloadFlagDataAux == 0 or 2*/ ) {
+              dataAuxORI = dataAuxORI ::: x0
             } else {
               logger.warn("Incompatible data already loaded in data and dataAux, ignoring new data {}. Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.", x0)
             }
         }
       }
       case x0: XDataChannel => {
-        data match {
+        dataORI match {
               case XDataNull => {
-                data = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
+                setData( new XDataChannelArray( Vector[XDataChannel]( x0 ) ) )
                 if( reloadFlagData == 1 ) {
-                  dataAux = XDataNull
+                  dataAuxORI = XDataNull
                   reloadFlagDataAux = 1
                   reloadFlagData = 2
                 }
               }
               case data0: XDataChannelArray => {
                 if( reloadFlagData == 1 ) {
-                  data = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
-                  dataAux = XDataNull
+                  setData( new XDataChannelArray( Vector[XDataChannel]( x0 ) ) )
+                  dataAuxORI = XDataNull
                   reloadFlagDataAux = 1
                   reloadFlagData = 2
                 } else if ( data0(0).isCompatible(x0)  /*reloadFlagData == 0, 2*/) {
-                  data = data0 ::: x0
+                  setData( data0 ::: x0 )
                   //reloadFlagData = 2
                 } else { //not compatible with data, try dataAux
                   if( reloadFlagDataAux == 1 ) {
-                    dataAux = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
+                    dataAuxORI = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
                     reloadFlagDataAux = 2
                   } else {
-                      dataAux match {
+                      dataAuxORI match {
                         case dataAux0: XDataChannelArray => {
                           if ( dataAux0.isCompatible(x0) /*reloadFlagDataAux == 0 or 2*/ ) {
-                            dataAux = dataAux0 ::: x0
+                            dataAuxORI = dataAux0 ::: x0
                           } else {
                             logger.warn("Incompatible data already loaded in data and dataAux, ignoring new data {}. Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.", x0)
                           }
@@ -188,13 +220,13 @@ class DataReader extends Logging {
               }
               case _ => {
                 if( reloadFlagDataAux == 1 ) {
-                  dataAux = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
+                  dataAuxORI = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
                   reloadFlagDataAux = 2
                 } else {
-                  dataAux match {
+                  dataAuxORI match {
                     case dataAux0: XDataChannelArray => {
                       if ( dataAux0.isCompatible(x0) /*reloadFlagDataAux == 0 or 2*/ ) {
-                        dataAux = dataAux0 ::: x0
+                        dataAuxORI = dataAux0 ::: x0
                       } else {
                         logger.warn("Incompatible data already loaded in data and dataAux, ignoring new data {}. Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.", x0)
                       }
@@ -229,6 +261,7 @@ class DataReader extends Logging {
             }
           }
       }
+      case x0: XSpikes => sys.error("ToDo: have not implemented spike loading yet!")
       case x0: X => logger.warn("Loading of this type of {} has not been implemented!", x0)
     }
   }
@@ -236,16 +269,15 @@ class DataReader extends Logging {
 
     // </editor-fold>
 
-  // </editor-fold>
-
   // <editor-fold defaultstate="collapsed" desc=" clearing ">
 
   def clearHead: Unit = {header = XHeaderNull}
-  def clearData: Unit = {data = XDataNull}
-  def clearDataAux: Unit = {dataAux = XDataNull}
+  def clearData: Unit = {setData(XDataNull)}
+  def clearDataAux: Unit = {dataAuxORI = XDataNull/*; dataAux = XDataNull*/ }
   def clearLayout: Unit = {layout = XLayoutNull}
   def clearMask: Unit = {mask = XMaskNull}
   def clearEvents: Unit = {events = XEventsNull}
+  def clearSpikes: Unit = {spikes = XSpikesNull}
 
   def clearAll: Unit = {
     clearHead
@@ -254,9 +286,22 @@ class DataReader extends Logging {
     clearLayout
     clearMask
     clearEvents
-  //    spk  = null
+    clearSpikes
   }
 
   // </editor-fold>
 
+  override def toString() = "DataReader( data channels:" + dataORI.channelCount + ", dataAux channels:" + dataAuxORI.channelCount +
+                                         ", data layout: " + layout + ", data mask: " + mask + ", events: " + events.length + ")"
+
+  def dataSummary(): String = {
+    "DataReader loaded data summary:\n" +
+    "     " + "header : " + header + "\n" +
+    "     " + "data   : " + dataORI + "\n" +
+    "     " + "dataAux: " + dataAuxORI + "\n" +
+    "     " + "layout : " + layout + "\n" +
+    "     " + "mask   : " + mask + "\n" +
+    "     " + "events : " + events + "\n" +
+    "     " + "spikes : " + spikes
+  }
 }

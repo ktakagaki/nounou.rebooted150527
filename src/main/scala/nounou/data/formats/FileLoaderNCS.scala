@@ -64,7 +64,7 @@ object FileLoaderNCS extends FileLoaderNLX {
         var tempSegmentStartFrame = 0
 
       //dwChannelNumber
-      fHand.skipBytes(4)
+      fHand.jumpBytes(4)
 
       //dwSampleFreq
       val dwSampleFreq = fHand.readUInt32
@@ -75,8 +75,7 @@ object FileLoaderNCS extends FileLoaderNLX {
       require(dwNumValidSamples == recordSampleCount, "Currently can only deal with records which are " + recordSampleCount + " samples long.")
 
       //snSamples
-      fHand.skipBytes(recordSampleCount*2)
-
+      fHand.jumpBytes(recordSampleCount*2)
 
       //ToDo 3: Implement cases where timestamps skip just a slight amount d/t DAQ problems
 
@@ -100,7 +99,7 @@ object FileLoaderNCS extends FileLoaderNLX {
         lastRecTS = thisRecTS
 
         //dwChannelNumber
-        fHand.skipBytes(4)
+        fHand.jumpBytes(4)
 
         //dwSampleFreq
         val dwSampleFreq = fHand.readUInt32
@@ -111,7 +110,10 @@ object FileLoaderNCS extends FileLoaderNLX {
         require(dwNumValidSamples == recordSampleCount, "Currently can only deal with records which are " + recordSampleCount + " samples long.")
 
         //snSamples
-        fHand.skipBytes(recordSampleCount*2)
+        fHand.jumpBytes(recordSampleCount*2)
+        //fHand.seek( fHand.getFilePointer + recordSampleCount*2 )
+        //fHand.skipBytes(recordSampleCount*2)
+
       }
 
       //Last record cleanup
@@ -128,7 +130,7 @@ object FileLoaderNCS extends FileLoaderNLX {
       channelName = tempAcqEntName
     )
 
-    logger.info( "FileLoaderNCS: loaded {}", xDataChannelNCS )
+    logger.info( "loaded {}", xDataChannelNCS )
     List[X]( xDataChannelNCS )
 
   }

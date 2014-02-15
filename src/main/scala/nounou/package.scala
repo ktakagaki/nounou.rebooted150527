@@ -2,6 +2,7 @@ import breeze.linalg.DenseVector
 import breeze.macros.expand
 import nounou.data.XData
 import scala.math
+import scala.reflect.runtime.universe._
 
 /**
  * @author ktakagaki
@@ -45,5 +46,23 @@ package object nounou {
       function(count)
       count = count + step
     } else throw new IllegalArgumentException
+  }
+
+  // <editor-fold defaultstate="collapsed" desc=" Some Scala Implicit Pimps ">
+
+    def toLong(vect: Vector[Int]): Vector[Long] = {
+      val tempArr = new Array[Long](vect.length)
+      for( c <- 0 until tempArr.length ){
+          tempArr(c) = Int.int2long(vect(c))
+      }
+      tempArr.toVector
+  }
+
+  def toInt(vect: Vector[Long]): Vector[Int] = {
+    val tempArr = Array[Int](vect.length)
+    for( c <- 0 until tempArr.length ){
+      tempArr(c) = vect(c).asInstanceOf[Int]
+    }
+    tempArr.toVector
   }
 }
