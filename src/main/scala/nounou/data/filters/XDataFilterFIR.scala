@@ -15,6 +15,11 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
   var kernel: FIRKernel1D[Long] = null
   var multiplier = 256L
 
+  override def toString() = {
+    if(kernel == null) "XDataFilterFIR: kernel null (off)"
+    else "XDataFilterFIR: kernel " + kernel.toString() + ", multiplier: " + multiplier.toString
+  }
+
   // <editor-fold defaultstate="collapsed" desc=" filter settings ">
 
   def setFilterOff(): Unit = if(kernel == null){
