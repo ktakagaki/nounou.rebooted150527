@@ -23,7 +23,7 @@
       )
 
       if( factor == this.factor ){
-        logger.info( "factor is already {}}, not changing. ", factor.toString )
+        logger.info( "factor is already {}, not changing. ", factor.toString )
       } else if(factor == 1) setDecimateOff()
       else {
         kernel = designFilterDecimation[ FIRKernel1D[Long] ](factor, multiplier = 1024L)
@@ -49,7 +49,7 @@
         upstream.readPointImpl(channel, frame, segment)
       } else {
         //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-        val tempData = upstream.readTrace( channel, (frame * factor - kernel.overhangPre) to (frame * factor + kernel.overhangPost), segment)
+        val tempData = upstream.readTrace( channel, new FrameRange(frame * factor - kernel.overhangPre, frame * factor + kernel.overhangPost, 1 ), segment)
         val tempRet = convolve( DenseVector( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None )
         require( tempRet.length == 1, "something is wrong with the convolution!" )
         tempRet(0).toInt
@@ -59,13 +59,17 @@
       if(kernel == null){
           upstream.readTraceImpl(channel, range, segment)
       } else {
-            //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-            val tempData = upstream.readTrace( channel, (range.start * factor - kernel.overhangPre) to (range.last * factor + kernel.overhangPost), segment)
-            val tempRes: DenseVector[Long] =
-              convolve( convert( DenseVector( tempData.toArray ), Long), kernel.kernel,
-                range = OptRange.rangeToRangeOpt( range.start * factor to range.end * factor ),
-                overhang = OptOverhang.None )
-            convert( tempRes :/ kernel.multiplier, Int).toVector
+          //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
+          val tempData = upstream.readTrace( channel, new FrameRange(range.start * factor - kernel.overhangPre, (range.last * factor + kernel.overhangPost), 1), segment)
+//        println("tempData: " + tempData.length)
+//        println("kernel: " + kernel.kernel.length)
+//        println("start: " + range.start + " end: " + range.end+ " step: " + range.step+ " inclusive: " + range.isInclusive)
+          val tempRes: DenseVector[Long] =
+            convolve( convert( DenseVector( tempData.toArray ), Long), kernel.kernel,
+              range = OptRange.RangeOpt( new Range.Inclusive(0, (range.end - range.start)*factor, range.step*factor) ),
+              overhang = OptOverhang.None )
+//        println("tempRes: " + tempRes.length)
+          convert( tempRes / kernel.multiplier, Int).toVector
       }
 
 //    override def readFrameImpl(frame: Int, segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame * factor, segment)
