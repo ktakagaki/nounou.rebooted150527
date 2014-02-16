@@ -55,6 +55,8 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
   // </editor-fold>
 
 
+  // <editor-fold defaultstate="collapsed" desc=" calculate data ">
+
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
     if(kernel == null){
       upstream.readPointImpl(channel, frame, segment)
@@ -80,8 +82,10 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
       toInt( tempRes.toArray.toVector )
     }
 
-  override def readFrameImpl(frame: Int, segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame, segment)
-  override def readFrameImpl(frame: Int, channels: Vector[Int], segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame, channels, segment)
+//  override def readFrameImpl(frame: Int, segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame, segment)
+//  override def readFrameImpl(frame: Int, channels: Vector[Int], segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame, channels, segment)
+
+  // </editor-fold>
 
 //  override def channelNames: scala.Vector[String] = upstream.channelNames
 
