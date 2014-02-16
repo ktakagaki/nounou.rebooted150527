@@ -13,6 +13,8 @@ import breeze.signal._
 class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstream ) {
 
   var kernel: FIRKernel1D[Long] = null
+  var kernelOmega0: Double = 0d
+  var kernelOmega1: Double = 1d
   var multiplier = 256L
 
   override def toString() = {
@@ -20,13 +22,15 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
     else "XDataFilterFIR: kernel " + kernel.toString() + ", multiplier: " + multiplier.toString
   }
 
-  // <editor-fold defaultstate="collapsed" desc=" filter settings ">
+  // <editor-fold defaultstate="collapsed" desc=" get/set filter settings ">
 
   def setFilterOff(): Unit = if(kernel == null){
     logger.info( "filter is already off, not changing. ")
   } else {
     logger.info( "Turning filter kernel off." )
     kernel = null
+    kernelOmega0 = 0
+    kernelOmega1 = 1
     changedData()
   }
 
@@ -42,6 +46,9 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
     else {
       kernel = designFilterFirwin[Long](1024, DenseVector[Double](omega0, omega1), nyquist = 1d,
         zeroPass = false, scale=true, multiplier = this.multiplier)
+      kernelOmega0 = omega0
+      kernelOmega1 = omega1
+
       logger.info( "set kernel to {}", kernel )
       changedData()
     }
@@ -51,6 +58,8 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
     require(f0 >= 0 && f1 > f0 && f1 <= sampleRate/2, logger.error("setFilterHz: Frequencies must be 0 <= f0 < f1 <= sampleRate/2. f0={}, f1={}", f0.toString, f1.toString) )
     setFilter(f0/(sampleRate/2d), f1/(sampleRate/2d))
   }
+
+  def getFilterHz(): Vector[Double] = Vector[Double]( kernelOmega0*(sampleRate/2d), kernelOmega1*(sampleRate/2d) )
 
   // </editor-fold>
 
