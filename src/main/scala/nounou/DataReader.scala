@@ -42,19 +42,22 @@ class DataReader extends Logging {
   }
 
 
-  def setFilterHz(f0: Double, f1: Double) = dataFIR.setFilterHz(f0, f1)
-  def setFilterOff() = dataFIR.setFilterOff()
-
   // </editor-fold>
 
 
   // <editor-fold defaultstate="collapsed" desc=" Java accessors ">
 
-  def readTrace(channel: Int): Array[Int] = data.readTrace(channel).toArray
-  def readTrace(channel: Int, range: FrameRange): Array[Int] = data.readTrace(channel, range).toArray
+  def setFilterHz(f0: Double, f1: Double) = dataFIR.setFilterHz(f0, f1)
+  def setFilterOff() = dataFIR.setFilterOff()
+
+  def readPoint(channel: Int, frame: Int): Int = data.readPoint(channel, frame)
+  def readPointAbs(channel: Int, frame: Int): Double = data.readPointAbs(channel, frame)
+
+  //def readTrace(channel: Int): Array[Int] = data.readTrace(channel).toArray
+  def readTrace(channel: Int, range: FrameRange): Array[Int] = data.readTrace(channel, range, 0).toArray
   def readTrace(channel: Int, range: FrameRange, segment: Int): Array[Int] = data.readTrace(channel, range, segment).toArray
 
-  def readTraceAbs(channel: Int): Array[Double] = data.readTraceAbs(channel).toArray
+  //def readTraceAbs(channel: Int): Array[Double] = data.readTraceAbs(channel).toArray
   def readTraceAbs(channel: Int, range: FrameRange): Array[Double] = data.readTraceAbs(channel, range).toArray
   def readTraceAbs(channel: Int, range: FrameRange, segment: Int): Array[Double] = data.readTraceAbs(channel, range, segment).toArray
 

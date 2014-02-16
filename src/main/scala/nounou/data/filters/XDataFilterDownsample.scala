@@ -20,6 +20,7 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
       logger.info( "changed factor to {}", factor.toString )
       changedData()
     }
+  }
   protected var  _factor: Int = 1
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
