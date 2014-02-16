@@ -10,7 +10,13 @@ import nounou.data.{XDataNull, X, XData}
   */
 class XDataFilterHolder( val upstream: XData = XDataNull ) extends XData {
 
-  var realData: XData = XDataNull
+  private var _realData: XData = XDataNull
+  def realData: XData = _realData
+  def realData_=( newData: XData ) = {
+    _realData = newData
+    changedData()
+    changedTiming()
+  }
 
   override def channelNames: scala.Vector[String] = realData.channelNames
 
