@@ -65,4 +65,6 @@ package object nounou {
     }
     tempArr.toVector
   }
+
+  def toArrayInt(vect: Vector[Int]): Array[Int] = vect.toArray
 }
