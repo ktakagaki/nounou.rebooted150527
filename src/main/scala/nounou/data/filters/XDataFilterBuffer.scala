@@ -67,25 +67,27 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
   }
 
   override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] = {
-    val totalLength = segmentLengths(segment)
-    val tempret = ArrayBuffer[Int]()
-      tempret.sizeHint(range.length )
-    val startPage =  getBufferPage( range.start)
-    val startIndex = getBufferIndex(range.start)
-    val endPage =    getBufferPage( range.end )
-    val endIndex =   getBufferIndex(range.end )
 
-    if(startPage == endPage) buffer( (channel, startPage, segment) ).slice(startIndex, endIndex)
-    else {
-      tempret ++= buffer( (channel, startPage, segment) ).slice(startIndex, bufferPageLength-1)  //deal with startPage separately
-      if( startPage + 1 <= endPage ) {
-        for(page <- startPage + 1 to endPage - 1) {
-          tempret ++= buffer( (channel, page, segment) )
+        val totalLength = segmentLengths(segment)
+        val tempret = ArrayBuffer[Int]()
+          tempret.sizeHint(range.length )
+        val startPage =  getBufferPage( range.start)
+        val startIndex = getBufferIndex(range.start)
+        val endPage =    getBufferPage( range.end )
+        val endIndex =   getBufferIndex(range.end )
+
+        if(startPage == endPage) buffer( (channel, startPage, segment) ).slice(startIndex, endIndex)
+        else {
+          tempret ++= buffer( (channel, startPage, segment) ).slice(startIndex, bufferPageLength-1)  //deal with startPage separately
+          if( startPage + 1 <= endPage ) {
+            for(page <- startPage + 1 to endPage - 1) {
+              tempret ++= buffer( (channel, page, segment) )
+            }
+          }
+          tempret ++= buffer( (channel, endPage, segment) ).slice(0, endIndex)  //deal with endPage separately
+          tempret.toVector
         }
-      }
-      tempret ++= buffer( (channel, endPage, segment) ).slice(0, endIndex)  //deal with endPage separately
-      tempret.toVector
-    }
+
   }
 
   //redirection function to deal with scope issues regarding super

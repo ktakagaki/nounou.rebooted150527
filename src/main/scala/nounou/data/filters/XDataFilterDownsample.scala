@@ -32,9 +32,9 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
 
   override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] =
     if(factor == 1){
-      upstream.readTraceImpl(channel, range, segment)
+        upstream.readTraceImpl(channel, range, segment)
     } else {
-      upstream.readTraceImpl(channel, new Range.Inclusive(range.start * factor, range.end * factor, factor), segment)
+        upstream.readTraceImpl(channel, new Range.Inclusive(range.start * factor, range.end * factor, factor), segment)
     }
 
   override def readFrameImpl(frame: Int, segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame * factor, segment)

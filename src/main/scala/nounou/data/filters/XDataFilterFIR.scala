@@ -70,16 +70,16 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
 
   override def readTraceImpl(channel: Int, ran: Range.Inclusive, segment: Int): Vector[Int] =
     if(kernel == null){
-      upstream.readTraceImpl(channel, ran, segment)
+        upstream.readTraceImpl(channel, ran, segment)
     } else {
-      //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-      val tempData = upstream.readTrace( channel, (ran.start - kernel.overhangPre) to (ran.last + kernel.overhangPost), segment)
-      //println( tempData.length )
-      val tempRes: DenseVector[Long] = convolve(
-                                            convert( DenseVector( tempData.toArray ), Long), kernel.kernel,
-                                            range = OptRange.rangeToRangeOpt(ran),
-                                            overhang = OptOverhang.None ) / multiplier
-      toInt( tempRes.toArray.toVector )
+        //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
+        val tempData = upstream.readTrace( channel, (ran.start - kernel.overhangPre) to (ran.last + kernel.overhangPost), segment)
+        //println( tempData.length )
+        val tempRes: DenseVector[Long] = convolve(
+                                              convert( DenseVector( tempData.toArray ), Long), kernel.kernel,
+                                              range = OptRange.rangeToRangeOpt(ran),
+                                              overhang = OptOverhang.None ) / multiplier
+        toInt( tempRes.toArray.toVector )
     }
 
 //  override def readFrameImpl(frame: Int, segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame, segment)
