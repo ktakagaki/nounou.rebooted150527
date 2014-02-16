@@ -59,7 +59,7 @@ package object nounou {
   }
 
   def toInt(vect: Vector[Long]): Vector[Int] = {
-    val tempArr = Array[Int](vect.length)
+    val tempArr = new Array[Int](vect.length)
     for( c <- 0 until tempArr.length ){
       tempArr(c) = vect(c).asInstanceOf[Int]
     }

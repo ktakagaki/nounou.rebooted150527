@@ -13,6 +13,7 @@ import breeze.signal._
 class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstream ) {
 
   var kernel: FIRKernel1D[Long] = null
+  var multiplier = 256L
 
   // <editor-fold defaultstate="collapsed" desc=" filter settings ">
 
@@ -34,8 +35,8 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
     if(omega0 == 0d && omega1 == 1d)
       setFilterOff()
     else {
-      kernel = designFilterFirwin[Long](2048, DenseVector[Double](omega0, omega1), nyquist = 1d,
-        zeroPass = false, scale=true, multiplier = 1024L)
+      kernel = designFilterFirwin[Long](1024, DenseVector[Double](omega0, omega1), nyquist = 1d,
+        zeroPass = false, scale=true, multiplier = this.multiplier)
       logger.info( "set kernel to {}", kernel )
       changedData()
     }
@@ -60,13 +61,17 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
       tempRet(0).toInt
     }
 
-  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] =
+  override def readTraceImpl(channel: Int, ran: Range.Inclusive, segment: Int): Vector[Int] =
     if(kernel == null){
-      upstream.readTraceImpl(channel, range, segment)
+      upstream.readTraceImpl(channel, ran, segment)
     } else {
       //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-      val tempData = upstream.readTrace( channel, (range.start - kernel.overhangPre) to (range.last + kernel.overhangPost), segment)
-      val tempRes: DenseVector[Long] = convolve( convert( DenseVector( tempData.toArray ), Long), kernel.kernel, overhang = OptOverhang.None )
+      val tempData = upstream.readTrace( channel, (ran.start - kernel.overhangPre) to (ran.last + kernel.overhangPost), segment)
+      //println( tempData.length )
+      val tempRes: DenseVector[Long] = convolve(
+                                            convert( DenseVector( tempData.toArray ), Long), kernel.kernel,
+                                            range = OptRange.rangeToRangeOpt(ran),
+                                            overhang = OptOverhang.None ) / multiplier
       toInt( tempRes.toArray.toVector )
     }
 
