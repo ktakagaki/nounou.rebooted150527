@@ -60,7 +60,7 @@ class FrameRange(val start: Int, val endMarker: Int, val step: Int, val isAll: B
     } else if(start >= 0 ) {
         val realLast = last(vectDataLen)
 
-        if( realLast < vectDataLen  ) new Range.Inclusive(start, realLast , step)
+        if( realLast < vectDataLen  ) new Range.Inclusive(start, realLast, step)
         else new Range.Inclusive(start, start + (getSamplesFromLength(vectDataLen - start) -1) * step, step )
     } else {
         if(endMarker < 0) new Range.Inclusive(0, -1, 1)// range with length zero
