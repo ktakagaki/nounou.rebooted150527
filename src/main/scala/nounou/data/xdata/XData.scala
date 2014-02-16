@@ -87,8 +87,9 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
     //println("r " + range.start + " " + range.last( totalLength ) + " " + range.step + " " + segment)
     val vr = range.getValidRange(totalLength)
-    //println("vr " + vr.start + " " + vr.end + " " + vr.step )
-    vectZeros( preLength ) ++ readTraceImpl(channel, vr, (currentSegment = segment)) ++ vectZeros( postLength )
+    val tempData = if( vr.length == 0 ) Vector[Int]() else readTraceImpl(channel, vr, (currentSegment = segment))
+
+    vectZeros( preLength ) ++ tempData ++ vectZeros( postLength )
 
   }
 
