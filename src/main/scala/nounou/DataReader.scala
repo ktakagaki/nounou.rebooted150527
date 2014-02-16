@@ -6,7 +6,8 @@ import com.typesafe.scalalogging.slf4j.Logging
 import nounou.data._
 import nounou.data.formats.{FileLoaderNEV, FileLoaderNCS, FileLoaderNEX}
 import nounou.data.discrete._
-import nounou.data.filters.{XDataFilterHolder, XDataFilterDecimate, XDataFilterFIR}
+import nounou.data.filters._
+import breeze.math.Complex
 
 
 /**
@@ -35,7 +36,10 @@ class DataReader extends Logging {
 
   // <editor-fold defaultstate="collapsed" desc=" filters, setting data/dataORI and dataAux/dataAuxORI ">
   var dataDecimate: XDataFilterDecimate = new XDataFilterDecimate( dataORI )
-  var dataFIR: XDataFilterFIR = new XDataFilterFIR( dataDecimate )
+    var dataDecimateBuf: XDataFilterBuffer = new XDataFilterBuffer( dataDecimate )
+      var dataFIR: XDataFilterFIR = new XDataFilterFIR( dataDecimateBuf )
+      var dataFourier: XDataFilterFourierTr = new XDataFilterFourierTr( dataDecimateBuf )
+
   def setData(x: XData): Unit = {
     dataORI.realData = x
     if(dataORI.sampleRate > 2000) dataDecimate.factor = math.min(16, (dataORI.sampleRate / 2000).toInt)
@@ -45,13 +49,17 @@ class DataReader extends Logging {
   // </editor-fold>
 
 
-  // <editor-fold defaultstate="collapsed" desc=" Java convenience accessors ">
+  // <editor-fold defaultstate="collapsed" desc=" Java convenience accessors (filtering, decimation, fourier) ">
 
   def dataSetFilterHz(f0: Double, f1: Double) = dataFIR.setFilterHz(f0, f1)
   def dataSetFilterOff() = dataFIR.setFilterOff()
   def dataGetFilterHz() = dataFIR.getFilterHz().toArray
   def dataSetDecimate(factor: Int) = dataDecimate.factor_=( factor )
   def dataGetDecimate() = dataDecimate.factor
+  def dataGetFourier(channel: Int, frameRange: FrameRange, segment: Int): Array[Complex] = dataFourier.readTraceFourierTr(channel, frameRange, segment).toArray
+  def dataGetFourier(channel: Int, frameRange: FrameRange, segment: Int, range: Range): Complex = dataFourier.readTraceFourierTr(channel, frameRange, segment, range)
+  // </editor-fold>
+  // <editor-fold defaultstate="collapsed" desc=" Java convenience accessors (basic) ">
 
   def dataAbsUnit() = data.absUnit
   def dataAbsGain() = data.absGain
