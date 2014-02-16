@@ -11,7 +11,7 @@ object FrameRange {
   class All(byVal: Int) extends FrameRange(0, 0 /*Integer.MAX_VALUE*/, byVal, true){
     override def preLength(totalLength: Int) = 0
     override def postLength(totalLength: Int) = 0
-    //override def validRange(totalLength: Int) = 0 to (totalLength -1) by byVal
+    //override def getValidRange(totalLength: Int) = 0 to (totalLength -1) by byVal
   }
 
 }
@@ -22,58 +22,86 @@ class FrameRange(val start: Int, val endMarker: Int, val step: Int, val isAll: B
   require( start <= endMarker, "In nounous, start <= last is required for frame ranges. start=" + start + ", last=" + endMarker)
 
   override def toString() = "FrameRange(" + start + ", " + endMarker + ", " + step + ", isAll=" + isAll + ")"
-  //override val isInclusive = true
-  //println( this )
+
+  //private val tempRange: Range.Inclusive = if(isAll) null else new Range.Inclusive(start, endMarker, step)
+//  val indexedStart = 0
+//  def indexedDataStart(vectDataLen: Int) = {
+//    if(start < 0) - start
+//    else if (start < vectDataLen) start
+//  }
+  private def getSamplesFromLength(len: Int) = (len -1)/step + 1
 
   /**range length*/
-  def length(totalLength: Int): Int = {
-    if(isAll) totalLength
-    else (endMarker - start /*+ 1 - 1*/)/2  + 1
-  }
-  /**Inclusive start frame*/
-  def start(totalLength: Int): Int = {
-    start //only positive steps, start is always correct
-  }
-  /**Inclusive last frame*/
-  def last(totalLength: Int): Int = {
-    if(isAll) totalLength - 1
-    else endMarker - start + 1
-  }
-  def getRange(tL: Int): Range = {
-    new Range(start, last(tL), step)
+  def length(vectDataLen: Int): Int = {
+    if(isAll || start >= vectDataLen) getSamplesFromLength( vectDataLen )
+    else getSamplesFromLength(endMarker - start + 1)//(endMarker - start /*+ 1 - 1*/)/step  + 1
   }
 
+  /**Inclusive last frame, taking into account step and overhang*/
+  def last(vectDataLen: Int): Int = start + (length(vectDataLen) - 1 ) * step
 
-  def preLength(totalLength: Int): Int = {
-    if( isAll ) 0 else {
-      if ( start >= 0 ) 0
-      else if ( start < - totalLength) totalLength //all pre padding
-      else ( - start )
+  // <editor-fold defaultstate="collapsed" desc=" conversion to Range.Inclusive ">
+
+  /** get a [[Range.Inclusive]] taking into account length and step, so that the start and last are exactly present values
+    */
+  def getRange(tL: Int): Range.Inclusive = {
+    new Range.Inclusive(start, last(tL), step)
+  }
+
+  /** get a [[Range.Inclusive]] which fits inside the given data vector length, and takes into account length and step,
+    * so that the start and last are exactly present values
+    */
+  def getValidRange(vectDataLen: Int): Range.Inclusive = {
+
+    if(isAll) {
+        new Range.Inclusive(0, last(vectDataLen), step)
+    } else if(start >= vectDataLen ) {
+        new Range.Inclusive(0, -1, 1)// range with length zero
+    } else if(start >= 0 ) {
+        val realLast = last(vectDataLen)
+
+        if( realLast < vectDataLen  ) new Range.Inclusive(start, realLast , step)
+        else new Range.Inclusive(start, start + getSamplesFromLength(vectDataLen - start + 1), step )
+    } else {
+        if(endMarker < 0) new Range.Inclusive(0, -1, 1)// range with length zero
+        else new Range.Inclusive(start + preLength(vectDataLen)*step, last(vectDataLen), step)
     }
   }
 
-  def postLength(totalLength: Int): Int = {
-    if( isAll ) 0 else {
-      if ( endMarker < totalLength ) 0
-      else if ( endMarker > 2 * totalLength - 1 ) totalLength //all post padding
-      else ( endMarker - totalLength + 1 )
+  // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc=" How much padding? ">
+
+  def preLength(vectDataLen: Int): Int = {
+    if( isAll || start >= 0 ){
+        0 //all post padding or no padding
+    } else if ( - vectDataLen < start ) {
+        getSamplesFromLength( - start ) //pre padding from start to -1
+    } else {
+        getSamplesFromLength( vectDataLen ) //all pre padding
     }
   }
 
-  def validRange(totalLength: Int): Range.Inclusive = {
-
-    val (realStart: Int, realEnd: Int) =
-      isAll match {
-        case true => (0, totalLength - 1)
-        case false => (if(start < totalLength) math.max(0, start) else 0,
-          if(endMarker < 0 || start >= totalLength) 0 else math.min(totalLength - 1, endMarker)    )
-      }
-
-    new Range.Inclusive(realStart, realEnd, step)
+  def postLength(vectDataLen: Int): Int = {
+    if( isAll ){
+      0
+    }else{
+      val realLast = last(vectDataLen)
+      if( realLast < vectDataLen ) 0
+      else length(vectDataLen) - getSamplesFromLength(vectDataLen - start)
+    }
+//    if( isAll ) 0 else {
+//      if ( endMarker < vectDataLen ) 0  //all pre padding or no padding
+//      else if ( endMarker > 2 * vectDataLen - 1 ) getSamplesFromLength(vectDataLen) //all post padding
+//      else getSamplesFromLength(endMarker - start + 1) - getSamplesFromLength(vectDataLen - start) //( endMarker - vectDataLen + 1 )
+//    }
   }
 
-  def isNoOverhangs(totalLength: Int): Boolean =
-    if (isAll) true
-    else (start >= 0 && endMarker < totalLength)
+//  def isNoOverhangs(vectDataLen: Int): Boolean =
+//    if (isAll) true
+//    else (start >= 0 && endMarker < vectDataLen)
+
+  // <editor-fold defaultstate="collapsed" desc="  ">
 
 }
+
