@@ -21,7 +21,7 @@ class DataReader extends Logging {
   val dataORI: XDataFilterHolder = new XDataFilterHolder()
   //insert downsample block, filter block, buffer block
   /**Auxiliary data, for instance, analog signals recorded with an optical trace.*/
-  def dataAux: XData = dataAuxORI //temporarily set to mirror
+  def dataAux(): XData = dataAuxORI //temporarily set to mirror
   var dataAuxORI: XData = XDataNull
   //insert downsample block, filter block, buffer block
   /**Layout of data*/
@@ -45,21 +45,37 @@ class DataReader extends Logging {
   // </editor-fold>
 
 
-  // <editor-fold defaultstate="collapsed" desc=" Java accessors ">
+  // <editor-fold defaultstate="collapsed" desc=" Java convenience accessors ">
 
-  def setFilterHz(f0: Double, f1: Double) = dataFIR.setFilterHz(f0, f1)
-  def setFilterOff() = dataFIR.setFilterOff()
+  def dataSetFilterHz(f0: Double, f1: Double) = dataFIR.setFilterHz(f0, f1)
+  def dataSetFilterOff() = dataFIR.setFilterOff()
+  def dataGetFilterHz() = dataFIR.getFilterHz().toArray
+  def dataSetDecimate(factor: Int) = dataDecimate.factor_=( factor )
+  def dataGetDecimate() = dataDecimate.factor
 
-  def readPoint(channel: Int, frame: Int): Int = data.readPoint(channel, frame)
-  def readPointAbs(channel: Int, frame: Int): Double = data.readPointAbs(channel, frame)
+  def dataAbsUnit() = data.absUnit
+  def dataAbsGain() = data.absGain
+  def dataAbsOffset() = data.absOffset
+
+  def dataChannelName(ch: Int) = data.channelNames(ch)
+  def dataChannelNames() = data.channelNames.toArray
+  def dataChannelCount = data.channelCount
+
+  def dataSampleRate() = data.sampleRate
+  def dataFrameSegmentToMs(fr: Int, seg: Int) = data.frameSegmentToMs(fr, seg)
+  def dataFrameSegmentToMs(fr: Int) = data.frameSegmentToMs(fr, 0)
+  def dataMsToFrameSegment(ms: Double) = data.msToFrameSegment( ms, false )
+
+  def dataPoint(channel: Int, frame: Int): Int = data.readPoint(channel, frame)
+  def dataPointAbs(channel: Int, frame: Int): Double = data.readPointAbs(channel, frame)
 
   //def readTrace(channel: Int): Array[Int] = data.readTrace(channel).toArray
-  def readTrace(channel: Int, range: FrameRange): Array[Int] = data.readTrace(channel, range, 0).toArray
-  def readTrace(channel: Int, range: FrameRange, segment: Int): Array[Int] = data.readTrace(channel, range, segment).toArray
+  def dataTrace(channel: Int, range: FrameRange): Array[Int] = data.readTrace(channel, range, 0).toArray
+  def dataTrace(channel: Int, range: FrameRange, segment: Int): Array[Int] = data.readTrace(channel, range, segment).toArray
 
   //def readTraceAbs(channel: Int): Array[Double] = data.readTraceAbs(channel).toArray
-  def readTraceAbs(channel: Int, range: FrameRange): Array[Double] = data.readTraceAbs(channel, range).toArray
-  def readTraceAbs(channel: Int, range: FrameRange, segment: Int): Array[Double] = data.readTraceAbs(channel, range, segment).toArray
+  def dataTraceAbs(channel: Int, range: FrameRange): Array[Double] = data.readTraceAbs(channel, range).toArray
+  def dataTraceAbs(channel: Int, range: FrameRange, segment: Int): Array[Double] = data.readTraceAbs(channel, range, segment).toArray
 
   // </editor-fold>
 
@@ -259,7 +275,6 @@ class DataReader extends Logging {
 
 
     // </editor-fold>
-
   // <editor-fold defaultstate="collapsed" desc=" clearing ">
 
   def clearHead: Unit = {header = XHeaderNull}
@@ -289,6 +304,7 @@ class DataReader extends Logging {
     "DataReader loaded data summary:\n" +
     "     " + "header : " + header + "\n" +
     "     " + "data   : " + dataORI + "\n" +
+    "     " + " (filt): " + data + "\n" +
     "     " + "dataAux: " + dataAuxORI + "\n" +
     "     " + "layout : " + layout + "\n" +
     "     " + "mask   : " + mask + "\n" +

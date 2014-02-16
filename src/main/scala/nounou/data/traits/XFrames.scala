@@ -2,10 +2,11 @@ package nounou.data.traits
 
 import nounou.data.X
 import scala.Vector
+import com.typesafe.scalalogging.slf4j.Logging
 
 /**Encapsulates segment, frame, and sampling information for xdata and XDataChannel.
  */
-trait XFrames extends X {
+trait XFrames extends X with Logging {
 
   // <editor-fold desc="segment related: segmentCount, segmentLengths, currentSegment ">
   
@@ -79,16 +80,33 @@ trait XFrames extends X {
     require( isValidFrame(frame, segment) )
     segmentStartTSs(segment) + (frame.toDouble * tsPerFrame).toLong
   }
-  /** Closest frame/segment index to the given timestamp. Will give beginning or last frames, if timestamp is
+  /** Timestamp of the given data frame index (in microseconds).
+    */
+  final def frameSegmentToMs(frame:Int, segment: Int): Double = {
+    frameSegmentToTS(frame, segment).toDouble / 1000d
+  }
+  /** Closest frame/segment index to the given timestamp in ms. Will give beginning or last frames, if timestamp is
     * out of range.
     */
+  final def msToFrameSegment(ms: Double, negativeIfOOB: Boolean = true): (Int, Int) = {
+    tsToFrameSegment( (ms*1000).toLong, negativeIfOOB )
+  }
+
+  /** Closest frame/segment index to the given timestamp. Will give beginning or last frames, if timestamp is
+    * out of range.
+   * @param timestamp in Long
+   * @param negativeIfOOB If true, will give a frame stamp as negative or larger than data length. Useful for overhangs. If False, will throw error.
+   * @return
+   */
   final def tsToFrameSegment(timestamp: Long, negativeIfOOB: Boolean = true): (Int, Int) = {
     var tempret: (Int, Int) = (0 , 0 )
     var changed = false
 
     if( /* TS cond */ timestamp <= segmentStartTSs(0) ){
         if( negativeIfOOB )  tempret = ( ((timestamp-segmentStartTSs(0)) * framesPerTS).toInt, 0)
-        else tempret = (0, 0)
+        else {
+          logger.error("timestamp "+timestamp+" is smaller than first frame of first segment!", new IllegalArgumentException )
+        }//tempret = (0, 0)
     } else {
         var seg = 0
         while(seg < segmentCount - 1 && !changed ){
@@ -98,11 +116,11 @@ trait XFrames extends X {
             } else if( /* TS cond */ timestamp < segmentStartTSs(seg+1) ) {
                 if(    /* TS cond */ timestamp - segmentEndTSs(seg) < segmentStartTSs(seg+1) - timestamp){
                     if( negativeIfOOB )  tempret = (((timestamp-segmentStartTSs(seg)) * framesPerTS).toInt, seg)
-                    else tempret = ( segmentLengths(seg) - 1, seg )
+                    else logger.error("timestamp is in the gap between segments "+seg+" and "+(seg+1)+"!", new IllegalArgumentException )//tempret = ( segmentLengths(seg) - 1, seg )
                     changed = true
                 } else {
                     if( negativeIfOOB )  tempret = (((timestamp-segmentStartTSs(seg + 1)) * framesPerTS).toInt, seg + 1)
-                    else tempret = (0, seg + 1)
+                    else logger.error("timestamp is in the gap between segments "+seg+" and "+(seg+1)+"!", new IllegalArgumentException )//tempret = (0, seg + 1)
                     changed = true
                 }
             } else {
@@ -114,12 +132,12 @@ trait XFrames extends X {
               tempret = ( ((timestamp - segmentStartTSs(segmentCount-1)) * framesPerTS).toInt, segmentCount - 1 )
           } else {
               if( negativeIfOOB )  tempret = ( ((timestamp - segmentStartTSs(segmentCount-1)) * framesPerTS).toInt, segmentCount - 1 )
-              else tempret = ( segmentLengths(segmentCount-1)-1, segmentCount -1)
+              else logger.error("timestamp "+timestamp+" is larger than last frame of last segment!", new IllegalArgumentException )//tempret = ( segmentLengths(segmentCount-1)-1, segmentCount -1)
           }
         }
     }
 
-    if( !negativeIfOOB )  require( tempret._1 >= 0 && tempret._1 < segmentLengths( tempret._2 ), "This must be a bug!")
+    if( !negativeIfOOB )  logger.error("this must be a bug in tsToFrameSegment!", new IllegalArgumentException )//require( tempret._1 >= 0 && tempret._1 < segmentLengths( tempret._2 ), "This must be a bug!")
 
     tempret
 
