@@ -11,6 +11,11 @@ import breeze.linalg.DenseVector
  */
 class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter( upstream ) {
 
+  override def toString() = {
+    if(factor == 1) "XDataFilterDownsample: off (factor=1)"
+    else "XDataFilterDownsample: factor=" + factor
+  }
+
   def factor: Int = _factor
   def factor_=( factor: Int ) = {
     if( factor == this.factor ){
