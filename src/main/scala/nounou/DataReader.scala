@@ -38,10 +38,10 @@ class DataReader extends Logging {
   var dataDecimate: XDataFilterDecimate = new XDataFilterDecimate( dataORI )
     var dataDecimateBuf: XDataFilterBuffer = new XDataFilterBuffer( dataDecimate )
       var dataFIR: XDataFilterFIR = new XDataFilterFIR( dataDecimateBuf )
-      var dataFourier: XDataFilterFourierTr = new XDataFilterFourierTr( dataDecimateBuf )
+      var dataFourier: XDataFilterStatistics = new XDataFilterStatistics( dataDecimateBuf )
 
   def setData(x: XData): Unit = {
-    dataORI.realData = x
+    dataORI.heldData = x
     if(dataORI.sampleRate > 2000) dataDecimate.factor = math.min(16, (dataORI.sampleRate / 2000).toInt)
   }
 
@@ -51,44 +51,72 @@ class DataReader extends Logging {
 
   // <editor-fold defaultstate="collapsed" desc=" Java convenience accessors (filtering, decimation, fourier) ">
 
-  def dataSetFilterHz(f0: Double, f1: Double) = dataFIR.setFilterHz(f0, f1)
-  def dataSetFilterOff() = dataFIR.setFilterOff()
-  def dataGetFilterHz() = dataFIR.getFilterHz().toArray
-  def dataSetDecimate(factor: Int) = dataDecimate.factor_=( factor )
-  def dataGetDecimate() = dataDecimate.factor
-  def dataGetFourier(channel: Int, frameRange: FrameRange, segment: Int): Array[Complex] = dataFourier.readTraceFourierTr(channel, frameRange, segment).toArray
-  def dataGetFourier(channel: Int, frameRange: FrameRange, segment: Int, range: Range): Complex = dataFourier.readTraceFourierTr(channel, frameRange, segment, range)
+  def setFilterHz(f0: Double, f1: Double) = dataFIR.setFilterHz(f0, f1)
+  def setFilterOff() = dataFIR.setFilterOff()
+  def getFilterHz() = dataFIR.getFilterHz().toArray
+  def setDecimate(factor: Int) = dataDecimate.factor_=( factor )
+  def getDecimate() = dataDecimate.factor
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" Java convenience accessors (basic) ">
 
-  def dataAbsUnit() = data.absUnit
-  def dataAbsGain() = data.absGain
-  def dataAbsOffset() = data.absOffset
+//  def dataAbsUnit() = data.absUnit
+//  def dataAbsGain() = data.absGain
+//  def dataAbsOffset() = data.absOffset
+//
+//  def dataChannelName(ch: Int) = data.channelNames(ch)
+//  def dataChannelNames() = data.channelNames.toArray
+//  def dataChannelCount = data.channelCount
 
-  def dataChannelName(ch: Int) = data.channelNames(ch)
-  def dataChannelNames() = data.channelNames.toArray
-  def dataChannelCount = data.channelCount
 
-  def dataSampleRate() = data.sampleRate
-  def dataFrameSegmentToMs(fr: Int, seg: Int) = data.frameSegmentToMs(fr, seg)
-  def dataFrameSegmentToMs(fr: Int) = data.frameSegmentToMs(fr, 0)
-  def dataMsToFrameSegment(ms: Double) = {
-    val temp = data.msToFrameSegment( ms, false )
-    Array[Int]( temp._1, temp._2 )
-  }
 
-  def dataPoint(channel: Int, frame: Int): Int = data.readPoint(channel, frame)
-  def dataPointAbs(channel: Int, frame: Int): Double = data.readPointAbs(channel, frame)
 
-  //def readTrace(channel: Int): Array[Int] = data.readTrace(channel).toArray
-  def dataTrace(channel: Int, range: FrameRange): Array[Int] = data.readTrace(channel, range, 0).toArray
-  def dataTrace(channel: Int, range: FrameRange, segment: Int): Array[Int] = data.readTrace(channel, range, segment).toArray
+//  def dataSampleRate() = data.sampleRate
+//  def dataFrameToMs(fr: Int) = data.frameToMs(fr)
+////  def dataFrameSegmentToTS(fr: Int, seg: Int) = data.frameSegmentToTS(fr, seg)
+////  def dataFrameSegmentToTS(fr: Int) = data.frameSegmentToTS(fr, 0)
+//  def dataTSToFrameSegment(ms: Long) = {
+//    val temp = data.tsToFrameSegment( ms, false )
+//    Array[Int]( temp._1, temp._2 )
+//  }
+//  def dataMsToFrame(ms: Double) = {
+//    data.msToFrame( ms)
+//  }
+//  def dataORISampleRate() = dataORI.sampleRate
+//  def dataORIFrameToMs(fr: Int) = dataORI.frameToMs(fr)
+//  def dataORITSToFrameSegment(ms: Long) = {
+//    val temp = dataORI.tsToFrameSegment( ms, false )
+//    Array[Int]( temp._1, temp._2 )
+//  }
+//  def dataORIMsToFrame(ms: Double) = {
+//    dataORI.msToFrame( ms)
+//  }
+//
 
-  //def readTraceAbs(channel: Int): Array[Double] = data.readTraceAbs(channel).toArray
-  def dataTraceAbs(channel: Int, range: FrameRange): Array[Double] = data.readTraceAbs(channel, range).toArray
-  def dataTraceAbs(channel: Int, range: FrameRange, segment: Int): Array[Double] = data.readTraceAbs(channel, range, segment).toArray
 
-  // </editor-fold>
+
+//  def dataPoint(channel: Int, frame: Int): Int = data.readPoint(channel, frame)
+//  def dataPointAbs(channel: Int, frame: Int): Double = data.readPointAbs(channel, frame)
+
+//  // <editor-fold defaultstate="collapsed" desc=" trace accessor methods ">
+//
+//  //def readTrace(channel: Int): Array[Int] = data.readTrace(channel).toArray
+//  def dataTrace(channel: Int, range: FrameRange): Array[Int] = data.readTrace(channel, range, 0).toArray
+//  def dataTrace(channel: Int, range: FrameRange, segment: Int): Array[Int] = data.readTrace(channel, range, segment).toArray
+//  def dataORITrace(channel: Int, range: FrameRange): Array[Int] = dataORI.readTrace(channel, range, 0).toArray
+//  def dataORITrace(channel: Int, range: FrameRange, segment: Int): Array[Int] = dataORI.readTrace(channel, range, segment).toArray
+//
+//  //def readTraceAbs(channel: Int): Array[Double] = data.readTraceAbs(channel).toArray
+//  def dataTraceAbs(channel: Int, range: FrameRange): Array[Double] = data.readTraceAbs(channel, range, 0).toArray
+//  def dataTraceAbs(channel: Int, range: FrameRange, segment: Int): Array[Double] = data.readTraceAbs(channel, range, segment).toArray
+//  def dataTraceAbs(channel: Int, range: MsRange): Array[Double] = dataTraceAbs(channel, range.getFrameRange(data), 0)
+//  def dataTraceAbs(channel: Int, range: MsRange, segment: Int): Array[Double] = dataTraceAbs(channel, range.getFrameRange(data), segment)
+//  def dataORITraceAbs(channel: Int, range: FrameRange): Array[Double] = dataORI.readTraceAbs(channel, range).toArray
+//  def dataORITraceAbs(channel: Int, range: FrameRange, segment: Int): Array[Double] = dataORI.readTraceAbs(channel, range, segment).toArray
+//  def dataORITraceAbs(channel: Int, range: MsRange): Array[Double] = dataORITraceAbs(channel, range.getFrameRange(data), 0)
+//  def dataORITraceAbs(channel: Int, range: MsRange, segment: Int): Array[Double] = dataORITraceAbs(channel, range.getFrameRange(data), segment)
+//  // </editor-fold>
+//
+//  // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc=" load/reload ">
 
@@ -180,10 +208,10 @@ class DataReader extends Logging {
           dataAuxORI = XDataNull
           reloadFlagDataAux = 1
           reloadFlagData = 2
-        } else if( dataORI.realData == XDataNull /*reloadFlagData == 0*/) {
+        } else if( dataORI.heldData == XDataNull /*reloadFlagData == 0*/) {
           setData(x0)
         } else if ( dataORI.isCompatible(x0)  /*reloadFlagData == 2*/) {
-          setData(dataORI.realData ::: x0)
+          setData(dataORI.heldData ::: x0)
           //reloadFlagData = 2
         } else { //not compatible with data, try dataAux
             if( reloadFlagDataAux == 1 ) {
@@ -199,7 +227,7 @@ class DataReader extends Logging {
         }
       }
       case x0: XDataChannel => {
-        dataORI.realData match {
+        dataORI.heldData match {
               case XDataNull => {
                 setData( new XDataChannelArray( Vector[XDataChannel]( x0 ) ) )
                 if( reloadFlagData == 1 ) {
@@ -316,7 +344,9 @@ class DataReader extends Logging {
     "DataReader loaded data summary:\n" +
     "     " + "header : " + header + "\n" +
     "     " + "data   : " + dataORI + "\n" +
-    "     " + " (filt): " + data + "\n" +
+    "     " + "    (XFrames) " + data().timingSummary() + "\n" +
+    "     " + "    (XDataDecimate) " + dataDecimate + "\n" +
+    "     " + "    (XDataFIR) " + dataFIR + "\n" +
     "     " + "dataAux: " + dataAuxORI + "\n" +
     "     " + "layout : " + layout + "\n" +
     "     " + "mask   : " + mask + "\n" +

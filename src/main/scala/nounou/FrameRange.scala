@@ -6,13 +6,14 @@ package nounou
  */
 object FrameRange {
 
-  val All = new All(1)
+  def All(): FrameRange = All(1)
 
-  class All(byVal: Int) extends FrameRange(0, 0 /*Integer.MAX_VALUE*/, byVal, true){
-    override def preLength(totalLength: Int) = 0
-    override def postLength(totalLength: Int) = 0
-    //override def getValidRange(totalLength: Int) = 0 to (totalLength -1) by byVal
-  }
+  def All(step: Int): FrameRange = new FrameRange(0, 0 /*Integer.MAX_VALUE*/, step, true)
+//  class All(step: Int) extends FrameRange(0, 0 /*Integer.MAX_VALUE*/, step, true){
+//    override def preLength(totalLength: Int) = 0
+//    override def postLength(totalLength: Int) = 0
+//    //override def getValidRange(totalLength: Int) = 0 to (totalLength -1) by byVal
+//  }
 
 }
 

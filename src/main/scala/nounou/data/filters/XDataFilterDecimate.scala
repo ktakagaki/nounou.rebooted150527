@@ -12,6 +12,11 @@
    */
   class XDataFilterDecimate(override val upstream: XData ) extends XDataFilterDownsample( upstream ) {
 
+    override def toString() = {
+      if(factor == 1) "XDataFilterDecimate: off (factor=1)"
+      else "XDataFilterDecimate: factor=" + factor
+    }
+
     var kernel: FIRKernel1D[Long] = null
     override def factor: Int = _factor
     _factor = 1
