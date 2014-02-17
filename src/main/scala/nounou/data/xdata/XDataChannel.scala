@@ -85,7 +85,7 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
     that match {
       case t: XDataChannelArray => {
         if(this.isCompatible(t(0))){
-          new XDataChannelArray( t.array.+:(this) )
+          new XDataChannelArray( t.array :+ this )
         } else {
           throw new IllegalArgumentException("types are not compatible, and cannot be concatenated.")
         }

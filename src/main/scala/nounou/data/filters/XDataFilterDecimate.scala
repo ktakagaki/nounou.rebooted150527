@@ -23,7 +23,7 @@
       )
 
       if( factor == this.factor ){
-        logger.info( "factor is already {}, not changing. ", factor.toString )
+        logger.trace( "factor is already {}, not changing. ", factor.toString )
       } else if(factor == 1) setDecimateOff()
       else {
         kernel = designFilterDecimation[ FIRKernel1D[Long] ](factor, multiplier = 1024L)
