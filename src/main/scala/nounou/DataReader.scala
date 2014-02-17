@@ -72,7 +72,10 @@ class DataReader extends Logging {
   def dataSampleRate() = data.sampleRate
   def dataFrameSegmentToMs(fr: Int, seg: Int) = data.frameSegmentToMs(fr, seg)
   def dataFrameSegmentToMs(fr: Int) = data.frameSegmentToMs(fr, 0)
-  def dataMsToFrameSegment(ms: Double) = data.msToFrameSegment( ms, false )
+  def dataMsToFrameSegment(ms: Double) = {
+    val temp = data.msToFrameSegment( ms, false )
+    Array[Int]( temp._1, temp._2 )
+  }
 
   def dataPoint(channel: Int, frame: Int): Int = data.readPoint(channel, frame)
   def dataPointAbs(channel: Int, frame: Int): Double = data.readPointAbs(channel, frame)
@@ -100,7 +103,7 @@ class DataReader extends Logging {
     filesChosen.map(load(_))
   }
 
-  def load(files: Array[String]): Unit = files.map( (fStr: String) => load( new File(fStr) ) )
+  def load(files: Array[String]): Unit = files.foreach( (fStr: String) => load( new File(fStr) ) )
 
   def load(file: File, reload: Boolean = false): Unit = {
     val list = file.getName.toLowerCase match {
@@ -109,7 +112,8 @@ class DataReader extends Logging {
       case n: String if n.endsWith(".nev") => FileLoaderNEV.load( file )
       case n => throw new IllegalArgumentException("File format for " + n + " is not supported yet.")
     }
-    list.map( loadImpl(_) )
+    logger.info("loading file: {}", file.getName)
+    list.foreach( loadImpl(_) )
   }
 
   def load(x: X): Unit = loadImpl(x)
