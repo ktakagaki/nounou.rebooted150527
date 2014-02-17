@@ -25,7 +25,7 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
   // <editor-fold defaultstate="collapsed" desc=" get/set filter settings ">
 
   def setFilterOff(): Unit = if(kernel == null){
-    logger.info( "filter is already off, not changing. ")
+    logger.trace( "filter is already off, not changing. ")
   } else {
     logger.info( "Turning filter kernel off." )
     kernel = null
@@ -82,12 +82,12 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
         upstream.readTraceImpl(channel, ran, segment)
     } else {
         //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-        val tempData = upstream.readTrace( channel, new FrameRange( ran.start - kernel.overhangPre, ran.endMarker + kernel.overhangPost, 1), segment)
+        val tempData = upstream.readTrace( channel, new FrameRange( ran.start - kernel.overhangPre, ran.last + kernel.overhangPost + 1, 1), segment)
       println( "1: " + tempData.length )
 //      println(OptRange.rangeToRangeOpt(ran))
         val tempRes: DenseVector[Long] = convolve(
                                               convert( new DenseVector( tempData.toArray ), Long), kernel.kernel,
-                                              range = OptRange.RangeOpt(ran),
+                                              range = OptRange.RangeOpt(new Range.Inclusive(0, ran.last - ran.start, ran.step)),
                                               overhang = OptOverhang.None ) / multiplier
       println( "2: " +  tempRes.length )
         toInt( tempRes.toArray.toVector )

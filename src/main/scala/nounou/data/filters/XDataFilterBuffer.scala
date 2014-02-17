@@ -71,13 +71,15 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
         val totalLength = segmentLengths(segment)
         val tempret = ArrayBuffer[Int]()
           tempret.sizeHint(range.length )
+        var tempretArr: Array[Int] = null
         val startPage =  getBufferPage( range.start)
         val startIndex = getBufferIndex(range.start)
         val endPage =    getBufferPage( range.end )
         val endIndex =   getBufferIndex(range.end )
 
-        if(startPage == endPage) buffer( (channel, startPage, segment) ).slice(startIndex, endIndex)
-        else {
+        if(startPage == endPage) {
+          tempretArr = buffer( (channel, startPage, segment) ).slice(startIndex, endIndex).toArray
+        } else {
           tempret ++= buffer( (channel, startPage, segment) ).slice(startIndex, bufferPageLength-1)  //deal with startPage separately
           if( startPage + 1 <= endPage ) {
             for(page <- startPage + 1 to endPage - 1) {
@@ -85,9 +87,16 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
             }
           }
           tempret ++= buffer( (channel, endPage, segment) ).slice(0, endIndex)  //deal with endPage separately
-          tempret.toVector
+          tempretArr = tempret.toArray
         }
 
+        val realRet = new Array[Int]( range.length )
+        var count = 0
+        for(cnt <- 0 until tempretArr.length by range.step){
+          realRet(count) = tempretArr(cnt)
+          count += 1
+        }
+        realRet.toVector
   }
 
   //redirection function to deal with scope issues regarding super

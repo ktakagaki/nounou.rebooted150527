@@ -74,25 +74,25 @@ trait XFrames extends X with Logging {
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc="Sample Rate: frameToTS/tsToFrame">
 
-  /** Timestamp of the given data frame index (in microseconds).
+  /** Absolute timestamp of the given data frame index (in microseconds).
     */
   final def frameSegmentToTS(frame:Int, segment: Int): Long = {
     require( isValidFrame(frame, segment) )
     segmentStartTSs(segment) + (frame.toDouble * tsPerFrame).toLong
   }
-  /** Timestamp of the given data frame index (in microseconds).
+  /** Time of the given data frame and segment (in milliseconds, with t=0 being the time for frame 0 segment 0).
     */
   final def frameSegmentToMs(frame:Int, segment: Int): Double = {
-    frameSegmentToTS(frame, segment).toDouble / 1000d
+    (frameSegmentToTS(frame, segment)-frameSegmentToTS(0, 0)).toDouble / 1000d
   }
-  /** Closest frame/segment index to the given timestamp in ms. Will give beginning or last frames, if timestamp is
+  /** Closest frame/segment index to the given timestamp in ms (frame 0 segment 0 being time 0). Will give beginning or last frames, if timestamp is
     * out of range.
     */
   final def msToFrameSegment(ms: Double, negativeIfOOB: Boolean = true): (Int, Int) = {
-    tsToFrameSegment( (ms*1000).toLong, negativeIfOOB )
+    tsToFrameSegment( (ms*1000).toLong + frameSegmentToTS(0, 0), negativeIfOOB )
   }
 
-  /** Closest frame/segment index to the given timestamp. Will give beginning or last frames, if timestamp is
+  /** Closest frame/segment index to the given absolute timestamp. Will give beginning or last frames, if timestamp is
     * out of range.
    * @param timestamp in Long
    * @param negativeIfOOB If true, will give a frame stamp as negative or larger than data length. Useful for overhangs. If False, will throw error.
