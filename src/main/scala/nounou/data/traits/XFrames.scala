@@ -72,7 +72,7 @@ trait XFrames extends X with Logging {
   def framesPerTS = 1D/tsPerFrame
 
   // </editor-fold>
-  // <editor-fold defaultstate="collapsed" desc="Sample Rate: frameToTS/tsToFrame">
+  // <editor-fold defaultstate="collapsed" desc="Sample Rate: conversion between frame/segment, TS, and ms">
 
   /** Absolute timestamp of the given data frame index (in microseconds).
     */
@@ -80,25 +80,40 @@ trait XFrames extends X with Logging {
     require( isValidFrame(frame, segment) )
     segmentStartTSs(segment) + (frame.toDouble * tsPerFrame).toLong
   }
-  /** Time of the given data frame and segment (in milliseconds, with t=0 being the time for frame 0 segment 0).
+
+  /** Time of the given data frame and segment (in milliseconds, with t=0 being the time for frame 0 within the segment).
     */
-  final def frameSegmentToMs(frame:Int, segment: Int): Double = {
-    (frameSegmentToTS(frame, segment)-frameSegmentToTS(0, 0)).toDouble / 1000d
-  }
-  /** Closest frame/segment index to the given timestamp in ms (frame 0 segment 0 being time 0). Will give beginning or last frames, if timestamp is
-    * out of range.
-    */
-  final def msToFrameSegment(ms: Double, negativeIfOOB: Boolean = true): (Int, Int) = {
-    tsToFrameSegment( (ms*1000).toLong + frameSegmentToTS(0, 0), negativeIfOOB )
+  final def frameToMs(frame:Int): Double = {
+    frame.toDouble * sampleInterval * 1000d
+    //(frameSegmentToTS(frame, segment)-frameSegmentToTS(0, segment)).toDouble / 1000d
   }
 
+  /** Closest frame/segment index to the given timestamp in ms (frame 0 within segment being time 0). Will give beginning or last frames, if timestamp is
+    * out of range.
+    */
+  final def msToFrame(ms: Double): Int = {
+    val tempret = (ms*sampleRate*0.001).toInt
+    require(tempret>=0, "frame index must be >0, not checking upper range. Input ms=" + ms + ", calculated output=" + tempret)
+    tempret
+    //tsToFrameSegment( (ms*1000).toLong + frameSegmentToTS(0, 0), negativeIfOOB )
+  }
+
+  final def tsToFrameSegment(timestamp: Long): (Int, Int) = tsToFrameSegment(timestamp, false)
+  final def tsToFrameSegmentA(timestamp: Long): Array[Int] = {
+    val tempret = tsToFrameSegment(timestamp, false)
+    Array[Int]( tempret._1, tempret._2 )
+  }
+  final def tsToFrameSegmentA(timestamp: Long, negativeIfOOB: Boolean): Array[Int] = {
+    val tempret = tsToFrameSegment(timestamp, negativeIfOOB)
+    Array[Int]( tempret._1, tempret._2 )
+  }
   /** Closest frame/segment index to the given absolute timestamp. Will give beginning or last frames, if timestamp is
     * out of range.
    * @param timestamp in Long
    * @param negativeIfOOB If true, will give a frame stamp as negative or larger than data length. Useful for overhangs. If False, will throw error.
    * @return
    */
-  final def tsToFrameSegment(timestamp: Long, negativeIfOOB: Boolean = true): (Int, Int) = {
+  final def tsToFrameSegment(timestamp: Long, negativeIfOOB: Boolean): (Int, Int) = {
     var tempret: (Int, Int) = (0 , 0 )
     var changed = false
 
@@ -184,6 +199,17 @@ trait XFrames extends X with Logging {
   }
 
   // </editor-fold>
+
+
+  def timingSummary(): String = {
+    var tempout = "Timing Summary: fs=" + sampleRate + ", segmentCount=" + segmentCount + ""
+    for( seg <- 0 until segmentCount) {
+      tempout += "\n               Seg " + seg + ": length=" + segmentLengths(seg)+", ms=[0, " +
+        (segmentLengths(seg).toDouble/sampleRate*1000).toString + "], segmentStartTS=" + segmentStartTSs(seg)
+    }
+    tempout
+  }
+
 
 }
 

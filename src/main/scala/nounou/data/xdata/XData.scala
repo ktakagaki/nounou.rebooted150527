@@ -92,6 +92,8 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     vectZeros( preLength ) ++ tempData ++ vectZeros( postLength )
 
   }
+  final def readTraceA(channel: Int, range: FrameRange): Array[Int] = readTrace(channel, range).toArray
+  final def readTraceA(channel: Int, range: FrameRange, segment: Int): Array[Int] = readTrace(channel, range, segment).toArray
 
   /** Read a single trace from the data, in internal integer scaling.
     */
@@ -118,6 +120,9 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   /** Read a single trace (within the span) from the data, in absolute unit scaling (as recorded).
     */
   final def readTraceAbs(channel: Int, range: FrameRange, segment: Int): Vector[Double] = toAbs(readTrace(channel, range, segment))
+
+  final def readTraceAbsA(channel: Int, range: FrameRange): Array[Double] = toAbs(readTrace(channel, range)).toArray
+  final def readTraceAbsA(channel: Int, range: FrameRange, segment: Int): Array[Double] = toAbs(readTrace(channel, range, segment)).toArray
 
   //</editor-fold>
 
@@ -150,6 +155,8 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     if( isValidFrame(frame, segment) ) readFrameImpl(frame, (currentSegment = segment) ) else vectZeros( channelCount )
 
   }
+  final def readFrameA(frame: Int, segment: Int): Array[Int] = readFrame(frame, segment).toArray
+  final def readFrameA(frame: Int, channels: Array[Int], segment: Int): Array[Int] = readFrame(frame, channels.toVector, segment).toArray
 
   //</editor-fold>
 
