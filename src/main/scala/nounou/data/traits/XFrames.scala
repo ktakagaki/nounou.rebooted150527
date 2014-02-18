@@ -3,6 +3,7 @@ package nounou.data.traits
 import nounou.data.X
 import scala.Vector
 import com.typesafe.scalalogging.slf4j.Logging
+import nounou.FrameRange
 
 /**Encapsulates segment, frame, and sampling information for xdata and XDataChannel.
  */
@@ -17,6 +18,7 @@ trait XFrames extends X with Logging {
   /**Total number of frames in each segment.
     */
   def segmentLengths: Vector[Int]
+  def segmentLengthsA = segmentLengths.toArray
 
   private var _currentSegment = 0
 
@@ -39,9 +41,11 @@ trait XFrames extends X with Logging {
   /** OVERRIDE: List of starting timestamps for each segment.
     */
   def segmentStartTSs: Vector[Long]
+  def segmentStartTSsA = segmentStartTSs.toArray
   /** OVERRIDE: End timestamp for each segment. Implement by overriding _endTimestamp
     */
   def segmentEndTSs: Vector[Long]
+  def segmentEndTSsA = segmentEndTSs.toArray
 
   // </editor-fold>
 
@@ -53,6 +57,9 @@ trait XFrames extends X with Logging {
   /** Is this frame valid in the current segment?
     */
   final def isValidFrame(frame: Int): Boolean = isValidFrame(frame, currentSegment)
+
+  final def isRealisticFrame(frame: Int, segment: Int): Boolean = (-100000 <= frame && frame < segmentLengths(segment) + 100000)
+  final def isRealisticFrameRange(range: FrameRange, segment: Int): Boolean = (-100000 <= range.start && range.endMarker < segmentLengths(segment) + 100000)
 
   // </editor-fold>
 
@@ -152,7 +159,7 @@ trait XFrames extends X with Logging {
         }
     }
 
-    if( !negativeIfOOB )  logger.error("this must be a bug in tsToFrameSegment!", new IllegalArgumentException )//require( tempret._1 >= 0 && tempret._1 < segmentLengths( tempret._2 ), "This must be a bug!")
+    //if( !negativeIfOOB )  logger.error("this must be a bug in tsToFrameSegment!", new IllegalArgumentException )//require( tempret._1 >= 0 && tempret._1 < segmentLengths( tempret._2 ), "This must be a bug!")
 
     tempret
 

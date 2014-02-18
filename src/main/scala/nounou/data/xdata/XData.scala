@@ -41,6 +41,8 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     * Implement via readPointImpl.
     */
   final def readPoint(channel: Int, frame: Int, segment: Int): Int = {
+
+    require(isRealisticFrame(frame, segment), "Unrealistic frame/segment: " + (frame, segment).toString)
     require(isValidChannel(channel), "Invalid channel: " + channel.toString)
     //require(isValidFrame(frame, segment), "Invalid frame/segment: " + (frame, segment).toString)
     if( isValidFrame(frame, segment) ) readPointImpl(channel, frame, currentSegment = segment) else 0
@@ -75,7 +77,8 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   /** Read a single trace from the data, in internal integer scaling.
     */
   final def readTrace(channel: Int, range: FrameRange, segment: Int): Vector[Int] = {
-    //println("v "+ range.start + " ")
+
+    require(isRealisticFrameRange(range, segment), "Unrealistic frame/segment: " + (range, segment).toString)
     require(isValidChannel(channel), "Invalid channel: " + channel.toString)
 
     //val realRange = range.getRangeWithoutNegativeIndexes( segmentLengths(segment) )
@@ -85,7 +88,6 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
         val preLength = range.preLength( totalLength )
         val postLength = range.postLength( totalLength )
 
-    //println("r " + range.start + " " + range.last( totalLength ) + " " + range.step + " " + segment)
     val vr = range.getValidRange(totalLength)
     val tempData = if( vr.length == 0 ) Vector[Int]() else readTraceImpl(channel, vr, (currentSegment = segment))
 
@@ -140,9 +142,10 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   /** Read a single frame from the data, in internal integer scaling, for just the specified channels.
     */
   final def readFrame(frame: Int, channels: Vector[Int], segment: Int): Vector[Int] = {
-
-    //require(isValidFrame(frame, segment), "Invalid frame/segment: " + (frame, segment).toString)
+    //ToDo 1: change requires to logging!
+    require(isRealisticFrame(frame, segment), "Unrealistic frame/segment: " + (frame, segment).toString)
     require(channels.forall(isValidChannel), "Invalid channels: " + channels.toString)
+
     if( isValidFrame(frame, segment) ) readFrameImpl(frame, channels, (currentSegment = segment) ) else vectZeros( channels.length )
 
   }
@@ -151,7 +154,8 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     */
   final def readFrame(frame: Int, segment: Int): Vector[Int] = {
 
-    //require(isValidFrame(frame, segment), "Invalid frame/segment: " + (frame, segment).toString)
+    require(isRealisticFrame(frame, segment), "Unrealistic frame/segment: " + (frame, segment).toString)
+
     if( isValidFrame(frame, segment) ) readFrameImpl(frame, (currentSegment = segment) ) else vectZeros( channelCount )
 
   }
@@ -197,6 +201,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   override def toString() = {
     "XData(" + channelCount + " channels, "+ segmentCount + " segments, with lengths " + segmentLengths + ", fs=" + sampleRate + ")"
   }
+  //ToDo: print data chain (with children recursively)
 
 }
 

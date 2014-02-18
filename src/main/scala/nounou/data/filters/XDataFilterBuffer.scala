@@ -13,8 +13,8 @@ import nounou.data.XData
   */
 class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstream) {
 
-  private var buffer: HashMap[(Int, Int, Int), Vector[Int]] = new ReadingHashMapBuffer()
-  private var garbageQue: ArrayBuffer[(Int, Int, Int)] = new ArrayBuffer[(Int, Int, Int)]()
+  var buffer: HashMap[(Int, Int, Int), Vector[Int]] = new ReadingHashMapBuffer()
+  var garbageQue: ArrayBuffer[(Int, Int, Int)] = new ArrayBuffer[(Int, Int, Int)]()
 
   lazy val bufferPageLength: Int = (32768 / 2) //default page length will be 32 kB
   lazy val garbageQueBound: Int = 2048 //32MB in data + //1073741824 / 8 / (bufferPageLength * 2)  //default buffer maximum size will be 128 MB
@@ -68,33 +68,34 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
 
   override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] = {
 
-        val totalLength = segmentLengths(segment)
+        //val totalLength = segmentLengths(segment)
         val tempret = ArrayBuffer[Int]()
           tempret.sizeHint(range.length )
         var tempretArr: Array[Int] = null
         val startPage =  getBufferPage( range.start)
         val startIndex = getBufferIndex(range.start)
-        val endPage =    getBufferPage( range.end )
-        val endIndex =   getBufferIndex(range.end )
+        val endPage =    getBufferPage( range.last )
+        val endIndex =   getBufferIndex(range.last )
 
         if(startPage == endPage) {
-          tempretArr = buffer( (channel, startPage, segment) ).slice(startIndex, endIndex).toArray
+          tempretArr = buffer( (channel, startPage, segment) ).slice(startIndex, endIndex + 1).toArray
         } else {
-          tempret ++= buffer( (channel, startPage, segment) ).slice(startIndex, bufferPageLength-1)  //deal with startPage separately
-          if( startPage + 1 <= endPage ) {
-            for(page <- startPage + 1 to endPage - 1) {
+          tempret ++= buffer( (channel, startPage, segment) ).slice(startIndex, bufferPageLength)  //deal with startPage separately
+          //if( startPage + 1 <= endPage ) {
+            for(page <- startPage + 1 to endPage){//endPage - 1) {
               tempret ++= buffer( (channel, page, segment) )
             }
-          }
-          tempret ++= buffer( (channel, endPage, segment) ).slice(0, endIndex)  //deal with endPage separately
+          //}
+          //tempret ++= buffer( (channel, endPage, segment) ).slice(0, endIndex + 1)  //deal with endPage separately
           tempretArr = tempret.toArray
         }
 
         val realRet = new Array[Int]( range.length )
-        var count = 0
-        for(cnt <- 0 until tempretArr.length by range.step){
-          realRet(count) = tempretArr(cnt)
-          count += 1
+    //println("realRet.length=" + realRet.length + ", tempretArr.length="+ tempretArr.length)
+        var index = 0
+        for(cnt <- 0 until range.length){
+          realRet(cnt) = tempretArr(index)
+          index += range.step
         }
         realRet.toVector
   }
@@ -124,7 +125,7 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
     override def default( key: (Int, Int, Int)  ): Vector[Int] = {
       val startFrame = key._2 * bufferPageLength
       val endFramePlusOne: Int = scala.math.min( startFrame + bufferPageLength, segmentLengths( key._3 ) )
-      val returnValue = tempTraceReader( key._1, new Range.Inclusive(startFrame, endFramePlusOne, 1), key._3  )
+      val returnValue = tempTraceReader( key._1, new Range.Inclusive(startFrame, endFramePlusOne-1, 1), key._3  )
       this.+=( key -> returnValue )
       returnValue
     }
