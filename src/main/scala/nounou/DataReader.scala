@@ -8,6 +8,7 @@ import nounou.data.formats.{FileLoaderNEV, FileLoaderNCS, FileLoaderNEX}
 import nounou.data.discrete._
 import nounou.data.filters._
 import breeze.math.Complex
+import breeze.linalg.max
 
 
 /**
@@ -28,23 +29,53 @@ class DataReader extends Logging {
   /**Layout of data*/
   var layout: XLayout = XLayoutNull
   /**Mask*/
-  var mask: XMask = XMaskNull
+  var mask: XMask = new XMask
   /**Events*/
   var events: XEvents = XEventsNull
   /**Spikes*/
   var spikes: XSpikes = XSpikesNull
 
   // <editor-fold defaultstate="collapsed" desc=" filters, setting data/dataORI and dataAux/dataAuxORI ">
-  var dataDecimate: XDataFilterDecimate = new XDataFilterDecimate( dataORI )
-    var dataDecimateBuf: XDataFilterBuffer = new XDataFilterBuffer( dataDecimate )
-      var dataFIR: XDataFilterFIR = new XDataFilterFIR( dataDecimateBuf )
-      var dataFourier: XDataFilterStatistics = new XDataFilterStatistics( dataDecimateBuf )
+
+  val dataDecimate: XDataFilterDecimate = new XDataFilterDecimate( dataORI )
+    val dataDecimateBuf: XDataFilterBuffer = new XDataFilterBuffer( dataDecimate )
+      val dataFIR: XDataFilterFIR = new XDataFilterFIR( dataDecimateBuf )
+      val dataStats: XDataFilterStatistics = new XDataFilterStatistics( dataDecimateBuf )
+      val dataRMSFIR: XDataFilterFIR = new XDataFilterFIR( dataDecimateBuf )
+        val dataRMS: XDataFilterRMS = new XDataFilterRMS( new XDataFilterBuffer( dataRMSFIR ) )
+      val dataMAX: XDataFilterMinMaxAbs = new XDataFilterMinMaxAbs( dataDecimateBuf )
 
   def setData(x: XData): Unit = {
     dataORI.heldData = x
     if(dataORI.sampleRate > 2000) dataDecimate.factor = math.min(16, (dataORI.sampleRate / 2000).toInt)
+    val halfWindow = (dataRMSFIR.sampleRate * 0.05).toInt //50 ms
+    dataRMS.setHalfWindow(halfWindow)
+    dataMAX.setHalfWindow(halfWindow)
   }
+  // </editor-fold>
 
+
+  // <editor-fold defaultstate="collapsed" desc=" artifact masking ">
+
+  def maskMovementArtifacts(f0: Double, f1: Double, rmsAbsThreshold: Double, absAbsThreshold: Double): Unit = {
+
+    val stepSize = (dataRMSFIR.sampleRate * 0.1).toInt //100 ms
+    val maskHalfWindow = 100L * 1000L // 100 ms
+    dataRMSFIR.setFilterHz(f0, f1)
+
+    val rmsThreshold = dataRMS.absToInternal( rmsAbsThreshold )
+    val absThreshold = dataRMS.absToInternal( absAbsThreshold )
+
+    for(seg <- 0 to dataRMS.segmentCount)
+    for(frame <- 0 to dataRMS.segmentLengths(seg) by stepSize ) {
+      if( max( (for(ch <- 0 until dataMAX.channelCount) yield dataMAX.readPoint(ch, frame, seg)).toVector ) >= absThreshold ||
+            max( (for(ch <- 0 until dataRMS.channelCount) yield dataRMS.readPoint(ch, frame, seg)).toVector ) >= rmsThreshold ){
+        val frameTS = dataRMS.frameSegmentToTS(frame, seg)
+        mask.mask( frameTS - maskHalfWindow, frameTS + maskHalfWindow )
+      }
+    }
+
+  }
 
   // </editor-fold>
 
@@ -321,7 +352,7 @@ class DataReader extends Logging {
   def clearData: Unit = {setData(XDataNull)}
   def clearDataAux: Unit = {dataAuxORI = XDataNull/*; dataAux = XDataNull*/ }
   def clearLayout: Unit = {layout = XLayoutNull}
-  def clearMask: Unit = {mask = XMaskNull}
+  def clearMask: Unit = {mask = new XMask}
   def clearEvents: Unit = {events = XEventsNull}
   def clearSpikes: Unit = {spikes = XSpikesNull}
 

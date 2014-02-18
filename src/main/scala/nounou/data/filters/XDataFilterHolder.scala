@@ -15,7 +15,7 @@ class XDataFilterHolder( val upstream: XData = XDataNull ) extends XData {
   def heldData_=( newData: XData ) = {
     _heldData = newData
     changedData()
-    changedTiming()
+    changedTiming()  //ToDo 2: buffer and only conditionally trigger timing change
   }
 
   override def channelNames: scala.Vector[String] = heldData.channelNames
