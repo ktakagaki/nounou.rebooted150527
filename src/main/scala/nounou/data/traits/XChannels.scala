@@ -9,6 +9,7 @@ trait XChannels {
 
   /**Get the name of a given channel.*/
   def channelNames: Vector[String]
+  def channelNamesA = channelNames.toArray
   /**Get number of channels.*/
   def channelCount = channelNames.length
 

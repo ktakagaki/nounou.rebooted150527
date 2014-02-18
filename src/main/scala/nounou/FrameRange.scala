@@ -17,7 +17,7 @@ object FrameRange {
 
 }
 
-class FrameRange(val start: Int, val endMarker: Int, val step: Int, val isAll: Boolean = false) /*extends Range(start, last, step)*/{
+class FrameRange(val start: Int, val endMarker: Int, val step: Int = 1, val isAll: Boolean = false) /*extends Range(start, last, step)*/{
 
   require( step > 0, "In nounous, step > 0 is required for frame ranges.")
   require( start <= endMarker, "In nounous, start <= last is required for frame ranges. start=" + start + ", last=" + endMarker)

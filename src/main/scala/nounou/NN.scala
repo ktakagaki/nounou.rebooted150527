@@ -2,6 +2,7 @@ package nounou
 
 import scala.reflect.ClassTag
 import breeze.math.Complex
+import nounou.data.traits.XFrames
 
 /**
  * @author ktakagaki
@@ -39,6 +40,13 @@ import breeze.math.Complex
     final def al(vector: Vector[Long]): Array[Long] = vector.toArray
     final def ad(vector: Vector[Double]): Array[Double] = vector.toArray
     final def ac(vector: Vector[Complex]): Array[Complex] = vector.toArray
+
+    final def ms(msStart: Double, msEnd: Double, step: Double, sampleRate:Double): FrameRange = {
+      val startFr = (msStart/1000d * sampleRate).toInt
+      val endFr = (msEnd/1000d * sampleRate).toInt
+      val stepReal = (step/1000d * sampleRate).toInt
+      new FrameRange(startFr, endFr, stepReal)
+    }
 
 
 

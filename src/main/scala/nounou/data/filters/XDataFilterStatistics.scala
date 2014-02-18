@@ -17,14 +17,24 @@ class XDataFilterStatistics( override val upstream: XData ) extends XDataFilter(
     fourierTr( DenseVector( tempTrace.toArray ) )
   }
 
-  def readTraceAbsFourier( ch: Int, range: FrameRange, segment: Int, fourierRange: Range ): Complex = {
-    val tempTrace = readTraceAbs( ch, range, segment )
-    mean( fourierTr( DenseVector( tempTrace.toArray ), fourierRange ) )
-  }
+//  def readTraceAbsFourier( ch: Int, range: FrameRange, segment: Int, fourierRange: Range ): Complex = {
+//    val tempTrace = readTraceAbs( ch, range, segment )
+//    mean( fourierTr( DenseVector( tempTrace.toArray ), fourierRange ) )
+//  }
 
   def readTraceAbsRMS( ch: Int, range: FrameRange, segment: Int ): Double = {
     val tempTrace = readTraceAbs( ch, range, segment )
-    fourierTr( DenseVector( tempTrace.toArray ) )
+    rms( tempTrace )
+  }
+
+  private def rms(vect: Vector[Double]): Double = {
+    var tempsum = 0d
+    var tempcount = 0
+    for( cnt <- 0 until vect.length){
+      tempsum += ( vect(cnt) * vect(cnt) )
+      tempcount += 1
+    }
+    tempsum / tempcount
   }
 
 }

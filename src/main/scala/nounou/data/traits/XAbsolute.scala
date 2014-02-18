@@ -38,7 +38,18 @@ trait XAbsolute extends X {
     * absUnit (e.g. "mV")
     */
   final def toAbs(data: Vector[Int]): Vector[Double] = data.map( toAbs _ )
+  final def toAbsA(data: Array[Int]): Array[Double] = data.map( toAbs _ )
   //ToDo 3: toAbs erasure
+  /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
+    * absUnit (e.g. "mV")
+    */
+  final def absToInternal(dataAbs: Double) = ((dataAbs - absOffset) / absGain).toInt //ToDo 4: change to multiply?
+  /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
+    * absUnit (e.g. "mV")
+    */
+  final def absToInternal(dataAbs: Vector[Double]): Vector[Int] = dataAbs.map( absToInternal _ )
+  final def absToInternalA(dataAbs: Array[Double]): Array[Int] = dataAbs.map( absToInternal _ )
+
   //  /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
   //   * absUnit (e.g. "mV")
   //   */

@@ -74,7 +74,7 @@
               range = OptRange.RangeOpt( new Range.Inclusive(0, (range.end - range.start)*factor, range.step*factor) ),
               overhang = OptOverhang.None )
 //        println("tempRes: " + tempRes.length)
-          convert( tempRes / kernel.multiplier, Int).toVector
+          convert( (tempRes / kernel.multiplier.toLong ), Int).toArray.toVector
       }
 
 //    override def readFrameImpl(frame: Int, segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame * factor, segment)
