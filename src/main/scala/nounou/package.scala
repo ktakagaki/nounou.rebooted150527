@@ -1,5 +1,6 @@
 import breeze.linalg.DenseVector
 import breeze.macros.expand
+import com.typesafe.scalalogging.slf4j.Logger
 import nounou.data.XData
 import scala.math
 import scala.reflect.runtime.universe._
@@ -64,6 +65,20 @@ package object nounou {
       tempArr(c) = vect(c).asInstanceOf[Int]
     }
     tempArr.toVector
+  }
+
+  @throws[IllegalArgumentException]
+  def loggerError(logger: Logger, message: String, params: AnyRef*): Unit = {
+    logger.error(message, params: _*)
+    throw new IllegalArgumentException(message)
+  }
+
+  @throws[IllegalArgumentException]
+  def loggerRequire(logger: Logger, boolean: Boolean, message: String, params: AnyRef*): Unit = {
+    if(!boolean){
+        logger.error(message, params: _* )
+        throw new IllegalArgumentException( "require:" +message)
+    }
   }
 
   //def toArrayInt(vect: Vector[Int]): Array[Int] = vect.toArray

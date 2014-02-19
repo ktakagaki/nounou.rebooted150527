@@ -34,7 +34,7 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
     changedData()
   }
 
-  def setFilter( omega0: Double, omega1: Double ): Unit = {
+  def setFilter( omega0: Double, omega1: Double, taps: Int ): Unit = {
     require(omega0>= 0 && omega1 > omega0 && omega1 <= 1,
       logger.error(
         "Frequencies must be 0 <= omega0 < omega1 <= 1. omega0={}, omega1={}. Use setFilterHz if setting in Hz.",
@@ -44,7 +44,7 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
     if(omega0 == 0d && omega1 == 1d)
       setFilterOff()
     else {
-      kernel = designFilterFirwin[Long](1024, DenseVector[Double](omega0, omega1), nyquist = 1d,
+      kernel = designFilterFirwin[Long](taps, DenseVector[Double](omega0, omega1), nyquist = 1d,
         zeroPass = false, scale=true, multiplier = this.multiplier)
       kernelOmega0 = omega0
       kernelOmega1 = omega1
@@ -54,9 +54,10 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
     }
   }
 
-  def setFilterHz( f0: Double, f1: Double ): Unit = {
+  def setFilterHz( f0: Double, f1: Double): Unit = setFilterHz(f0, f1, 1024)
+  def setFilterHz( f0: Double, f1: Double, taps: Int ): Unit = {
     require(f0 >= 0 && f1 > f0 && f1 <= sampleRate/2, logger.error("setFilterHz: Frequencies must be 0 <= f0 < f1 <= sampleRate/2. f0={}, f1={}", f0.toString, f1.toString) )
-    setFilter(f0/(sampleRate/2d), f1/(sampleRate/2d))
+    setFilter(f0/(sampleRate/2d), f1/(sampleRate/2d), taps)
   }
 
   def getFilterHz(): Vector[Double] = Vector[Double]( kernelOmega0*(sampleRate/2d), kernelOmega1*(sampleRate/2d) )

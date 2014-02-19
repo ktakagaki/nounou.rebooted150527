@@ -5,7 +5,6 @@ import breeze.linalg.{DenseVector}
 import scala.collection.immutable.VectorBuilder
 import scala.collection.mutable.{ArrayBuffer, HashMap}
 import nounou.data.filters.XDataFilterMinMaxAbs.{ABS, MIN, MAX}
-import breeze.numerics.abs
 
 
 object XDataFilterMinMaxAbs {
@@ -32,7 +31,7 @@ class XDataFilterMinMaxAbs( override val upstream: XData ) extends XDataFilterRM
       //(upstream.sampleRate * 0.05).toInt //50 ms
     }
 
-    private var _mode: Int = ABS
+    protected var _mode: Int = ABS
     def mode = _mode
     def getMode = _mode
     def mode_=(newValue: Int) : Unit = {
@@ -96,7 +95,8 @@ class XDataFilterMinMaxAbs( override val upstream: XData ) extends XDataFilterRM
   private def absMinMax(vect: Vector[Int]): Int = {
     var tempmax= Int.MinValue
     for( cnt <- 0 until vect.length){
-      if( abs(vect(cnt)) > tempmax ) tempmax = abs(vect(cnt))
+      val tempAbs = scala.math.abs(vect(cnt))
+      if( tempAbs > tempmax ) tempmax = tempAbs
     }
     tempmax
   }

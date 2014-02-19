@@ -3,7 +3,7 @@ package nounou.data.traits
 import nounou.data.X
 import scala.Vector
 import com.typesafe.scalalogging.slf4j.Logging
-import nounou.FrameRange
+import nounou.{FrameRange, loggerError}
 
 /**Encapsulates segment, frame, and sampling information for xdata and XDataChannel.
  */
@@ -105,7 +105,10 @@ trait XFrames extends X with Logging {
     //tsToFrameSegment( (ms*1000).toLong + frameSegmentToTS(0, 0), negativeIfOOB )
   }
 
+  final def tsToMs(timestamp: Long): Double = frameToMs( tsToFrameSegment(timestamp)._1 )
+
   final def tsToFrameSegment(timestamp: Long): (Int, Int) = tsToFrameSegment(timestamp, false)
+
   final def tsToFrameSegmentA(timestamp: Long): Array[Int] = {
     val tempret = tsToFrameSegment(timestamp, false)
     Array[Int]( tempret._1, tempret._2 )
@@ -127,7 +130,8 @@ trait XFrames extends X with Logging {
     if( /* TS cond */ timestamp <= segmentStartTSs(0) ){
         if( negativeIfOOB )  tempret = ( ((timestamp-segmentStartTSs(0)) * framesPerTS).toInt, 0)
         else {
-          logger.error("timestamp "+timestamp+" is smaller than first frame of first segment!", new IllegalArgumentException )
+          logger.error("timestamp {} is smaller than first frame of first segment!", timestamp.toString)
+          throw new IllegalArgumentException("text")
         }//tempret = (0, 0)
     } else {
         var seg = 0
@@ -138,11 +142,17 @@ trait XFrames extends X with Logging {
             } else if( /* TS cond */ timestamp < segmentStartTSs(seg+1) ) {
                 if(    /* TS cond */ timestamp - segmentEndTSs(seg) < segmentStartTSs(seg+1) - timestamp){
                     if( negativeIfOOB )  tempret = (((timestamp-segmentStartTSs(seg)) * framesPerTS).toInt, seg)
-                    else logger.error("timestamp is in the gap between segments "+seg+" and "+(seg+1)+"!", new IllegalArgumentException )//tempret = ( segmentLengths(seg) - 1, seg )
+                    else {
+                      logger.error("timestamp is in the gap between segments {} and {}!", seg.toString, (seg+1).toString)
+                      throw new IllegalArgumentException//tempret = ( segmentLengths(seg) - 1, seg )
+                    }
                     changed = true
                 } else {
                     if( negativeIfOOB )  tempret = (((timestamp-segmentStartTSs(seg + 1)) * framesPerTS).toInt, seg + 1)
-                    else logger.error("timestamp is in the gap between segments "+seg+" and "+(seg+1)+"!", new IllegalArgumentException )//tempret = (0, seg + 1)
+                    else {
+                      logger.error("timestamp is in the gap between segments "+seg+" and "+(seg+1)+"!")
+                      throw new IllegalArgumentException()
+                    }//tempret = (0, seg + 1)
                     changed = true
                 }
             } else {
@@ -154,7 +164,10 @@ trait XFrames extends X with Logging {
               tempret = ( ((timestamp - segmentStartTSs(segmentCount-1)) * framesPerTS).toInt, segmentCount - 1 )
           } else {
               if( negativeIfOOB )  tempret = ( ((timestamp - segmentStartTSs(segmentCount-1)) * framesPerTS).toInt, segmentCount - 1 )
-              else logger.error("timestamp "+timestamp+" is larger than last frame of last segment!", new IllegalArgumentException )//tempret = ( segmentLengths(segmentCount-1)-1, segmentCount -1)
+              else {
+                loggerError(logger, "timestamp {} is larger than last frame {} of last segment {}!",
+                  timestamp.toString, (segmentLengths.last - 1).toString, (segmentCount - 1).toString )
+              }//tempret = ( segmentLengths(segmentCount-1)-1, segmentCount -1)
           }
         }
     }
@@ -172,9 +185,9 @@ trait XFrames extends X with Logging {
     if(timestamp <= segmentStartTSs(0) ){
       0
     } else {
-      var tempret = 0
+      var tempret = -1
       var seg = 0
-      while(seg < segmentCount - 1 && tempret == 0){
+      while(seg < segmentCount - 1 && tempret == -1){
         if( timestamp < segmentEndTSs(seg) ){
           tempret = seg
         } else if(timestamp < segmentStartTSs(seg+1)) {
@@ -183,7 +196,7 @@ trait XFrames extends X with Logging {
           seg += 1
         }
       }
-      if(tempret == 0){
+      if(tempret == -1){
         tempret = segmentCount - 1
       }
       tempret
