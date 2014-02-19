@@ -11,12 +11,18 @@ import breeze.linalg.DenseVector
  */
 class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter( upstream ) {
 
+  def this(upstream: XData, factor: Int) = {
+    this(upstream)
+    factor_=(factor)
+  }
+
   override def toString() = {
     if(factor == 1) "XDataFilterDownsample: off (factor=1)"
     else "XDataFilterDownsample: factor=" + factor
   }
 
   def factor: Int = _factor
+  def getFactor(): Int = factor
   def factor_=( factor: Int ) = {
     if( factor == this.factor ){
       logger.trace( "factor is already {}}, not changing. ", factor.toString )
@@ -26,6 +32,7 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
       changedData()
     }
   }
+  def setFactor( factor: Int ): Unit = factor_=( factor )
   protected var  _factor: Int = 1
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
@@ -56,7 +63,7 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
   // override def segmentStartTSs: Vector[Long] = upstream.segmentStartTSs
   override def segmentEndTSs: Vector[Long] = if( factor == currentSegEndTSFactor ) currentSegEndTSBuffer
   else {
-    currentSegEndTSBuffer = ( for(seg <- 0 until segmentCount) yield upstream.segmentStartTSs(seg) + ((upstream.segmentLengths(seg)-1)*tsPerFrame).toLong ).toVector
+    currentSegEndTSBuffer = ( for(seg <- 0 until segmentCount) yield upstream.segmentStartTSs(seg) + ((this.segmentLengths(seg)-1)*tsPerFrame).toLong ).toVector
     currentSegEndTSFactor = factor
     currentSegEndTSBuffer
   }

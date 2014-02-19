@@ -17,25 +17,25 @@ class FileLoaderNCSTest extends FunSuite {
 
     val d = new DataReader
     d.reload( testFileTet4a )
-    assert(d.data.segmentCount == 3, "Segment count " + d.data.segmentCount + " should be 3!" )
 
-    println(d.data.readTrace(0, FrameRange.All, 0).length)
-    println(d.data.readTrace(0, FrameRange.All, 1).length)
+    println(d.dataORI.readTrace(0, FrameRange.All, 0).length)
+    println(d.dataORI.readTrace(0, FrameRange.All, 1).length)
 
-    assert(d.data.readTrace(0, FrameRange.All, 0).length == 3339264, "read whole segment length incorrect!")
+    assert(d.dataORI.segmentCount == 3, "Segment count " + d.data.segmentCount + " should be 3!" )
+    assert(d.dataORI.readTrace(0, FrameRange.All, 0).length == 3339264, "read whole segment length incorrect!")
 
-    val tempTrace1 = d.data.readTrace(0, 0 to 5120, 0)
+    val tempTrace1 = d.dataORI.readTrace(0, 0 to 5120, 0)
 
 //    println( tempTrace1.length )
 //    println( (0 to 5120) )
 
-    val xBits = d.data.xBits
+    val xBits = d.dataORI.xBits
     assert(tempTrace1(0)/xBits == -888, "tempTrace1-0: read value incorrect!")
     assert(tempTrace1(1)/xBits == -603, "tempTrace1-1: read value incorrect!")
     assert(tempTrace1(2)/xBits == -107, "tempTrace1-2: read value incorrect!")
     assert(tempTrace1.length == 5121, "tempTrace1: trace read length incorrect!" )
 
-    val tempTrace2 = d.data.readTraceAbs(0, 0 to 10, 0)
+    val tempTrace2 = d.dataORI.readTraceAbs(0, 0 to 10, 0)
     //println(tempTrace2(0) + "  " + d.data.absGain + " " + d.data.absOffset )
     assert( tempTrace2(0) + 27.1000428 < 1.0E-6 , "tempTrace2-0: abs read value incorrect!")
     assert( tempTrace2(1) + 18.4026555 < 1.0E-6 , "tempTrace2-1: abs read value incorrect!")

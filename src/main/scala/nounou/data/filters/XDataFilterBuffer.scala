@@ -8,6 +8,7 @@ import nounou.data.XData
 
 
 //ToDo: buffer timing info?
+//ToDo: parallelize?
 
 /** Buffer filter, which will save intermediate calculation results for an XData object.
   */
@@ -82,7 +83,7 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
         } else {
           tempret ++= buffer( (channel, startPage, segment) ).slice(startIndex, bufferPageLength)  //deal with startPage separately
           //if( startPage + 1 <= endPage ) {
-            for(page <- startPage + 1 to endPage){//endPage - 1) {
+            for( page <- (startPage + 1 to endPage)/*.par*/ ){//endPage - 1) {
               tempret ++= buffer( (channel, page, segment) )
             }
           //}
