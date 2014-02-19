@@ -57,10 +57,12 @@ class DataReader extends Logging {
 
   // <editor-fold defaultstate="collapsed" desc=" artifact masking ">
 
-  def maskMovementArtifacts(f0: Double, f1: Double, rmsAbsThreshold: Double, absAbsThreshold: Double): Unit = {
+  def maskMovementArtifacts(f0: Double, f1: Double, rmsAbsThreshold: Double, absAbsThreshold: Double, stepSize: Int, maskHalfWindow: Long): Unit = {
 
-    val stepSize = (dataRMSFIR.sampleRate * 0.05).toInt //100 ms
-    val maskHalfWindow = 100L * 1000L // 100 ms
+    mask.clear()
+
+//    val stepSize = (dataRMSFIR.sampleRate * 0.05).toInt //100 ms
+//    val maskHalfWindow = 150L * 1000L // 150 ms
     dataRMSFIR.setFilterHz(f0, f1, 64)
 
     val rmsThreshold = dataRMS.absToInternal( rmsAbsThreshold )
@@ -68,13 +70,23 @@ class DataReader extends Logging {
 
     for(seg <- 0 until dataRMS.segmentCount)
     for(frame <- 0 until dataRMS.segmentLengths(seg) by stepSize ) {
-      if( max( (for(ch <- (0 until dataMAX.channelCount) ) yield dataMAX.readPoint(ch, frame, seg)).toVector ) >= absThreshold ||
-            max( (for(ch <- (0 until dataRMS.channelCount) ) yield dataRMS.readPoint(ch, frame, seg)).toVector ) >= rmsThreshold ){
+      if( mean( (for(ch <- (0 until dataMAX.channelCount) ) yield dataMAX.readPoint(ch, frame, seg)).toVector ) >= absThreshold ||
+            mean( (for(ch <- (0 until dataRMS.channelCount) ) yield dataRMS.readPoint(ch, frame, seg)).toVector ) >= rmsThreshold ){
         val frameTS = dataRMS.frameSegmentToTS(frame, seg)
         mask.mask( frameTS - maskHalfWindow, frameTS + maskHalfWindow )
       }
     }
 
+    mask.eliminateOverlapping()
+
+  }
+
+  private def mean(vect: Vector[Int]): Int ={
+    var sum = 0
+    for(cnt <- 0 until vect.length){
+      sum += vect(cnt)
+    }
+    sum/vect.length
   }
 
   // </editor-fold>
