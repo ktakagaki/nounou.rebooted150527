@@ -8,50 +8,49 @@ import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
  * @author ktakagaki
  * @date 2/2/14.
  */
-object FileWriterKlustaDAT extends FileWriter {
+object FileWriterKlustaDAT extends XDataFileWriter {
 
-  override def write(fileName: String, data: List[X]) = write(fileName, data, FrameRange.All,  0)
+  override def write(fileName: String, data: XData) = write(fileName, data, 0, FrameRange.All)
 
-  def write(fileName: String, data: List[X], range: FrameRange, segment: Int = 0 ): Unit = {
+
+  def write(fileName: String, data: XData, segment: Int, range: FrameRange ): Unit = {
 
     val actualFileName = {
       if( fileName.toLowerCase.endsWith(".klusta.dat") ) fileName
       else fileName + ".klusta.dat"
     }
 
-    val actualXData =
-      if( data.length == 1 ) {
-        data(0) match {
-          case x: XData => x
-          case x: XDataChannel => new XDataChannelArray( Vector(x) )
-          case _ => throw new IllegalArgumentException("Cannot write data type " + data(0) + " as .klusta.dat file!")
+    val fileObj = new RandomAccessFile(actualFileName, "rw")(ByteConverterLittleEndian)
+
+    val realRange = range.getValidRange(data.segmentLengths(segment))
+    val writeFrameLength = 1024 //32kb if 16 channels
+
+    var currentFrameStart = 0
+    if(realRange.length > writeFrameLength){
+      var currentIndex = 0
+      while(currentFrameStart + writeFrameLength < realRange.length){
+        val writeArray = new Array[Short]( data.channelCount * writeFrameLength )
+        currentIndex = 0
+        for(fr <- 0 until writeFrameLength)
+          for(ch <- 0 until data.channelCount) {
+            writeArray( currentIndex ) = (data.readPoint(ch, fr + currentFrameStart, segment) / data.xBits).toShort
+            currentIndex += 1
+          }
+        fileObj.writeInt16( writeArray)
+        currentFrameStart += writeFrameLength
+      }
+
+      val writeArray = new Array[Short]( data.channelCount * (realRange.length - currentFrameStart) )
+      currentIndex = 0
+      for(fr <- currentFrameStart until realRange.length)
+        for(ch <- 0 until data.channelCount) {
+          writeArray( currentIndex ) = (data.readPoint(ch, fr, segment) / data.xBits).toShort
+          currentIndex += 1
         }
-      } else if (data.forall( _.isInstanceOf[XDataChannel] )) {
-        new XDataChannelArray( data.map(_.asInstanceOf[XDataChannel]).toVector )
-      } else {
-        throw new IllegalArgumentException("Cannot write given list of data as .klusta.dat file!")
-      }
+      fileObj.writeInt16( writeArray)
+      fileObj.close()
 
-    val fileObj = new RandomAccessFile(actualFileName, "w")(ByteConverterLittleEndian)
-
-    //val realRangegetRangeWithoutNegativeIndexes( actualXData.segmentLengths(segment) )
-
-    val totalLength = actualXData.segmentLengths(segment)
-    val tempTraces: Array[Array[Short]] =
-            Array.tabulate(actualXData.channelCount)( (ch: Int) => actualXData.readTrace(ch, range, segment).map( (i: Int) => ( i / actualXData.xBits).toShort ).toArray  )
-    val tempArray: Array[Short] = new Array[Short]( range.length( totalLength ) * actualXData.channelCount )
-
-    var index: Int = 0
-    for(frame <- range.start to range.last( totalLength ) ){
-      for(channel <- 0 until actualXData.channelCount ){
-        tempArray(index) = tempTraces(channel)(frame)
-        index += 1
-      }
     }
-
-    fileObj.writeInt16(tempArray)
-    fileObj.close()
-
   }
 
 

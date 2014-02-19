@@ -1,15 +1,15 @@
 package nounou.data.formats
 
 import java.io.File
-import nounou.data.X
+import nounou.data.{XData, X}
 
 /**
  * @author ktakagaki
  * @date 2/2/14.
  */
-trait FileWriter {
+trait XDataFileWriter {
 
-  def write(fileName: String, data: List[X])
+  def write(fileName: String, data: XData)
 
 
 }

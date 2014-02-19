@@ -79,19 +79,22 @@ import scala.collection.mutable.ArrayBuffer
 
   // <editor-fold defaultstate="collapsed" desc=" isMasked ">
 
-  def isMasked( timeStamp: Long ): Boolean = {
+  def isMaskedTS( timeStamp: Long ): Boolean = {
     _masks.exists( p => p._1 <= timeStamp && timeStamp <= p._2 )
   }
 
-  def isMasked( timeSegment: (Long, Long) ): Boolean = isMasked( timeSegment._1, timeSegment._2 )
+  def isMaskedTS( timeSegment: (Long, Long) ): Boolean = isMaskedTS( timeSegment._1, timeSegment._2 )
 
-  def isMasked( frameStart: Int, frameEnd: Int, segment: Int, x: XData ): Boolean =
-        isMasked(x.frameSegmentToTS(frameStart, segment) , x.frameSegmentToTS(frameEnd, segment) )
-
-  def isMasked( timeStampStart: Long, timeStampEnd: Long ): Boolean = {
+  def isMaskedTS( timeStampStart: Long, timeStampEnd: Long ): Boolean = {
     _masks.exists( elem => (timeStampStart <= elem._1 && elem._1 <= timeStampEnd) ||
-                           (elem._2 <= timeStampEnd && timeStampStart <= elem._2)    )
+      (elem._2 <= timeStampEnd && timeStampStart <= elem._2)    )
   }
+
+  def isMaskedFrame( frameStart: Int, frameEnd: Int, segment: Int, x: XData ): Boolean =
+        isMaskedTS(x.frameSegmentToTS(frameStart, segment) , x.frameSegmentToTS(frameEnd, segment) )
+
+  def isMaskedFrame( frame: Int, segment: Int, x: XData ): Boolean =
+    isMaskedTS(x.frameSegmentToTS(frame, segment) )
 
   // </editor-fold>
 
