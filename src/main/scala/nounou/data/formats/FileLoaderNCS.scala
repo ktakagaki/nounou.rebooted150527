@@ -22,7 +22,7 @@ object FileLoaderNCS extends FileLoaderNLX {
   val absOffset = 0D
   val absUnit: String = "microV"
   //val absGain = ???
-
+  def recordStartByte(recNo: Int) = headerBytes + recordBytes * recNo.toLong
 
   //must be declared here, and values used in companion object... object cannot override class
   val xBits = 1024
@@ -54,7 +54,7 @@ object FileLoaderNCS extends FileLoaderNLX {
       //   if a start timestamp jumps in time, a new segment is defined
 
       //First record dealt separately
-      fHand.seek( headerBytes  )
+      fHand.seek( headerBytes )
 
       ///qwTimeStamp
       var thisRecTS = fHand.readUInt64Shifted()
@@ -74,52 +74,103 @@ object FileLoaderNCS extends FileLoaderNLX {
       val dwNumValidSamples = fHand.readUInt32
       require(dwNumValidSamples == recordSampleCount, "Currently can only deal with records which are " + recordSampleCount + " samples long.")
 
-      //snSamples
-      fHand.jumpBytes(recordSampleCount*2)
+//      //snSamples
+//      fHand.jumpBytes(recordSampleCount*2)
 
       //ToDo 3: Implement cases where timestamps skip just a slight amount d/t DAQ problems
 
       // <editor-fold defaultstate="collapsed" desc=" read loop ">
 
-      for(rec <- 1 until tempNoRecords){
+      var rec = 1 //already dealt with rec=0
+      var lastRecJump = 1
+      var lastTriedJump = 4096
+      while(rec < tempNoRecords){
+
+        fHand.seek( recordStartByte(rec) )
         //qwTimeStamp
         thisRecTS = fHand.readUInt64Shifted
-        if(thisRecTS > lastRecTS + tempRecTSIncrement){
 
-          //Append timestamp for record rec as a new segment start
-          tempStartTimestamps = tempStartTimestamps :+ thisRecTS
+            if(thisRecTS > lastRecTS + tempRecTSIncrement*lastRecJump){
 
-          //Append length of previous segment as segment length
-          tempLengths = tempLengths :+ (rec*512 - tempSegmentStartFrame)
-          tempSegmentStartFrame = rec*512
-          //tempLengths = tempLengths :+ (rec - tempLengths(tempLengths.length-1))
-        } else {
-          require(thisRecTS == lastRecTS + tempRecTSIncrement, "timestamp is going backward in time at record number " + rec)
-        }
-        lastRecTS = thisRecTS
+                if( lastRecJump != 1 ){
+                  //Went over change in segment, rewind and try a step of 1
+                  rec = rec - lastRecJump + 1
+                  fHand.seek( recordStartByte(rec) )
+                  lastRecJump = 1
+                  //qwTimeStamp
+                  thisRecTS = fHand.readUInt64Shifted
 
-        //dwChannelNumber
-        fHand.jumpBytes(4)
+                  if(thisRecTS > lastRecTS + tempRecTSIncrement/*lastRecJump*/){
+                    //We got the correct start of a segment, with lastRecJump of 1!!!
 
-        //dwSampleFreq
-        val dwSampleFreq = fHand.readUInt32
-        require(dwSampleFreq == sampleRate, "Reported sampling frequency for record " + rec + ", " + dwSampleFreq + " is different from file sampling frequency " + sampleRate )
+                    //Append timestamp for record rec as a new segment start
+                    tempStartTimestamps = tempStartTimestamps :+ thisRecTS
+                    //Append length of previous segment as segment length
+                    tempLengths = tempLengths :+ (rec*512 - tempSegmentStartFrame)
+                    //New segment's start frame
+                    tempSegmentStartFrame = rec*512
 
-        //dwNumValidSamples
-        val dwNumValidSamples = fHand.readUInt32
-        require(dwNumValidSamples == recordSampleCount, "Currently can only deal with records which are " + recordSampleCount + " samples long.")
+                    //reset next jump attempt count
+                    lastTriedJump = 4096
 
-        //snSamples
-        fHand.jumpBytes(recordSampleCount*2)
-        //fHand.seek( fHand.getFilePointer + recordSampleCount*2 )
-        //fHand.skipBytes(recordSampleCount*2)
+                  } else {
+                    //We went ahead by lastRecJump = 1, but the record was just one frame ahead in the same jump
+                    if( lastTriedJump > 1 ){
+                      //Jump less next loop
+                      lastTriedJump = lastTriedJump / 2
+                    }
+                  }
+
+                } else {
+                  //We went forward lastRecJump = 1, and hit a new segment
+
+                  //Append timestamp for record rec as a new segment start
+                  tempStartTimestamps = tempStartTimestamps :+ thisRecTS
+                  //Append length of previous segment as segment length
+                  tempLengths = tempLengths :+ (rec*512 - tempSegmentStartFrame)
+                  //New segment's start frame
+                  tempSegmentStartFrame = rec*512
+
+                  //reset next jump attempt count
+                  lastTriedJump = 4096
+
+                }
+
+            } //else { } //advanced correctly within segment
+
+            //reset marker for lastTS
+            lastRecTS = thisRecTS
+
+            //VARIOUS CHECKS, NOT NECESSARY
+            //dwChannelNumber
+            fHand.jumpBytes(4)
+            //dwSampleFreq
+            val dwSampleFreq = fHand.readUInt32
+            require(dwSampleFreq == sampleRate, "Reported sampling frequency for record " + rec + ", " + dwSampleFreq + " is different from file sampling frequency " + sampleRate )
+            //dwNumValidSamples
+            val dwNumValidSamples = fHand.readUInt32
+            require(dwNumValidSamples == recordSampleCount, "Currently can only deal with records which are " + recordSampleCount + " samples long.")
+
+
+            //Loop advancement
+            if( rec == tempNoRecords -1 ){
+              //was on last record
+              rec += 1 //this will cause break in while
+            } else if (rec + lastTriedJump < tempNoRecords ) {
+              //try the jump in lastTriedJump
+              lastRecJump = lastTriedJump
+              rec += lastRecJump
+            } else {
+              //jump to the end of the file
+              lastRecJump = tempNoRecords-1-rec
+              lastTriedJump = lastRecJump
+              rec += lastRecJump
+            }
+
 
       }
-
-      //Last record cleanup
-      tempStartTimestamps = tempStartTimestamps :+ thisRecTS
+      //Last record cleanup: Append length of previous segment as segment length
       tempLengths = tempLengths :+ (tempNoRecords*512 - tempSegmentStartFrame)
-
 
 // </editor-fold>
 
@@ -159,7 +210,7 @@ class XDataChannelNCS
     recordStartByte(record) + 20L + (index * 2)
   }
 
-  def recordStartByte(recNo: Int) = t.headerBytes + t.recordBytes * recNo.toLong// + 1
+  def recordStartByte(recNo: Int) = t.recordStartByte(recNo)
 
   def frameSegmentToRecordIndex(frame: Int, segment: Int) = {
     val cumFrame = segmentStartFrames(segment) + frame

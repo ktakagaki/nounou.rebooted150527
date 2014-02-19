@@ -42,7 +42,7 @@ class DataReader extends Logging {
       val dataFIR: XDataFilterFIR = new XDataFilterFIR( dataDecimateBuf )
       val dataStats: XDataFilterStatistics = new XDataFilterStatistics( dataDecimateBuf )
       val dataRMSFIR: XDataFilterFIR = new XDataFilterFIR( dataDecimateBuf )
-        val dataRMS: XDataFilterRMS = new XDataFilterRMS( new XDataFilterBuffer( dataRMSFIR ) )
+        val dataRMS: XDataFilterRMS = new XDataFilterRMS( dataRMSFIR ) //new XDataFilterDownsample( dataRMSFIR, 5 ) )
       val dataMAX: XDataFilterMinMaxAbs = new XDataFilterMinMaxAbs( dataDecimateBuf )
 
   def setData(x: XData): Unit = {
@@ -59,17 +59,17 @@ class DataReader extends Logging {
 
   def maskMovementArtifacts(f0: Double, f1: Double, rmsAbsThreshold: Double, absAbsThreshold: Double): Unit = {
 
-    val stepSize = (dataRMSFIR.sampleRate * 0.1).toInt //100 ms
+    val stepSize = (dataRMSFIR.sampleRate * 0.05).toInt //100 ms
     val maskHalfWindow = 100L * 1000L // 100 ms
-    dataRMSFIR.setFilterHz(f0, f1)
+    dataRMSFIR.setFilterHz(f0, f1, 64)
 
     val rmsThreshold = dataRMS.absToInternal( rmsAbsThreshold )
     val absThreshold = dataRMS.absToInternal( absAbsThreshold )
 
-    for(seg <- 0 to dataRMS.segmentCount)
-    for(frame <- 0 to dataRMS.segmentLengths(seg) by stepSize ) {
-      if( max( (for(ch <- 0 until dataMAX.channelCount) yield dataMAX.readPoint(ch, frame, seg)).toVector ) >= absThreshold ||
-            max( (for(ch <- 0 until dataRMS.channelCount) yield dataRMS.readPoint(ch, frame, seg)).toVector ) >= rmsThreshold ){
+    for(seg <- 0 until dataRMS.segmentCount)
+    for(frame <- 0 until dataRMS.segmentLengths(seg) by stepSize ) {
+      if( max( (for(ch <- (0 until dataMAX.channelCount) ) yield dataMAX.readPoint(ch, frame, seg)).toVector ) >= absThreshold ||
+            max( (for(ch <- (0 until dataRMS.channelCount) ) yield dataRMS.readPoint(ch, frame, seg)).toVector ) >= rmsThreshold ){
         val frameTS = dataRMS.frameSegmentToTS(frame, seg)
         mask.mask( frameTS - maskHalfWindow, frameTS + maskHalfWindow )
       }
@@ -374,10 +374,10 @@ class DataReader extends Logging {
   def dataSummary(): String = {
     "DataReader loaded data summary:\n" +
     "     " + "header : " + header + "\n" +
-    "     " + "data   : " + dataORI + "\n" +
-    "     " + "    (XFrames) " + data().timingSummary() + "\n" +
+    "     " + "dataORI   : " + dataORI + "\n" +
     "     " + "    (XDataDecimate) " + dataDecimate + "\n" +
     "     " + "    (XDataFIR) " + dataFIR + "\n" +
+      "     " + "  (dataFIR XFrames) " + data().timingSummary() + "\n" +
     "     " + "dataAux: " + dataAuxORI + "\n" +
     "     " + "layout : " + layout + "\n" +
     "     " + "mask   : " + mask + "\n" +

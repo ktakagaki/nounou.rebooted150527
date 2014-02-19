@@ -23,7 +23,7 @@ class XDataFilterRMS( override val upstream: XData ) extends XDataFilter( upstre
       //(upstream.sampleRate * 0.05).toInt //50 ms
     }
 
-    private var _halfWindow: Int = 0
+    protected var _halfWindow: Int = 0
     def halfWindow = _halfWindow
     def getHalfWindow = _halfWindow
     def halfWindow_=(newValue: Int) : Unit = {
