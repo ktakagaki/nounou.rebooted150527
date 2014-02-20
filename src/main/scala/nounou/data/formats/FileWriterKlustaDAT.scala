@@ -31,9 +31,10 @@ object FileWriterKlustaDAT extends XDataFileWriter {
       while(currentFrameStart + writeFrameLength < realRange.length){
         val writeArray = new Array[Short]( data.channelCount * writeFrameLength )
         currentIndex = 0
+        val writeData = for(ch <- 0 until data.channelCount) yield data.readTrace(ch, currentFrameStart to currentFrameStart + writeFrameLength - 1, 0)
         for(fr <- 0 until writeFrameLength)
           for(ch <- 0 until data.channelCount) {
-            writeArray( currentIndex ) = (data.readPoint(ch, fr + currentFrameStart, segment) / data.xBits).toShort
+            writeArray( currentIndex ) = ( writeData(ch)(fr) / data.xBits).toShort
             currentIndex += 1
           }
         fileObj.writeInt16( writeArray)
