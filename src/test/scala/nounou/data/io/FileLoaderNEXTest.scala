@@ -1,4 +1,4 @@
-package nounou.data.formats
+package nounou.data.io
 
 import nounou.data.{XData}
 import org.scalatest.FunSuite

@@ -1,4 +1,4 @@
-package nounou.data.formats
+package nounou.data.io
 
 import nounou.data._
 import java.io.File
@@ -11,7 +11,10 @@ import scala.collection.mutable.ArrayBuffer
 *
 * @author K. Takagaki
 */
-object FileLoaderNEX extends FileLoader {
+object FileAdapterNEX extends FileAdapter {
+
+  override val canWriteExt: List[String] = List[String]()
+  override val canLoadExt: List[String] = List[String]( "ncs" )
 
 
   override def loadImpl(file: File): List[X] = {
