@@ -23,7 +23,8 @@ class FileWriterKlustaDATTest extends FunSuite {
     reader.load(bigTestFiles)
     println(reader.dataSummary())
 
-    val writeData =  new XDataFilterMask( new XDataFilterBuffer( reader.dataORI ), reader.mask)
+    val writeData =  new XDataFilterMask( reader.dataORI, reader.mask)
+    //val writeData =  new XDataFilterMask( new XDataFilterBuffer( reader.dataORI ), reader.mask)
 
     FileWriterKlustaDAT.write( bigTestFilesHead+"test", writeData)
 

@@ -17,6 +17,7 @@ object FileLoaderNCS extends FileLoaderNLX {
   override val recordBytes = 1044
   /**Number of samples per record*/
   val recordSampleCount= 512
+  val recordNonDataBytes = recordBytes - recordSampleCount * 2
   /**Sample rate, Hz*/
   val sampleRate = 32000D
   val absOffset = 0D
@@ -235,16 +236,20 @@ class XDataChannelNCS
 
     val tempRet = ListBuffer[Int]()//var tempRet = Vector[Int]()
 
+    fileHandle.seek( dataByteLocationRI(currentRecord, currentIndex) )
+    tempRet ++= fileHandle.readInt16(512 - currentIndex).map( _.toInt* xBits )
+    currentRecord += 1
+    fileHandle.jumpBytes(t.recordNonDataBytes)
     while(currentRecord < endReadRecord){
-      fileHandle.seek( dataByteLocationRI(currentRecord, currentIndex) )
-      tempRet ++= fileHandle.readInt16(512 - currentIndex).map( _.toInt* xBits )
+      tempRet ++= fileHandle.readInt16(512 /*- currentIndex*/).map( _.toInt* xBits )
       //tempRet = tempRet ++ fileHandle.readInt16(512 - currentIndex).map( _.toInt* xBits )
       currentRecord += 1
-      currentIndex = 0
+      //currentIndex = 0
+      fileHandle.jumpBytes(t.recordNonDataBytes)
     }
     //if(currentIndex <= endReadIndex){
-      fileHandle.seek( dataByteLocationRI(currentRecord, currentIndex) )
-      tempRet ++= fileHandle.readInt16(endReadIndex - currentIndex + 1).map( _.toInt* xBits )
+      //fileHandle.seek( dataByteLocationRI(currentRecord, 0) )
+      tempRet ++= fileHandle.readInt16(endReadIndex /*- currentIndex*/ + 1).map( _.toInt* xBits )
     //}
 
     tempRet.toVector
