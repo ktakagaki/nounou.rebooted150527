@@ -1,6 +1,6 @@
 import breeze.linalg.DenseVector
 import breeze.macros.expand
-import com.typesafe.scalalogging.slf4j.Logger
+import com.typesafe.scalalogging.slf4j.Logging
 import nounou.data.XData
 import scala.math
 import scala.reflect.runtime.universe._
@@ -9,7 +9,7 @@ import scala.reflect.runtime.universe._
  * @author ktakagaki
  * @date 2/4/14.
  */
-package object nounou {
+package object nounou extends Logging {
 
   /**A range of time stamps for extracting data, events, and spikes.*/
   class RangeTS(val startTSInclusive: Long, val endTSInclusive: Long){
@@ -67,18 +67,23 @@ package object nounou {
     tempArr.toVector
   }
 
-  @throws[IllegalArgumentException]
-  def loggerError(logger: Logger, message: String, params: AnyRef*): Unit = {
-    logger.error(message, params: _*)
-    throw new IllegalArgumentException(message)
-  }
 
-  @throws[IllegalArgumentException]
-  def loggerRequire(logger: Logger, boolean: Boolean, message: String, params: AnyRef*): Unit = {
-    if(!boolean){
-        logger.error(message, params: _* )
-        throw new IllegalArgumentException( "require:" +message)
+  trait LoggingExt extends Logging {
+
+    @throws[IllegalArgumentException]
+    def loggerError(message: String, params: AnyRef*): Unit = {
+      logger.error(message, params: _*)
+      throw new IllegalArgumentException(message)
     }
+
+    @throws[IllegalArgumentException]
+    def loggerRequire(boolean: Boolean, message: String, params: AnyRef*): Unit = {
+      if(!boolean){
+          logger.error(message, params: _* )
+          throw new IllegalArgumentException( "require:" +message)
+      }
+    }
+
   }
 
   //def toArrayInt(vect: Vector[Int]): Array[Int] = vect.toArray

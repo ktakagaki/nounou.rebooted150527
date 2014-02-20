@@ -1,7 +1,7 @@
 package nounou.data.filters
 
 import nounou.data.{XDataChannel, XDataChannelArray}
-import nounou.data.formats.FileLoaderNCS
+import nounou.data.io.FileAdapterNCS
 import org.scalatest.FunSuite
 
 /**
@@ -13,7 +13,7 @@ class XDataFilterDownsampleTest extends FunSuite {
   val testFile = getClass.getResource("/_testFiles/Neuralynx/t130911/Tet4a.ncs").getPath()
 
   test("check timing info"){
-    val ori = new XDataChannelArray( Vector[XDataChannel]( FileLoaderNCS.load(testFile).head.asInstanceOf[XDataChannel] ) )
+    val ori = new XDataChannelArray( Vector[XDataChannel]( FileAdapterNCS.load(testFile).head.asInstanceOf[XDataChannel] ) )
     val obj = new XDataFilterDownsample( ori, 16 )
 
     assert(obj.sampleRate == 2000.0)

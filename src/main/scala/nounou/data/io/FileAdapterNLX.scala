@@ -1,4 +1,4 @@
-package nounou.data.formats
+package nounou.data.io
 
 import breeze.io.RandomAccessFile
 
@@ -7,7 +7,7 @@ import breeze.io.RandomAccessFile
  * @author ktakagaki
  * @date 12/16/13
  */
-trait FileLoaderNLX extends FileLoader {
+abstract class FileAdapterNLX extends FileAdapter {
 
   var fHand: RandomAccessFile = _
 
