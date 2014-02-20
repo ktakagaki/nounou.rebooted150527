@@ -1,4 +1,4 @@
-package nounou.data.formats
+package nounou.data.io
 
 import java.io.File
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
@@ -9,10 +9,14 @@ import scala.collection.mutable.ListBuffer
 /**
  * @author ktakagaki
  */
-object FileLoaderNCS extends FileLoaderNLX {
+object FileAdapterNCS extends FileAdapterNLX {
+
+  override val canWriteExt: List[String] = List[String]()
+  override val canLoadExt: List[String] = List[String]( "ncs" )
+
 
   //Constants for NCS files
-  //val headerBytes = 16384L FileLoaderNLX
+  //val headerBytes = 16384L FileAdapterNLX
   /**Size of each record, in bytes*/
   override val recordBytes = 1044
   /**Number of samples per record*/
@@ -187,8 +191,6 @@ object FileLoaderNCS extends FileLoaderNLX {
 
   }
 
-
-
 }
 
 
@@ -200,7 +202,7 @@ class XDataChannelNCS
                        override val channelName: String
                        ) extends XDataChannelFilestream {
 
-  val t = FileLoaderNCS
+  val t = FileAdapterNCS
   override val absOffset: Double = t.absOffset
   override val absUnit: String = t.absUnit
   override val sampleRate: Double = t.sampleRate

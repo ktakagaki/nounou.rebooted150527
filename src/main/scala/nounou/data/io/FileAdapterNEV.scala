@@ -1,4 +1,4 @@
-package nounou.data.formats
+package nounou.data.io
 
 import java.io.File
 import nounou.data.X
@@ -12,7 +12,11 @@ import scala.collection.immutable.TreeMap
  * @author ktakagaki
  * @date 1/30/14.
  */
-object FileLoaderNEV extends FileLoaderNLX {
+object FileAdapterNEV extends FileAdapterNLX {
+
+  override val canWriteExt: List[String] = List[String]()
+  override val canLoadExt: List[String] = List[String]( "nev" )
+
 
   override val recordBytes = 184
 
@@ -60,7 +64,7 @@ object FileLoaderNEV extends FileLoaderNLX {
     // </editor-fold>
 
     val xEvents = new XEvents( TreeMap(eventMap.toArray:_*) )
-    logger.info( "FileLoaderNEV: loaded {} ", xEvents )
+    logger.info( "FileAdapterNEV: loaded {} ", xEvents )
 
     List[X]( xEvents )
   }

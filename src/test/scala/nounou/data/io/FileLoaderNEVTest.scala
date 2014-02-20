@@ -1,4 +1,4 @@
-package nounou.data.formats
+package nounou.data.io
 
 import org.scalatest.FunSuite
 import java.io.File

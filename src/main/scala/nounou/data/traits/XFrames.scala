@@ -2,12 +2,11 @@ package nounou.data.traits
 
 import nounou.data.X
 import scala.Vector
-import com.typesafe.scalalogging.slf4j.Logging
-import nounou.{FrameRange, loggerError}
+import nounou.{LoggingExt, FrameRange}
 
 /**Encapsulates segment, frame, and sampling information for xdata and XDataChannel.
  */
-trait XFrames extends X with Logging {
+trait XFrames extends X with LoggingExt {
 
   // <editor-fold desc="segment related: segmentCount, segmentLengths, currentSegment ">
   
@@ -24,7 +23,7 @@ trait XFrames extends X with Logging {
 
   /** Which segment is currently active? (initially 0) This variable allows syntax such as
     * <code>readPoint(channel: Int, frame: Int)</code>, leaving out an explicitly specified segment.
-    * This is useful, for example, for file formats which only feature one segment.
+    * This is useful, for example, for file io which only feature one segment.
     */
   def currentSegment = _currentSegment
   /** currentSegment getter, Scala style.*/
@@ -165,7 +164,7 @@ trait XFrames extends X with Logging {
           } else {
               if( negativeIfOOB )  tempret = ( ((timestamp - segmentStartTSs(segmentCount-1)) * framesPerTS).toInt, segmentCount - 1 )
               else {
-                loggerError(logger, "timestamp {} is larger than last frame {} of last segment {}!",
+                loggerError("timestamp {} is larger than last frame {} of last segment {}!",
                   timestamp.toString, (segmentLengths.last - 1).toString, (segmentCount - 1).toString )
               }//tempret = ( segmentLengths(segmentCount-1)-1, segmentCount -1)
           }

@@ -1,7 +1,7 @@
 package nounou.data.filters
 
 import org.scalatest.FunSuite
-import nounou.data.formats.{XDataChannelNCS, FileLoaderNCS}
+import nounou.data.io.{XDataChannelNCS, FileAdapterNCS}
 import nounou.data.{XDataChannel, XDataChannelArray}
 import nounou.FrameRange
 
@@ -14,7 +14,7 @@ class XDataFilterFIRTest extends FunSuite {
   val testFile = getClass.getResource("/_testFiles/Neuralynx/t130911/Tet4a.ncs").getPath()
 
   test("speed optimization"){
-    val fileObject = new XDataChannelArray( Vector[XDataChannel]( FileLoaderNCS.load(testFile).head.asInstanceOf[XDataChannel] ) )
+    val fileObject = new XDataChannelArray( Vector[XDataChannel]( FileAdapterNCS.load(testFile).head.asInstanceOf[XDataChannel] ) )
     val filterObject = new XDataFilterFIR( fileObject )
     filterObject.setFilterHz(5d, 10d)
 //    for( count <- 0 until 2 ){

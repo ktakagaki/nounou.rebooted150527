@@ -4,7 +4,7 @@ import java.io.File
 
 import com.typesafe.scalalogging.slf4j.Logging
 import nounou.data._
-import nounou.data.formats.{FileLoaderNEV, FileLoaderNCS, FileLoaderNEX}
+import nounou.data.io.{FileAdapterNEV, FileAdapterNCS, FileAdapterNEX}
 import nounou.data.discrete._
 import nounou.data.filters._
 import breeze.math.Complex
@@ -178,9 +178,9 @@ class DataReader extends Logging {
 
   def load(file: File, reload: Boolean = false): Unit = {
     val list = file.getName.toLowerCase match {
-      case n: String if n.endsWith(".nex") => FileLoaderNEX.load( file )
-      case n: String if n.endsWith(".ncs") => FileLoaderNCS.load( file )
-      case n: String if n.endsWith(".nev") => FileLoaderNEV.load( file )
+      case n: String if n.endsWith(".nex") => FileAdapterNEX.load( file )
+      case n: String if n.endsWith(".ncs") => FileAdapterNCS.load( file )
+      case n: String if n.endsWith(".nev") => FileAdapterNEV.load( file )
       case n => throw new IllegalArgumentException("File format for " + n + " is not supported yet.")
     }
     logger.info("loading file: {}", file.getName)

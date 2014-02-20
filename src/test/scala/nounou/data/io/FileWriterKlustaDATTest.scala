@@ -1,4 +1,4 @@
-package nounou.data.formats
+package nounou.data.io
 
 import org.scalatest.FunSuite
 import nounou.DataReader
@@ -26,7 +26,7 @@ class FileWriterKlustaDATTest extends FunSuite {
     val writeData =  new XDataFilterMask( reader.dataORI, reader.mask)
     //val writeData =  new XDataFilterMask( new XDataFilterBuffer( reader.dataORI ), reader.mask)
 
-    FileWriterKlustaDAT.write( bigTestFilesHead+"test", writeData)
+    FileAdapterKlustaDAT.write( bigTestFilesHead+"test", writeData)
 
   }
 
