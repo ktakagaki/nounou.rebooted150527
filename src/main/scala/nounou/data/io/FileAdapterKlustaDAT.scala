@@ -3,6 +3,7 @@ package nounou.data.io
 import nounou._
 import nounou.data._
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
+import java.io.File
 
 /**
  * @author ktakagaki
@@ -10,15 +11,22 @@ import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
  */
 object FileAdapterKlustaDAT extends FileAdapter {
 
-  override val canWriteExt: List[String] = List[String]()
+  override val canWriteExt: List[String] = List[String]("klusta.dat")
   override val canLoadExt: List[String] = List[String]()
 
  // override def write(fileName: String, data: XData) = write(fileName, data, 0, FrameRange.All)
 
-
+    def loadImpl(file: File) = loadCannotImpl(file)
 //  implicit val canWriteXData: CanWrite[XData] = new CanWrite[XData]{
 //
-    def writeImpl(fileName: String, data: XData, opt: OptFileAdapter): Unit = {
+  def writeImpl(file: File, data: X, opt: OptFileAdapter): Unit = {
+    data match {
+      case x: XData => writeImpl(file, x, opt)
+      case x: X => writeCannotImpl(file, x, opt)
+    }
+  }
+
+  def writeImpl(fileName: String, data: XData, opt: OptFileAdapter): Unit = {
 
       val actualFileName = {
         if( fileName.toLowerCase.endsWith(".klusta.dat") ) fileName

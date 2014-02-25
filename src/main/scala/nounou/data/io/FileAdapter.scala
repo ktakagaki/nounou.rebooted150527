@@ -7,34 +7,35 @@ import com.typesafe.scalalogging.slf4j.Logging
 import scala.collection.mutable
 
 
-object FileAdapter {
+//object FileAdapter {
+//
+//  final val loaders = new mutable.HashMap[String, FileAdapter]
+//  final val writers = new mutable.HashMap[String, FileAdapter]
+//
+//}
 
-  final val loaders = new mutable.HashMap[String, FileAdapter]
-  final val writers = new mutable.HashMap[String, FileAdapter]
 
-}
-
-
-class FileAdapter extends LoggingExt {
+trait FileAdapter extends LoggingExt {
 
   /** Must be overridden, list of extensions (in lower case) which can be read.
     */
-  val canLoadExt: List[String] = List[String]()
+  val canLoadExt: List[String]
   /** Must be overridden, list of extensions (in upper case) which can be read.
     */
-  val canWriteExt: List[String] = List[String]()
+  val canWriteExt: List[String]
 
-  //Adds loader to program loader library
-  FileAdapter.loaders.++=( canLoadExt.map( str => (str, this)) )
-  //Adds writer to program loader library
-  FileAdapter.writers.++=( canWriteExt.map( str => (str, this)) )
+//  //Adds loader to program loader library
+//  FileAdapter.loaders.++=( canLoadExt.map( str => (str, this)) )
+//  //Adds writer to program loader library
+//  FileAdapter.writers.++=( canWriteExt.map( str => (str, this)) )
 
 
 
   /** The minimal requirement which a file loader must satisfy. Default is to throw error (i.e. cannot load files;
     * used for writer objects.)
     */
-  def loadImpl(file: File): List[X] = {
+  def loadImpl(file: File): List[X]
+  def loadCannotImpl(file: File) = {
     loggerError("Loading of file {} is not specified in this particular reader!", file)
     throw new IllegalArgumentException
   }
@@ -89,7 +90,8 @@ class FileAdapter extends LoggingExt {
   /** The minimal requirement which a file loader must satisfy. Default is to throw error (i.e. cannot load files;
     * used for writer objects.)
     */
-  def writeImpl(file: File, data: X, options: OptFileAdapter): Unit = {
+  def writeImpl(file: File, data: X, options: OptFileAdapter): Unit
+  def writeCannotImpl(file: File, data: X, options: OptFileAdapter): Unit = {
     loggerError("Loading of file {} is not specified in this particular writer!", file)
     throw new IllegalArgumentException
   }

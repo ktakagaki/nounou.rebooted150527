@@ -1,6 +1,8 @@
 package nounou.data.io
 
 import breeze.io.RandomAccessFile
+import java.io.File
+import nounou.data.X
 
 
 /**
@@ -8,6 +10,8 @@ import breeze.io.RandomAccessFile
  * @date 12/16/13
  */
 abstract class FileAdapterNLX extends FileAdapter {
+
+  override def writeImpl(file: File, data: X, options: OptFileAdapter) = writeCannotImpl(file, data, options)
 
   var fHand: RandomAccessFile = _
 
