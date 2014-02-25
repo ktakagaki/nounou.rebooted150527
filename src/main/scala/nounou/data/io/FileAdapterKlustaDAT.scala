@@ -16,9 +16,9 @@ object FileAdapterKlustaDAT extends FileAdapter {
  // override def write(fileName: String, data: XData) = write(fileName, data, 0, FrameRange.All)
 
 
-  implicit val canWriteXData: CanWrite[XData] = new CanWrite[XData]{
-
-    def apply(fileName: String, data: XData, opt: OptFileAdapter): Unit = {
+//  implicit val canWriteXData: CanWrite[XData] = new CanWrite[XData]{
+//
+    def writeImpl(fileName: String, data: XData, opt: OptFileAdapter): Unit = {
 
       val actualFileName = {
         if( fileName.toLowerCase.endsWith(".klusta.dat") ) fileName
@@ -27,8 +27,8 @@ object FileAdapterKlustaDAT extends FileAdapter {
       val fileObj = new RandomAccessFile(actualFileName, "rw")(ByteConverterLittleEndian)
 
       val parsedOpt = opt match {
-        case OptFileAdapter.Automatic => new OptFileAdapter.XData()
-        case x: OptFileAdapter.XData => x
+        case OptFileAdapter.Automatic => new OptFileAdapter.XDataFrames()
+        case x: OptFileAdapter.XDataFrames => x
         case _ => loggerError("{} is not a valid option for OptFileAdapter!", opt.toString ); throw new IllegalArgumentException
       }
 
@@ -62,7 +62,6 @@ object FileAdapterKlustaDAT extends FileAdapter {
         fileObj.close()
 
       }
-    }
   }
 
 
