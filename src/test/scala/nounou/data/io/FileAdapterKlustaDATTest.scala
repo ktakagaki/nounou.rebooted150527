@@ -4,6 +4,7 @@ import org.scalatest.FunSuite
 import nounou.DataReader
 import nounou.data.filters.{XDataFilterBuffer, XDataFilterMask}
 import nounou.data.io._
+import nounou.data.XData
 
 /**
  * @author ktakagaki
