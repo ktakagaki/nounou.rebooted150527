@@ -16,8 +16,8 @@ class XDataPreloaded(  val data: Vector[Vector[Vector[Int]]],
                        override val absOffset: Double,
                        override val absUnit: String,
                        override val channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
-                       override val segmentStartTSs: Vector[Long] = Vector(0L),
-                       override val sampleRate: Double = 1d
+                       override val segmentStartTSs: Vector[Long],
+                       override val sampleRate: Double
                       )
   extends XDataImmutable with XConcatenatable {
 
@@ -30,7 +30,7 @@ class XDataPreloaded(  val data: Vector[Vector[Vector[Int]]],
     override def readPointImpl(channel: Int, frame: Int, segment: Int) = data(channel)(frame)(segment)
 
     override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int) = {
-      data(channel)(segment).slice(range.start, range.end )
+      data(channel)(segment).slice(range.start, range.end + 1 )
     }
 
   // <editor-fold desc="XConcatenatable">
@@ -46,9 +46,10 @@ class XDataPreloaded(  val data: Vector[Vector[Vector[Int]]],
                                 absGain = oriThis.absGain,
                                 absOffset = oriThis.absOffset,
                                 absUnit = oriThis.absUnit,
+                                channelNames = oriThis.channelNames ++ t.channelNames,
                                 segmentStartTSs = oriThis.segmentStartTSs,
-                                sampleRate = oriThis.sampleRate,
-                                channelNames = oriThis.channelNames ++ t.channelNames
+                                sampleRate = oriThis.sampleRate
+
             )
           } else {
             throw new IllegalArgumentException("the two XDataPreloaded types are not compatible, and cannot be concatenated.")
@@ -60,5 +61,16 @@ class XDataPreloaded(  val data: Vector[Vector[Vector[Int]]],
 
   // </editor-fold>
 
-
 }
+
+class XDataPreloadedSingleSegment(
+                    data: Vector[Vector[Int]],
+                    xBits: Int,
+                    absGain: Double,
+                    absOffset: Double,
+                    absUnit: String,
+                    channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
+                    segmentStartTS: Long,
+                    sampleRate: Double
+                    )
+  extends XDataPreloaded( data.map( Vector(_) ), xBits, absGain, absOffset, absUnit, channelNames, Vector[Long](segmentStartTS), sampleRate)

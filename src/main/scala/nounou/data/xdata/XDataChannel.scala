@@ -129,15 +129,29 @@ class XDataChannelNull extends XDataChannel {
   override val sampleRate: Double = 1d
 }
 
-class XDataChannelPreloaded(val data: Vector[Int],
-                            val channelName: String,
+class XDataChannelPreloaded(val data: Vector[Vector[Int]],
+                            override val xBits: Int,
                             override val absGain: Double,
                             override val absUnit: String,
-                            override val segmentLengths: Vector[Int],
-                            override val sampleRate: Double,
                             override val absOffset: Double,
-                            override val segmentStartTSs: Vector[Long] )  extends XDataChannel {
+                            override val channelName: String,
+                            override val segmentStartTSs: Vector[Long],
+                            override val sampleRate: Double
+ )  extends XDataChannel {
 
-  def readPointImpl(frame: Int, segment: Int): Int = 0
+  override lazy val segmentLengths = data.map( _.length )
+  def readPointImpl(frame: Int, segment: Int): Int = data(segment)(frame)
 
 }
+
+class XDataChannelPreloadedSingleSegment
+                   (data: Vector[Int],
+                    xBits: Int,
+                    absGain: Double,
+                    absUnit: String,
+                    absOffset: Double,
+                    channelName: String,
+                    segmentStartTS: Long,
+                    sampleRate: Double
+                    )
+  extends XDataChannelPreloaded(Vector(data), xBits, absGain, absUnit, absOffset, channelName, Vector(segmentStartTS), sampleRate)
