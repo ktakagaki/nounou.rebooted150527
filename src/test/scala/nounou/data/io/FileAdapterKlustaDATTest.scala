@@ -3,12 +3,13 @@ package nounou.data.io
 import org.scalatest.FunSuite
 import nounou.DataReader
 import nounou.data.filters.{XDataFilterBuffer, XDataFilterMask}
+import nounou.data.io._
 
 /**
  * @author ktakagaki
  * @date 2/19/14.
  */
-class FileWriterKlustaDATTest extends FunSuite {
+class FileAdapterKlustaDATTest extends FunSuite {
 
   val bigTestFilesHead = "V:/docs/k.VSDdata/project.SPP/Nlx/SPP010/2013-12-02_17-07-31/"
   val bigTestFiles = Array[String](
