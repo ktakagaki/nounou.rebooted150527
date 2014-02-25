@@ -1,9 +1,11 @@
 package nounou.data
 
+import scala.collection.immutable.TreeMap
+
 /**
  * @author ktakagaki
  */
-class XHeader(val header: Map[String, HeaderValue]) extends X {
+class XHeader(val header: TreeMap[String, HeaderValue]) extends X {
 
   override def toString = header.toString
 
@@ -23,7 +25,7 @@ class XHeader(val header: Map[String, HeaderValue]) extends X {
 }
 
 
-object XHeaderNull extends XHeader(Map[String, HeaderValue]()){
+object XHeaderNull extends XHeader(TreeMap[String, HeaderValue]()){
 
   override def toString() = "XHeaderNull"
 
