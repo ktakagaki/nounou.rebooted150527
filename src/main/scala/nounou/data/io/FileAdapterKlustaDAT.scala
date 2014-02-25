@@ -8,7 +8,7 @@ import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
  * @author ktakagaki
  * @date 2/2/14.
  */
-class FileAdapterKlustaDAT extends FileAdapter {
+object FileAdapterKlustaDAT extends FileAdapter {
 
   override val canWriteExt: List[String] = List[String]()
   override val canLoadExt: List[String] = List[String]()
