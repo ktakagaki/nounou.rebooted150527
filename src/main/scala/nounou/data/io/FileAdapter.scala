@@ -9,20 +9,20 @@ import scala.collection.mutable
 
 object FileAdapter {
 
-  val loaders = new mutable.HashMap[String, FileAdapter]
-  val writers = new mutable.HashMap[String, FileAdapter]
+  final val loaders = new mutable.HashMap[String, FileAdapter]
+  final val writers = new mutable.HashMap[String, FileAdapter]
 
 }
 
 
-abstract class FileAdapter extends LoggingExt {
+class FileAdapter extends LoggingExt {
 
   /** Must be overridden, list of extensions (in lower case) which can be read.
     */
-  val canLoadExt: List[String]
+  val canLoadExt: List[String] = List[String]()
   /** Must be overridden, list of extensions (in upper case) which can be read.
     */
-  val canWriteExt: List[String]
+  val canWriteExt: List[String] = List[String]()
 
   //Adds loader to program loader library
   FileAdapter.loaders.++=( canLoadExt.map( str => (str, this)) )
@@ -35,7 +35,7 @@ abstract class FileAdapter extends LoggingExt {
     * used for writer objects.)
     */
   def loadImpl(file: File): List[X] = {
-    loggerError("Loading of file {} is not specified in this particular writer!", file)
+    loggerError("Loading of file {} is not specified in this particular reader!", file)
     throw new IllegalArgumentException
   }
   final def loadImpl(fileName: String): List[X] = loadImpl( new File(fileName) )
@@ -44,73 +44,92 @@ abstract class FileAdapter extends LoggingExt {
 
   // <editor-fold defaultstate="collapsed" desc=" loading ">
 
+  trait CanLoad[FileSpec]{
+    def apply(file: FileSpec): List[X]
+  }
+
+
   /** Load a certain file/filename/files/filenames. Will throw error if not readable with this particular adaptor
     *
     */
   def load[Input](list: Input)(implicit canLoad: CanLoad[Input]): List[X] = canLoad(list)
 
 
-  trait CanLoad[FileSpec]{
-    def apply(file: FileSpec): List[X]
+  implicit val canLoadFile: CanLoad[File] = new CanLoad[File] {
+    def apply(file: File): List[X] = loadImpl(file)
+  }
+  implicit val canLoadString: CanLoad[String] = new CanLoad[String] {
+    def apply(string: String): List[X] = loadImpl( new File(string) )
   }
 
-  object CanLoad {
-    implicit val canLoadFile: CanLoad[File] = new CanLoad[File] {
-      def apply(file: File): List[X] = loadImpl(file)
+  implicit val canLoadFiles: CanLoad[List[File]] = new CanLoad[List[File]] {
+    def apply(list: List[File]): List[X] = {
+      list.flatMap( loadImpl(_) )
     }
-    implicit val canLoadString: CanLoad[String] = new CanLoad[String] {
-      def apply(string: String): List[X] = loadImpl( new File(string) )
-    }
+  }
 
-    implicit val canLoadFiles: CanLoad[List[File]] = new CanLoad[List[File]] {
-      def apply(list: List[File]): List[X] = {
-        list.flatMap( loadImpl(_) )
-      }
-    }
-
-    implicit val canLoadStrings: CanLoad[List[String]] = new CanLoad[List[String]] {
-      def apply(list: List[String]): List[X] = {
-        load( list.map(new File(_)) )
-      }
+  implicit val canLoadStrings: CanLoad[List[String]] = new CanLoad[List[String]] {
+    def apply(list: List[String]): List[X] = {
+      load( list.map(new File(_)) )
     }
   }
 
   // </editor-fold>
 
+//  /** Inheriting classes will implement data writers by implementing implicit instances of this trait.
+//    * This design pattern allows the write( fileName, data ) to take multiple forms of "data."
+//    * Some adapters might write only XData, others XEvents....
+//    *
+//    * @tparam Data
+//    */
+//  trait CanWrite[Data]{
+//    def apply(fileName: String, data: Data, opts: OptFileAdapter)
+//  }
 
-  final def write[Data](fileName: String, data: Data)(implicit canWrite: CanWrite[Data]): Unit = {
-    canWrite.apply(fileName, data, OptFileAdapter.Automatic)
+  /** The minimal requirement which a file loader must satisfy. Default is to throw error (i.e. cannot load files;
+    * used for writer objects.)
+    */
+  def writeImpl(file: File, data: X, options: OptFileAdapter): Unit = {
+    loggerError("Loading of file {} is not specified in this particular writer!", file)
+    throw new IllegalArgumentException
   }
-  final def write[Data](fileName: String, data: Data, options: OptFileAdapter = OptFileAdapter.Automatic)(implicit canWrite: CanWrite[Data]): Unit = {
-    canWrite.apply(fileName, data, options)
-  }
+
+  //final def write(file: File, data: List[X]): Unit = writeImpl(file: File, data: List[X], OptFileAdapter.Automatic)
+  //final def write(fileName: String, data: List[X]): Unit = writeImpl( new File(fileName), data, OptFileAdapter.Automatic )
+  final def write(file: File, data: X): Unit = writeImpl(file: File, data, OptFileAdapter.Automatic)
+  final def write(fileName: String, data: X): Unit = writeImpl( new File(fileName), data, OptFileAdapter.Automatic )
+
+
+//  final def write[Data](fileName: String, data: Data, options: OptFileAdapter = OptFileAdapter.Automatic)(implicit canWrite: CanWrite[Data]): Unit = {
+//    canWrite.apply(fileName, data, options)
+//  }
 //  final def write[Data](file: File, data: Data, options: OptFileAdapter = OptFileAdapter.Automatic)(implicit canWrite: CanWrite[Data]): Unit = {
 //    canWrite(file.getCanonicalPath, data, options)
 //  }
 
 
 
-  implicit val canWriteXList: CanWrite[List[X]] = new CanWrite[List[X]] {
-    def apply(fileName: String, data: List[X], opt: OptFileAdapter): Unit = {
-      opt match {
-        case x: OptFileAdapter.ListOpt => {
-          loggerRequire( data.length == x.list.length, "you must specify as many options as data X elements (even if it is OptFileAdapter.Automatic)")
-          for(cnt <- 0 to data.length) write( fileName, data(cnt), x.list.apply( cnt ) )
-        }
-        case x: OptFileAdapter => {
-          for(cnt <- data) write( fileName, cnt, x )
-        }
-      }
-
-    }
-  }
-
-  //this implicit value will provide the fallback write error for all children
-  implicit val cannotWriteX: CanWrite[X] = new CanWrite[X] {
-    def apply(fileName: String, data: X, opt: OptFileAdapter): Unit = {
-      loggerError("This writer object {} cannot write X type {}!", this.getClass.getName, data.getClass.getName )
-    }
-  }
+//  implicit val canWriteXList: CanWrite[List[X]] = new CanWrite[List[X]] {
+//    def apply(fileName: String, data: List[X], opt: OptFileAdapter): Unit = {
+//      opt match {
+//        case x: OptFileAdapter.ListOpt => {
+//          loggerRequire( data.length == x.list.length, "you must specify as many options as data X elements (even if it is OptFileAdapter.Automatic)")
+//          for(cnt <- 0 to data.length) write( fileName, data(cnt), x.list.apply( cnt ) )
+//        }
+//        case x: OptFileAdapter => {
+//          for(cnt <- data) write( fileName, cnt, x )
+//        }
+//      }
+//
+//    }
+//  }
+//
+//  //this implicit value will provide the fallback write error for all children
+//  implicit val cannotWriteX: CanWrite[X] = new CanWrite[X] {
+//    def apply(fileName: String, data: X, opt: OptFileAdapter): Unit = {
+//      loggerError("This writer object {} cannot write X type {}!", this.getClass.getName, data.getClass.getName )
+//    }
+//  }
 //  /** The minimal requirement which a file writer must satisfy. Default is to throw error (i.e. cannot write files;
 //    * used for writer objects.)
 //    */
@@ -121,19 +140,10 @@ abstract class FileAdapter extends LoggingExt {
 }
 
 
-/** Inheriting classes will implement data writers by implementing implicit instances of this trait.
-  * This design pattern allows the write( fileName, data ) to take multiple forms of "data."
-  * Some adapters might write only XData, others XEvents....
-  *
-  * @tparam Data
-  */
-trait CanWrite[Data]{
-  def apply(fileName: String, data: Data, opts: OptFileAdapter)
-}
 
 class OptFileAdapter
 object OptFileAdapter{
   case object Automatic extends OptFileAdapter
-  case class XData(range: FrameRange = FrameRange.All(), segment: Int = 0) extends OptFileAdapter
-  case class ListOpt(list: List[OptFileAdapter]) extends OptFileAdapter
+  case class XDataFrames(range: FrameRange = FrameRange.All(), segment: Int = 0) extends OptFileAdapter
+  //case class ListOpt(list: List[OptFileAdapter]) extends OptFileAdapter
 }
