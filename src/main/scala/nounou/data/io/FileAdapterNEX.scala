@@ -4,7 +4,7 @@ import nounou.data._
 import java.io.File
 import breeze.io.{RandomAccessFile, ByteConverterLittleEndian}
 import nounou.data.XDataPreloaded
-import scala.collection.immutable.HashMap
+import scala.collection.immutable.TreeMap
 import scala.collection.mutable.ArrayBuffer
 
 /**Reads in single NEX files. Partial implementation, with only waveforms processed.
@@ -36,7 +36,7 @@ object FileAdapterNEX extends FileAdapter {
     val nexFileNVar: Int = fHand.readInt
 
     val header = new XHeaderNEX(
-      HashMap[String, HeaderValue](
+      TreeMap[String, HeaderValue](
         "nexFileVersion" -> HeaderValue(nexFileVersion),
         "nexFileComment" -> HeaderValue(nexFileComment),
         "nexFileFreq" -> HeaderValue(nexFileFreq),
@@ -117,4 +117,4 @@ object FileAdapterNEX extends FileAdapter {
 
 }
 
-class XHeaderNEX(override val header: Map[String, HeaderValue]) extends XHeader(header)
+class XHeaderNEX(override val header: TreeMap[String, HeaderValue]) extends XHeader(header)
