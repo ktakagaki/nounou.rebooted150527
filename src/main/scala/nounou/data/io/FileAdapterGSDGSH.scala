@@ -5,7 +5,8 @@ import java.io.File
 import breeze.io.RandomAccessFile
 import scala.collection.immutable.TreeMap
 
-/**Reader for MiCAM unified form data (gsd/gsh). Currently, it actually only reads from the gsd, and ignores the accompanying gsh file.
+/**Reader for MiCAM unified form data (gsd/gsh).
+  * Currently, it actually only reads from the gsd, and ignores the accompanying gsh file.
  * @author ktakagaki
  * @date 2/25/14.
  */
@@ -36,7 +37,7 @@ object FileAdapterGSDGSH extends FileAdapter {
   private def loadImplGSD(file: File): List[X] = {
 
     val raf = new RandomAccessFile(file)
-    raf.seek(256);
+    raf.seek(256)
     val nDataXsize = raf.readInt16()     //256... number of pixels on X axis
     val nDataYsize = raf.readInt16()     //258... number of pixels on Y axis
     val nLeftSkip = raf.readInt16()      //260
