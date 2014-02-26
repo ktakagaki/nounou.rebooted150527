@@ -17,7 +17,7 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
   var kernelOmega1: Double = 1d
   var multiplier = 256L
 
-  override def toString() = {
+  override def toStringImpl() = {
     if(kernel == null) "XDataFilterFIR: kernel null (off)"
     else "XDataFilterFIR: kernel " + kernel.toString() + ", multiplier: " + multiplier.toString
   }

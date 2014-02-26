@@ -23,8 +23,8 @@ class DataReader extends Logging {
   val dataORI: XDataFilterHolder = new XDataFilterHolder()
   //insert downsample block, filter block, buffer block
   /**Auxiliary data, for instance, analog signals recorded with an optical trace.*/
-  def dataAux(): XData = dataAuxORI //temporarily set to mirror
-  var dataAuxORI: XData = XDataNull
+  def dataAux(): XDataAux = dataAuxORI //temporarily set to mirror
+  var dataAuxORI: XDataFilterHolder = new XDataFilterHolder()
   //insert downsample block, filter block, buffer block
   /**Layout of data*/
   var layout: XLayout = XLayoutNull
@@ -51,6 +51,9 @@ class DataReader extends Logging {
     val halfWindow = (dataRMSFIR.sampleRate * 0.05).toInt //50 ms
     dataRMS.setHalfWindow(halfWindow)
     dataMAX.setHalfWindow(halfWindow)
+  }
+  def setDataAux(x: XData): Unit = {
+    dataAuxORI.heldData = x
   }
   // </editor-fold>
 
@@ -231,7 +234,6 @@ class DataReader extends Logging {
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" loadImpl ">
 
-    //ToDo 2: reorganize, refactor, rethink!
   private def loadImpl(x: X): Unit = {
     x match {
       case x0: XHeader => {
@@ -245,90 +247,74 @@ class DataReader extends Logging {
           }
         }
       }
+      //handle XDataAux before XData, as it is a subtype trait of XData
+      //     0=load(not reload) 1=marked for reload 2=reloading/cleared
+      case x0: XDataAux => {
+        if( reloadFlagDataAux == 1 ) {
+          //reload dataAux regardless of what is already there, if the flag is 1
+          setDataAux(x0)
+          reloadFlagDataAux = 2
+        } else if ( dataAuxORI.heldData == XDataNull /*reloadFlagDataAux == 0, 1*/ ) {
+          //both load and reload data if dataAuxORI holds a null
+          setDataAux(x0)
+          reloadFlagDataAux = 2
+        } else if ( dataAuxORI.isCompatible(x0)  /*reloadFlagDataAux == 0, 2*/) {
+          //if flag is NOT 0 and if what is already loaded is compatible
+          setDataAux(dataAuxORI.heldData ::: x0)
+          reloadFlagDataAux = 2
+        } else { //not compatible with dataAux
+          logger.warn("Incompatible data already loaded in dataAux, ignoring new data {}. Use clearDataAux first or reload() instead of load(), if this is unintended.", x0)
+        }
+      }
       case x0: XData => {
         if( reloadFlagData == 1 ) {
+          //reload data regardless of what is already there, if the flag is 1
           setData(x0)
-          dataAuxORI = XDataNull
-          reloadFlagDataAux = 1
           reloadFlagData = 2
-        } else if( dataORI.heldData == XDataNull /*reloadFlagData == 0*/) {
+        } else if( dataORI.heldData == XDataNull /*reloadFlagData == 0, 1*/) {
+          //both load and reload data if dataORI holds a null
           setData(x0)
-        } else if ( dataORI.isCompatible(x0)  /*reloadFlagData == 2*/) {
+        } else if ( dataORI.isCompatible(x0)  /*reloadFlagData == 0, 2*/) {
+          //if flag is NOT 0 and if what is already loaded is compatible
           setData(dataORI.heldData ::: x0)
-          //reloadFlagData = 2
+          reloadFlagData = 2
         } else { //not compatible with data, try dataAux
-            if( reloadFlagDataAux == 1 ) {
-              dataAuxORI = x0
-              reloadFlagDataAux = 2
-            } else if ( dataAuxORI == XDataNull  /*reloadFlagDataAux == 0*/ ) {
-              dataAuxORI = x0
-            } else if ( dataAuxORI.isCompatible(x0) /*reloadFlagDataAux == 0 or 2*/ ) {
-              dataAuxORI = dataAuxORI ::: x0
-            } else {
-              logger.warn("Incompatible data already loaded in data and dataAux, ignoring new data {}. Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.", x0)
-            }
+          logger.warn("Incompatible data already loaded in data and dataAux, ignoring new data {}. Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.", x0)
         }
       }
       case x0: XDataChannel => {
         dataORI.heldData match {
               case XDataNull => {
+                //if null, reload to regardless
                 setData( new XDataChannelArray( Vector[XDataChannel]( x0 ) ) )
-                if( reloadFlagData == 1 ) {
-                  dataAuxORI = XDataNull
-                  reloadFlagDataAux = 1
-                  reloadFlagData = 2
-                }
+                reloadFlagData = 2
               }
               case data0: XDataChannelArray => {
                 if( reloadFlagData == 1 ) {
+                  //overwrite and load to data regardless, if the reload flag is 1
                   setData( new XDataChannelArray( Vector[XDataChannel]( x0 ) ) )
-                  dataAuxORI = XDataNull
-                  reloadFlagDataAux = 1
                   reloadFlagData = 2
                 } else if ( data0(0).isCompatible(x0)  /*reloadFlagData == 0, 2*/) {
                   setData( data0 ::: x0 )
-                  //reloadFlagData = 2
+                  reloadFlagData = 2
                 } else { //not compatible with data, try dataAux
-                  if( reloadFlagDataAux == 1 ) {
-                    dataAuxORI = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
-                    reloadFlagDataAux = 2
-                  } else {
-                      dataAuxORI match {
-                        case dataAux0: XDataChannelArray => {
-                          if ( dataAux0.isCompatible(x0) /*reloadFlagDataAux == 0 or 2*/ ) {
-                            dataAuxORI = dataAux0 ::: x0
-                          } else {
-                            logger.warn("Incompatible data already loaded in data and dataAux, ignoring new data {}. Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.", x0)
-                          }
-                        }
-                        case _ => {
-                          logger.warn("Incompatible data already loaded in data and dataAux, ignoring new data {}}. Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.", x0)
-                        }
-                      }
-                  }
-                  }
+                  logger.warn("Incompatible data already loaded in data, ignoring new data channel {}}. Use clearData first or reload() instead of load(), if this is unintended.", x0)
+                }
               }
-              case _ => {
-                if( reloadFlagDataAux == 1 ) {
-                  dataAuxORI = new XDataChannelArray( Vector[XDataChannel]( x0 ) )
-                  reloadFlagDataAux = 2
-                } else {
-                  dataAuxORI match {
-                    case dataAux0: XDataChannelArray => {
-                      if ( dataAux0.isCompatible(x0) /*reloadFlagDataAux == 0 or 2*/ ) {
-                        dataAuxORI = dataAux0 ::: x0
-                      } else {
-                        logger.warn("Incompatible data already loaded in data and dataAux, ignoring new data {}. Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.", x0)
-                      }
-                    }
-                    case _ => {
-                      logger.warn("Incompatible data already loaded in data and dataAux, ignoring new data {}. Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.", x0)
-                    }
-                  }
+              case data0:XData => { //if XDataChannel
+                if( reloadFlagData == 1 ) {
+                  //overwrite and load to data regardless, if the reload flag is 1
+                  setData( new XDataChannelArray( Vector[XDataChannel]( x0 ) ) )
+                  reloadFlagData = 2
+                } else if ( data0.isCompatible(x0)  /*reloadFlagData == 0, 2*/) {
+                  setData( data0 ::: x0 )
+                  reloadFlagData = 2
+                } else { //not compatible with data, try dataAux
+                  logger.warn("Incompatible data already loaded in data, ignoring new data channel {}}. Use clearData first or reload() instead of load(), if this is unintended.", x0)
                 }
               }
         }
-        }
+      }
       case x0: XMask => sys.error("ToDo: have not implemented mask loading yet!")
       case x0: XEvents => {
           if( events == XEventsNull ) {
@@ -362,7 +348,7 @@ class DataReader extends Logging {
 
   def clearHead: Unit = {header = XHeaderNull}
   def clearData: Unit = {setData(XDataNull)}
-  def clearDataAux: Unit = {dataAuxORI = XDataNull/*; dataAux = XDataNull*/ }
+  def clearDataAux: Unit = {setDataAux(XDataNull) }
   def clearLayout: Unit = {layout = XLayoutNull}
   def clearMask: Unit = {mask = new XMask}
   def clearEvents: Unit = {events = XEventsNull}
@@ -384,16 +370,18 @@ class DataReader extends Logging {
                                          ", data layout: " + layout + ", data mask: " + mask + ", events: " + events.length + ")"
 
   def dataSummary(): String = {
-    "DataReader loaded data summary:\n" +
-    "     " + "header : " + header + "\n" +
-    "     " + "dataORI   : " + dataORI + "\n" +
-    "     " + "    (XDataDecimate) " + dataDecimate + "\n" +
-    "     " + "    (XDataFIR) " + dataFIR + "\n" +
-      "     " + "  (dataFIR XFrames) " + data().timingSummary() + "\n" +
-    "     " + "dataAux: " + dataAuxORI + "\n" +
-    "     " + "layout : " + layout + "\n" +
-    "     " + "mask   : " + mask + "\n" +
-    "     " + "events : " + events + "\n" +
-    "     " + "spikes : " + spikes
+    val tempstr =
+      "header  : " + header + "\n" +
+      "dataORI :"+ "\n" +
+      dataORI+ "\n" +
+      "dataAux :"+ "\n" +
+      dataAuxORI+ "\n" +
+      "layout  : " + layout+ "\n" +
+      "mask   : " + mask+ "\n" +
+      "events : " + events+ "\n" +
+      "spikes : " + spikes
+
+
+    "DataReader loaded data summary:\n" + (tempstr split "\n").flatMap( "     " + _)
   }
 }
