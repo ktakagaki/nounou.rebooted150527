@@ -198,10 +198,14 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   // </editor-fold>
 
-  override def toString() = {
-    "XData(" + channelCount + " channels, "+ segmentCount + " segments, with lengths " + segmentLengths + ", fs=" + sampleRate + ")"
+  def toStringImpl(): String = "XData(" + channelCount + " channels, "+ segmentCount + " segments, with lengths " + segmentLengths + ", fs=" + sampleRate + ")"
+  override final def toString(): String = {
+    toStringImpl + (if(children.size!=0) {
+      children.map("\n" + 192.toChar.toString + " " + _.toString).reduce( _ + _ )
+    } else {
+      ""
+    })
   }
-  //ToDo: print data chain (with children recursively)
 
 }
 
@@ -242,7 +246,7 @@ abstract class XDataImmutable extends XData with XFramesImmutable with XChannels
 
 }
 
-object XDataNull extends XDataImmutable {
+abstract class XDataNullImpl extends XDataImmutable {
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = 0
   override val absGain: Double = 1D
   override val absOffset: Double = 0D
@@ -251,10 +255,21 @@ object XDataNull extends XDataImmutable {
   override val segmentStartTSs: Vector[Long] = Vector[Long]()
   override val sampleRate: Double = 1D
   override val channelNames: Vector[String] = Vector[String]()
+}
 
+object XDataNull extends XDataNull
+class XDataNull extends XDataNullImpl {
   override def :::(x: X): XDataImmutable = x match {
     case XDataNull => this
     case _ => require(false, "cannot append incompatible data types (XDataNull)"); this
   }
-  override def toString() = "XDataNull"
+  override def toStringImpl() = "XDataNull()"
+}
+
+object XDataAuxNull extends XDataNullImpl with XDataAux {
+  override def :::(x: X): XDataImmutable = x match {
+    case XDataAuxNull => this
+    case _ => require(false, "cannot append incompatible data types (XDataAuxNull)"); this
+  }
+  override def toStringImpl() = "XDataAuxNull()"
 }

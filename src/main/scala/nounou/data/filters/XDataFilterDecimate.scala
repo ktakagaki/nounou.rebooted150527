@@ -12,7 +12,7 @@
    */
   class XDataFilterDecimate(override val upstream: XData ) extends XDataFilterDownsample( upstream ) {
 
-    override def toString() = {
+    override def toStringImpl() = {
       if(factor == 1) "XDataFilterDecimate: off (factor=1)"
       else "XDataFilterDecimate: factor=" + factor
     }

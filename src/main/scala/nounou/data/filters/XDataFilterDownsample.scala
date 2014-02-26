@@ -16,7 +16,7 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
     factor_=(factor)
   }
 
-  override def toString() = {
+  override def toStringImpl() = {
     if(factor == 1) "XDataFilterDownsample: off (factor=1)"
     else "XDataFilterDownsample: factor=" + factor
   }

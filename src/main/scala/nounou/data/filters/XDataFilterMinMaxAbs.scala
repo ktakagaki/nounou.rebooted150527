@@ -21,7 +21,7 @@ object XDataFilterMinMaxAbs {
  */
 class XDataFilterMinMaxAbs( override val upstream: XData ) extends XDataFilterRMS( upstream ) {
 
-    override def toString() = {
+    override def toStringImpl() = {
       if(halfWindow == 0) "XDataFilterMinMaxAbs: off (halfWindow=0)"
       else "XDataFilterMinMaxAbs: halfWindow=" + halfWindow
     }
