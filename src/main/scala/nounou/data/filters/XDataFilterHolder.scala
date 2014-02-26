@@ -1,6 +1,6 @@
 package nounou.data.filters
 
-import nounou.data.{XDataNull, X, XData}
+import nounou.data._
 
 /**This class serves as an "immutable" reference point for various data structures, which may change.
   *The `upstream` variable is not valid in the usual sense, and everything is redirected to the
@@ -8,7 +8,7 @@ import nounou.data.{XDataNull, X, XData}
  * @author ktakagaki
  * @date 2/15/14.
   */
-class XDataFilterHolder( val upstream: XData = XDataNull ) extends XData {
+class XDataFilterHolder( val upstream: XData = XDataNull ) extends XData with XDataAux {
 
   private var _heldData: XData = XDataNull
   def heldData: XData = _heldData
