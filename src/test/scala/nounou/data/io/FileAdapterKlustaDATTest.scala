@@ -23,7 +23,7 @@ class FileAdapterKlustaDATTest extends FunSuite {
   test("Speed Optimization") {
     val reader = new DataReader
     reader.load(bigTestFiles)
-    println(reader.dataSummary())
+    println(reader.toStringChain())
 
     val writeData =  new XDataFilterMask( reader.dataORI, reader.mask)
     //val writeData =  new XDataFilterMask( new XDataFilterBuffer( reader.dataORI ), reader.mask)

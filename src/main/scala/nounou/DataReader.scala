@@ -4,7 +4,7 @@ import java.io.File
 
 import com.typesafe.scalalogging.slf4j.Logging
 import nounou.data._
-import nounou.data.io.{FileAdapterNEV, FileAdapterNCS, FileAdapterNEX}
+import nounou.data.io.{FileAdapterGSDGSH, FileAdapterNEV, FileAdapterNCS, FileAdapterNEX}
 import nounou.data.discrete._
 import nounou.data.filters._
 import breeze.math.Complex
@@ -184,6 +184,7 @@ class DataReader extends Logging {
       case n: String if n.endsWith(".nex") => FileAdapterNEX.load( file )
       case n: String if n.endsWith(".ncs") => FileAdapterNCS.load( file )
       case n: String if n.endsWith(".nev") => FileAdapterNEV.load( file )
+      case n: String if (n.endsWith(".gsd") || n.endsWith(".gsh")) => FileAdapterGSDGSH.load( file )
       case n => throw new IllegalArgumentException("File format for " + n + " is not supported yet.")
     }
     logger.info("loading file: {}", file.getName)
@@ -366,22 +367,20 @@ class DataReader extends Logging {
 
   // </editor-fold>
 
-  override def toString() = "DataReader( data channels:" + dataORI.channelCount + ", dataAux channels:" + dataAuxORI.channelCount +
-                                         ", data layout: " + layout + ", data mask: " + mask + ", events: " + events.length + ")"
+  override def toString() = "DataReader( data ch:" + dataORI.channelCount + ", dataAux ch:" + dataAuxORI.channelCount +
+                                         ", layout: " + layout + ", mask: " + mask + ", events: " + events.length + ")"
 
-  def dataSummary(): String = {
+  def toStringChain(): String = {
     val tempstr =
-      "header  : " + header + "\n" +
-      "dataORI :"+ "\n" +
-      dataORI+ "\n" +
-      "dataAux :"+ "\n" +
-      dataAuxORI+ "\n" +
-      "layout  : " + layout+ "\n" +
-      "mask   : " + mask+ "\n" +
-      "events : " + events+ "\n" +
-      "spikes : " + spikes
+      "[header  ] " + header + "\n" +
+      "[dataORI ] " + dataORI.toStringChain()+ "\n" +
+      "[dataAux ] " + dataAuxORI.toStringChain()+ "\n" +
+      "[layout  ] " + layout+ "\n" +
+      "[mask    ] " + mask+ "\n" +
+      "[events  ] " + events+ "\n" +
+      "[spikes  ] " + spikes
 
 
-    "DataReader loaded data summary:\n" + (tempstr split "\n").flatMap( "     " + _)
+      "DataReader LOADED DATA SUMMARY\n================================\n" + toString() +"\n" + (tempstr split "\n").flatMap( "\n     " + _).mkString
   }
 }

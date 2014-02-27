@@ -12,6 +12,8 @@ import breeze.signal.fourierTr
  */
 class XDataFilterStatistics( override val upstream: XData ) extends XDataFilter( upstream ) {
 
+  override def toString() =  "XDataFilterStatistics: "
+
   def readTraceAbsFourier( ch: Int, range: FrameRange, segment: Int ): DenseVector[Complex] = {
     val tempTrace = readTraceAbs( ch, range, segment )
     fourierTr( DenseVector( tempTrace.toArray ) )

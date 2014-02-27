@@ -10,17 +10,269 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[       769,         33]
-NotebookOptionsPosition[       560,         21]
-NotebookOutlinePosition[       908,         36]
-CellTagsIndexPosition[       865,         33]
+NotebookDataLength[     12843,        335]
+NotebookOptionsPosition[     11247,        273]
+NotebookOutlinePosition[     11590,        288]
+CellTagsIndexPosition[     11547,        285]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+
+Cell[CellGroupData[{
+Cell["FileAdapterGSDGSH test", "Title",
+ CellChangeTimes->{{3.6000809243998537`*^9, 3.6000809304792013`*^9}, {
+  3.600114600836507*^9, 3.6001146015385475`*^9}, {3.601276829674528*^9, 
+  3.6012768326646986`*^9}, {3.6016367435135307`*^9, 3.6016367458816657`*^9}, {
+  3.6024843248932467`*^9, 3.6024843318206425`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"<<", "NounouM2`"}]], "Input",
+ CellChangeTimes->{{3.601276597725261*^9, 3.601276600971447*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"Welcome to NounouM2, the Mathematica interface to nounou!\"\
+\>"], "Print",
+ CellChangeTimes->{
+  3.602487828056616*^9, 3.6024880352884693`*^9, 3.6024909301330442`*^9, 
+   3.602491680815981*^9, 3.602493715914382*^9, 3.602493880198779*^9, {
+   3.602496724988491*^9, 3.6024967495198946`*^9}, 3.6024986222380075`*^9, {
+   3.602498710273043*^9, 3.6024987363625355`*^9}, 3.6025019736426973`*^9, 
+   3.6025071393801603`*^9, 3.6025091005413322`*^9, 3.602509400073465*^9, 
+   3.6025096453344927`*^9, 3.602510245749835*^9, 3.6025103657066956`*^9, 
+   3.6025201740136986`*^9, 3.6025212236457343`*^9, 3.6025216093347945`*^9, 
+   3.6025228220291567`*^9, 3.6025230530373697`*^9, 3.602523359026871*^9, 
+   3.602523512105627*^9, 3.60252372458778*^9, 3.6025238494819236`*^9}],
+
+Cell[BoxData["\<\"(last updated:  Thu 27 Feb 2014 22:04:04)\"\>"], "Print",
+ CellChangeTimes->{
+  3.602487828056616*^9, 3.6024880352884693`*^9, 3.6024909301330442`*^9, 
+   3.602491680815981*^9, 3.602493715914382*^9, 3.602493880198779*^9, {
+   3.602496724988491*^9, 3.6024967495198946`*^9}, 3.6024986222380075`*^9, {
+   3.602498710273043*^9, 3.6024987363625355`*^9}, 3.6025019736426973`*^9, 
+   3.6025071393801603`*^9, 3.6025091005413322`*^9, 3.602509400073465*^9, 
+   3.6025096453344927`*^9, 3.602510245749835*^9, 3.6025103657066956`*^9, 
+   3.6025201740136986`*^9, 3.6025212236457343`*^9, 3.6025216093347945`*^9, 
+   3.6025228220291567`*^9, 3.6025230530373697`*^9, 3.602523359026871*^9, 
+   3.602523512105627*^9, 3.60252372458778*^9, 3.6025238494829235`*^9}],
+
+Cell[BoxData["\<\"<<Set JLink` java stack size to 3072Mb>>\"\>"], "Print",
+ CellChangeTimes->{
+  3.602487828056616*^9, 3.6024880352884693`*^9, 3.6024909301330442`*^9, 
+   3.602491680815981*^9, 3.602493715914382*^9, 3.602493880198779*^9, {
+   3.602496724988491*^9, 3.6024967495198946`*^9}, 3.6024986222380075`*^9, {
+   3.602498710273043*^9, 3.6024987363625355`*^9}, 3.6025019736426973`*^9, 
+   3.6025071393801603`*^9, 3.6025091005413322`*^9, 3.602509400073465*^9, 
+   3.6025096453344927`*^9, 3.602510245749835*^9, 3.6025103657066956`*^9, 
+   3.6025201740136986`*^9, 3.6025212236457343`*^9, 3.6025216093347945`*^9, 
+   3.6025228220291567`*^9, 3.6025230530373697`*^9, 3.602523359026871*^9, 
+   3.602523512105627*^9, 3.60252372458778*^9, 3.602523849521926*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ShowJavaConsole", "[", "]"}], ";"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+  "testDataFile", " ", "=", " ", 
+   "\"\<V:\\\\docs\\\\bb\\\\nounous\\\\src\\\\test\\\\resources\\\\_testFiles\
+\\\\Micam\\\\mag130712008A_3.gsd\>\""}], ";"}]], "Input",
+ CellChangeTimes->{{3.6024843707548695`*^9, 3.6024843887268977`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"$NNReader", "@", 
+  RowBox[{"load", "[", "testDataFile", "]"}]}]], "Input",
+ CellChangeTimes->{{3.602484407973998*^9, 3.6024844107911596`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"$NNReader", "@", 
+  RowBox[{"toStringChain", "[", "]"}]}]], "Input",
+ CellChangeTimes->{{3.6025091133030624`*^9, 3.602509114798148*^9}, {
+  3.602509657211172*^9, 3.6025096586182528`*^9}}],
+
+Cell[BoxData["\<\"DataReader LOADED DATA \
+SUMMARY\\n================================\\nDataReader( data ch:7360, \
+dataAux ch:2, layout: XLayoutNull, mask: XMask: 0 _masks, events: 0)\\n\\n    \
+ [header  ] XHeader: 26 entries\\n     [dataORI ] XDataFilterHolder: XData: \
+7360 ch, 1 seg, lengths=Vector(1025), fs=500.0)    \\n         \\\\ \
+XDataFilterDecimate: off (factor=1)    \\n             \\\\ \
+XDataFilterBuffer: bufferPageLength=16384, garbageQueBound=1024    \\n        \
+         \\\\ XDataFilterStatistics: \\n                 \\\\ XDataFilterFIR: \
+kernel null (off)    \\n                     \\\\ XDataFilterRMS: \
+halfWindow=25\\n                 \\\\ XDataFilterMinMaxAbs: halfWindow=25\\n  \
+               \\\\ XDataFilterFIR: kernel null (off)\\n     [dataAux ] \
+XDataFilterHolder: XData: 2 ch, 1 seg, lengths=Vector(1024), fs=500.0)\\n     \
+[layout  ] XLayoutNull\\n     [mask    ] XMask: 0 _masks\\n     [events  ] \
+XEventsNull\\n     [spikes  ] XSpikesNull\"\>"], "Output",
+ CellChangeTimes->{
+  3.602506946654137*^9, 3.6025071431913786`*^9, {3.602509104238544*^9, 
+   3.6025091150741634`*^9}, 3.602509403999689*^9, {3.602509649352723*^9, 
+   3.6025096589162693`*^9}, 3.602510249501049*^9, 3.6025103693699055`*^9, 
+   3.6025201774958982`*^9, 3.6025212279309797`*^9, 3.6025216131960154`*^9, 
+   3.6025228258483753`*^9, 3.60252305688759*^9, 3.6025233628250885`*^9, 
+   3.602523516200861*^9, 3.602523728522005*^9, 3.602523853111131*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"$NNReader", "@", 
+  RowBox[{
+   RowBox[{"header", "[", "]"}], "@", 
+   RowBox[{"toStringFull", "[", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.6025019914817176`*^9, 3.602502022792508*^9}, {
+  3.602523750008234*^9, 3.602523751311309*^9}}],
+
+Cell[BoxData["\<\"XHeader: Map(AUXnChNext -> 0, AUXnChanum -> 2, AUXnDummy1 \
+-> 512, AUXnDummy2 -> 1, AUXnDummy3 -> 0, AUXnFrameSize -> 1024, AUXnOfset -> \
+0, AUXnRate -> 20, AUXnShift -> 1, AUXnTimeNext -> 0, dAverage -> 1.0, dDummy \
+-> 9.1837E-41, dOrgSampleTime -> 2.0, dSampleTime -> 2.0, nDataXsize -> 92, \
+nDataYsize -> 80, nDummy -> 0, nFrameSize -> 1024, nImgXsize -> 92, nImgYsize \
+-> 80, nLeftSkip -> 0, nOrgFrmSize -> 1024, nOrgImgXsize -> 92, nOrgImgYsize \
+-> 80, nShift -> 1, nTopSkip -> 0)\"\>"], "Output",
+ CellChangeTimes->{{3.602501996105982*^9, 3.60250202316853*^9}, 
+   3.6025071500457706`*^9, 3.6025091042995477`*^9, 3.6025094060258055`*^9, 
+   3.6025096494157267`*^9, 3.602510251044138*^9, 3.602520184625306*^9, 
+   3.602521239189624*^9, 3.6025216170052333`*^9, 3.602522834660879*^9, 
+   3.6025230569415927`*^9, 3.6025233652872295`*^9, 3.6025235162678647`*^9, {
+   3.6025237285840087`*^9, 3.6025237515343213`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"$NNReader", "@", 
+  RowBox[{
+   RowBox[{"dataDecimateBuf", "[", "]"}], "@", 
+   RowBox[{"toStringChain", "[", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.6025201884435244`*^9, 3.6025202174721847`*^9}, {
+  3.60252024832895*^9, 3.6025202577844906`*^9}, {3.6025215111131763`*^9, 
+  3.6025215114471955`*^9}}],
+
+Cell[BoxData["\<\"XDataFilterBuffer: bufferPageLength=16384, \
+garbageQueBound=1024    \\n        \\\\ XDataFilterFIR: kernel null (off)\\n  \
+      \\\\ XDataFilterStatistics: \\n        \\\\ XDataFilterMinMaxAbs: \
+halfWindow=25\\n        \\\\ XDataFilterFIR: kernel null (off)    \\n         \
+   \\\\ XDataFilterRMS: halfWindow=25\"\>"], "Output",
+ CellChangeTimes->{{3.602520206016529*^9, 3.602520217837206*^9}, 
+   3.6025202583485227`*^9, 3.602521241003727*^9, 3.6025215156714373`*^9, 
+   3.602521618398313*^9, 3.6025228353829203`*^9, 3.602523057027598*^9, 
+   3.602523365934266*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"$NNReader", "@", 
+  RowBox[{
+   RowBox[{"dataORI", "[", "]"}], "@", 
+   RowBox[{
+    RowBox[{"getChildren", "[", "]"}], "@", 
+    RowBox[{"toString", "[", "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.602523072003454*^9, 3.6025231015481443`*^9}}],
+
+Cell[BoxData["\<\"Set()\"\>"], "Output",
+ CellChangeTimes->{{3.602523080680951*^9, 3.602523101929166*^9}, {
+  3.6025233669473248`*^9, 3.6025233928948083`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"$NNReader", "@", 
+  RowBox[{
+   RowBox[{"dataORI", "[", "]"}], "@", 
+   RowBox[{
+    RowBox[{"Uchildren", "[", "]"}], "@", 
+    RowBox[{"toString", "[", "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.602523072003454*^9, 3.6025231015481443`*^9}, {
+  3.6025232672646227`*^9, 3.6025232744270325`*^9}, {3.602523310499096*^9, 
+  3.60252332474691*^9}, {3.602523370034501*^9, 3.6025233756908245`*^9}}],
+
+Cell[BoxData["\<\"Set(XDataFilterDecimate: off (factor=1))\"\>"], "Output",
+ CellChangeTimes->{{3.6025233117511673`*^9, 3.6025233253599453`*^9}, {
+  3.6025233676143627`*^9, 3.602523376043844*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"$NNReader", "@", 
+  RowBox[{
+   RowBox[{"dataORI", "[", "]"}], "@", 
+   RowBox[{"toString", "[", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.602523072003454*^9, 3.6025231053733635`*^9}}],
+
+Cell[BoxData["\<\"XDataFilterHolder: XData: 7360 ch, 1 seg, \
+lengths=Vector(1025), fs=500.0)\"\>"], "Output",
+ CellChangeTimes->{{3.602523091387563*^9, 3.6025231060434017`*^9}, 
+   3.60252339554396*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"$NNReader", "@", 
+  RowBox[{
+   RowBox[{"dataORI", "[", "]"}], "@", 
+   RowBox[{"toStringChain", "[", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.602523072003454*^9, 3.6025231143128743`*^9}}],
+
+Cell[BoxData["\<\"XDataFilterHolder: XData: 7360 ch, 1 seg, \
+lengths=Vector(1025), fs=500.0)\"\>"], "Output",
+ CellChangeTimes->{3.6025231147669*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"$NNReader", "@", 
+  RowBox[{
+   RowBox[{"dataDecimateBuf", "[", "]"}], "@", 
+   RowBox[{
+    RowBox[{"getChildren", "[", "]"}], "@", 
+    RowBox[{"toString", "[", "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.6025201884435244`*^9, 3.6025202294168677`*^9}, 
+   3.6025202804737883`*^9, {3.6025213900562525`*^9, 3.6025213906242847`*^9}, 
+   3.6025215200806894`*^9}],
+
+Cell[BoxData["\<\"Set(XDataFilterStatistics: , XDataFilterMinMaxAbs: \
+halfWindow=25, XDataFilterFIR: kernel null (off), XDataFilterFIR: kernel null \
+(off))\"\>"], "Output",
+ CellChangeTimes->{
+  3.602520229821891*^9, 3.6025202811718283`*^9, {3.6025213859160156`*^9, 
+   3.6025213913353257`*^9}, 3.602521520725726*^9, 3.6025230605838013`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"$NNReader", "@", 
+  RowBox[{
+   RowBox[{"dataDecimateBuf", "[", "]"}], "@", 
+   RowBox[{
+    RowBox[{"upstream", "[", "]"}], "@", 
+    RowBox[{"toString", "[", "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.6025201884435244`*^9, 3.6025202294168677`*^9}, 
+   3.6025202804737883`*^9, {3.6025213900562525`*^9, 3.6025213906242847`*^9}, {
+   3.60252144403234*^9, 3.6025214570800858`*^9}, 3.6025215225928335`*^9}],
+
+Cell[BoxData["\<\"XDataFilterDecimate: off (factor=1)\"\>"], "Output",
+ CellChangeTimes->{{3.6025214493766456`*^9, 3.602521457292098*^9}, 
+   3.6025215230848618`*^9, 3.6025230665311413`*^9}]
+}, Open  ]]
+}, Open  ]]
 },
-WindowSize->{716, 867},
-WindowMargins->{{316, Automatic}, {-1053, Automatic}},
+WindowSize->{952, 1129},
+WindowMargins->{{Automatic, 0}, {0, Automatic}},
 FrontEndVersion->"9.0 for Microsoft Windows (64-bit) (January 25, 2013)",
 StyleDefinitions->"Default.nb"
 ]
@@ -35,6 +287,56 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 314, 4, 90, "Title"],
+Cell[CellGroupData[{
+Cell[918, 30, 119, 2, 31, "Input"],
+Cell[CellGroupData[{
+Cell[1062, 36, 777, 11, 23, "Print"],
+Cell[1842, 49, 759, 10, 23, "Print"],
+Cell[2604, 61, 756, 10, 23, "Print"]
+}, Open  ]]
+}, Open  ]],
+Cell[3387, 75, 81, 2, 31, "Input"],
+Cell[3471, 79, 275, 6, 31, "Input"],
+Cell[3749, 87, 167, 3, 31, "Input"],
+Cell[CellGroupData[{
+Cell[3941, 94, 211, 4, 31, "Input"],
+Cell[4155, 100, 1463, 20, 404, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5655, 125, 261, 6, 31, "Input"],
+Cell[5919, 133, 941, 12, 112, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6897, 150, 327, 7, 31, "Input"],
+Cell[7227, 159, 589, 8, 132, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7853, 172, 269, 7, 31, "Input"],
+Cell[8125, 181, 159, 2, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8321, 188, 416, 9, 31, "Input"],
+Cell[8740, 199, 196, 2, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8973, 206, 209, 5, 31, "Input"],
+Cell[9185, 213, 203, 3, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9425, 221, 214, 5, 31, "Input"],
+Cell[9642, 228, 150, 2, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9829, 235, 385, 9, 31, "Input"],
+Cell[10217, 246, 343, 5, 52, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10597, 256, 429, 9, 31, "Input"],
+Cell[11029, 267, 190, 2, 31, "Output"]
+}, Open  ]]
+}, Open  ]]
 }
 ]
 *)
