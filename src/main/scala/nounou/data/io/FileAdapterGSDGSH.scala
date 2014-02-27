@@ -2,7 +2,7 @@ package nounou.data.io
 
 import nounou.data._
 import java.io.File
-import breeze.io.RandomAccessFile
+import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
 import scala.collection.immutable.TreeMap
 
 /**Reader for MiCAM unified form data (gsd/gsh).
@@ -18,11 +18,11 @@ object FileAdapterGSDGSH extends FileAdapter {
 
   override def loadImpl(file: File): List[X] = {
 
-    val gshfile = "(*).(gsh)".r//("strippedName","extension")
+    val gshfile = """([^ \t\r\n\v\f]*).(gsh)""".r//("strippedName","extension")
 
     val fileName =file.getName.toLowerCase
-    if(fileName.matches("*.gsd")) loadImplGSD(file)
-    else if(fileName.matches("*.gsh")){
+    if(fileName.endsWith(".gsd")) loadImplGSD(file)
+    else if(fileName.endsWith(".gsh")){
       if( new File(gshfile.findAllIn(fileName).next + ".gsd").isFile ){
         loadImplGSD(file)
       } else {
@@ -36,7 +36,7 @@ object FileAdapterGSDGSH extends FileAdapter {
 
   private def loadImplGSD(file: File): List[X] = {
 
-    val raf = new RandomAccessFile(file)
+    val raf = new RandomAccessFile(file)(ByteConverterLittleEndian)
     raf.seek(256)
     val nDataXsize = raf.readInt16()     //256... number of pixels on X axis
     val nDataYsize = raf.readInt16()     //258... number of pixels on Y axis
@@ -60,7 +60,7 @@ object FileAdapterGSDGSH extends FileAdapter {
     raf.seek(328)
     val AUXnChanum = raf.readInt16()        //328
     val AUXnRate = raf.readInt16()          //330... temporal resolution
-          val sampleRateAux = 1000d/AUXnRate
+          val sampleRateAux = 1000d/AUXnRate *10d //ToDo: get actual factor from Brady
     val AUXnOfset = raf.readInt16()         //332
     val AUXnChNext = raf.readInt16()        //334
     val AUXnTimeNext = raf.readInt16()      //336
@@ -146,6 +146,8 @@ object FileAdapterGSDGSH extends FileAdapter {
     val dataAuxReturn = new Array[Array[Int]](AUXnChanum)
     for( ch <- 0 until AUXnChanum.toInt ) dataAuxReturn(ch) = new Array[Int]( AUXnFrameSize )
 
+    val chNamesAuxReturn = (for( ch <- 0 until AUXnChanum ) yield "A-In " + (ch +1).toString )
+
     var dataAuxCnt = 0
     for( fr <- 0 until AUXnFrameSize.toInt ) {
       var chCnt = 0
@@ -159,7 +161,7 @@ object FileAdapterGSDGSH extends FileAdapter {
     List(
       header,
       new XDataGSD( dataReturn.toVector.map( _.toVector ), xBits, absGain, absOffset, absUnit, chNamesReturn.toVector, 0L, sampleRate ),
-      new XDataGSDAux( dataAuxReturn.toVector.map( _.toVector ), xBits, absGain, absOffset, absUnit, chNamesReturn.toVector, 0L, sampleRateAux )
+      new XDataGSDAux( dataAuxReturn.toVector.map( _.toVector ), xBits, absGain, absOffset, absUnit, chNamesAuxReturn.toVector, 0L, sampleRateAux )
     )
   }
 

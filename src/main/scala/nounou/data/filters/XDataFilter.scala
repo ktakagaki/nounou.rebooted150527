@@ -7,7 +7,7 @@ import nounou.data.{X, XData}
   */
 class XDataFilter( val upstream: XData ) extends XData {
 
-  upstream.children += this
+  upstream.setChild(this)
 
   override def channelNames: scala.Vector[String] = upstream.channelNames
 

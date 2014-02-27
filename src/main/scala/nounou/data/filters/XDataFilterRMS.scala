@@ -13,7 +13,7 @@ import nounou.FrameRange
  */
 class XDataFilterRMS( override val upstream: XData ) extends XDataFilter( upstream ) {
 
-    override def toStringImpl() = {
+    override def toString() = {
       if(halfWindow == 0) "XDataFilterRMS: off (halfWindow=0)"
       else "XDataFilterRMS: halfWindow=" + halfWindow
     }

@@ -23,6 +23,7 @@ class XDataPreloaded(  val data: Vector[Vector[Vector[Int]]],
 
     override lazy val segmentLengths: Vector[Int] = data(0).map(_.length)
 
+
     require(channelCount == data.length,
       "number of channels " + channelCount + " does not match data.length " + data.length + "!")
 

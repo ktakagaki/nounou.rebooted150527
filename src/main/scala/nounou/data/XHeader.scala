@@ -7,7 +7,8 @@ import scala.collection.immutable.TreeMap
  */
 class XHeader(val header: TreeMap[String, HeaderValue]) extends X {
 
-  override def toString = header.toString
+  override def toString = "XHeader: " + header.size + " entries"
+  def toStringFull = "XHeader: " + header.toString
 
   def apply(key: String) = header(key)
 
