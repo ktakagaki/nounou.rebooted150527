@@ -14,24 +14,40 @@ import nounou.data.filters.XDataFilter
   */
 abstract class XData extends X with XConcatenatable with XFrames with XChannels with XAbsolute with Logging {
 
+  override def toString(): String = "XData: " + channelCount + " ch, "+ segmentCount + " seg, lengths=" + segmentLengths + ", fs=" + sampleRate + ")"
+
+  final def toStringChain(): String = {
+    toString() + (if(getChildren.size!=0) {
+      getChildren.map(p => "\n\\ " + p.toStringChain).reduce( _ + _ ).split("\n").flatMap( "\n     " + _ ).mkString.drop(1)
+    } else {
+      ""
+    })
+  }
+
   // <editor-fold defaultstate="collapsed" desc=" DataSource related ">
 
-  val children = scala.collection.mutable.Set[XData]()
+  private val _children = scala.collection.mutable.Set[XData]()
+  def setChild(x: XData): Unit = _children.+=(x)
+  final def setChildren(xs: TraversableOnce[XData]): Unit = xs.map( setChild(_) )
+  def getChildren() = _children
+  def clearChildren(): Unit = _children.clear()
+  def clearChild(x: XData): Unit = _children.-=(x)
+  final def clearChildren(xs: TraversableOnce[XData]): Unit = xs.map( clearChild(_) )
 
   /** Must be overriden and expanded, especially by buffering functions
     * and functions which have an active update which must be updated.
     */
-  def changedData(): Unit = for( child <- children ) child.changedData()
+  def changedData(): Unit = for( child <- getChildren ) child.changedData()
   /** Must be overriden and expanded, especially by buffering functions
     * and functions which have an active update which must be updated.
     */
-  def changedData(channel: Int): Unit = for( child <- children ) child.changedData(channel)
+  def changedData(channel: Int): Unit = for( child <- getChildren ) child.changedData(channel)
   def changedData(channels: Vector[Int]): Unit = for( channel <- channels ) changedData(channel)
   /** Must be overriden and expanded, especially by buffering functions
     * and functions which have an active update which must be updated.
     * Covers sampleRate, segmentLengths, segmentEndTSs, segmentStartTSs, segmentCount
     */
-  def changedTiming(): Unit = for( child <- children ) child.changedTiming()
+  def changedTiming(): Unit = for( child <- getChildren ) child.changedTiming()
 
   // </editor-fold>
 
@@ -198,14 +214,6 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   // </editor-fold>
 
-  def toStringImpl(): String = "XData(" + channelCount + " channels, "+ segmentCount + " segments, with lengths " + segmentLengths + ", fs=" + sampleRate + ")"
-  override final def toString(): String = {
-    toStringImpl + (if(children.size!=0) {
-      children.map("\n" + 192.toChar.toString + " " + _.toString).reduce( _ + _ )
-    } else {
-      ""
-    })
-  }
 
 }
 
@@ -263,7 +271,7 @@ class XDataNull extends XDataNullImpl {
     case XDataNull => this
     case _ => require(false, "cannot append incompatible data types (XDataNull)"); this
   }
-  override def toStringImpl() = "XDataNull()"
+  override def toString() = "XDataNull()"
 }
 
 object XDataAuxNull extends XDataNullImpl with XDataAux {
@@ -271,5 +279,5 @@ object XDataAuxNull extends XDataNullImpl with XDataAux {
     case XDataAuxNull => this
     case _ => require(false, "cannot append incompatible data types (XDataAuxNull)"); this
   }
-  override def toStringImpl() = "XDataAuxNull()"
+  override def toString() = "XDataAuxNull()"
 }

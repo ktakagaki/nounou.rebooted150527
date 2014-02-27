@@ -22,20 +22,21 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
 
   logger.debug("initialized XDataFilterTrBuffer w/ bufferPageLength={} and garbageQueBound={}", bufferPageLength.toString, garbageQueBound.toString)
 
+  override def toString(): String = "XDataFilterBuffer: bufferPageLength=" + bufferPageLength + ", garbageQueBound=" + garbageQueBound
 
   // <editor-fold defaultstate="collapsed" desc=" changes (XDataSource related) and flushing ">
 
   override def changedData() = {
     flushBuffer()
-    for(child <- children) child.changedData()
+    for(child <- getChildren() ) child.changedData()
   }
   override def changedData(channel: Int) = {
     flushBuffer( channel )
-    for(child <- children) child.changedData( channel )
+    for(child <- getChildren()) child.changedData( channel )
   }
   override def changedData(channels: Vector[Int]) = {
     flushBuffer( channels )
-    for(child <- children) child.changedData( channels )
+    for(child <- getChildren()) child.changedData( channels )
   }
 
   def flushBuffer(): Unit = {

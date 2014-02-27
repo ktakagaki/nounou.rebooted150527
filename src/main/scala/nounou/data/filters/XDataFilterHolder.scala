@@ -8,15 +8,40 @@ import nounou.data._
  * @author ktakagaki
  * @date 2/15/14.
   */
-class XDataFilterHolder( val upstream: XData = XDataNull ) extends XData with XDataAux {
+class XDataFilterHolder extends XData with XDataAux {
 
   private var _heldData: XData = XDataNull
   def heldData: XData = _heldData
   def heldData_=( newData: XData ) = {
+    heldData.clearChildren()
     _heldData = newData
+      heldData.clearChildren()
+      heldData.setChildren( super.getChildren() )
+
     changedData()
-    changedTiming()  //ToDo 2: buffer and only conditionally trigger timing change
+    changedTiming()  //ToDo 3: buffer and only conditionally trigger timing change
   }
+  override def getChildren() = {
+    heldData.getChildren() ++ super.getChildren()
+  }
+  override def setChild(x: XData) = {
+    super.setChild(x)
+    heldData.setChild(x)
+  }
+  override def clearChildren(): Unit = {
+    super.clearChildren()
+    heldData.clearChildren()
+  }
+  override def clearChild(x: XData): Unit = {
+    super.clearChild(x)
+    heldData.clearChild(x)
+  }
+
+
+  override def toString() = {
+    "XDataFilterHolder: " + heldData.toString()
+  }
+
 
   override def channelNames: scala.Vector[String] = heldData.channelNames
 
