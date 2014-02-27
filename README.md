@@ -27,7 +27,7 @@ Many of Nounou's routines are based on the numerical processing library [breeze]
 
 Documentation
 - A list of comparable projects.
-- [Supported formats](/docs/formats.MD)
+- [Supported formats](https://github.com/ktakagaki/nounou/wiki/_preview)
 - Installing
 - Basic use examples
     -   MATLAB
