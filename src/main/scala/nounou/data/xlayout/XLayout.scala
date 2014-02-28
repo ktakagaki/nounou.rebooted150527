@@ -1,9 +1,9 @@
 package nounou.data
 
-import java.awt.Rectangle
-import nounou.data.traits.XChannelsImmutable
+import javafx.scene.shape.Rectangle
+import nounou.data.traits.{XConcatenatable, XChannelsImmutable}
 
-abstract class XLayout extends X with XChannelsImmutable {
+abstract class XLayout extends X with XChannelsImmutable with XConcatenatable {
 
   // field bounding rectangle
   /** The bounding rectangle of the detector field.
@@ -22,17 +22,19 @@ abstract class XLayout extends X with XChannelsImmutable {
   /** Center coordinate of chosen detector (or channel,
    *  if it is designated a part of the field for display.
    */
-  final def channelToCoordinates(ch: Int): Array[Double] = {
+  final def channelToCoordinates(ch: Int): Vector[Double] = {
     require(isValidChannel(ch), "Invalid channel!")
     channelToCoordinatesImpl(ch)
   }
-  def channelToCoordinatesImpl(ch: Int): Array[Double]
+  def channelToCoordinatesImpl(ch: Int): Vector[Double]
 
   /** Detector which covers the chosen coordinates.*/
   def coordinatesToChannel(x: Double, y: Double): Int
   /** Geometric radius of detectors.*/
 
   val channelRadius: Double
+
+  // <editor-fold defaultstate="collapsed" desc="XConcatenatable">
 
   override def isCompatible(that: X): Boolean = {
     that match {
@@ -44,7 +46,15 @@ abstract class XLayout extends X with XChannelsImmutable {
     }
   }
 
-  override def toString() = "XLayout(fieldX="+fieldX+", fieldY="+fieldY+", fieldWidth="+fieldWidth+", fieldHeight="+fieldHeight+")"
+  override def :::(x: X): XLayout = x match {
+    case x: XLayout if x.isCompatible(this) => this
+    case x: XData if x.layout.isCompatible(this) => this
+    case _ => throw loggerError("cannot combine, {} is not compatible with this layout {}", x.toString, this.toString())
+  }
+
+  // </editor-fold>
+
+  override def toString() = "XLayout(fieldX="+fieldX+", fY="+fieldY+", fWidth="+fieldWidth+", fHeight="+fieldHeight+")"
 
 }
 
@@ -54,7 +64,7 @@ object XLayoutNull extends XLayout {
 
   val field: Rectangle = new Rectangle()
 
-  def channelToCoordinatesImpl(ch: Int): Array[Double] = Array(0D, 0D)
+  def channelToCoordinatesImpl(ch: Int): Vector[Double] = Vector(0D, 0D)
 
   /** Detector which covers the chosen coordinates. */
   def coordinatesToChannel(x: Double, y: Double): Int = 0
@@ -64,4 +74,5 @@ object XLayoutNull extends XLayout {
   override def isCompatible(that: X): Boolean = false
 
   override def toString() = "XLayoutNull"
+
 }

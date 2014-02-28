@@ -6,7 +6,7 @@ import nounou.data.traits.XConcatenatable
 /**
  * Created by Kenta on 12/15/13.
  */
- class XDataChannelArray(val array: Vector[XDataChannel]) extends XDataImmutable with XConcatenatable{
+ class XDataChannelArray(val array: Vector[XDataChannel], override val layout: XLayout = XLayoutNull) extends XDataImmutable with XConcatenatable{
 
   def this( dataChannel: XDataChannel ) = this( Vector[XDataChannel]( dataChannel ) )
 

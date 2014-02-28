@@ -60,6 +60,8 @@ class XDataFilterHolder extends XData with XDataAux {
   override def segmentLengths: scala.Vector[Int] = heldData.segmentLengths
   override def segmentCount: Int = heldData.segmentCount
 
+  override def layout: XLayout = heldData.layout()
+
   override def isCompatible(target: X) = false
   override def :::(target: X): XData = {
     throw new IllegalArgumentException("cannot append an XDataFilterHolder or child!")
