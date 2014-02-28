@@ -1,7 +1,7 @@
 package nounou.data.filters
 
 import nounou._
-import nounou.data.{X, XData}
+import nounou.data.{XLayout, X, XData}
 
 /** A passthrough object, which is overriden and inherited with various XDataFilterTr traits to create a filter block.
   */
@@ -25,6 +25,8 @@ class XDataFilter( val upstream: XData ) extends XData {
   override def segmentStartTSs: scala.Vector[Long] = upstream.segmentStartTSs
   override def segmentLengths: scala.Vector[Int] = upstream.segmentLengths
   override def segmentCount: Int = upstream.segmentCount
+
+  override def layout: XLayout = upstream.layout()
 
   override def isCompatible(target: X) = false
   override def :::(target: X): XData = {

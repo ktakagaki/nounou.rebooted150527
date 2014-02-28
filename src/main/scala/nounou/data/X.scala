@@ -1,11 +1,10 @@
 package nounou.data
 
-import scala.collection.immutable.Vector
+import nounou.LoggingExt
 
 /** Base class for all sources
-  *
   */
-abstract class X {
+abstract class X extends LoggingExt {
 
   //ToDo consider add: pt info, rec info, rec start time/date, etc
   //ToDo: toString based on name, comments, etc.

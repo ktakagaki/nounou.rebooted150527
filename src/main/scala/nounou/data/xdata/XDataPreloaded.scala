@@ -17,7 +17,8 @@ class XDataPreloaded(  val data: Vector[Vector[Vector[Int]]],
                        override val absUnit: String,
                        override val channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
                        override val segmentStartTSs: Vector[Long],
-                       override val sampleRate: Double
+                       override val sampleRate: Double,
+                       override val layout: XLayout = XLayoutNull
                       )
   extends XDataImmutable with XConcatenatable {
 
@@ -49,8 +50,8 @@ class XDataPreloaded(  val data: Vector[Vector[Vector[Int]]],
                                 absUnit = oriThis.absUnit,
                                 channelNames = oriThis.channelNames ++ t.channelNames,
                                 segmentStartTSs = oriThis.segmentStartTSs,
-                                sampleRate = oriThis.sampleRate
-
+                                sampleRate = oriThis.sampleRate,
+                                layout = oriThis.layout
             )
           } else {
             throw new IllegalArgumentException("the two XDataPreloaded types are not compatible, and cannot be concatenated.")
@@ -72,6 +73,7 @@ class XDataPreloadedSingleSegment(
                     absUnit: String,
                     channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
                     segmentStartTS: Long,
-                    sampleRate: Double
+                    sampleRate: Double,
+                    layout: XLayout = XLayoutNull
                     )
-  extends XDataPreloaded( data.map( Vector(_) ), xBits, absGain, absOffset, absUnit, channelNames, Vector[Long](segmentStartTS), sampleRate)
+  extends XDataPreloaded( data.map( Vector(_) ), xBits, absGain, absOffset, absUnit, channelNames, Vector[Long](segmentStartTS), sampleRate, layout)
