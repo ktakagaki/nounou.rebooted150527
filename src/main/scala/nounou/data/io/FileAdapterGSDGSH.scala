@@ -108,40 +108,42 @@ object FileAdapterGSDGSH extends FileAdapter {
     val absUnit = "bit"
     val absGain = 1d
 
+    //================
+    //Read actual data
+    //================
     raf.seek(972)
     val tempFrameShorts = nDataXsize.toInt * nDataYsize.toInt
-    val bkgData =  raf.readInt16( tempFrameShorts )
+    //Read background frames and scale
+    val backgroundFrame =  raf.readInt16( tempFrameShorts ).map( _.toInt * xBits ).toVector
+    //Read data frames
     val data = raf.readInt16( tempFrameShorts * nFrameSize.toInt )
+    //Read analog data
     val analogData = raf.readInt16( AUXnChanum * AUXnFrameSize )
 
     val dataReturn = new Array[Array[Int]](tempFrameShorts)
-    for( ch <- 0 until tempFrameShorts ) dataReturn(ch) = new Array[Int]( nFrameSize + 1 )
+    for( ch <- 0 until tempFrameShorts ) dataReturn(ch) = new Array[Int]( nFrameSize ) // + 1 )
 
-    var bkgCnt = 0
-    for( y <- 0 until nDataYsize.toInt )
-      for( x <- 0 until nDataXsize.toInt ){
-        dataReturn(bkgCnt)(0) = (bkgData(bkgCnt) + bitOffset).toInt
-        bkgCnt += 1
-      }
+
+
+// old code used background as first frame
+//    var bkgCnt = 0
+//    for( y <- 0 until nDataYsize.toInt )
+//      for( x <- 0 until nDataXsize.toInt ){
+//        dataReturn(bkgCnt)(0) = (bkgData(bkgCnt) + bitOffset).toInt
+//        bkgCnt += 1
+//      }
 
     var dataCnt = 0
-    for( fr <- 1 until nFrameSize.toInt + 1 ) {
+    for( fr <- 0 until nFrameSize.toInt ) {
       var chCnt = 0
       for( y <- 0 until nDataYsize.toInt )
         for( x <- 0 until nDataXsize.toInt ){
-          dataReturn(chCnt)(fr) = dataReturn(chCnt)(0) + data(dataCnt).toInt
+          dataReturn(chCnt)(fr) = backgroundFrame(chCnt) + data(dataCnt).toInt * xBits
           chCnt += 1
           dataCnt += 1
         }
     }
 
-    val chNamesReturn = new Array[String](tempFrameShorts)
-    var chNamesCnt = 0
-    for( y <- 0 until nDataYsize.toInt )
-      for( x <- 0 until nDataXsize.toInt ){
-        chNamesReturn(chNamesCnt) = "(x, y) = ("+ x+", "+ y+"), pixel number = "+ chNamesCnt
-        chNamesCnt += 1
-      }
 
     val dataAuxReturn = new Array[Array[Int]](AUXnChanum)
     for( ch <- 0 until AUXnChanum.toInt ) dataAuxReturn(ch) = new Array[Int]( AUXnFrameSize )
@@ -158,10 +160,13 @@ object FileAdapterGSDGSH extends FileAdapter {
         }
     }
 
+    val layout = new XLayoutSquare(nDataXsize, nDataYsize)
+
     List(
       header,
-      new XDataGSD( dataReturn.toVector.map( _.toVector ), xBits, absGain, absOffset, absUnit, chNamesReturn.toVector, 0L, sampleRate ),
-      new XDataGSDAux( dataAuxReturn.toVector.map( _.toVector ), xBits, absGain, absOffset, absUnit, chNamesAuxReturn.toVector, 0L, sampleRateAux )
+      new XDataGSD( dataReturn.toVector.map( _.toVector ), xBits, absGain, absOffset, absUnit, layout.channelNames, 0L, sampleRate, layout, backgroundFrame ),
+      new XDataGSDAux( dataAuxReturn.toVector.map( _.toVector ), xBits, absGain, absOffset, absUnit, chNamesAuxReturn.toVector, 0L, sampleRateAux, XLayoutNull ),
+      layout
     )
   }
 
@@ -176,8 +181,10 @@ class XDataGSD(
                 absUnit: String,
                 channelNames: Vector[String],
                 segmentStartTS: Long,
-                sampleRate: Double
-                ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, channelNames, segmentStartTS, sampleRate)
+                sampleRate: Double,
+                layout: XLayout,
+                val backgroundFrame: Vector[Int]
+                ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, channelNames, segmentStartTS, sampleRate, layout)
 
 class XDataGSDAux(
                 data: Vector[Vector[Int]],
@@ -187,5 +194,6 @@ class XDataGSDAux(
                 absUnit: String,
                 channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
                 segmentStartTS: Long,
-                sampleRate: Double
-                ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, channelNames, segmentStartTS, sampleRate) with XDataAux
+                sampleRate: Double,
+                layout: XLayout
+                   ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, channelNames, segmentStartTS, sampleRate, layout) with XDataAux

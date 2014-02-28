@@ -3,8 +3,6 @@ package nounou.data
 import nounou._
 import scala.collection.immutable.Vector
 import nounou.data.traits._
-import com.typesafe.scalalogging.slf4j.Logging
-import nounou.data.filters.XDataFilter
 
 /** Base class for data encoded as Int arrays.
   * This object is mutable, to allow inheritance by [[nounou.data.filters.XDataFilter]].
@@ -12,7 +10,7 @@ import nounou.data.filters.XDataFilter
   * Each trace of data must share the following variables:
   * sampling, start, length, xBits, absGain, absOffset, absUnit
   */
-abstract class XData extends X with XConcatenatable with XFrames with XChannels with XAbsolute with Logging {
+abstract class XData extends X with XConcatenatable with XFrames with XChannels with XAbsolute {
 
   override def toString(): String = "XData: " + channelCount + " ch, "+ segmentCount + " seg, lengths=" + segmentLengths + ", fs=" + sampleRate + ")"
 
@@ -51,6 +49,15 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   // </editor-fold>
 
+  // <editor-fold defaultstate="collapsed" desc=" XLayout related ">
+
+  def layout(): XLayout
+
+  // </editor-fold>
+
+
+
+  // <editor-fold defaultstate="collapsed" desc=" READING ACTUAL DATA ">
 
   //<editor-fold defaultstate="collapsed" desc="reading a point">
   /** Read a single point from the data, in internal integer scaling, after checking values.
@@ -197,13 +204,14 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     res.toVector
   }
 
+  // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc="XConcatenatable">
 
   override def isCompatible(that: X): Boolean = {
     that match {
       case x: XData => {
-        (super[XFrames].isCompatible(x)) && (super[XAbsolute].isCompatible(x))
+        (super[XFrames].isCompatible(x)) && (super[XAbsolute].isCompatible(x)) && this.layout.isCompatible(x.layout)
         //not channel info
       }
       case _ => false
@@ -214,8 +222,10 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   // </editor-fold>
 
-
 }
+
+
+
 
 /** Immutable version of XData.
   *
@@ -254,6 +264,7 @@ abstract class XDataImmutable extends XData with XFramesImmutable with XChannels
 
 }
 
+
 abstract class XDataNullImpl extends XDataImmutable {
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = 0
   override val absGain: Double = 1D
@@ -263,9 +274,11 @@ abstract class XDataNullImpl extends XDataImmutable {
   override val segmentStartTSs: Vector[Long] = Vector[Long]()
   override val sampleRate: Double = 1D
   override val channelNames: Vector[String] = Vector[String]()
+  override val layout: XLayout = XLayoutNull
 }
 
 object XDataNull extends XDataNull
+
 class XDataNull extends XDataNullImpl {
   override def :::(x: X): XDataImmutable = x match {
     case XDataNull => this

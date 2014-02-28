@@ -21,13 +21,13 @@ class DataReader extends Logging {
   /**Main data output.*/
   def data(): XData = dataFIR
   val dataORI: XDataFilterHolder = new XDataFilterHolder()
-  //insert downsample block, filter block, buffer block
   /**Auxiliary data, for instance, analog signals recorded with an optical trace.*/
   def dataAux(): XDataAux = dataAuxORI //temporarily set to mirror
   var dataAuxORI: XDataFilterHolder = new XDataFilterHolder()
   //insert downsample block, filter block, buffer block
-  /**Layout of data*/
-  var layout: XLayout = XLayoutNull
+//Layout has been encapsulated into XData
+//  /**Layout of data*/
+//  var layout: XLayout = XLayoutNull
   /**Mask*/
   var mask: XMask = new XMask
   /**Events*/
@@ -197,11 +197,12 @@ class DataReader extends Logging {
 
   /** 0=load(not reload) 1=marked for reload 2=reloading/cleared
     */
-  private var reloadFlagHead, reloadFlagData, reloadFlagDataAux, reloadFlagLayout, reloadFlagMask, reloadFlagEvents = 0
+  private var reloadFlagHead, reloadFlagData, reloadFlagDataAux,  reloadFlagMask, reloadFlagEvents = 0    //Layout has been encapsulated into XData // reloadFlagLayout
   private def setReloadFlags(value: Int): Unit = {
     reloadFlagHead = value
     reloadFlagData = value; reloadFlagDataAux = value
-    reloadFlagLayout = value; reloadFlagMask = value; reloadFlagEvents = value
+    //reloadFlagLayout = value;
+    reloadFlagMask = value; reloadFlagEvents = value
   }
   def reload(files: Array[File]): Unit = {
     setReloadFlags(1)
@@ -350,7 +351,8 @@ class DataReader extends Logging {
   def clearHead: Unit = {header = XHeaderNull}
   def clearData: Unit = {setData(XDataNull)}
   def clearDataAux: Unit = {setDataAux(XDataNull) }
-  def clearLayout: Unit = {layout = XLayoutNull}
+  //Layout has been encapsulated into XData
+  //def clearLayout: Unit = {layout = XLayoutNull}
   def clearMask: Unit = {mask = new XMask}
   def clearEvents: Unit = {events = XEventsNull}
   def clearSpikes: Unit = {spikes = XSpikesNull}
@@ -359,7 +361,8 @@ class DataReader extends Logging {
     clearHead
     clearData
     clearDataAux
-    clearLayout
+    //Layout has been encapsulated into XData
+    //clearLayout
     clearMask
     clearEvents
     clearSpikes
@@ -368,14 +371,15 @@ class DataReader extends Logging {
   // </editor-fold>
 
   override def toString() = "DataReader( data ch:" + dataORI.channelCount + ", dataAux ch:" + dataAuxORI.channelCount +
-                                         ", layout: " + layout + ", mask: " + mask + ", events: " + events.length + ")"
+                                         //", layout: " + layout +
+                                         ", mask: " + mask + ", events: " + events.length + ")"
 
   def toStringChain(): String = {
     val tempstr =
       "[header  ] " + header + "\n" +
       "[dataORI ] " + dataORI.toStringChain()+ "\n" +
       "[dataAux ] " + dataAuxORI.toStringChain()+ "\n" +
-      "[layout  ] " + layout+ "\n" +
+//      "[layout  ] " + layout+ "\n" +
       "[mask    ] " + mask+ "\n" +
       "[events  ] " + events+ "\n" +
       "[spikes  ] " + spikes

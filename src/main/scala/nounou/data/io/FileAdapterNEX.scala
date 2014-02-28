@@ -104,9 +104,11 @@ object FileAdapterNEX extends FileAdapter {
                                         absGain = ADtoMV / extraBits,
                                         absOffset = MVOffset,
                                         absUnit = "mV",
+                                        channelNames = Vector[String]( name ),
                                         segmentStartTSs = Vector[Long](nexFileTBeg.toLong), //TODO 1: Must fix this placeholder!!!
                                         sampleRate = nexFileFreq,
-                                        channelNames = Vector[String]( name )  )
+                                        layout = XLayoutNull
+                                          )
          }/*case 5*/
        } /*recType match*/
 //    } /*for(i <- 1 to nexFileNVar)*/
