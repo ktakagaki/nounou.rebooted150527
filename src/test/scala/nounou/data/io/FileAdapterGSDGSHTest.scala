@@ -15,7 +15,6 @@ class FileAdapterGSDGSHTest extends FunSuite {
 
   test("load test"){
 
-    val raf = new RandomAccessFile(testFile)(ByteConverterLittleEndian)
     val dataList = FileAdapterGSDGSH.load(testFile)
 
     println(dataList(0).toString)

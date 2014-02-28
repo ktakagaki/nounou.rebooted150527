@@ -9,7 +9,7 @@ import breeze.numerics.abs
  * @author ktakagaki
  * @date 1/30/14.
  */
-class FileLoaderNCSTest extends FunSuite {
+class FileAdapterNCSTest extends FunSuite {
 
   val testFileTet4a = new File( getClass.getResource("/_testFiles/Neuralynx/t130911/Tet4a.ncs").getPath() )
 
@@ -18,8 +18,9 @@ class FileLoaderNCSTest extends FunSuite {
     val d = new DataReader
     d.reload( testFileTet4a )
 
-    println(d.dataORI.readTrace(0, FrameRange.All, 0).length)
-    println(d.dataORI.readTrace(0, FrameRange.All, 1).length)
+    println(d.dataORI.segmentLengths)
+    //println(d.dataORI.readTrace(0, FrameRange.All, 0).length)
+    //println(d.dataORI.readTrace(0, FrameRange.All, 1).length)
 
     assert(d.dataORI.segmentCount == 3, "Segment count " + d.data.segmentCount + " should be 3!" )
     assert(d.dataORI.readTrace(0, FrameRange.All, 0).length == 3339264, "read whole segment length incorrect!")
