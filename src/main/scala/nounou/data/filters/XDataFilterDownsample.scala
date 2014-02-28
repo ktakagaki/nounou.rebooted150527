@@ -24,6 +24,7 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
   def factor: Int = _factor
   def getFactor(): Int = factor
   def factor_=( factor: Int ) = {
+    loggerRequire( factor >= 1, "new factor {} cannot be less than 1!", factor.toString )
     if( factor == this.factor ){
       logger.trace( "factor is already {}}, not changing. ", factor.toString )
     } else {
@@ -33,7 +34,7 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
     }
   }
   def setFactor( factor: Int ): Unit = factor_=( factor )
-  protected var  _factor: Int = 1
+  protected var  _factor: Int = 0
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
     if(factor == 1){
@@ -67,7 +68,7 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
     currentSegEndTSFactor = factor
     currentSegEndTSBuffer
   }
-  private var currentSegEndTSFactor = 1
+  private var currentSegEndTSFactor = 0
   private var currentSegEndTSBuffer = upstream.segmentEndTSs
 
   override def segmentLengths: Vector[Int] = if( factor == currentSegLenFactor ) currentSegLenBuffer
@@ -76,7 +77,7 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
     currentSegLenFactor = factor
     currentSegLenBuffer
   }
-  private var currentSegLenFactor = 1
+  private var currentSegLenFactor = 0
   private var currentSegLenBuffer = upstream.segmentLengths
 
   //  override def segmentCount: Int = upstream.segmentCount
