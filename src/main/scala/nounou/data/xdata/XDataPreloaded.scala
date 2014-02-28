@@ -21,7 +21,7 @@ class XDataPreloaded(  val data: Vector[Vector[Vector[Int]]],
                       )
   extends XDataImmutable with XConcatenatable {
 
-    override lazy val segmentLengths: Vector[Int] = data(0).map(_.length)
+    override val segmentLengths: Vector[Int] = data(0).map(_.length)
 
 
     require(channelCount == data.length,
