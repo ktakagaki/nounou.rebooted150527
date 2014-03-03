@@ -1,20 +1,20 @@
 package nounou.data.filters
 
-import nounou._
-import breeze.linalg.RangeExtender
 import scala.collection.mutable.{ArrayBuffer, HashMap}
-import com.typesafe.scalalogging.slf4j.Logging
 import nounou.data.XData
+import breeze.linalg.{DenseVector => DV}
+
 
 
 //ToDo: buffer timing info?
 //ToDo: parallelize?
+//ToDo: anticipate?
 
 /** Buffer filter, which will save intermediate calculation results for an XData object.
   */
 class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstream) {
 
-  var buffer: HashMap[(Int, Int, Int), Vector[Int]] = new ReadingHashMapBuffer()
+  var buffer: HashMap[(Int, Int, Int), DV[Int]] = new ReadingHashMapBuffer()
   var garbageQue: ArrayBuffer[(Int, Int, Int)] = new ArrayBuffer[(Int, Int, Int)]()
 
   lazy val bufferPageLength: Int = (32768 / 2) //default page length will be 32 kB
@@ -47,13 +47,13 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
 
   def flushBuffer(channel: Int): Unit = {
     logger.debug( "flushBuffer({}) conducted", channel.toString )
-    buffer = buffer.filter( ( p:((Int, Int, Int), Vector[Int]) ) => ( p._1._1 != channel ) )
+    buffer = buffer.filter( ( p:((Int, Int, Int), DV[Int]) ) => ( p._1._1 != channel ) )
     garbageQue = garbageQue.filter( ( p:(Int, Int, Int) ) => (p._1 != channel) )
   }
 
   def flushBuffer(channels: Vector[Int]): Unit = {
     logger.debug( "flushBuffer({}) conducted", channels.toString )
-    buffer = buffer.filterNot( ( p:((Int, Int, Int), Vector[Int]) ) => ( channels.contains( p._1._1 ) ) )
+    buffer = buffer.filterNot( ( p:((Int, Int, Int), DV[Int]) ) => ( channels.contains( p._1._1 ) ) )
     garbageQue = garbageQue.filterNot( ( p:(Int, Int, Int) ) => ( channels.contains( p._1 ) ) )
   }
 
@@ -68,47 +68,47 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
     buffer( (channel, getBufferPage(frame), segment) )( getBufferIndex(frame) )
   }
 
-  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] = {
+  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] = {
 
         //val totalLength = segmentLengths(segment)
-        val tempret = ArrayBuffer[Int]()
-          tempret.sizeHint(range.length )
-        var tempretArr: Array[Int] = null
+//        val tempret = ArrayBuffer[Int]()
+//          tempret.sizeHint(range.length )
+        var tempret: DV[Int] = DV[Int]()//Array[Int] = null
         val startPage =  getBufferPage( range.start)
         val startIndex = getBufferIndex(range.start)
         val endPage =    getBufferPage( range.last )
         val endIndex =   getBufferIndex(range.last )
 
         if(startPage == endPage) {
-          tempretArr = buffer( (channel, startPage, segment) ).slice(startIndex, endIndex + 1).toArray
+          tempret = buffer( (channel, startPage, segment) ).slice(startIndex, endIndex + 1)//.toArray
         } else {
-          tempret ++= buffer( (channel, startPage, segment) ).slice(startIndex, bufferPageLength)  //deal with startPage separately
+          tempret = DV.vertcat( tempret, buffer( (channel, startPage, segment) ).slice(startIndex, bufferPageLength) )  //deal with startPage separately
           //if( startPage + 1 <= endPage ) {
             for( page <- (startPage + 1 to endPage)/*.par*/ ){//endPage - 1) {
-              tempret ++= buffer( (channel, page, segment) )
+              tempret = DV.vertcat( tempret, buffer( (channel, page, segment) ) )
             }
           //}
           //tempret ++= buffer( (channel, endPage, segment) ).slice(0, endIndex + 1)  //deal with endPage separately
-          tempretArr = tempret.toArray
+          //tempretArr = tempret.toArray
         }
 
-        val realRet = new Array[Int]( range.length )
-    //println("realRet.length=" + realRet.length + ", tempretArr.length="+ tempretArr.length)
-        var index = 0
-        for(cnt <- 0 until range.length){
-          realRet(cnt) = tempretArr(index)
-          index += range.step
-        }
-        realRet.toVector
+//        val realRet = new Array[Int]( range.length )
+//        var index = 0
+//        for(cnt <- 0 until range.length){
+//          realRet(cnt) = tempretArr(index)
+//          index += range.step
+//        }
+//        realRet.toVector
+    tempret
   }
 
   //redirection function to deal with scope issues regarding super
   private def tempTraceReader(ch: Int, range: Range.Inclusive, segment: Int) = upstream.readTraceImpl(ch, range, segment)
 
-  class ReadingHashMapBuffer extends HashMap[(Int, Int, Int), Vector[Int]] {
+  class ReadingHashMapBuffer extends HashMap[(Int, Int, Int), DV[Int]] {
 
     //do not use applyOrElse!
-    override def apply( key: (Int, Int, Int)  ): Vector[Int] = {
+    override def apply( key: (Int, Int, Int)  ): DV[Int] = {
       val index = garbageQue.indexOf( key )
       if( index == -1 ){
         if(garbageQue.size >= garbageQueBound ){
@@ -124,7 +124,7 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
       }
     }
 
-    override def default( key: (Int, Int, Int)  ): Vector[Int] = {
+    override def default( key: (Int, Int, Int)  ): DV[Int] = {
       val startFrame = key._2 * bufferPageLength
       val endFramePlusOne: Int = scala.math.min( startFrame + bufferPageLength, segmentLengths( key._3 ) )
       val returnValue = tempTraceReader( key._1, new Range.Inclusive(startFrame, endFramePlusOne-1, 1), key._3  )

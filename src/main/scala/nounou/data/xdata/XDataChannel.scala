@@ -4,6 +4,7 @@ import nounou._
 import scala.Vector
 import java.io.DataInput
 import nounou.data.traits.{XConcatenatable, XFramesImmutable, XAbsoluteImmutable}
+import breeze.linalg.{DenseVector => DV}
 
 /**
  * Created by Kenta on 12/14/13.
@@ -30,26 +31,20 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
   //<editor-fold desc="reading a trace">
   /** Read a single trace from the data, in internal integer scaling.
     */
-  final def readTrace(segment: Int): Vector[Int] = {
+  final def readTrace(segment: Int): DV[Int] = {
     val range = FrameRange.All.getValidRange( segmentLengths(segment) )
     readTraceImpl(range, currentSegment = segment)
   }
   /** Read a single trace (within the span) from the data, in internal integer scaling.
     */
-  final def readTrace(range: FrameRange, segment: Int): Vector[Int] = {
+  final def readTrace(range: FrameRange, segment: Int): DV[Int] = {
 
     val segLen =  segmentLengths(segment)
     val preLength = range.preLength( segLen )
     val postLength = range.postLength( segLen )
 
-    vectZeros( preLength ) ++ readTraceImpl(range.getValidRange( segLen ), (currentSegment = segment)) ++ vectZeros( postLength )
+    DV.vertcat( DV.zeros[Int]( preLength ), readTraceImpl(range.getValidRange( segLen ), (currentSegment = segment)), DV.zeros[Int]( postLength ) )
 
-    //val span = range.getRangeWithoutNegativeIndexes( segmentLengths(segment) )
-    //readTraceImpl(span, currentSegment = segment)
-//    span match {
-//      case Span.All => readTraceImpl(currentSegment = segment)
-//      case _ => readTraceImpl(span, currentSegment = segment)
-//      }
   }
   //</editor-fold>
 
@@ -61,13 +56,13 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
   /** CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
     * Should return a defensive clone.
     */
-  def readTraceImpl(range: Range.Inclusive, segment: Int): Vector[Int] = {
+  def readTraceImpl(range: Range.Inclusive, segment: Int): DV[Int] = {
     //Impls only get real ranges
     //val realRange = range.getRangeWithoutNegativeIndexes( segmentLengths(segment) )
     val totalLengths = segmentLengths( segment )
-    val res = new Array[Int]( range.length )
+    val res = DV.zeros[Int](range.length) //new Array[Int]( range.length )
     forJava(range.start, range.end + 1, range.step, (c: Int) => (res(c) = readPointImpl(c, segment)))
-    res.toVector
+    res
   }
 
   // <editor-fold desc="XConcatenatable">
@@ -129,7 +124,7 @@ class XDataChannelNull extends XDataChannel {
   override val sampleRate: Double = 1d
 }
 
-class XDataChannelPreloaded(val data: Vector[Vector[Int]],
+class XDataChannelPreloaded(val data: Array[DV[Int]],
                             override val xBits: Int,
                             override val absGain: Double,
                             override val absUnit: String,
@@ -139,13 +134,13 @@ class XDataChannelPreloaded(val data: Vector[Vector[Int]],
                             override val sampleRate: Double
  )  extends XDataChannel {
 
-  override lazy val segmentLengths = data.map( _.length )
+  override lazy val segmentLengths = data.map( _.length ).toVector
   def readPointImpl(frame: Int, segment: Int): Int = data(segment)(frame)
 
 }
 
 class XDataChannelPreloadedSingleSegment
-                   (data: Vector[Int],
+                   (data: DV[Int],
                     xBits: Int,
                     absGain: Double,
                     absUnit: String,
@@ -154,4 +149,4 @@ class XDataChannelPreloadedSingleSegment
                     segmentStartTS: Long,
                     sampleRate: Double
                     )
-  extends XDataChannelPreloaded(Vector(data), xBits, absGain, absUnit, absOffset, channelName, Vector(segmentStartTS), sampleRate)
+  extends XDataChannelPreloaded(Array(data), xBits, absGain, absUnit, absOffset, channelName, Vector(segmentStartTS), sampleRate)

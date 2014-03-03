@@ -1,7 +1,7 @@
 package nounou.data.filters
 
 import nounou.data.XData
-import breeze.linalg.{DenseVector}
+import breeze.linalg.{DenseVector => DV, max, min}
 import scala.collection.immutable.VectorBuilder
 import scala.collection.mutable.{ArrayBuffer, HashMap}
 import nounou.data.filters.XDataFilterMinMaxAbs.{ABS, MIN, MAX}
@@ -54,45 +54,46 @@ class XDataFilterMinMaxAbs( override val upstream: XData ) extends XDataFilterRM
         }
       }
 
-    override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] =
+    override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] =
       if(halfWindow == 1){
         upstream.readTraceImpl(channel, range, segment)
       } else {
         val trace = upstream.readTrace(channel, new Range.Inclusive(range.start - halfWindow, range.end + halfWindow, 1), segment)
-        val tempret = new VectorBuilder[Int]()
-            tempret.sizeHint(range.length)
+        var tempret = DV[Int]() //= new VectorBuilder[Int]()
+            //tempret.sizeHint(range.length)
         val window = 2*halfWindow
         for( cnt <- 0 to (range.end-range.start) by range.step) {
           val tempWindow = trace.slice(cnt, cnt + window)
 //          val tempMax = if(mode != MIN) max( tempWindow ) else Int.MinValue
 //          val tempMin = if(mode != MAX) min( tempWindow ) else Int.MaxValue
-          tempret.+=( mode match {
+          tempret += ( mode match {//.+=( mode match {
             case ABS => absMinMax(tempWindow)//)scala.math.max( abs( max(tempWindow) ), abs( min(tempWindow) ) )
             case MIN => min( tempWindow )
             case MAX => max( tempWindow )
             case _ => {logger.error("This should not happen!"); throw new IllegalArgumentException}
           } )
         }
-        tempret.result()
+        tempret//.result()
       }
 
 
 
-  private def min(vect: Vector[Int]): Int = {
-    var tempmin= Int.MaxValue
-    for( cnt <- 0 until vect.length){
-      if(vect(cnt)<tempmin) tempmin = vect(cnt)
-    }
-    tempmin
-  }
-  private def max(vect: Vector[Int]): Int = {
-    var tempmax= Int.MinValue
-    for( cnt <- 0 until vect.length){
-      if( vect(cnt) > tempmax ) tempmax = vect(cnt)
-    }
-    tempmax
-  }
-  private def absMinMax(vect: Vector[Int]): Int = {
+//  private def min(vect: Vector[Int]): Int = {
+//    var tempmin= Int.MaxValue
+//    for( cnt <- 0 until vect.length){
+//      if(vect(cnt)<tempmin) tempmin = vect(cnt)
+//    }
+//    tempmin
+//  }
+//  private def max(vect: Vector[Int]): Int = {
+//    var tempmax= Int.MinValue
+//    for( cnt <- 0 until vect.length){
+//      if( vect(cnt) > tempmax ) tempmax = vect(cnt)
+//    }
+//    tempmax
+//  }
+  //ToDo 3: put Into Breeze somehow
+  private def absMinMax(vect: DV[Int]): Int = {
     var tempmax= Int.MinValue
     for( cnt <- 0 until vect.length){
       val tempAbs = scala.math.abs(vect(cnt))

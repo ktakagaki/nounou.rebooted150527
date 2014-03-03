@@ -2,7 +2,7 @@ package nounou.data.filters
 
 import nounou.data.XData
 import nounou.data.discrete.XMask
-import nounou.FrameRange
+import breeze.linalg.{DenseVector => DV}
 
 /**
  * @author ktakagaki
@@ -32,7 +32,7 @@ class XDataFilterMask(override val upstream: XData, private var initialMask: XMa
     }
   }
 
-  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] = {
+  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] = {
     if( mask.isMaskedFrame(range, segment, upstream) ){
       super.readTraceImpl(channel, range, segment)
     } else {

@@ -2,7 +2,7 @@ package nounou.data.filters
 
 import nounou._
 import nounou.data.{XData, X}
-import breeze.linalg.{DenseVector, convert}
+import breeze.linalg.{DenseVector => DV, convert}
 import breeze.signal.support.FIRKernel1D
 import breeze.signal._
 
@@ -44,7 +44,7 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
     if(omega0 == 0d && omega1 == 1d)
       setFilterOff()
     else {
-      kernel = designFilterFirwin[Long](taps, DenseVector[Double](omega0, omega1), nyquist = 1d,
+      kernel = designFilterFirwin[Long](taps, DV[Double](omega0, omega1), nyquist = 1d,
         zeroPass = false, scale=true, multiplier = this.multiplier)
       kernelOmega0 = omega0
       kernelOmega1 = omega1
@@ -73,12 +73,12 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
     } else {
       //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
       val tempData = upstream.readTrace( channel, (frame - kernel.overhangPre) to (frame + kernel.overhangPost), segment)
-      val tempRet = convolve( DenseVector( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None )
+      val tempRet = convolve( DV( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None )
       require( tempRet.length == 1, "something is wrong with the convolution!" )
       tempRet(0).toInt
     }
 
-  override def readTraceImpl(channel: Int, ran: Range.Inclusive, segment: Int): Vector[Int] =
+  override def readTraceImpl(channel: Int, ran: Range.Inclusive, segment: Int): DV[Int] =
     if(kernel == null){
         upstream.readTraceImpl(channel, ran, segment)
     } else {
@@ -86,12 +86,13 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
         val tempData = upstream.readTrace( channel, new FrameRange( ran.start - kernel.overhangPre, ran.last + kernel.overhangPost + 1, 1), segment)
 //      println( "1: " + tempData.length )
 //      println(OptRange.rangeToRangeOpt(ran))
-        val tempRes: DenseVector[Long] = convolve(
-                                              convert( new DenseVector( tempData.toArray ), Long), kernel.kernel,
+        val tempRes: DV[Long] = convolve(
+                                              convert( new DV( tempData.toArray ), Long), kernel.kernel,
                                               range = OptRange.RangeOpt(new Range.Inclusive(0, ran.last - ran.start, ran.step)),
                                               overhang = OptOverhang.None ) / multiplier
 //      println( "2: " +  tempRes.length )
-        toInt( tempRes.toArray.toVector )
+        //toInt( tempRes.toArray.toVector )
+        convert(tempRes, Int)
     }
 
 //  override def readFrameImpl(frame: Int, segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame, segment)
