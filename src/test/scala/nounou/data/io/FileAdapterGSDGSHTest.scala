@@ -11,15 +11,32 @@ import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
  */
 class FileAdapterGSDGSHTest extends FunSuite {
 
-  val testFile = new File( getClass.getResource("/_testFiles/Micam/mag130712008A_3.gsd").getPath() )
 
-  test("load test"){
+//  test("load test"){
+//    val testFile = new File( getClass.getResource("/_testFiles/Micam/mag130712008A_3.gsd").getPath() )
+//
+//    val dataList = FileAdapterGSDGSH.load(testFile)
+//
+//    println(dataList(0).toString)
+//    println(dataList(1).toString)
+//    println(dataList(2).toString)
+//
+//  }
 
-    val dataList = FileAdapterGSDGSH.load(testFile)
 
-    println(dataList(0).toString)
-    println(dataList(1).toString)
-    println(dataList(2).toString)
+  test("memory leak"){
+
+    val dataList = FileAdapterGSDGSH.load("E:/data/Micam/dc-stimulation/140224/mag140224006A.gsd")
+    //dataReader.load()
+    val dataReader = new DataReader()
+    dataReader.load("E:/data/Micam/dc-stimulation/140224/mag140224006A.gsd")
+
+    println(dataReader.header.toString)
+    println(dataReader.data.toStringChain)
+
+//    println(dataList(0).toString)
+//    println(dataList(1).toString)
+//    println(dataList(2).toString)
 
   }
 

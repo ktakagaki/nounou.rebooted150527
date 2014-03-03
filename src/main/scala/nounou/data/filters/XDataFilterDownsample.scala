@@ -21,7 +21,10 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
     else "XDataFilterDownsample: factor=" + factor
   }
 
-  def factor: Int = _factor
+  def factor(): Int = _factor
+
+  /** Java-style alias for [[factor()]].
+    */
   def getFactor(): Int = factor
   def factor_=( factor: Int ) = {
     loggerRequire( factor >= 1, "new factor {} cannot be less than 1!", factor.toString )
@@ -33,6 +36,8 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
       changedData()
     }
   }
+  /** Java-style alias for [[factor_=()]] aka [[[[factor_$eq()]]]].
+    */
   def setFactor( factor: Int ): Unit = factor_=( factor )
   protected var  _factor: Int = 0
 
