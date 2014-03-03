@@ -2,7 +2,7 @@
 
   import nounou._
   import nounou.data.{XData, X}
-  import breeze.linalg.{convert, DenseVector}
+  import breeze.linalg.{DenseVector => DV, convert}
   import breeze.signal.support.FIRKernel1D
   import breeze.signal._
 
@@ -55,12 +55,12 @@
       } else {
         //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
         val tempData = upstream.readTrace( channel, new FrameRange(frame * factor - kernel.overhangPre, frame * factor + kernel.overhangPost, 1 ), segment)
-        val tempRet = convolve( DenseVector( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None )
+        val tempRet = convolve( DV( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None )
         require( tempRet.length == 1, "something is wrong with the convolution!" )
         tempRet(0).toInt
       }
 
-    override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] =
+    override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] =
       if(kernel == null){
           upstream.readTraceImpl(channel, range, segment)
       } else {
@@ -69,12 +69,12 @@
 //        println("tempData: " + tempData.length)
 //        println("kernel: " + kernel.kernel.length)
 //        println("start: " + range.start + " end: " + range.end+ " step: " + range.step+ " inclusive: " + range.isInclusive)
-          val tempRes: DenseVector[Long] =
-            convolve( convert( DenseVector( tempData.toArray ), Long), kernel.kernel,
+          val tempRes: DV[Long] =
+            convolve( convert( DV( tempData.toArray ), Long), kernel.kernel,
               range = OptRange.RangeOpt( new Range.Inclusive(0, (range.end - range.start)*factor, range.step*factor) ),
               overhang = OptOverhang.None )
 //        println("tempRes: " + tempRes.length)
-          convert( (tempRes / kernel.multiplier.toLong ), Int).toArray.toVector
+          convert( (tempRes / kernel.multiplier.toLong ), Int)
       }
 
 //    override def readFrameImpl(frame: Int, segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame * factor, segment)

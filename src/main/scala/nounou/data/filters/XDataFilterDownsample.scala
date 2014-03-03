@@ -3,7 +3,7 @@ package nounou.data.filters
 import nounou.data.XData
 import breeze.signal.support.FIRKernel1D
 import breeze.signal._
-import breeze.linalg.DenseVector
+import breeze.linalg.{DenseVector => DV}
 
 /**
  * @author ktakagaki
@@ -48,15 +48,15 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
       upstream.readPointImpl(channel, frame*factor, segment)
     }
 
-  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] =
+  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] =
     if(factor == 1){
         upstream.readTraceImpl(channel, range, segment)
     } else {
         upstream.readTraceImpl(channel, new Range.Inclusive(range.start * factor, range.end * factor, factor), segment)
     }
 
-  override def readFrameImpl(frame: Int, segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame * factor, segment)
-  override def readFrameImpl(frame: Int, channels: Vector[Int], segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame * factor, channels, segment)
+  override def readFrameImpl(frame: Int, segment: Int): DV[Int] = super[XDataFilter].readFrameImpl(frame * factor, segment)
+  override def readFrameImpl(frame: Int, channels: Vector[Int], segment: Int): DV[Int] = super[XDataFilter].readFrameImpl(frame * factor, channels, segment)
 
   //  override def channelNames: scala.Vector[String] = upstream.channelNames
 

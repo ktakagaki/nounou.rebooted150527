@@ -2,6 +2,7 @@ package nounou.data
 
 import nounou._
 import nounou.data.traits.XConcatenatable
+import breeze.linalg.{DenseMatrix => DM, DenseVector => DV}
 
 /**xdata class with internal representation as data array
  * Created with IntelliJ IDEA.
@@ -10,7 +11,7 @@ import nounou.data.traits.XConcatenatable
  * Time: 18:50
  * To change this template use File | Settings | File Templates.
  */
-class XDataPreloaded(  val data: Vector[Vector[Vector[Int]]],
+class XDataPreloaded(  val data: Array[DM[Int]],
                        override val xBits: Int,
                        override val absGain: Double,
                        override val absOffset: Double,
@@ -22,17 +23,17 @@ class XDataPreloaded(  val data: Vector[Vector[Vector[Int]]],
                       )
   extends XDataImmutable with XConcatenatable {
 
-    override val segmentLengths: Vector[Int] = data(0).map(_.length)
+    override val segmentLengths = data.map( (p: DM[Int]) => p.rows ).toVector
 
 
-    require(channelCount == data.length,
+    require(channelCount == data(0).rows,
       "number of channels " + channelCount + " does not match data.length " + data.length + "!")
 
     //reading
-    override def readPointImpl(channel: Int, frame: Int, segment: Int) = data(channel)(frame)(segment)
+    override def readPointImpl(channel: Int, frame: Int, segment: Int) = data(segment)(channel, frame)
 
     override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int) = {
-      data(channel)(segment).slice(range.start, range.end + 1 )
+      data(segment)( channel, range ).toDenseVector
     }
 
   // <editor-fold desc="XConcatenatable">
@@ -66,7 +67,7 @@ class XDataPreloaded(  val data: Vector[Vector[Vector[Int]]],
 }
 
 class XDataPreloadedSingleSegment(
-                    data: Vector[Vector[Int]],
+                    data: DM[Int],
                     xBits: Int,
                     absGain: Double,
                     absOffset: Double,
@@ -76,4 +77,4 @@ class XDataPreloadedSingleSegment(
                     sampleRate: Double,
                     layout: XLayout = XLayoutNull
                     )
-  extends XDataPreloaded( data.map( Vector(_) ), xBits, absGain, absOffset, absUnit, channelNames, Vector[Long](segmentStartTS), sampleRate, layout)
+  extends XDataPreloaded( Array(data), xBits, absGain, absOffset, absUnit, channelNames, Vector[Long](segmentStartTS), sampleRate, layout)

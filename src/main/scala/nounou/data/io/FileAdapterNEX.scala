@@ -6,6 +6,7 @@ import breeze.io.{RandomAccessFile, ByteConverterLittleEndian}
 import nounou.data.XDataPreloaded
 import scala.collection.immutable.TreeMap
 import scala.collection.mutable.ArrayBuffer
+import breeze.linalg.{DenseVector => DV}
 
 /**Reads in single NEX files. Partial implementation, with only waveforms processed.
 *
@@ -83,7 +84,7 @@ object FileAdapterNEX extends FileAdapter {
         //case 1 //events
         //case 2 //intervals
         case 5 => { //continuous data
-            var tempData: Array[Int] = null
+            val tempData = DV.zeros[Int](NPointsWave)
             val extraBits = 1024
 
           	fHand.seek(offset)
@@ -93,22 +94,33 @@ object FileAdapterNEX extends FileAdapter {
           	//tempData = Array.fill(NPointsWave){fHand.readShort.toInt * extraBits}
             //tempData = fHand.readShort(NPointsWave) map ( _.toInt * extraBits)
             val tempDataShort = fHand.readShort(NPointsWave)
-            tempData = new Array[Int](NPointsWave)
+            //tempData = new Array[Int](NPointsWave)
             var c = 0
             while(c < NPointsWave){
               tempData(c) = tempDataShort(c).toInt * extraBits
               c += 1
             }
-          tempRet += new XDataPreloaded( data = Vector(Vector(tempData.toVector)),
-                                        xBits = extraBits,
-                                        absGain = ADtoMV / extraBits,
-                                        absOffset = MVOffset,
-                                        absUnit = "mV",
-                                        channelNames = Vector[String]( name ),
-                                        segmentStartTSs = Vector[Long](nexFileTBeg.toLong), //TODO 1: Must fix this placeholder!!!
-                                        sampleRate = nexFileFreq,
-                                        layout = XLayoutNull
-                                          )
+
+          tempRet += new XDataChannelPreloadedSingleSegment(  data = tempData,
+                                                              xBits = extraBits,
+                                                              absGain = ADtoMV / extraBits,
+                                                              absOffset = MVOffset,
+                                                              absUnit = "mV",
+                                                              channelName = name,
+                                                              segmentStartTS = nexFileTBeg.toLong, //TODO 1: Must fix this placeholder!!!
+                                                              sampleRate = nexFileFreq
+          )
+
+          //          tempRet += new XDataPreloaded( data = Vector(Vector(tempData.toVector)),
+//                                        xBits = extraBits,
+//                                        absGain = ADtoMV / extraBits,
+//                                        absOffset = MVOffset,
+//                                        absUnit = "mV",
+//                                        channelNames = Vector[String]( name ),
+//                                        segmentStartTSs = Vector[Long](nexFileTBeg.toLong), //TODO 1: Must fix this placeholder!!!
+//                                        sampleRate = nexFileFreq,
+//                                        layout = XLayoutNull
+//                                          )
          }/*case 5*/
        } /*recType match*/
 //    } /*for(i <- 1 to nexFileNVar)*/

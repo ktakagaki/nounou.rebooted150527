@@ -1,6 +1,7 @@
 package nounou.data.filters
 
 import nounou.data._
+import breeze.linalg.{DenseVector => DV}
 
 /**This class serves as an "immutable" reference point for various data structures, which may change.
   *The `upstream` variable is not valid in the usual sense, and everything is redirected to the
@@ -46,9 +47,9 @@ class XDataFilterHolder extends XData with XDataAux {
   override def channelNames: scala.Vector[String] = heldData.channelNames
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = heldData.readPointImpl(channel, frame, segment)
-  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] = heldData.readTraceImpl(channel, range, segment)
-  override def readFrameImpl(frame: Int, segment: Int): Vector[Int] = heldData.readFrameImpl(frame, segment)
-  override def readFrameImpl(frame: Int, channels: Vector[Int], segment: Int): Vector[Int] = heldData.readFrameImpl(frame, channels, segment)
+  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] = heldData.readTraceImpl(channel, range, segment)
+  override def readFrameImpl(frame: Int, segment: Int): DV[Int] = heldData.readFrameImpl(frame, segment)
+  override def readFrameImpl(frame: Int, channels: Vector[Int], segment: Int): DV[Int] = heldData.readFrameImpl(frame, channels, segment)
 
   override def absUnit: String = heldData.absUnit
   override def absOffset: Double = heldData.absOffset

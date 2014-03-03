@@ -3,8 +3,8 @@ package nounou.data.io
 import java.io.File
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
 import nounou.data.{X, XDataChannelFilestream}
-import nounou._
 import scala.collection.mutable.ListBuffer
+import breeze.linalg.{DenseVector => DV}
 
 /**
  * @author ktakagaki
@@ -230,20 +230,20 @@ class XDataChannelNCS
     fileHandle.readInt16 * xBits
   }
 
-  override def readTraceImpl(range: Range.Inclusive, segment: Int): Vector[Int] = {
+  override def readTraceImpl(range: Range.Inclusive, segment: Int): DV[Int] = {
     var (currentRecord: Int, currentIndex: Int) = frameSegmentToRecordIndex( range.start, segment )
     val (endReadRecord: Int, endReadIndex: Int) = frameSegmentToRecordIndex( range.end, segment ) //range is exclusive of last
     //println( range.start + " d " + range.end)
     //println( "err eri " + (endReadRecord, endReadIndex) )
 
-    val tempRet = ListBuffer[Int]()//var tempRet = Vector[Int]()
+    var tempRet = DV[Int]() // ListBuffer[Int]()//var tempRet = Vector[Int]()
 
     fileHandle.seek( dataByteLocationRI(currentRecord, currentIndex) )
-    tempRet ++= fileHandle.readInt16(512 - currentIndex).map( _.toInt* xBits )
+    tempRet = DV.vertcat(tempRet, DV( fileHandle.readInt16(512 - currentIndex).map( _.toInt* xBits ) ))
     currentRecord += 1
     fileHandle.jumpBytes(t.recordNonDataBytes)
     while(currentRecord < endReadRecord){
-      tempRet ++= fileHandle.readInt16(512 /*- currentIndex*/).map( _.toInt* xBits )
+      tempRet = DV.vertcat(tempRet, DV( fileHandle.readInt16(512 /*- currentIndex*/).map( _.toInt* xBits ) ))
       //tempRet = tempRet ++ fileHandle.readInt16(512 - currentIndex).map( _.toInt* xBits )
       currentRecord += 1
       //currentIndex = 0
@@ -251,10 +251,10 @@ class XDataChannelNCS
     }
     //if(currentIndex <= endReadIndex){
       //fileHandle.seek( dataByteLocationRI(currentRecord, 0) )
-      tempRet ++= fileHandle.readInt16(endReadIndex /*- currentIndex*/ + 1).map( _.toInt* xBits )
+      tempRet= DV.vertcat(tempRet, DV( fileHandle.readInt16(endReadIndex /*- currentIndex*/ + 1).map( _.toInt* xBits ) ))
     //}
 
-    tempRet.toVector
+    tempRet
 
 }
 

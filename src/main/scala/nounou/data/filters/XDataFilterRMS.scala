@@ -2,8 +2,7 @@ package nounou.data.filters
 
 import nounou.data.XData
 import breeze.signal.rootMeanSquare
-import breeze.linalg.{DenseVector}
-import scala.collection.immutable.VectorBuilder
+import breeze.linalg.{DenseVector => DV}
 import breeze.numerics.sqrt
 import nounou.FrameRange
 
@@ -39,23 +38,25 @@ class XDataFilterRMS( override val upstream: XData ) extends XDataFilter( upstre
         upstream.readPointImpl(channel, frame, segment)
       } else {
         //logger.info("2"+halfWindow + " ")
-        rms( upstream.readTrace(channel, new FrameRange(frame - halfWindow, frame + halfWindow), segment) )
+        rootMeanSquare( upstream.readTrace(channel, new FrameRange(frame - halfWindow, frame + halfWindow), segment) ).toInt
         //rootMeanSquare( DenseVector[Int]( upstream.readTrace(channel, frame - halfWindow to frame + halfWindow, segment).toArray ) ).toInt
       }
 
-    override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): Vector[Int] = {
+    override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] = {
       if(halfWindow == 0){
         upstream.readTraceImpl(channel, range, segment)
       } else {
         val trace = upstream.readTrace(channel, new FrameRange(range.start - halfWindow, range.last + halfWindow), segment)
-        val tempret = new VectorBuilder[Int]()
-          tempret.sizeHint(range.length)
+        val tempret = DV[Int](range.length) //= new VectorBuilder[Int]()
+          //tempret.sizeHint(range.length)
           val window = 2*halfWindow
+          var tempIndex = 0
           for( cnt <- 0 to (range.end-range.start) by range.step) {
-            tempret += rms( trace.slice(cnt, cnt + window)  )
+            tempret(tempIndex) = rootMeanSquare( trace.slice(cnt, cnt + window)  ).toInt
+            tempIndex += 1
           } //rootMeanSquare( DenseVector(trace.slice(cnt, cnt + windowMinus1).toArray) ).toInt
         //logger.info(halfWindow + " " + windowMinus1)
-        tempret.result()
+        tempret
       }
     }
 
@@ -75,14 +76,14 @@ class XDataFilterRMS( override val upstream: XData ) extends XDataFilter( upstre
 
     //  override def segmentCount: Int = upstream.segmentCount
 
-    private def rms(vect: Vector[Int]): Int = {
-      var tempsum = 0d
-      var tempcount = 0
-      for( cnt <- 0 until vect.length){
-        tempsum += ( vect(cnt).toDouble * vect(cnt).toDouble )
-        tempcount += 1
-      }
-      sqrt((tempsum / tempcount)).toInt
-    }
+//    private def rms(vect: Vector[Int]): Int = {
+//      var tempsum = 0d
+//      var tempcount = 0
+//      for( cnt <- 0 until vect.length){
+//        tempsum += ( vect(cnt).toDouble * vect(cnt).toDouble )
+//        tempcount += 1
+//      }
+//      sqrt((tempsum / tempcount)).toInt
+//    }
 
   }
