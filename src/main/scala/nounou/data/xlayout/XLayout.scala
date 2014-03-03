@@ -1,9 +1,10 @@
 package nounou.data
 
 import javafx.scene.shape.Rectangle
-import nounou.data.traits.{XConcatenatable, XChannelsImmutable}
+import nounou.data.traits.{XChannels, XConcatenatable, XChannelsImmutable}
 
-abstract class XLayout extends X with XChannelsImmutable with XConcatenatable {
+abstract class XLayout extends X with XChannels with XConcatenatable {
+  //ToDo 2: XChannels is not immutable d/t binning filter downstream. Reevaluate, perhaps regenerate Layout for each new filter?
 
   // field bounding rectangle
   /** The bounding rectangle of the detector field.
@@ -32,7 +33,7 @@ abstract class XLayout extends X with XChannelsImmutable with XConcatenatable {
   def coordinatesToChannel(x: Double, y: Double): Int
   /** Geometric radius of detectors.*/
 
-  val channelRadius: Double
+  def channelRadius: Double
 
   // <editor-fold defaultstate="collapsed" desc="XConcatenatable">
 
