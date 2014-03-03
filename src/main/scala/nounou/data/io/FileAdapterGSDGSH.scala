@@ -1,9 +1,11 @@
 package nounou.data.io
 
+import nounou._
 import nounou.data._
 import java.io.File
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
-import scala.collection.immutable.TreeMap
+import scala.collection.immutable.{VectorBuilder, TreeMap}
+import breeze.linalg.DenseMatrix
 
 /**Reader for MiCAM unified form data (gsd/gsh).
   * Currently, it actually only reads from the gsd, and ignores the accompanying gsh file.
@@ -114,57 +116,102 @@ object FileAdapterGSDGSH extends FileAdapter {
     raf.seek(972)
     val tempFrameShorts = nDataXsize.toInt * nDataYsize.toInt
     //Read background frames and scale
-    val backgroundFrame =  raf.readInt16( tempFrameShorts ).map( _.toInt * xBits ).toVector
+    val backgroundOri = raf.readInt16( tempFrameShorts )
     //Read data frames
-    val data = raf.readInt16( tempFrameShorts * nFrameSize.toInt )
+    val dataOri = raf.readInt16( tempFrameShorts * nFrameSize.toInt )
     //Read analog data
-    val analogData = raf.readInt16( AUXnChanum * AUXnFrameSize )
+    val analogOri = raf.readInt16( AUXnChanum * AUXnFrameSize * AUXnRate  )
 
-    val dataReturn = new Array[Array[Int]](tempFrameShorts)
-    for( ch <- 0 until tempFrameShorts ) dataReturn(ch) = new Array[Int]( nFrameSize ) // + 1 )
+    var tempFrCnt = 0
+    var tempChCnt = 0
+    var tempDataCnt = 0
 
+    val backgroundReturn = new Array[Int](tempFrameShorts)
+    forJava(0, tempFrameShorts, 1, (p: Int) => (backgroundReturn(p) = xBits * backgroundOri(p)) )
+    //val backgroundFrame =  raf.readInt16( tempFrameShorts ).map( _.toInt * xBits ).toVector
 
+//    for( ch <- 0 until tempFrameShorts ) dataReturn(ch) = new Array[Int]( nFrameSize ) // + 1 )
+//        val dataReturn = new Array[Array[Int]](tempFrameShorts)
+//        for( ch <- 0 until tempFrameShorts ) dataReturn(ch) = new Array[Int]( nFrameSize ) // + 1 )
+//    val dataReturn = Array.tabulate[VectorBuilder[Int]](tempFrameShorts)( (p: Int) => {val temp = new VectorBuilder[Int]; temp.sizeHint(nFrameSize); temp} )
+    //val dataReturn = new Array[ Array[Int] ](tempFrameShorts)
+    var dataReturn = DenseMatrix.zeros[Int](tempFrameShorts, nFrameSize)
+    //for(cnt <- 0 until tempFrameShorts)( dataReturn(cnt) = new Array[Int](nFrameSize) )
 
-// old code used background as first frame
-//    var bkgCnt = 0
-//    for( y <- 0 until nDataYsize.toInt )
-//      for( x <- 0 until nDataXsize.toInt ){
-//        dataReturn(bkgCnt)(0) = (bkgData(bkgCnt) + bitOffset).toInt
-//        bkgCnt += 1
-//      }
-
-    var dataCnt = 0
-    for( fr <- 0 until nFrameSize.toInt ) {
-      var chCnt = 0
-      for( y <- 0 until nDataYsize.toInt )
-        for( x <- 0 until nDataXsize.toInt ){
-          dataReturn(chCnt)(fr) = backgroundFrame(chCnt) + data(dataCnt).toInt * xBits
-          chCnt += 1
-          dataCnt += 1
-        }
+    tempFrCnt = 0
+    tempDataCnt = 0
+    while(tempFrCnt < nFrameSize){
+      tempChCnt = 0
+      while( tempChCnt < tempFrameShorts){
+        //dataReturn.set(tempChCnt, tempFrCnt, backgroundReturn(tempChCnt) + xBits * dataOri(tempDataCnt))
+        dataReturn(tempChCnt, tempFrCnt) = backgroundReturn(tempChCnt) + xBits * dataOri(tempDataCnt)
+        tempDataCnt += 1;
+        tempChCnt += 1;
+      }
+      tempFrCnt += 1
     }
+    dataReturn = dataReturn.t
+    val dataReturnVect = Vector.tabulate[Vector[Int]](tempFrameShorts)( (p: Int) => ( dataReturn(::, p).toScalaVector ) )
 
-
-    val dataAuxReturn = new Array[Array[Int]](AUXnChanum)
-    for( ch <- 0 until AUXnChanum.toInt ) dataAuxReturn(ch) = new Array[Int]( AUXnFrameSize )
+//    forJava(0, nFrameSize, 1,
+//      (fr: Int) =>
+//      forJava(0, tempFrameShorts, 1,
+//        (chCnt: Int) => {
+//          dataReturn(chCnt)(fr) = backgroundReturn(chCnt) + xBits * dataOri(tempDataCnt)
+//          tempDataCnt += 1;
+//        }
+//      )
+//    )
+//    for( fr <- 0 until nFrameSize; chCnt <- 0 until tempFrameShorts ) {
+//      dataReturn(chCnt).+=( backgroundReturn(chCnt) + xBits * dataOri(dataCnt) )
+//      dataCnt += 1
+//    }
+//    for( fr <- 0 until nFrameSize.toInt ) {
+//      var chCnt = 0
+//      for( y <- 0 until nDataYsize.toInt )
+//        for( x <- 0 until nDataXsize.toInt ){
+//          dataReturn(chCnt)(fr) = backgroundReturn(chCnt) + data(dataCnt).toInt * xBits
+//          chCnt += 1
+//          dataCnt += 1
+//        }
+//    }
 
     val chNamesAuxReturn = (for( ch <- 0 until AUXnChanum ) yield "A-In " + (ch +1).toString )
 
-    var dataAuxCnt = 0
-    for( fr <- 0 until AUXnFrameSize.toInt ) {
-      var chCnt = 0
-      for( ch <- 0 until AUXnChanum.toInt ) {
-          dataAuxReturn(chCnt)(fr) = analogData( dataAuxCnt ).toInt
-          chCnt += 1
-          dataAuxCnt += 1
-        }
+    val dataAuxReturn = Array.tabulate[Array[Int]](AUXnChanum)( (p: Int) => new Array[Int](nFrameSize/* * AUXnRate*/) )
+    tempFrCnt = 0
+    tempDataCnt = 0
+    while(tempFrCnt < nFrameSize/* * AUXnRate*/){
+      tempChCnt = 0
+      while( tempChCnt < AUXnChanum){
+        dataAuxReturn(tempChCnt)(tempFrCnt) = xBits * analogOri(tempDataCnt)    //ToDo 1: scale??
+        tempDataCnt += 1;
+        tempChCnt += 1;
+      }
+      tempFrCnt += 1
     }
+//    tempDataCnt = 0
+//    for( fr <- 0 until AUXnFrameSize; chCnt <- 0 until AUXnChanum.toInt ) {
+//      dataAuxReturn(chCnt)+=( analogOri( tempDataCnt ) )
+//      tempDataCnt += 1
+//    }
+//    val dataAuxReturn = new Array[Array[Int]](AUXnChanum)
+//    for( ch <- 0 until AUXnChanum.toInt ) dataAuxReturn(ch) = new Array[Int]( AUXnFrameSize )
+//    var dataAuxCnt = 0
+//    for( fr <- 0 until AUXnFrameSize.toInt ) {
+//      var chCnt = 0
+//      for( ch <- 0 until AUXnChanum.toInt ) {
+//        dataAuxReturn(chCnt)(fr) = analogData( dataAuxCnt ).toInt
+//        chCnt += 1
+//        dataAuxCnt += 1
+//      }
+//    }
 
     val layout = new XLayoutSquare(nDataXsize, nDataYsize)
 
     List(
       header,
-      new XDataGSD( dataReturn.toVector.map( _.toVector ), xBits, absGain, absOffset, absUnit, layout.channelNames, 0L, sampleRate, layout, backgroundFrame ),
+      new XDataGSD( dataReturnVect, xBits, absGain, absOffset, absUnit, layout.channelNames, 0L, sampleRate, layout, backgroundReturn.toVector ),
       new XDataGSDAux( dataAuxReturn.toVector.map( _.toVector ), xBits, absGain, absOffset, absUnit, chNamesAuxReturn.toVector, 0L, sampleRateAux, XLayoutNull ),
       layout
     )

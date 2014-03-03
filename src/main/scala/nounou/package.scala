@@ -3,6 +3,7 @@ import breeze.macros.expand
 import com.typesafe.scalalogging.slf4j.Logging
 import nounou.data.XData
 import scala.math
+import scala.reflect.ClassTag
 import scala.reflect.runtime.universe._
 
 /**
@@ -48,6 +49,30 @@ package object nounou extends Logging {
       count = count + step
     } else throw new IllegalArgumentException
   }
+//  def forJava[@specialized(Int) T <: Int](start: T, endExclusive: T, step: T, function: (T => Unit) ): Unit = {
+//    var count: T = start
+//    if( step > 0 ) while( count < endExclusive){
+//      function(count)
+//      count = count + step
+//    } else if (step<0) while( count > endExclusive){
+//      function(count)
+//      count = count + step
+//    } else throw new IllegalArgumentException
+//  }
+
+  final class SpecArrayIm[@specialized(Int, Double) V: ClassTag](n: Int){
+    val value = new Array[ V ](n)
+    def get(): Array[ V ] = value
+  }
+//  final class ArrayArrayIm[@specialized(Int, Double) V: ClassTag](n: Int, m: Int){
+//    val value = new Array[ Array[V] ](n)
+//    for(cnt <- 0 until n) { value(cnt) = new Array[V](m) }
+//
+//    def set(n0: Int, m0: Int, v: V): Unit = { value(n0)(m0) = v }
+//    def get(n0: Int, m0: Int): V = value(n0)(m0)
+//    def get(n0: Int): Array[V] = value(n0)
+//    def get(): Array[Array[V]] = value
+//  }
 
   // <editor-fold defaultstate="collapsed" desc=" Some Scala Implicit Pimps ">
 
