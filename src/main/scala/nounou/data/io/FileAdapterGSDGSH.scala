@@ -5,7 +5,7 @@ import nounou.data._
 import java.io.File
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
 import scala.collection.immutable.{VectorBuilder, TreeMap}
-import breeze.linalg.DenseMatrix
+import breeze.linalg.{DenseMatrix => DM, DenseVector => DV}
 
 /**Reader for MiCAM unified form data (gsd/gsh).
   * Currently, it actually only reads from the gsd, and ignores the accompanying gsh file.
@@ -126,7 +126,7 @@ object FileAdapterGSDGSH extends FileAdapter {
     var tempChCnt = 0
     var tempDataCnt = 0
 
-    val backgroundReturn = new Array[Int](tempFrameShorts)
+    val backgroundReturn = DV.zeros[Int](tempFrameShorts)
     forJava(0, tempFrameShorts, 1, (p: Int) => (backgroundReturn(p) = xBits * backgroundOri(p)) )
     //val backgroundFrame =  raf.readInt16( tempFrameShorts ).map( _.toInt * xBits ).toVector
 
@@ -135,7 +135,7 @@ object FileAdapterGSDGSH extends FileAdapter {
 //        for( ch <- 0 until tempFrameShorts ) dataReturn(ch) = new Array[Int]( nFrameSize ) // + 1 )
 //    val dataReturn = Array.tabulate[VectorBuilder[Int]](tempFrameShorts)( (p: Int) => {val temp = new VectorBuilder[Int]; temp.sizeHint(nFrameSize); temp} )
     //val dataReturn = new Array[ Array[Int] ](tempFrameShorts)
-    var dataReturn = DenseMatrix.zeros[Int](tempFrameShorts, nFrameSize)
+    var dataReturn = DM.zeros[Int](tempFrameShorts, nFrameSize)
     //for(cnt <- 0 until tempFrameShorts)( dataReturn(cnt) = new Array[Int](nFrameSize) )
 
     tempFrCnt = 0
@@ -150,8 +150,8 @@ object FileAdapterGSDGSH extends FileAdapter {
       }
       tempFrCnt += 1
     }
-    dataReturn = dataReturn.t
-    val dataReturnVect = Vector.tabulate[Vector[Int]](tempFrameShorts)( (p: Int) => ( dataReturn(::, p).toScalaVector ) )
+    //dataReturn = dataReturn.t
+    //val dataReturnVect = Vector.tabulate[Vector[Int]](tempFrameShorts)( (p: Int) => ( dataReturn(::, p).toScalaVector ) )
 
 //    forJava(0, nFrameSize, 1,
 //      (fr: Int) =>
@@ -178,13 +178,14 @@ object FileAdapterGSDGSH extends FileAdapter {
 
     val chNamesAuxReturn = (for( ch <- 0 until AUXnChanum ) yield "A-In " + (ch +1).toString )
 
-    val dataAuxReturn = Array.tabulate[Array[Int]](AUXnChanum)( (p: Int) => new Array[Int](nFrameSize/* * AUXnRate*/) )
+    //val dataAuxReturn = Array.tabulate[Array[Int]](AUXnChanum)( (p: Int) => new Array[Int](nFrameSize/* * AUXnRate*/) )
+    val dataAuxReturn = DM.zeros[Int](AUXnChanum, nFrameSize)
     tempFrCnt = 0
     tempDataCnt = 0
     while(tempFrCnt < nFrameSize/* * AUXnRate*/){
       tempChCnt = 0
       while( tempChCnt < AUXnChanum){
-        dataAuxReturn(tempChCnt)(tempFrCnt) = xBits * analogOri(tempDataCnt)    //ToDo 1: scale??
+        dataAuxReturn(tempChCnt, tempFrCnt) = xBits * analogOri(tempDataCnt)    //ToDo 1: scale??
         tempDataCnt += 1;
         tempChCnt += 1;
       }
@@ -211,8 +212,8 @@ object FileAdapterGSDGSH extends FileAdapter {
 
     List(
       header,
-      new XDataGSD( dataReturnVect, xBits, absGain, absOffset, absUnit, layout.channelNames, 0L, sampleRate, layout, backgroundReturn.toVector ),
-      new XDataGSDAux( dataAuxReturn.toVector.map( _.toVector ), xBits, absGain, absOffset, absUnit, chNamesAuxReturn.toVector, 0L, sampleRateAux, XLayoutNull ),
+      new XDataGSD( dataReturn, xBits, absGain, absOffset, absUnit, layout.channelNames, 0L, sampleRate, layout, backgroundReturn ),
+      new XDataGSDAux( dataAuxReturn, xBits, absGain, absOffset, absUnit, chNamesAuxReturn.toVector, 0L, sampleRateAux, XLayoutNull ),
       layout
     )
   }
@@ -221,7 +222,7 @@ object FileAdapterGSDGSH extends FileAdapter {
 
 class XHeaderGSD(override val header: TreeMap[String, HeaderValue]) extends XHeader(header)
 class XDataGSD(
-                data: Vector[Vector[Int]],
+                data: DM[Int],
                 xBits: Int,
                 absGain: Double,
                 absOffset: Double,
@@ -230,11 +231,11 @@ class XDataGSD(
                 segmentStartTS: Long,
                 sampleRate: Double,
                 layout: XLayout,
-                val backgroundFrame: Vector[Int]
+                val backgroundFrame: DV[Int]
                 ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, channelNames, segmentStartTS, sampleRate, layout)
 
 class XDataGSDAux(
-                data: Vector[Vector[Int]],
+                data: DM[Int],
                 xBits: Int,
                 absGain: Double,
                 absOffset: Double,

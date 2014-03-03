@@ -1,6 +1,7 @@
 package nounou.data.traits
 
 import nounou.data.X
+import breeze.linalg.DenseVector
 
 /**
  * Created by Kenta on 12/15/13.
@@ -37,8 +38,8 @@ trait XAbsolute extends X {
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
     * absUnit (e.g. "mV")
     */
-  final def toAbs(data: Vector[Int]): Vector[Double] = data.map( toAbs _ )
-  final def toAbsA(data: Array[Int]): Array[Double] = data.map( toAbs _ )
+  final def toAbs(data: DenseVector[Int]): DenseVector[Double] = data.map( toAbs _ )
+//  final def toAbsA(data: Array[Int]): Array[Double] = toAbs(data)
   //ToDo 3: toAbs erasure
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
     * absUnit (e.g. "mV")
@@ -47,7 +48,7 @@ trait XAbsolute extends X {
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
     * absUnit (e.g. "mV")
     */
-  final def absToInternal(dataAbs: Vector[Double]): Vector[Int] = dataAbs.map( absToInternal _ )
+  final def absToInternal(dataAbs: DenseVector[Double]): DenseVector[Int] = dataAbs.map( absToInternal _ )
   final def absToInternalA(dataAbs: Array[Double]): Array[Int] = dataAbs.map( absToInternal _ )
 
   //  /**Converts data in the internal representation (Int) to absolute units (Double), with unit of

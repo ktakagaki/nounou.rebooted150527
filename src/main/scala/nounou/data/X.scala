@@ -21,7 +21,7 @@ abstract class X extends LoggingExt {
 
   def isCompatible(that: X): Boolean
 
-  protected def vectZeros(length: Int) = Vector.tabulate(length)( (i: Int) => 0 )
+//  protected def vectZeros(length: Int) = Vector.tabulate(length)( (i: Int) => 0 )
 
 
 }

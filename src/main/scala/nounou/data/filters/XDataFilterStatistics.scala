@@ -4,7 +4,7 @@ import nounou.data.XData
 import nounou.FrameRange
 import breeze.math.Complex
 import breeze.linalg.{mean, DenseVector}
-import breeze.signal.fourierTr
+import breeze.signal.{rootMeanSquare, fourierTr}
 
 /**
  * @author ktakagaki
@@ -26,7 +26,7 @@ class XDataFilterStatistics( override val upstream: XData ) extends XDataFilter(
 
   def readTraceAbsRMS( ch: Int, range: FrameRange, segment: Int ): Double = {
     val tempTrace = readTraceAbs( ch, range, segment )
-    rms( tempTrace )
+    rootMeanSquare( tempTrace )
   }
 
   private def rms(vect: Vector[Double]): Double = {
