@@ -47,7 +47,7 @@ class DataReader extends Logging {
 
   def setData(x: XData): Unit = {
     dataORI.heldData = x
-    if(dataORI.sampleRate > 2000 && dataORI.segmentLengths.reduce(_+_) > 200000) dataDecimate.factor = math.min(16, (dataORI.sampleRate / 2000).toInt)
+    if(dataORI.sampleRate > 2000 && dataORI.segmentLengths.reduce(_+_) > 200000) dataDecimate.factor_=(math.min(16, (dataORI.sampleRate / 2000).toInt))
     val halfWindow = (dataRMSFIR.sampleRate * 0.05).toInt //50 ms
     dataRMS.setHalfWindow(halfWindow)
     dataMAX.setHalfWindow(halfWindow)
