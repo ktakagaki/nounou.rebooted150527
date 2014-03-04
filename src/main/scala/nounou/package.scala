@@ -33,7 +33,7 @@ package object nounou extends Logging {
     require( range.step > 0, "Only positive steps are allowed for indexing in nounou!" )
     require( range.start <= range.end, "In nounous, start <= last is required for frame ranges. start=" + range.start + ", last=" + range.end)
 
-    //println( "1 " + new FrameRange(range.start, range.end, range.step, false) )
+    //println( "1 " + new FrameRange(range.start, range.end, range.stepMs, false) )
     new FrameRange(range.start, range.end, range.step, false)
 
   }
@@ -49,14 +49,14 @@ package object nounou extends Logging {
       count = count + step
     } else throw new IllegalArgumentException
   }
-//  def forJava[@specialized(Int) T <: Int](start: T, endExclusive: T, step: T, function: (T => Unit) ): Unit = {
+//  def forJava[@specialized(Int) T <: Int](start: T, endExclusive: T, stepMs: T, function: (T => Unit) ): Unit = {
 //    var count: T = start
-//    if( step > 0 ) while( count < endExclusive){
+//    if( stepMs > 0 ) while( count < endExclusive){
 //      function(count)
-//      count = count + step
-//    } else if (step<0) while( count > endExclusive){
+//      count = count + stepMs
+//    } else if (stepMs<0) while( count > endExclusive){
 //      function(count)
-//      count = count + step
+//      count = count + stepMs
 //    } else throw new IllegalArgumentException
 //  }
 
