@@ -97,7 +97,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   /** Read a single trace from current segment (or segment 0 if not initialized), in internal integer scaling.
     */
-  final def readTrace(channel: Int): DV[Int] = readTrace(channel, FrameRange.All, currentSegment)
+  final def readTrace(channel: Int): DV[Int] = readTrace(channel, FrameRange.all, currentSegment)
   final def readTraceA(channel: Int) = readTrace(channel).toArray
 
   /** Read a single trace (within the span) from current segment (or segment 0 if not initialized), in internal integer scaling.
@@ -154,7 +154,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   /** Read a single trace (within the span) from current segment (or segment 0 if not initialized), in absolute unit scaling (as recorded).
     */
-  final def readTraceAbs(channel: Int, range: FrameRange = FrameRange.All): DV[Double] = toAbs(readTrace(channel, range))
+  final def readTraceAbs(channel: Int, range: FrameRange = FrameRange.all): DV[Double] = toAbs(readTrace(channel, range))
 
   /** Read a single trace (within the span) from the data, in absolute unit scaling (as recorded).
     */

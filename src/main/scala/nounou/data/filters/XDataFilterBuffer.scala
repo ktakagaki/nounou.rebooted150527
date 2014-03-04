@@ -96,7 +96,7 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
 //        var index = 0
 //        for(cnt <- 0 until range.length){
 //          realRet(cnt) = tempretArr(index)
-//          index += range.step
+//          index += range.stepMs
 //        }
 //        realRet.toVector
     tempret

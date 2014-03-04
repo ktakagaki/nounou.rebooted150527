@@ -146,6 +146,6 @@ trait FileAdapter extends LoggingExt {
 class OptFileAdapter
 object OptFileAdapter{
   case object Automatic extends OptFileAdapter
-  case class XDataFrames(range: FrameRange = FrameRange.All(), segment: Int = 0) extends OptFileAdapter
+  case class XDataFrames(range: FrameRange = FrameRange.all(), segment: Int = 0) extends OptFileAdapter
   //case class ListOpt(list: List[OptFileAdapter]) extends OptFileAdapter
 }

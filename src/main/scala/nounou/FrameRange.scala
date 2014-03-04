@@ -1,115 +1,173 @@
 package nounou
 
+import nounou.data.traits.{XFrames}
+
+//TODO 1: Should really streamline this code and test better, but it is a minefield!
+
 /**
  * @author ktakagaki
  * @date 2/9/14.
  */
-object FrameRange {
+object FrameRange extends LoggingExt {
 
-  def All(): FrameRange = All(1)
+  final def all(): FrameRange = all(1)
 
-  def All(step: Int): FrameRange = new FrameRange(0, 0 /*Integer.MAX_VALUE*/, step, true)
-//  class All(step: Int) extends FrameRange(0, 0 /*Integer.MAX_VALUE*/, step, true){
-//    override def preLength(totalLength: Int) = 0
-//    override def postLength(totalLength: Int) = 0
-//    //override def getValidRange(totalLength: Int) = 0 to (totalLength -1) by byVal
+  final def all(step: Int): FrameRange = new FrameRange(0, 0 /*Integer.MAX_VALUE*/, step, true)
+
+  final def msRange(startMs: Double, endMs: Double, stepMs: Double, sampleRate:Double): FrameRange = {
+
+    loggerRequire(stepMs>0, "stepMs ({}) must be larger than zero!", stepMs.toString)
+    loggerRequire(sampleRate>0, "sampleRate ({}) must be larger than zero!", sampleRate.toString)
+
+    val startFr = (startMs/1000d * sampleRate).toInt
+    val endFr = (endMs/1000d * sampleRate).toInt
+    val stepReal = (stepMs/1000d * sampleRate).toInt
+
+    new FrameRange(startFr, endFr, stepReal)
+  }
+
+  def msAnchorRange(anchorMs: Double, preMs: Double, postMs: Double, stepMs: Double, sampleRate:Double): FrameRange = {
+    msRange(anchorMs-preMs, anchorMs+postMs, stepMs, sampleRate)
+  }
+
+//  def tsAnchorRange(anchor: Long, preFrames: Int, postFrames: Int, x: XFrames): FrameRange = {
+//
 //  }
+
+//  def tsAnchorRangeMs(anchorTs: Long, preMs: Double, postMs: Double, stepMs: Double, x: XFrames): (FrameRange, Int) = {
+//    val temp = x.tsToFrameSegment(anchorTs, true)
+//    val anchorMs = (temp._1).toDouble/1000d * x.sampleRate
+//    ( msAnchorRange( anchorMs, preMs, postMs, stepMs, x.sampleRate ), temp._2 )
+//  }
+
 
 }
 
-class FrameRange(val start: Int, val endMarker: Int, val step: Int = 1, val isAll: Boolean = false) /*extends Range(start, last, step)*/{
+class FrameRange(val start: Int, val endMarker: Int, val step: Int = 1, val isAll: Boolean = false) extends LoggingExt {
 
-  require( step > 0, "In nounous, step > 0 is required for frame ranges.")
-  require( start <= endMarker, "In nounous, start <= last is required for frame ranges. start=" + start + ", last=" + endMarker)
+  loggerRequire( step > 0, "In nounous, stepMs > 0 is required for frame ranges; stepMs = {}!", step.toString)
+  loggerRequire( start <= endMarker, "In nounous, start <= last is required for frame ranges. start=" + start + ", last=" + endMarker)
 
   override def toString() = "FrameRange(" + start + ", " + endMarker + ", " + step + ", isAll=" + isAll + ")"
 
-  //private val tempRange: Range.Inclusive = if(isAll) null else new Range.Inclusive(start, endMarker, step)
-//  val indexedStart = 0
-//  def indexedDataStart(vectDataLen: Int) = {
-//    if(start < 0) - start
-//    else if (start < vectDataLen) start
-//  }
-  private def getSamplesFromLength(len: Int) = (len -1)/step + 1
-
-  /**range length*/
-  def length(vectDataLen: Int): Int = {
-    if(isAll || start >= vectDataLen) getSamplesFromLength( vectDataLen )
-    else getSamplesFromLength(endMarker - start + 1)//(endMarker - start /*+ 1 - 1*/)/step  + 1
+  //private def getSamplesFromLength(len: Int) = (len -1)/step + 1
+  private var buffRangeInclusive = new Range.Inclusive(0,0,1)
+  private var buffRangeInclusiveLength = -1
+  private def buffRefresh(totalLength: Int) = {
+    if( totalLength != buffRangeInclusiveLength ) {
+      buffRangeInclusive = if(isAll) {
+        new Range.Inclusive(start, totalLength-1, step)
+      } else {
+        new Range.Inclusive(start, endMarker, step)//scala.math.min(endMarker, totalLength-1), step)
+      }
+      buffRangeInclusiveLength = totalLength
+    }
   }
 
-  /**Inclusive last frame, taking into account step and overhang*/
-  def last(vectDataLen: Int): Int = start + (length(vectDataLen) - 1 ) * step
+  /**range length*/
+  def length(totalLength: Int): Int = {
+    buffRefresh(totalLength)
+    buffRangeInclusive.length
+//    if(isAll || start >= vectDataLen) getSamplesFromLength( vectDataLen )
+//    else getSamplesFromLength(endMarker - start + 1)//(endMarker - start /*+ 1 - 1*/)/stepMs  + 1
+  }
+
+  /** Inclusive last frame, taking into account step and overhang
+    * @param totalLength full length of this segment in frames, used to realize with FrameRange.all()
+    */
+  def last(totalLength: Int): Int = {
+    buffRefresh(totalLength)
+    buffRangeInclusive.last
+//    if(isAll) totalLength/step*step -1  //start + (length(totalLength) - 1 ) * step
+//    else {
+//      start + (endMarker-start+1)/step*step
+//    }
+
+  }
+
+  /** Valid last frame, taking into account step and overhang
+    * @param totalLength full length of this segment in frames, used to realize with FrameRange.all()
+    */
+  def lastValid(totalLength: Int): Int = {
+    val realEnd = scala.math.min(totalLength -1, endMarker)
+    if(start <= realEnd){
+      val tempRange = new Range.Inclusive(start, realEnd, step)
+      tempRange.last
+    }else{
+      -1  //give errorif start>realEnd
+    }
+//    if(isAll) (totalLength - 1)/step + 1
+//    else {
+//      val tempLast = last(totalLength)
+//      if(tempLast < totalLength) tempLast
+//      else (totalLength - start - 1)/step*step + 1 + start //(new Range.Inclusive(start, totalLength-1, step)).last        //ToDo 3: make into more streamlined code
+//    }
+  }
 
   // <editor-fold defaultstate="collapsed" desc=" conversion to Range.Inclusive ">
 
-  /** get a [[Range.Inclusive]] taking into account length and step, so that the start and last are exactly present values
+  /** Get a [[Range.Inclusive]] taking into account length and stepMs, so that the start and last are exactly present values
+    * @param totalLength full length of this segment in frames, used to realize with FrameRange.all()
     */
-  def getRange(tL: Int): Range.Inclusive = {
-    new Range.Inclusive(start, last(tL), step)
-  }
+  def getRange(totalLength: Int): Range.Inclusive =
+    if(isAll) new Range.Inclusive(0, last(totalLength), step)
+    else new Range.Inclusive(start, endMarker, step)
 
-  /** get a [[Range.Inclusive]] which fits inside the given data vector length, and takes into account length and step,
-    * so that the start and last are exactly present values
+  /** Get a [[Range.Inclusive]] which fits inside the given data vector length, and takes into account length and stepMs,
+    * so that the start and last are exactly present values.
+    * @param totalLength full length of this segment in frames, used to realize with FrameRange.all()
     */
-  def getValidRange(vectDataLen: Int): Range.Inclusive = {
+  def getValidRange(totalLength: Int): Range.Inclusive = {
 
-    if(isAll) {
-        new Range.Inclusive(0, last(vectDataLen), step)
-    } else if(start >= vectDataLen ) {
-        new Range.Inclusive(0, -1, 1)// range with length zero
-    } else if(start >= 0 ) {
-        val realLast = last(vectDataLen)
-
-        if( realLast < vectDataLen  ) new Range.Inclusive(start, realLast, step)
-        else new Range.Inclusive(start, start + (getSamplesFromLength(vectDataLen - start) -1) * step, step )
-    } else {
-        if(endMarker < 0) new Range.Inclusive(0, -1, 1)// range with length zero
-        else{
-          val realLast = last(vectDataLen)
-          val dataStart = start + (preLength(vectDataLen))*step
-
-          if( realLast < vectDataLen ) new Range.Inclusive(dataStart, realLast, step)
-          else new Range.Inclusive(dataStart, dataStart + (getSamplesFromLength(vectDataLen - dataStart) - 1) * step, step)
-        }
-
+    if(isAll) {                            //full range
+      new Range.Inclusive(0, last(totalLength), step)
+    } else if(start >= totalLength ) {     //range starts after final data value
+      new Range.Inclusive(0, -1, 1)// range with length zero
+    } else if(start >= 0 ) {               //range starts within data
+      new Range.Inclusive(start, lastValid(totalLength), step)
+    } else {                               //range starts in negative range
+        val realStart =
+          if(start<0){
+            start + ((- start - 1)/step + 1 ) * step
+          } else { start }
+        new Range.Inclusive(realStart, lastValid(totalLength), step)
     }
+
   }
 
   // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc=" How much padding? ">
 
-  def preLength(vectDataLen: Int): Int = {
-    if( isAll || start >= 0 ){
-        0 //all post padding or no padding
-    } else if ( - vectDataLen < start ) {
-        getSamplesFromLength( - start ) //pre padding from start to -1
-    } else {
-        getSamplesFromLength( vectDataLen ) //all pre padding
-    }
-  }
-
-  def postLength(vectDataLen: Int): Int = {
-    if( isAll ){
+  def preLength(totalLength: Int): Int = {
+    if( isAll || start >= 0 ){              //all post padding or no padding
       0
-    }else{
-      val realLast = last(vectDataLen)
-      if( realLast < vectDataLen ) 0
-      else length(vectDataLen) - getSamplesFromLength(vectDataLen - start)
+    } else if ( totalLength > - start ) {   //pre padding from start to -1
+      (-start-1)/step + 1
+      //getSamplesFromLength( - start )
+    } else {                                //all pre padding
+      (totalLength-1)/step + 1
+      //getSamplesFromLength( vectDataLen )
     }
-//    if( isAll ) 0 else {
-//      if ( endMarker < vectDataLen ) 0  //all pre padding or no padding
-//      else if ( endMarker > 2 * vectDataLen - 1 ) getSamplesFromLength(vectDataLen) //all post padding
-//      else getSamplesFromLength(endMarker - start + 1) - getSamplesFromLength(vectDataLen - start) //( endMarker - vectDataLen + 1 )
-//    }
   }
 
-//  def isNoOverhangs(vectDataLen: Int): Boolean =
-//    if (isAll) true
-//    else (start >= 0 && endMarker < vectDataLen)
+  def postLength(totalLength: Int): Int = {
+    val lastV = lastValid(totalLength)
+    if( lastV < 0 ){   //start>realEnd, all post padding
+      //println( endMarker + " " + lastV + " " + step)
+      //(endMarker - lastV)/step
+      (endMarker - start )/step + 1
+    } else if( isAll ){                            //no post padding
+      0
+    } else {
+      //println( endMarker + " " + lastV + " " + step)
+      ( endMarker - lastV )/step /* + 1 - 1*/
+      // + step //scala.math.min(totalLength-1, endMarker)
+//      if( endMarker <= lastV ) 0     //no padding
+//      else (endMarker - lastV /* + 1 - 1*/)/step
+    }
+  }
+  // </editor-fold>
 
-  // <editor-fold defaultstate="collapsed" desc="  ">
 
 }
-
