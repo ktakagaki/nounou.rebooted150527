@@ -1,6 +1,5 @@
-package nounou.data.discrete
+package nounou.data
 
-import nounou.data.{XData, X}
 import scala.collection.immutable.{TreeMap}
 import scala.reflect.ClassTag
 import nounou.data.traits.XFrames

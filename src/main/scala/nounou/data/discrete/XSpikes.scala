@@ -1,10 +1,8 @@
-package nounou.data.discrete
+package nounou.data
 
-import nounou.data.X
 import scala.collection.immutable.TreeMap
 import nounou.data.traits.XConcatenatable
 
-//import nounou.data.X
 
   /**
     * Created with IntelliJ IDEA.
