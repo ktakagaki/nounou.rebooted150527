@@ -1,7 +1,7 @@
 package nounou.data.filters
 
 import nounou.data.XData
-import nounou.data.discrete.XMask
+import nounou.data.XMask
 import breeze.linalg.{DenseVector => DV}
 
 /**

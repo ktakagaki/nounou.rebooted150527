@@ -135,11 +135,11 @@ object FileAdapterGSDGSH extends FileAdapter {
     tempFrCnt = 0
     tempDataCnt = 0
 
-    val dataReturn = DM.zeros[Int](tempFrameShorts, nFrameSize)
+    val dataReturn = DM.zeros[Int](nFrameSize, tempFrameShorts)
     while(tempFrCnt < nFrameSize){
       tempChCnt = 0
       while( tempChCnt < tempFrameShorts){
-        dataReturn(tempChCnt, tempFrCnt) = backgroundReturn(tempChCnt) + xBits * dataOri(tempDataCnt)
+        dataReturn(tempFrCnt, tempChCnt) = backgroundReturn(tempChCnt) + xBits * dataOri(tempDataCnt)
         tempDataCnt += 1;
         tempChCnt += 1;
       }
@@ -152,11 +152,11 @@ object FileAdapterGSDGSH extends FileAdapter {
     tempFrCnt = 0
     tempDataCnt = 0
 
-    val dataAuxReturn = DM.zeros[Int](AUXnChanum, nFrameSize * AUXnRate)
+    val dataAuxReturn = DM.zeros[Int](nFrameSize * AUXnRate, AUXnChanum)
     while(tempFrCnt < nFrameSize * AUXnRate){
       tempChCnt = 0
       while( tempChCnt < AUXnChanum){
-        dataAuxReturn(tempChCnt, tempFrCnt) = xBits * analogOri(tempDataCnt)    //ToDo 1: scale??
+        dataAuxReturn(tempFrCnt, tempChCnt) = xBits * analogOri(tempDataCnt)    //ToDo 1: scale??
         tempDataCnt += 1;
         tempChCnt += 1;
       }

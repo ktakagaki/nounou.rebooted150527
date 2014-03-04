@@ -3,7 +3,7 @@ package nounou.data.io
 import java.io.File
 import nounou.data.X
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
-import nounou.data.discrete.{XEvents, XEvent}
+import nounou.data.{XEvents, XEvent}
 import scala.collection.mutable.ListBuffer
 import scala.collection.mutable
 import scala.collection.immutable.TreeMap

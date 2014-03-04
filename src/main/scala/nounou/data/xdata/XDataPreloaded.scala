@@ -26,14 +26,14 @@ class XDataPreloaded(  val data: Array[DM[Int]],
     override val segmentLengths = data.map( (p: DM[Int]) => p.rows ).toVector
 
 
-    require(channelCount == data(0).rows,
+    require(channelCount == data(0).cols,
       "number of channels " + channelCount + " does not match data.length " + data.length + "!")
 
     //reading
     override def readPointImpl(channel: Int, frame: Int, segment: Int) = data(segment)(channel, frame)
 
     override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int) = {
-      data(segment)( channel, range ).toDenseVector
+      data(segment)( range, channel ).toDenseVector
     }
 
   // <editor-fold desc="XConcatenatable">

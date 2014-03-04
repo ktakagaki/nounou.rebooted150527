@@ -5,10 +5,7 @@ import java.io.File
 import com.typesafe.scalalogging.slf4j.Logging
 import nounou.data._
 import nounou.data.io.{FileAdapterGSDGSH, FileAdapterNEV, FileAdapterNCS, FileAdapterNEX}
-import nounou.data.discrete._
 import nounou.data.filters._
-import breeze.math.Complex
-import breeze.linalg.max
 
 
 /**
