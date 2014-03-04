@@ -1,4 +1,4 @@
-package nounou.data.discrete
+package nounou.data
 
 /**An immutable class to encapsulate a single event mark in a neurophysiological recording.
  */

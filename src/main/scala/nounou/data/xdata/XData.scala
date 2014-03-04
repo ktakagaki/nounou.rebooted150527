@@ -15,6 +15,11 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   override def toString(): String = "XData: " + channelCount + " ch, "+ segmentCount + " seg, lengths=" + segmentLengths + ", fs=" + sampleRate + ")"
 
+  /** Provides a textual representation of the child hierarchy starting from this data object.
+    * If multiple XDataFilter objects (e.g. an XDataFilterFIR object) is chained after this data,
+    * this method will show the chained objects and their tree hierarchy.
+    * @return
+    */
   final def toStringChain(): String = {
     toString() + (if(getChildren.size!=0) {
       getChildren.map(p => "\n\\ " + p.toStringChain).reduce( _ + _ ).split("\n").flatMap( "\n     " + _ ).mkString.drop(1)
@@ -93,10 +98,12 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   /** Read a single trace from current segment (or segment 0 if not initialized), in internal integer scaling.
     */
   final def readTrace(channel: Int): DV[Int] = readTrace(channel, FrameRange.All, currentSegment)
+  final def readTraceA(channel: Int) = readTrace(channel).toArray
 
   /** Read a single trace (within the span) from current segment (or segment 0 if not initialized), in internal integer scaling.
     */
   final def readTrace(channel: Int, range: FrameRange): DV[Int] = readTrace(channel, range, currentSegment)
+  final def readTraceA(channel: Int, range: FrameRange) = readTrace(channel, range).toArray
 
   /** Read a single trace from the data, in internal integer scaling.
     */
@@ -118,17 +125,19 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     DV.vertcat( DV.zeros[Int]( preLength ), tempData, DV.zeros[Int]( postLength ) )
 
   }
-  final def readTraceA(channel: Int, range: FrameRange): Array[Int] = readTrace(channel, range).toArray
-  final def readTraceA(channel: Int, range: FrameRange, segment: Int): Array[Int] = readTrace(channel, range, segment).toArray
+  final def readTraceA(channel: Int, range: FrameRange, segment: Int) = readTrace(channel, range, segment)
+
+//  final def readTraceA(channel: Int, range: FrameRange): Array[Int] = readTrace(channel, range).toArray
+//  final def readTraceA(channel: Int, range: FrameRange, segment: Int): Array[Int] = readTrace(channel, range, segment).toArray
 
   /** Read a single trace from the data, in internal integer scaling.
     */
-  final def readTraceFromTS(channel: Int, ts: Long, preFrames: Int = 0, postFrames: Int = 0, nullIfOOB: Boolean = true): DV[Int] = {
+  final def readTraceFromTS(channel: Int, ts: Long, preFrames: Int = 0, postFrames: Int = 0, readOOB: Boolean = true): DV[Int] = {
     require(isValidChannel(channel), "Invalid channel: " + channel.toString)
 
     val keyFrame = tsToFrameSegment(ts, negativeIfOOB = true)
 
-    if( nullIfOOB ){
+    if( readOOB ){
       if( keyFrame._1 - postFrames < 0 || keyFrame._1 + postFrames >= segmentLengths( keyFrame._2 ) ) null
            //readTraceImpl will only read within range
       else readTraceImpl( channel, (keyFrame._1 - postFrames) to (keyFrame._1 + postFrames), keyFrame._2 )
@@ -139,6 +148,10 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   }
 
+  /** Read a single trace from current segment (or segment 0 if not initialized),  in absolute unit scaling (as recorded).
+    */
+  final def readTraceAbs(channel: Int): DV[Double] = toAbs(readTrace(channel))
+
   /** Read a single trace (within the span) from current segment (or segment 0 if not initialized), in absolute unit scaling (as recorded).
     */
   final def readTraceAbs(channel: Int, range: FrameRange = FrameRange.All): DV[Double] = toAbs(readTrace(channel, range))
@@ -147,8 +160,9 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     */
   final def readTraceAbs(channel: Int, range: FrameRange, segment: Int): DV[Double] = toAbs(readTrace(channel, range, segment))
 
-  final def readTraceAbsA(channel: Int, range: FrameRange): Array[Double] = toAbs(readTrace(channel, range)).toArray
-  final def readTraceAbsA(channel: Int, range: FrameRange, segment: Int): Array[Double] = toAbs(readTrace(channel, range, segment)).toArray
+  final def readTraceAbsA(channel: Int): Array[Double] = readTraceAbs(channel).toArray
+  final def readTraceAbsA(channel: Int, range: FrameRange): Array[Double] = readTraceAbs(channel, range).toArray
+  final def readTraceAbsA(channel: Int, range: FrameRange, segment: Int): Array[Double] = readTraceAbs(channel, range, segment).toArray
 
   //</editor-fold>
 
@@ -166,9 +180,8 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   /** Read a single frame from the data, in internal integer scaling, for just the specified channels.
     */
   final def readFrame(frame: Int, channels: Vector[Int], segment: Int): DV[Int] = {
-    //ToDo 1: change requires to logging!
-    require(isRealisticFrame(frame, segment), "Unrealistic frame/segment: " + (frame, segment).toString)
-    require(channels.forall(isValidChannel), "Invalid channels: " + channels.toString)
+    loggerRequire(isRealisticFrame(frame, segment), "Unrealistic frame/segment: " + (frame, segment).toString)
+    loggerRequire(channels.forall(isValidChannel), "Invalid channels: " + channels.toString)
 
     if( isValidFrame(frame, segment) ) readFrameImpl(frame, channels, (currentSegment = segment) ) else DV.zeros[Int]( channels.length )
 
@@ -177,12 +190,12 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   /** Read a single frame from the data, in internal integer scaling.
     */
   final def readFrame(frame: Int, segment: Int): DV[Int] = {
-
-    require(isRealisticFrame(frame, segment), "Unrealistic frame/segment: " + (frame, segment).toString)
-
+    loggerRequire(isRealisticFrame(frame, segment), "Unrealistic frame/segment: " + (frame, segment).toString)
     if( isValidFrame(frame, segment) ) readFrameImpl(frame, (currentSegment = segment) ) else DV.zeros[Int]( channelCount )
-
   }
+  final def readFrame(frame: Int): DV[Int] = readFrame(frame, 0)
+
+  final def readFrameA(frame: Int): Array[Int] = readFrame(frame).toArray
   final def readFrameA(frame: Int, segment: Int): Array[Int] = readFrame(frame, segment).toArray
   final def readFrameA(frame: Int, channels: Array[Int], segment: Int): Array[Int] = readFrame(frame, channels.toVector, segment).toArray
 
