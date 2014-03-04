@@ -12,15 +12,15 @@ import nounou.data.traits.XFrames
 
   }
 
-  class MsRange(val start: Double, val end: Double, val step: Double, val isAll: Boolean = false) /*extends Range(start, last, step)*/{
+  class MsRange(val start: Double, val end: Double, val step: Double, val isAll: Boolean = false) /*extends Range(start, last, stepMs)*/{
 
     def getFrameRange(x: XFrames): FrameRange = {
 
       val stepReal = (step * x.sampleInterval * 1000d).toInt
-      require(stepReal>0, "This amounts to a negative or zero timestep! (step=" + step + " ms)")
+      require(stepReal>0, "This amounts to a negative or zero timestep! (stepMs=" + step + " ms)")
 
       if(isAll){
-        FrameRange.All( stepReal )
+        FrameRange.all( stepReal )
       } else {
         val startReal = x.msToFrame(start)
         val endReal = x.msToFrame(end)

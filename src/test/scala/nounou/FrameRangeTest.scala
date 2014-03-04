@@ -11,6 +11,7 @@ class FrameRangeTest extends FunSuite {
   test("length odd"){
 
     val totalLen = 5
+    val totalLen2 = 7
 
     val testFrRange11 = new FrameRange(0, 4, 1)
     val testFrRange21= new FrameRange(-4, 4, 1)
@@ -47,6 +48,36 @@ class FrameRangeTest extends FunSuite {
     assert( testFrRange32.last(totalLen) == 6)
     assert( testFrRange42.last(totalLen) == 7)
     // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc=" last valid ">
+
+    assert( testFrRange11.lastValid(totalLen) == 4 )
+    assert( testFrRange21.lastValid(totalLen) == 4 )
+    assert( testFrRange31.lastValid(totalLen) == 4)
+    assert( testFrRange41.lastValid(totalLen) == 4)
+
+    assert( testFrRange12.lastValid(totalLen) == 4)
+    assert( testFrRange22.lastValid(totalLen) == 4)
+    assert( testFrRange32.lastValid(totalLen) == 4)
+    assert( testFrRange42.lastValid(totalLen) == 3)
+
+    assert( testFrRange52.lastValid(totalLen) == 3)
+    assert( testFrRange62.lastValid(totalLen) == -1)
+
+    assert( testFrRange11.lastValid(totalLen2) == 4 )
+    assert( testFrRange21.lastValid(totalLen2) == 4 )
+    assert( testFrRange31.lastValid(totalLen2) == 6 )
+    assert( testFrRange41.lastValid(totalLen2) == 6 )
+
+    assert( testFrRange12.lastValid(totalLen2) == 4)
+    assert( testFrRange22.lastValid(totalLen2) == 4)
+    assert( testFrRange32.lastValid(totalLen2) == 6)
+    assert( testFrRange42.lastValid(totalLen2) == 5)
+
+    assert( testFrRange52.lastValid(totalLen2) == 5)
+    assert( testFrRange62.lastValid(totalLen2) == 5)
+
+
+    // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc=" preLength ">
 
     assert( testFrRange11.preLength(totalLen) == 0 )
@@ -63,7 +94,6 @@ class FrameRangeTest extends FunSuite {
     assert( testFrRange62.preLength(totalLen) == 0 )
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc=" postLength ">
-
     assert( testFrRange11.postLength(totalLen) == 0 )
     assert( testFrRange21.postLength(totalLen) == 0 )
     assert( testFrRange31.postLength(totalLen) == 3 )
@@ -76,10 +106,24 @@ class FrameRangeTest extends FunSuite {
 
     assert( testFrRange52.postLength(totalLen) == 2 )
     assert( testFrRange62.postLength(totalLen) == 2 )
+
+    assert( testFrRange11.postLength(totalLen2) == 0 )
+    assert( testFrRange21.postLength(totalLen2) == 0 )
+    assert( testFrRange31.postLength(totalLen2) == 1 )
+    assert( testFrRange41.postLength(totalLen2) == 2 )
+
+    assert( testFrRange12.postLength(totalLen2) == 0 )
+    assert( testFrRange22.postLength(totalLen2) == 0 )
+    assert( testFrRange32.postLength(totalLen2) == 0 )
+    assert( testFrRange42.postLength(totalLen2) == 1 )
+
+    assert( testFrRange52.postLength(totalLen2) == 1 )
+    assert( testFrRange62.postLength(totalLen2) == 1 )
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc=" getValidRange ">
 
     assert( testFrRange11.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )
+    println( testFrRange21.getValidRange(totalLen) )
     assert( testFrRange21.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )
     assert( testFrRange31.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )
     assert( testFrRange41.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )

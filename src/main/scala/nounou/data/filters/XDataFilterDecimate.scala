@@ -68,7 +68,7 @@
           val tempData = upstream.readTrace( channel, new FrameRange(range.start * factor - kernel.overhangPre, (range.last * factor + kernel.overhangPost), 1), segment)
 //        println("tempData: " + tempData.length)
 //        println("kernel: " + kernel.kernel.length)
-//        println("start: " + range.start + " end: " + range.end+ " step: " + range.step+ " inclusive: " + range.isInclusive)
+//        println("start: " + range.start + " end: " + range.end+ " stepMs: " + range.stepMs+ " inclusive: " + range.isInclusive)
           val tempRes: DV[Long] =
             convolve( convert( DV( tempData.toArray ), Long), kernel.kernel,
               range = OptRange.RangeOpt( new Range.Inclusive(0, (range.end - range.start)*factor, range.step*factor) ),

@@ -98,7 +98,7 @@ object FileAdapterNCS extends FileAdapterNLX {
             if(thisRecTS > lastRecTS + tempRecTSIncrement*lastRecJump){
 
                 if( lastRecJump != 1 ){
-                  //Went over change in segment, rewind and try a step of 1
+                  //Went over change in segment, rewind and try a stepMs of 1
                   rec = rec - lastRecJump + 1
                   fHand.seek( recordStartByte(rec) )
                   lastRecJump = 1
@@ -262,7 +262,7 @@ class XDataChannelNCS
   //
   //    //val res = new Array[Int]( range.length )
   //    val ((startRec, startIndex), (endRec, endIndex)) =
-  //      if(range.step > 0) ( frameToRecordIndex( range.start ), frameToRecordIndex( range.end ))
+  //      if(range.stepMs > 0) ( frameToRecordIndex( range.start ), frameToRecordIndex( range.end ))
   //      else ( frameToRecordIndex( range.end ), frameToRecordIndex( range.start ) )
   //
   //    val tempret =
@@ -281,7 +281,7 @@ class XDataChannelNCS
   //        }
   //      }
   //
-  //    if(range.step > 0) tempret else tempret.reverse
+  //    if(range.stepMs > 0) tempret else tempret.reverse
 }
 
 //  def readRecord(recNo: Int): Vector[Int] = {
