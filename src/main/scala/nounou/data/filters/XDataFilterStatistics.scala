@@ -3,7 +3,7 @@ package nounou.data.filters
 import nounou.data.XData
 import nounou.FrameRange
 import breeze.math.Complex
-import breeze.linalg.{mean, DenseVector}
+import breeze.linalg.{DenseVector}
 import breeze.signal.{rootMeanSquare, fourierTr}
 
 /**
