@@ -54,6 +54,8 @@ class XDataFilterHolder extends XData with XDataAux {
   override def absUnit: String = heldData.absUnit
   override def absOffset: Double = heldData.absOffset
   override def absGain: Double = heldData.absGain
+  override def scaleMax: Int = heldData.scaleMax
+  override def scaleMin: Int = heldData.scaleMin
 
   override def sampleRate: Double = heldData.sampleRate
   override def segmentEndTSs: scala.Vector[Long] = heldData.segmentEndTSs

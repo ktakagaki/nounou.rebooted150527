@@ -181,6 +181,8 @@ object FileAdapterNCS extends FileAdapterNLX {
 
     val xDataChannelNCS = new XDataChannelNCS(fileHandle = fHand,
       absGain = 1.0E6 * tempADBitVolts / xBitsD,
+      scaleMax = Short.MaxValue.toInt*xBits,
+      scaleMin = Short.MinValue.toInt*xBits,
       segmentLengths = tempLengths,
       segmentStartTSs = tempStartTimestamps,
       channelName = tempAcqEntName
@@ -197,6 +199,8 @@ object FileAdapterNCS extends FileAdapterNLX {
 class XDataChannelNCS
 ( override val fileHandle: RandomAccessFile,
                        override val absGain: Double,
+                       override val scaleMax: Int,
+                       override val scaleMin: Int,
                        override val segmentLengths: Vector[Int],
                        override val segmentStartTSs: Vector[Long],
                        override val channelName: String

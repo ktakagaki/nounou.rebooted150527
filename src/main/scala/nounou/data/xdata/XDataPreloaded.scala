@@ -16,6 +16,8 @@ class XDataPreloaded(  val data: Array[DM[Int]],
                        override val absGain: Double,
                        override val absOffset: Double,
                        override val absUnit: String,
+                       override val scaleMax: Int,
+                       override val scaleMin: Int,
                        override val channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
                        override val segmentStartTSs: Vector[Long],
                        override val sampleRate: Double,
@@ -49,6 +51,8 @@ class XDataPreloaded(  val data: Array[DM[Int]],
                                 absGain = oriThis.absGain,
                                 absOffset = oriThis.absOffset,
                                 absUnit = oriThis.absUnit,
+                                scaleMax = oriThis.scaleMax,
+                                scaleMin = oriThis.scaleMin,
                                 channelNames = oriThis.channelNames ++ t.channelNames,
                                 segmentStartTSs = oriThis.segmentStartTSs,
                                 sampleRate = oriThis.sampleRate,
@@ -72,9 +76,11 @@ class XDataPreloadedSingleSegment(
                     absGain: Double,
                     absOffset: Double,
                     absUnit: String,
+                    scaleMax: Int,
+                    scaleMin: Int,
                     channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
                     segmentStartTS: Long,
                     sampleRate: Double,
                     layout: XLayout = XLayoutNull
                     )
-  extends XDataPreloaded( Array(data), xBits, absGain, absOffset, absUnit, channelNames, Vector[Long](segmentStartTS), sampleRate, layout)
+  extends XDataPreloaded( Array(data), xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, channelNames, Vector[Long](segmentStartTS), sampleRate, layout)

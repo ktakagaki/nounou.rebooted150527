@@ -119,6 +119,8 @@ class XDataChannelNull extends XDataChannel {
   override val absGain: Double = 1d
   override val absOffset: Double = 0d
   override val absUnit: String = "XDataChannelNull"
+  override val scaleMax: Int = 0
+  override val scaleMin: Int = 0
   override val segmentLengths: Vector[Int] = Vector[Int]()
   override val segmentStartTSs: Vector[Long] = Vector(0L)
   override val sampleRate: Double = 1d
@@ -129,6 +131,8 @@ class XDataChannelPreloaded(val data: Array[DV[Int]],
                             override val absGain: Double,
                             override val absUnit: String,
                             override val absOffset: Double,
+                            override val scaleMax: Int,
+                            override val scaleMin: Int,
                             override val channelName: String,
                             override val segmentStartTSs: Vector[Long],
                             override val sampleRate: Double
@@ -145,8 +149,10 @@ class XDataChannelPreloadedSingleSegment
                     absGain: Double,
                     absUnit: String,
                     absOffset: Double,
+                    scaleMax: Int,
+                    scaleMin: Int,
                     channelName: String,
                     segmentStartTS: Long,
                     sampleRate: Double
                     )
-  extends XDataChannelPreloaded(Array(data), xBits, absGain, absUnit, absOffset, channelName, Vector(segmentStartTS), sampleRate)
+  extends XDataChannelPreloaded(Array(data), xBits, absGain, absUnit, absOffset, scaleMax, scaleMin, channelName, Vector(segmentStartTS), sampleRate)
