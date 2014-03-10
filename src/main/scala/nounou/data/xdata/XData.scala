@@ -284,9 +284,11 @@ abstract class XDataNullImpl extends XDataImmutable {
   override val absGain: Double = 1D
   override val absOffset: Double = 0D
   override val absUnit: String = "Null unit"
+  override val scaleMax: Int = 0
+  override val scaleMin: Int = 0
   override val segmentLengths: Vector[Int] = Vector[Int]()
   override val segmentStartTSs: Vector[Long] = Vector[Long]()
-  override val sampleRate: Double = 1D
+  override val sampleRate: Double = 1d
   override val channelNames: Vector[String] = Vector[String]()
   override val layout: XLayout = XLayoutNull
 }

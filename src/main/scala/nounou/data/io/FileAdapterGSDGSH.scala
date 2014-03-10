@@ -109,6 +109,8 @@ object FileAdapterGSDGSH extends FileAdapter {
     val absOffset = 8192d
     val absUnit = "bit"
     val absGain = 1d
+    val scaleMax = xBits*16384
+    val scaleMin = 0
 
     //================
     //Read actual data
@@ -170,8 +172,8 @@ object FileAdapterGSDGSH extends FileAdapter {
     //Return Results
     List(
       header,
-      new XDataGSD( dataReturn, xBits, absGain, absOffset, absUnit, layout.channelNames, 0L, sampleRate, layout, backgroundReturn ),
-      new XDataGSDAux( dataAuxReturn, xBits, absGain, absOffset, absUnit, chNamesAuxReturn.toVector, 0L, sampleRateAux, XLayoutNull ),
+      new XDataGSD( dataReturn, xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, layout.channelNames, 0L, sampleRate, layout, backgroundReturn ),
+      new XDataGSDAux( dataAuxReturn, xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, chNamesAuxReturn.toVector, 0L, sampleRateAux, XLayoutNull ),
       layout
     )
   }
@@ -185,12 +187,14 @@ class XDataGSD(
                 absGain: Double,
                 absOffset: Double,
                 absUnit: String,
+                scaleMax: Int,
+                scaleMin: Int,
                 channelNames: Vector[String],
                 segmentStartTS: Long,
                 sampleRate: Double,
                 layout: XLayout,
                 val backgroundFrame: DV[Int]
-                ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, channelNames, segmentStartTS, sampleRate, layout)
+                ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, channelNames, segmentStartTS, sampleRate, layout)
 
 class XDataGSDAux(
                 data: DM[Int],
@@ -198,8 +202,10 @@ class XDataGSDAux(
                 absGain: Double,
                 absOffset: Double,
                 absUnit: String,
+                scaleMax: Int,
+                scaleMin: Int,
                 channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
                 segmentStartTS: Long,
                 sampleRate: Double,
                 layout: XLayout
-                   ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, channelNames, segmentStartTS, sampleRate, layout) with XDataAux
+                   ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, channelNames, segmentStartTS, sampleRate, layout) with XDataAux

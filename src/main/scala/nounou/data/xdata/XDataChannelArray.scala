@@ -25,6 +25,8 @@ import nounou.data.traits.XConcatenatable
   override lazy val absGain = array(0).absGain
   override lazy val absOffset = array(0).absOffset
   override lazy val absUnit = array(0).absUnit
+  override lazy val scaleMax = array(0).scaleMax
+  override lazy val scaleMin = array(0).scaleMin
 
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int) = array(channel).readPointImpl(frame, segment)

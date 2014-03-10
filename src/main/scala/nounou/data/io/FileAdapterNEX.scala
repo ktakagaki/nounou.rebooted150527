@@ -106,6 +106,8 @@ object FileAdapterNEX extends FileAdapter {
                                                               absGain = ADtoMV / extraBits,
                                                               absOffset = MVOffset,
                                                               absUnit = "mV",
+                                                              scaleMax = Short.MaxValue.toInt * extraBits,
+                                                              scaleMin = Short.MinValue.toInt * extraBits,
                                                               channelName = name,
                                                               segmentStartTS = nexFileTBeg.toLong, //TODO 1: Must fix this placeholder!!!
                                                               sampleRate = nexFileFreq

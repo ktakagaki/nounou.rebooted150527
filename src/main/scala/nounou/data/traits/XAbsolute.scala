@@ -15,6 +15,12 @@ trait XAbsolute extends X {
   /**(xBits:Int).toDouble
     */
   def xBitsD = xBits.toDouble
+  /**The maximum extent up to which the data runs
+    */
+  def scaleMax: Int
+  /**The maximum extent down to which the data runs
+    */
+  def scaleMin: Int
 
   /**Used to calculate the absolute value (mV, etc) based on internal representation.<p>
     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(absolute value)=(internal value)*dataAbsoluteGain + dataAbsoluteOffset
@@ -63,7 +69,8 @@ trait XAbsolute extends X {
   override def isCompatible(that: X): Boolean = {
     that match {
       case x: XAbsolute => {
-        (this.xBits == x.xBits) && (this.absGain == x.absGain) && (this.absOffset == x.absOffset) && (this.absUnit == x.absUnit)
+        (this.xBits == x.xBits) && (this.absGain == x.absGain) && (this.absOffset == x.absOffset) && (this.absUnit == x.absUnit) &&
+          (this.scaleMax == x.scaleMax) && (this.scaleMin == x.scaleMin)
       }
       case _ => false
     }

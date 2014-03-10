@@ -20,6 +20,8 @@ class XDataFilter( val upstream: XData ) extends XData {
   override def absUnit: String = upstream.absUnit
   override def absOffset: Double = upstream.absOffset
   override def absGain: Double = upstream.absGain
+  override def scaleMax = upstream.scaleMax
+  override def scaleMin = upstream.scaleMin
 
   override def sampleRate: Double = upstream.sampleRate
   override def segmentEndTSs: scala.Vector[Long] = upstream.segmentEndTSs
