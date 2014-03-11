@@ -3,6 +3,7 @@ package nounou.data.traits
 import nounou.data.X
 import scala.Vector
 import nounou.{LoggingExt, FrameRange}
+import breeze.numerics.round
 
 /**Encapsulates segment, frame, and sampling information for xdata and XDataChannel.
  */
@@ -93,6 +94,7 @@ trait XFrames extends X with LoggingExt {
     frame.toDouble * sampleInterval * 1000d
     //(frameSegmentToTS(frame, segment)-frameSegmentToTS(0, segment)).toDouble / 1000d
   }
+  final def frameToMs(frame:Double): Double = frameToMs(round(frame).toInt)
 
   /** Closest frame/segment index to the given timestamp in ms (frame 0 within segment being time 0). Will give beginning or last frames, if timestamp is
     * out of range.
