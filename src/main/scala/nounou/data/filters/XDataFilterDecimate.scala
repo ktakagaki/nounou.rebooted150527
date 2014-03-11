@@ -5,6 +5,7 @@
   import breeze.linalg.{DenseVector => DV, convert}
   import breeze.signal.support.FIRKernel1D
   import breeze.signal._
+  import scala.beans.BeanProperty
 
   /**
    * @author ktakagaki
@@ -18,9 +19,9 @@
     }
 
     var kernel: FIRKernel1D[Long] = null
+
     override def factor: Int = _factor
     _factor = 1
-
 
     override def factor_= ( factor: Int ): Unit = {
       require( factor <= 16,

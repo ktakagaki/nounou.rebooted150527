@@ -3,6 +3,7 @@ package nounou
 import scala.reflect.ClassTag
 import breeze.math.Complex
 import nounou.data.traits.XFrames
+import breeze.numerics.round
 
 /**
  * @author ktakagaki
@@ -12,6 +13,8 @@ import nounou.data.traits.XFrames
 
     final val frameRangeAll: FrameRange = FrameRange.all()
     final def frameRangeAll(step: Int) = FrameRange.all(step)
+    final def frameRangeAll(step: Double) = FrameRange.all( round(step).toInt )
+
     final def frameRange(start: Int, endMarker: Int, step: Int): FrameRange = {
       return new FrameRange(start, endMarker, step, false)
     }
@@ -23,6 +26,9 @@ import nounou.data.traits.XFrames
     final def frameRange(frame: Int): FrameRange = {
       return new FrameRange(frame, frame, 1, false)
     }
+  final def frameRange(start: Double): FrameRange = frameRange(round(start).toInt)
+  final def frameRange(start: Double, endMarker: Double): FrameRange = frameRange(round(start).toInt, round(endMarker).toInt)
+  final def frameRange(start: Double, endMarker: Double, step: Double): FrameRange = frameRange(round(start).toInt, round(endMarker).toInt, round(step).toInt)
 
 //    final def scalaRange(start: Int, endMarker: Int, stepMs: Int): Range = {
 //      return new Range.Inclusive(start, endMarker, stepMs)
