@@ -4,8 +4,8 @@ import scala.collection.immutable.TreeMap
 import nounou.data.traits.XConcatenatable
 
 
-  /**
-    * Created with IntelliJ IDEA.
+  /** Encapsulates a database of [[XSpike]] objects for display and processing
+    *
     * User: takagaki
     * Date: 23.09.13
     * Time: 13:14
