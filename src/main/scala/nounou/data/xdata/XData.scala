@@ -58,7 +58,9 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   // <editor-fold defaultstate="collapsed" desc=" XLayout related ">
 
   def layout(): XLayout
-
+  override final def channelNames() = layout().channelNames
+  override final def channelNamesA() = layout().channelNamesA
+  //channelCount???
   // </editor-fold>
 
 
@@ -267,6 +269,8 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   */
 abstract class XDataImmutable extends XData with XFramesImmutable with XChannelsImmutable with XAbsoluteImmutable {
 
+
+  //ToDo 4: channelNames as lazy val?
   // <editor-fold defaultstate="collapsed" desc=" DataSource related ">
 
   override def changedData(): Unit = logger.error("this is an immutable data source, and changedData() should not be invoked!")
@@ -289,7 +293,6 @@ abstract class XDataNullImpl extends XDataImmutable {
   override val segmentLengths: Vector[Int] = Vector[Int]()
   override val segmentStartTSs: Vector[Long] = Vector[Long]()
   override val sampleRate: Double = 1d
-  override val channelNames: Vector[String] = Vector[String]()
   override val layout: XLayout = XLayoutNull
 }
 
