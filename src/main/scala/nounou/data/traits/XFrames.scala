@@ -5,8 +5,9 @@ import scala.Vector
 import nounou.{LoggingExt, FrameRange}
 import breeze.numerics.round
 
-/**Encapsulates segment, frame, and sampling information for xdata and XDataChannel.
- */
+/**This trait of XData and XDataChannel objects encapsulates segment,
+  * frame, and sampling information for electrophysiological and imaging recordings..
+  */
 trait XFrames extends X with LoggingExt {
 
   // <editor-fold desc="segment related: segmentCount, segmentLengths, currentSegment ">
