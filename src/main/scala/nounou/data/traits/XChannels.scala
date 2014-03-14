@@ -2,8 +2,10 @@ package nounou.data.traits
 
 import scala.Vector
 
-/**
- * Created by Kenta on 12/15/13.
+/**This trait of XData objects encapsulates the channel names and count information for
+  * electrophysiological and imaging recordings.
+  *
+  * Created by Kenta on 12/15/13.
  */
 trait XChannels {
 
