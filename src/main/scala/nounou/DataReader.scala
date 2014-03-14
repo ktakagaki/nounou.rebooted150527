@@ -6,6 +6,7 @@ import com.typesafe.scalalogging.slf4j.Logging
 import nounou.data._
 import nounou.data.io.{FileAdapterGSDGSH, FileAdapterNEV, FileAdapterNCS, FileAdapterNEX}
 import nounou.data.filters._
+import nounou.data.trodes.XTrodes
 
 
 /**
@@ -22,13 +23,16 @@ class DataReader extends Logging {
   def dataAux(): XDataAux = dataAuxORI //temporarily set to mirror
   var dataAuxORI: XDataFilterHolder = new XDataFilterHolder()
   //insert downsample block, filter block, buffer block
-//Layout has been encapsulated into XData
+//Data layout has been encapsulated into XData
 //  /**Layout of data*/
 //  var layout: XLayout = XLayoutNull
-  /**Mask*/
+  /**Time masks (by timestamp) to deactivate segments of data--for example, to mark artifact areas*/
   var mask: XMask = new XMask
+
   /**Events*/
   var events: XEvents = XEventsNull
+  /**Trode layout for spike detection/sorting*/
+  var trodeLayout: XTrodes = XTrodesNull
   /**Spikes*/
   var spikes: XSpikes = XSpikesNull
 
