@@ -3,6 +3,9 @@ package nounou.data
 import javafx.scene.shape.Rectangle
 import nounou.data.traits.{XChannels, XConcatenatable, XChannelsImmutable}
 
+/**Mutable layout object, works for filtering/binning... //ToDo 3: make immutable layout object
+ *
+ */
 abstract class XLayout extends X with XChannels with XConcatenatable {
   //ToDo 2: XChannels is not immutable d/t binning filter downstream. Reevaluate, perhaps regenerate Layout for each new filter?
 
@@ -47,11 +50,13 @@ abstract class XLayout extends X with XChannels with XConcatenatable {
     }
   }
 
-  override def :::(x: X): XLayout = x match {
-    case x: XLayout if x.isCompatible(this) => this
-    case x: XData if x.layout.isCompatible(this) => this
-    case _ => throw loggerError("cannot combine, {} is not compatible with this layout {}", x.toString, this.toString())
-  }
+  //ToDo 3: better concatenation(XLayoutPoint) and compatibility testing
+  override def :::(x: X): XLayout
+//  override def :::(x: X): XLayout = x match {
+//    case x: XLayout if x.isCompatible(this) => this
+////    case x: XData if x.layout.isCompatible(this) => this
+//    case _ => throw loggerError("cannot combine, {} is not compatible with this layout {}", x.toString, this.toString())
+//  }
 
   // </editor-fold>
 
@@ -59,21 +64,43 @@ abstract class XLayout extends X with XChannels with XConcatenatable {
 
 }
 
+class XLayoutPoint(override val channelNames: Vector[String]) extends XLayout {
+
+  override val field: Rectangle = new Rectangle()
+  override def channelToCoordinatesImpl(ch: Int): Vector[Double] = Vector(0D, 0D)
+  /** Detector which covers the chosen coordinates. */
+  override def coordinatesToChannel(x: Double, y: Double): Int = 0
+  override val channelRadius: Double = 0
+
+  override def toString() = "XLayoutPoint( channels=" + channelNames.length.toString + " )"
+
+  override def :::(x: X): XLayout = x match {
+    case x: XLayoutPoint if x.isCompatible(this) => new XLayoutPoint( this.channelNames ++ x.channelNames )
+    //case x: XData if x.layout.isCompatible(this) => this
+    case _ => throw loggerError("cannot combine, {} is not compatible with this layout {}", x.toString, this.toString())
+  }
+
+}
+
+//ToDo 4: XLayoutPoints, with multiple points, graphable as image with trodes grouped
+
 object XLayoutNull extends XLayout {
 
   override val channelNames = Vector[String]("null layout")
 
-  val field: Rectangle = new Rectangle()
-
-  def channelToCoordinatesImpl(ch: Int): Vector[Double] = Vector(0D, 0D)
-
+  override val field: Rectangle = new Rectangle()
+  override def channelToCoordinatesImpl(ch: Int): Vector[Double] = Vector(0D, 0D)
   /** Detector which covers the chosen coordinates. */
-  def coordinatesToChannel(x: Double, y: Double): Int = 0
-
-  val channelRadius: Double = 0
+  override def coordinatesToChannel(x: Double, y: Double): Int = 0
+  override val channelRadius: Double = 0
 
   override def isCompatible(that: X): Boolean = false
 
   override def toString() = "XLayoutNull"
+
+  override def :::(x: X): XLayout = x match {
+    case XLayoutNull => this
+    case _ => require(false, "cannot append incompatible data types (XLayoutNull)"); this
+  }
 
 }

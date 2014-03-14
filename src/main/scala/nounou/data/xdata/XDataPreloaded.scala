@@ -18,7 +18,7 @@ class XDataPreloaded(  val data: Array[DM[Int]],
                        override val absUnit: String,
                        override val scaleMax: Int,
                        override val scaleMin: Int,
-                       override val channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
+                       //override val channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
                        override val segmentStartTSs: Vector[Long],
                        override val sampleRate: Double,
                        override val layout: XLayout = XLayoutNull
@@ -53,10 +53,10 @@ class XDataPreloaded(  val data: Array[DM[Int]],
                                 absUnit = oriThis.absUnit,
                                 scaleMax = oriThis.scaleMax,
                                 scaleMin = oriThis.scaleMin,
-                                channelNames = oriThis.channelNames ++ t.channelNames,
+                                //channelNames = oriThis.channelNames ++ t.channelNames,
                                 segmentStartTSs = oriThis.segmentStartTSs,
                                 sampleRate = oriThis.sampleRate,
-                                layout = oriThis.layout
+                                layout = oriThis.layout ::: t.layout
             )
           } else {
             throw new IllegalArgumentException("the two XDataPreloaded types are not compatible, and cannot be concatenated.")
@@ -78,9 +78,9 @@ class XDataPreloadedSingleSegment(
                     absUnit: String,
                     scaleMax: Int,
                     scaleMin: Int,
-                    channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
+                    //channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
                     segmentStartTS: Long,
                     sampleRate: Double,
                     layout: XLayout = XLayoutNull
                     )
-  extends XDataPreloaded( Array(data), xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, channelNames, Vector[Long](segmentStartTS), sampleRate, layout)
+  extends XDataPreloaded( Array(data), xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, /*channelNames,*/ Vector[Long](segmentStartTS), sampleRate, layout)

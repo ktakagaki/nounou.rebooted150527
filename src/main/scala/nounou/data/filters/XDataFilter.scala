@@ -10,7 +10,7 @@ class XDataFilter( val upstream: XData ) extends XData {
 
   upstream.setChild(this)
 
-  override def channelNames: scala.Vector[String] = upstream.channelNames
+//  override def channelNames: scala.Vector[String] = upstream.channelNames
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = upstream.readPointImpl(channel, frame, segment)
   override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] = upstream.readTraceImpl(channel, range, segment)

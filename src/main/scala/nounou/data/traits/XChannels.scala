@@ -21,7 +21,7 @@ trait XChannels {
 
 trait XChannelsImmutable extends XChannels {
 
-  override val channelNames: Vector[String]
+  //override val channelNames: Vector[String]
   override final lazy val channelCount = channelNames.length
 
 }

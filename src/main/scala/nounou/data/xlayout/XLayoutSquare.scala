@@ -34,6 +34,12 @@ class XLayoutSquare(val _xDimensions: Int, val _yDimensions: Int) extends XLayou
   override def channelToCoordinatesImpl(ch: Int): Vector[Double] = Vector( ( ch % xDimensions).toDouble, (ch / xDimensions).toDouble )
 
   override val field: Rectangle = new Rectangle(- channelRadius, - channelRadius, xDimensions.toDouble, yDimensions.toDouble)
+
+  override def :::(x: X): XLayoutSquare = x match {
+    case x: XLayoutSquare if x.isCompatible(this) => throw loggerError("Concatenation of square layouts is not defined!")
+    case _ => throw loggerError("cannot combine, {} is not compatible with this layout {}", x.toString, this.toString())
+  }
+
 }
 
 
