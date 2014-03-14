@@ -1,4 +1,4 @@
-package nounou.data.trodes
+package nounou.data
 
 import nounou.data.X
 import nounou.data.traits.XConcatenatable
@@ -68,4 +68,7 @@ class XTrodesPreloaded(private val trodeGroups: Array[Array[Int]]) extends XTrod
 
 
 }
+
+object XTrodesNull extends XTrodesPreloaded( Array[Array[Int]]() )
+
 
