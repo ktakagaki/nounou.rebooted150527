@@ -3,7 +3,9 @@ package nounou.data.traits
 import nounou.data.X
 import breeze.linalg.DenseVector
 
-/**
+/**This trait of XData and XDataChannel objects encapsulates scaling and unit information for
+ * electrophysiological and imaging recordings.
+  *
  * Created by Kenta on 12/15/13.
  */
 trait XAbsolute extends X {
