@@ -1,7 +1,7 @@
 package nounou.data.filters
 
 import nounou._
-import nounou.data.{XLayout, X, XData}
+import nounou.data.{XDataNull, XLayout, X, XData}
 import breeze.linalg.{DenseVector => DV}
 
 /** A passthrough object, which is overriden and inherited with various XDataFilterTr traits to create a filter block.
@@ -37,3 +37,6 @@ class XDataFilter( val upstream: XData ) extends XData {
   }
 
 }
+
+
+object XDataFilterNull extends XDataFilter( XDataNull )

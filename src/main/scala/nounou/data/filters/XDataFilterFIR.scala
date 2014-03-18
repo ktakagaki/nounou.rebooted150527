@@ -5,6 +5,7 @@ import nounou.data.{XData, X}
 import breeze.linalg.{DenseVector => DV, convert}
 import breeze.signal.support.FIRKernel1D
 import breeze.signal._
+import scala.beans.BeanProperty
 
 /**
  * @author ktakagaki
@@ -34,7 +35,7 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
     changedData()
   }
 
-  def setFilter( omega0: Double, omega1: Double, taps: Int ): Unit = {
+  def setFilter( omega0: Double, omega1: Double): Unit = {
     require(omega0>= 0 && omega1 > omega0 && omega1 <= 1,
       logger.error(
         "Frequencies must be 0 <= omega0 < omega1 <= 1. omega0={}, omega1={}. Use setFilterHz if setting in Hz.",
@@ -54,14 +55,15 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
     }
   }
 
-  def setFilterHz( f0: Double, f1: Double): Unit = setFilterHz(f0, f1, 1024)
-  def setFilterHz( f0: Double, f1: Double, taps: Int ): Unit = {
+  def setFilterHz( f0: Double, f1: Double): Unit = {
     require(f0 >= 0 && f1 > f0 && f1 <= sampleRate/2, logger.error("setFilterHz: Frequencies must be 0 <= f0 < f1 <= sampleRate/2. f0={}, f1={}", f0.toString, f1.toString) )
-    setFilter(f0/(sampleRate/2d), f1/(sampleRate/2d), taps)
+    setFilter(f0/(sampleRate/2d), f1/(sampleRate/2d))
   }
 
   def getFilterHz(): Vector[Double] = Vector[Double]( kernelOmega0*(sampleRate/2d), kernelOmega1*(sampleRate/2d) )
 
+  @BeanProperty
+  var taps = 1024
   // </editor-fold>
 
 
@@ -83,7 +85,7 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
         upstream.readTraceImpl(channel, ran, segment)
     } else {
         //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-        val tempData = upstream.readTrace( channel, new FrameRange( ran.start - kernel.overhangPre, ran.last + kernel.overhangPost + 1, 1), segment)
+        val tempData = upstream.readTrace( channel, new FrameRange( ran.start - kernel.overhangPre, ran.last + kernel.overhangPost, 1), segment)
 //      println( "1: " + tempData.length )
 //      println(OptRange.rangeToRangeOpt(ran))
         val tempRes: DV[Long] = convolve(
