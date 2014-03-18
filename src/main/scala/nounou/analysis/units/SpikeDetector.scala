@@ -7,6 +7,7 @@ import scala.beans.BeanProperty
 import breeze.linalg.DenseVector
 import breeze.numerics.abs
 import breeze.stats.median
+import scala.collection.mutable.{ArrayBuffer}
 
 /**
  * @author ktakagaki
@@ -44,11 +45,39 @@ abstract class SpikeDetectorQuiroga extends SpikeDetector {
   var absThresholdSD: Double = 3d
 
   override def apply(xData: XData, xSpikes: XSpikes, trodes: Array[Int], frameRange: FrameRange, segment: Int, optSpikeDetectorFlush: OptSpikeDetectorFlush) = {
+    loggerRequire( frameRange.step == 1, "Currently, SpikeDetector classes must be called with a frame range with step = 1. {} is invalid", frameRange.step.toString)
+
     val channels = trodes.flatMap( p => xSpikes.trodeLayout.trodeGroup(p) )
-    val tempData = channels.map( p => xData.readTrace(p, frameRange, segment))
-    val thresholds = tempData.map( p => median( abs(p) ) / 0.6745 * absThresholdSD )
+    val tempData = channels.map( p => xData.readTrace(p, frameRange, segment).toArray )
+    val thresholds = tempData.map( p => (median( abs(p) ) / 0.6745 * absThresholdSD).toInt )
+    val blackoutSamples = xData.msToFrame( blackoutMs )
+    val timestamps = thresholder(tempData, thresholds, blackoutSamples).map(p => xData.frameSegmentToTS(p+frameRange.start, segment))
 
 
+  }
+
+  //ToDo 4: make into general breeze function
+  def thresholder( vect: Array[Array[Int]], thresholds: Array[Int], blackout: Int): Array[Int] = {
+    val tempRet = new ArrayBuffer[Int]()
+    var index = 0
+    var channels = Range(0, vect.length)
+    var triggered = !channels.forall( p => vect(p)(0) < thresholds(0) )
+    while(index < vect.length){
+      if( !triggered ){
+        if( !channels.forall(p => vect(p)(index) < thresholds(p) ) ){
+          tempRet.append(index)
+          triggered = true
+          index += blackout
+        } else{
+          index += 1
+        }
+      } else{
+        if( channels.forall(p => vect(p)(index) < thresholds(p) ) ) triggered = false
+        index += 1
+      }
+    }
+
+    tempRet.toArray
   }
 
 //  protected def setPreFilter(frameRange: FrameRange, segment: Int): Unit
@@ -60,6 +89,9 @@ abstract class SpikeDetectorQuiroga extends SpikeDetector {
     absThresholdSD + " deviations of the median estimate for standard deviation."
 
 }
+
+
+
 
 //object SpikeDetectorQuirogaFIR extends SpikeDetectorQuiroga {
 //
