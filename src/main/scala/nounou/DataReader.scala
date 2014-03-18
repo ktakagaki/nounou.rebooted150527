@@ -6,7 +6,6 @@ import com.typesafe.scalalogging.slf4j.Logging
 import nounou.data._
 import nounou.data.io.{FileAdapterGSDGSH, FileAdapterNEV, FileAdapterNCS, FileAdapterNEX}
 import nounou.data.filters._
-import nounou.data.trodes.XTrodes
 
 
 /**
@@ -31,8 +30,6 @@ class DataReader extends Logging {
 
   /**Events*/
   var events: XEvents = XEventsNull
-  /**Trode layout for spike detection/sorting*/
-  var trodeLayout: XTrodes = XTrodesNull
   /**Spikes*/
   var spikes: XSpikes = XSpikesNull
 
@@ -67,7 +64,8 @@ class DataReader extends Logging {
 
 //    val stepSize = (dataRMSFIR.sampleRate * 0.05).toInt //100 ms
 //    val maskHalfWindow = 150L * 1000L // 150 ms
-    dataRMSFIR.setFilterHz(f0, f1, 64)
+    dataRMSFIR.setTaps(64)
+    dataRMSFIR.setFilterHz(f0, f1)
 
     val rmsThreshold = dataRMS.absToInternal( rmsAbsThreshold )
     val absThreshold = dataRMS.absToInternal( absAbsThreshold )
