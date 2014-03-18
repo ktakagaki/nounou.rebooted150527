@@ -1,6 +1,5 @@
 package nounou.data
 
-import nounou.data.X
 import nounou.data.traits.XConcatenatable
 import breeze.linalg.max
 import scala.collection.mutable.Set
@@ -11,7 +10,9 @@ import scala.collection.mutable.Set
  */
 abstract class XTrodes extends X with XConcatenatable {
 
+  /**Returns the total number of defined trodes.*/
   def trodeCount: Int
+  /**Returns the channels included in each trode.*/
   def trodeGroup(trode: Int): Array[Int]
   def trodeNeighbors( channel: Int ): Array[Int]
   def channelCount: Int
@@ -68,6 +69,8 @@ class XTrodesPreloaded(private val trodeGroups: Array[Array[Int]]) extends XTrod
 
 
 }
+
+class XTrodesIndividual( channels: Int ) extends XTrodesPreloaded( Array.tabulate( channels )( Array( _ ) )  )
 
 object XTrodesNull extends XTrodesPreloaded( Array[Array[Int]]() )
 

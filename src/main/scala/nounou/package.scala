@@ -1,10 +1,5 @@
-import breeze.linalg.DenseVector
-import breeze.macros.expand
 import com.typesafe.scalalogging.slf4j.Logging
-import nounou.data.XData
-import scala.math
 import scala.reflect.ClassTag
-import scala.reflect.runtime.universe._
 
 /**
  * @author ktakagaki
@@ -111,4 +106,8 @@ package object nounou extends Logging {
   }
 
   //def toArrayInt(vect: Vector[Int]): Array[Int] = vect.toArray
+
+  case object None extends Opt
+  case object All extends Opt
+
 }
