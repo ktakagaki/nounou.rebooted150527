@@ -145,20 +145,20 @@ class DataReader extends Logging {
 //  // <editor-fold defaultstate="collapsed" desc=" trace accessor methods ">
 //
 //  //def readTrace(channel: Int): Array[Int] = data.readTrace(channel).toArray
-//  def dataTrace(channel: Int, range: FrameRange): Array[Int] = data.readTrace(channel, range, 0).toArray
-//  def dataTrace(channel: Int, range: FrameRange, segment: Int): Array[Int] = data.readTrace(channel, range, segment).toArray
-//  def dataORITrace(channel: Int, range: FrameRange): Array[Int] = dataORI.readTrace(channel, range, 0).toArray
-//  def dataORITrace(channel: Int, range: FrameRange, segment: Int): Array[Int] = dataORI.readTrace(channel, range, segment).toArray
+//  def dataTrace(channel: Int, range: RangeFr): Array[Int] = data.readTrace(channel, range, 0).toArray
+//  def dataTrace(channel: Int, range: RangeFr, segment: Int): Array[Int] = data.readTrace(channel, range, segment).toArray
+//  def dataORITrace(channel: Int, range: RangeFr): Array[Int] = dataORI.readTrace(channel, range, 0).toArray
+//  def dataORITrace(channel: Int, range: RangeFr, segment: Int): Array[Int] = dataORI.readTrace(channel, range, segment).toArray
 //
 //  //def readTraceAbs(channel: Int): Array[Double] = data.readTraceAbs(channel).toArray
-//  def dataTraceAbs(channel: Int, range: FrameRange): Array[Double] = data.readTraceAbs(channel, range, 0).toArray
-//  def dataTraceAbs(channel: Int, range: FrameRange, segment: Int): Array[Double] = data.readTraceAbs(channel, range, segment).toArray
-//  def dataTraceAbs(channel: Int, range: MsRange): Array[Double] = dataTraceAbs(channel, range.getFrameRange(data), 0)
-//  def dataTraceAbs(channel: Int, range: MsRange, segment: Int): Array[Double] = dataTraceAbs(channel, range.getFrameRange(data), segment)
-//  def dataORITraceAbs(channel: Int, range: FrameRange): Array[Double] = dataORI.readTraceAbs(channel, range).toArray
-//  def dataORITraceAbs(channel: Int, range: FrameRange, segment: Int): Array[Double] = dataORI.readTraceAbs(channel, range, segment).toArray
-//  def dataORITraceAbs(channel: Int, range: MsRange): Array[Double] = dataORITraceAbs(channel, range.getFrameRange(data), 0)
-//  def dataORITraceAbs(channel: Int, range: MsRange, segment: Int): Array[Double] = dataORITraceAbs(channel, range.getFrameRange(data), segment)
+//  def dataTraceAbs(channel: Int, range: RangeFr): Array[Double] = data.readTraceAbs(channel, range, 0).toArray
+//  def dataTraceAbs(channel: Int, range: RangeFr, segment: Int): Array[Double] = data.readTraceAbs(channel, range, segment).toArray
+//  def dataTraceAbs(channel: Int, range: RangeMs): Array[Double] = dataTraceAbs(channel, range.getFrameRange(data), 0)
+//  def dataTraceAbs(channel: Int, range: RangeMs, segment: Int): Array[Double] = dataTraceAbs(channel, range.getFrameRange(data), segment)
+//  def dataORITraceAbs(channel: Int, range: RangeFr): Array[Double] = dataORI.readTraceAbs(channel, range).toArray
+//  def dataORITraceAbs(channel: Int, range: RangeFr, segment: Int): Array[Double] = dataORI.readTraceAbs(channel, range, segment).toArray
+//  def dataORITraceAbs(channel: Int, range: RangeMs): Array[Double] = dataORITraceAbs(channel, range.getFrameRange(data), 0)
+//  def dataORITraceAbs(channel: Int, range: RangeMs, segment: Int): Array[Double] = dataORITraceAbs(channel, range.getFrameRange(data), segment)
 //  // </editor-fold>
 //
 //  // </editor-fold>

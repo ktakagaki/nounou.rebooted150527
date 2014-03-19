@@ -14,7 +14,7 @@ object FileAdapterKlustaDAT extends FileAdapter {
   override val canWriteExt: List[String] = List[String]("klusta.dat")
   override val canLoadExt: List[String] = List[String]()
 
- // override def write(fileName: String, data: XData) = write(fileName, data, 0, FrameRange.All)
+ // override def write(fileName: String, data: XData) = write(fileName, data, 0, RangeFr.All)
 
     def loadImpl(file: File) = loadCannotImpl(file)
 //  implicit val canWriteXData: CanWrite[XData] = new CanWrite[XData]{
