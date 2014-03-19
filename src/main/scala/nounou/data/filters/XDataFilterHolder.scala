@@ -22,6 +22,12 @@ class XDataFilterHolder extends XData with XDataAux {
     changedData()
     changedTiming()  //ToDo 3: buffer and only conditionally trigger timing change
   }
+  def getHeldData = heldData
+  def setHeldData( newData: XData ) = heldData_=(newData)
+
+  //ToDo 2: Go through all classes, check channelCount. Fix dependency on layout
+  override def channelCount() = _heldData.channelCount
+
   override def getChildren() = {
     heldData.getChildren() ++ super.getChildren()
   }
