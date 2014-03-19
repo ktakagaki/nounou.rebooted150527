@@ -107,6 +107,8 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     */
   final def readTrace(channel: Int, range: RangeFr): DV[Int] = readTrace(channel, range, currentSegment)
   final def readTraceA(channel: Int, range: RangeFr) = readTrace(channel, range).toArray
+  final def readTrace(channel: Int, range: RangeFrSpecifier): DV[Int] = readTrace(channel, range.getFrameRange(this), currentSegment)
+  final def readTraceA(channel: Int, range: RangeFrSpecifier) = readTrace(channel, range.getFrameRange(this)).toArray
 
   /** Read a single trace from the data, in internal integer scaling.
     */
@@ -129,27 +131,29 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   }
   final def readTraceA(channel: Int, range: RangeFr, segment: Int) = readTrace(channel, range, segment).toArray
+  final def readTrace(channel: Int, range: RangeFrSpecifier, segment: Int): DV[Int] = readTrace(channel, range.getFrameRange(this), segment)
+  final def readTraceA(channel: Int, range: RangeFrSpecifier, segment: Int) = readTrace(channel, range.getFrameRange(this), segment).toArray
 
 //  final def readTraceA(channel: Int, range: RangeFr): Array[Int] = readTrace(channel, range).toArray
 //  final def readTraceA(channel: Int, range: RangeFr, segment: Int): Array[Int] = readTrace(channel, range, segment).toArray
 
-  /** Read a single trace from the data, in internal integer scaling.
-    */
-  final def readTraceFromTS(channel: Int, ts: Long, preFrames: Int = 0, postFrames: Int = 0, readOOB: Boolean = true): DV[Int] = {
-    require(isValidChannel(channel), "Invalid channel: " + channel.toString)
-
-    val keyFrame = tsToFrameSegment(ts, negativeIfOOB = true)
-
-    if( readOOB ){
-      if( keyFrame._1 - postFrames < 0 || keyFrame._1 + postFrames >= segmentLengths( keyFrame._2 ) ) null
-           //readTraceImpl will only read within range
-      else readTraceImpl( channel, (keyFrame._1 - postFrames) to (keyFrame._1 + postFrames), keyFrame._2 )
-    } else {
-      //readTrace pads with zeros if out of range
-      readTrace( channel, (keyFrame._1 - postFrames) to (keyFrame._1 + postFrames), keyFrame._2 )
-    }
-
-  }
+//  /** Read a single trace from the data, in internal integer scaling.
+//    */
+//  final def readTraceFromTS(channel: Int, ts: Long, preFrames: Int = 0, postFrames: Int = 0, readOOB: Boolean = true): DV[Int] = {
+//    require(isValidChannel(channel), "Invalid channel: " + channel.toString)
+//
+//    val keyFrame = tsToFrameSegment(ts, negativeIfOOB = true)
+//
+//    if( readOOB ){
+//      if( keyFrame._1 - postFrames < 0 || keyFrame._1 + postFrames >= segmentLengths( keyFrame._2 ) ) null
+//           //readTraceImpl will only read within range
+//      else readTraceImpl( channel, (keyFrame._1 - postFrames) to (keyFrame._1 + postFrames), keyFrame._2 )
+//    } else {
+//      //readTrace pads with zeros if out of range
+//      readTrace( channel, (keyFrame._1 - postFrames) to (keyFrame._1 + postFrames), keyFrame._2 )
+//    }
+//
+//  }
 
   /** Read a single trace from current segment (or segment 0 if not initialized),  in absolute unit scaling (as recorded).
     */
@@ -158,14 +162,18 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   /** Read a single trace (within the span) from current segment (or segment 0 if not initialized), in absolute unit scaling (as recorded).
     */
   final def readTraceAbs(channel: Int, range: RangeFr = RangeFr.All): DV[Double] = toAbs(readTrace(channel, range))
+  final def readTraceAbs(channel: Int, range: RangeFrSpecifier): DV[Double] = toAbs(readTrace(channel, range))
 
   /** Read a single trace (within the span) from the data, in absolute unit scaling (as recorded).
     */
   final def readTraceAbs(channel: Int, range: RangeFr, segment: Int): DV[Double] = toAbs(readTrace(channel, range, segment))
+  final def readTraceAbs(channel: Int, range: RangeFrSpecifier, segment: Int): DV[Double] = toAbs(readTrace(channel, range, segment))
 
   final def readTraceAbsA(channel: Int): Array[Double] = readTraceAbs(channel).toArray
   final def readTraceAbsA(channel: Int, range: RangeFr): Array[Double] = readTraceAbs(channel, range).toArray
   final def readTraceAbsA(channel: Int, range: RangeFr, segment: Int): Array[Double] = readTraceAbs(channel, range, segment).toArray
+  final def readTraceAbsA(channel: Int, range: RangeFrSpecifier): Array[Double] = readTraceAbs(channel, range).toArray
+  final def readTraceAbsA(channel: Int, range: RangeFrSpecifier, segment: Int): Array[Double] = readTraceAbs(channel, range, segment).toArray
 
   //</editor-fold>
 

@@ -50,7 +50,7 @@ trait XFrames extends X with LoggingExt {
 
   // </editor-fold>
 
-  // <editor-fold desc="isValidFrame">
+  // <editor-fold defaultstate="collapsed" desc="isValidFrame">
 
   /** Is this frame valid?
     */
@@ -64,7 +64,7 @@ trait XFrames extends X with LoggingExt {
 
   // </editor-fold>
 
-  // <editor-fold desc="Sample Rate: sampleRate/sampleInterval/tsPerFrame/framesPerTS">
+  // <editor-fold defaultstate="collapsed" desc="Sample Rate: sampleRate/sampleInterval/tsPerFrame/framesPerTS">
 
   /**OVERRIDE: Sampling rate of frame data in Hz
     */
@@ -80,6 +80,7 @@ trait XFrames extends X with LoggingExt {
   def framesPerTS = 1D/tsPerFrame
 
   // </editor-fold>
+
   // <editor-fold defaultstate="collapsed" desc="Sample Rate: conversion between frame/segment, TS, and ms">
 
   /** Absolute timestamp of the given data frame index (in microseconds).
