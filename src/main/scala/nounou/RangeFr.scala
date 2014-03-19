@@ -4,6 +4,10 @@ import nounou.data.traits.{XFrames}
 
 //TODO 1: Should really streamline this code and test better, but it is a minefield!
 
+abstract class RangeFrSpecifier extends LoggingExt {
+  def getFrameRange(x: XFrames): RangeFr
+}
+
 /**
  * @author ktakagaki
  * @date 2/9/14.

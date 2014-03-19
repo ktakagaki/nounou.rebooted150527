@@ -6,15 +6,15 @@ import com.typesafe.scalalogging.slf4j.Logging
  */
 package object nounou extends Logging {
 
-  /**A range of time stamps for extracting data, events, and spikes.*/
-  class RangeTS(val startTSInclusive: Long, val endTSInclusive: Long){
-
-//    def this(val centerTS: Long, val framesPre: Int, val framesPost: Int )
-
-//    def toSegmentAndRangeAndPadding( xd: XData ): (Int, Range, (Int, Int) ) = {
-//      xd.tsToFrame()
-//    }
-  }
+//  /**A range of time stamps for extracting data, events, and spikes.*/
+//  class RangeTS(val startTSInclusive: Long, val endTSInclusive: Long){
+//
+////    def this(val centerTS: Long, val framesPre: Int, val framesPost: Int )
+//
+////    def toSegmentAndRangeAndPadding( xd: XData ): (Int, Range, (Int, Int) ) = {
+////      xd.tsToFrame()
+////    }
+//  }
 
 
   implicit def rangeInclusiveToFrameRange(range: Range.Inclusive): RangeFr = {

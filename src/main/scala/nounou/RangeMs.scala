@@ -12,7 +12,7 @@ import nounou.data.traits.XFrames
 
   }
 
-  class RangeMs(val start: Double, val end: Double, val step: Double, val isAll: Boolean = false) /*extends Range(start, last, stepMs)*/{
+  class RangeMs(val start: Double, val end: Double, val step: Double, val isAll: Boolean = false) extends RangeFrSpecifier {
 
     def getFrameRange(x: XFrames): RangeFr = {
 
