@@ -4,7 +4,7 @@ import scala.collection.immutable.{TreeMap}
 import scala.reflect.ClassTag
 import nounou.data.traits.XFrames
 import scala.collection.mutable.ArrayBuffer
-import nounou.FrameRange
+import nounou.RangeFr
 
 //ToDo 1: Mask serialization
 
@@ -93,7 +93,7 @@ import nounou.FrameRange
   def isMaskedFrame( frameStart: Int, frameEnd: Int, segment: Int, x: XData ): Boolean =
         isMaskedTS(x.frameSegmentToTS(frameStart, segment) , x.frameSegmentToTS(frameEnd, segment) )
 
-  def isMaskedFrame( range: FrameRange, segment: Int, x: XData ): Boolean ={
+  def isMaskedFrame( range: RangeFr, segment: Int, x: XData ): Boolean ={
     val realRange = range.getRange(x.segmentLengths(segment))
     isMaskedFrame( realRange, segment, x)
   }

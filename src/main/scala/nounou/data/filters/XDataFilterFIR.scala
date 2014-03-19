@@ -85,7 +85,7 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
         upstream.readTraceImpl(channel, ran, segment)
     } else {
         //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-        val tempData = upstream.readTrace( channel, new FrameRange( ran.start - kernel.overhangPre, ran.last + kernel.overhangPost, 1), segment)
+        val tempData = upstream.readTrace( channel, new RangeFr( ran.start - kernel.overhangPre, ran.last + kernel.overhangPost, 1), segment)
 //      println( "1: " + tempData.length )
 //      println(OptRange.rangeToRangeOpt(ran))
         val tempRes: DV[Long] = convolve(

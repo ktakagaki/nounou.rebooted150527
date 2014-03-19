@@ -19,11 +19,11 @@ class FileAdapterNCSTest extends FunSuite {
     d.reload( testFileTet4a )
 
     println(d.dataORI.segmentLengths)
-    //println(d.dataORI.readTrace(0, FrameRange.All, 0).length)
-    //println(d.dataORI.readTrace(0, FrameRange.All, 1).length)
+    //println(d.dataORI.readTrace(0, RangeFr.All, 0).length)
+    //println(d.dataORI.readTrace(0, RangeFr.All, 1).length)
 
     assert(d.dataORI.segmentCount == 3, "Segment count " + d.data.segmentCount + " should be 3!" )
-    assert(d.dataORI.readTrace(0, FrameRange.all, 0).length == 3339264, "read whole segment length incorrect!")
+    assert(d.dataORI.readTrace(0, RangeFr.All, 0).length == 3339264, "read whole segment length incorrect!")
 
     val tempTrace1 = d.dataORI.readTrace(0, 0 to 5120, 0)
 

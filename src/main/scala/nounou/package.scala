@@ -1,5 +1,4 @@
 import com.typesafe.scalalogging.slf4j.Logging
-import scala.reflect.ClassTag
 
 /**
  * @author ktakagaki
@@ -17,23 +16,20 @@ package object nounou extends Logging {
 //    }
   }
 
-//  Doesn't really work due to implicit definitions of the relevant functions, such as convolve
-//  @expand
-//  implicit def vectorToDenseVector[@expand.args(Int, Double, Long, Float) T]( vector: Vector[T] ): DenseVector[T] = {
-//    DenseVector[T]( vector.toArray )
-//  }
 
-  implicit def rangeInclusiveToFrameRange(range: Range.Inclusive): FrameRange = {
-    //require( range.isInclusive, "Exclusive indexing with 'until' is not permitted in nounou, use inclusive 'to'!" )
+  implicit def rangeInclusiveToFrameRange(range: Range.Inclusive): RangeFr = {
     require( range.step > 0, "Only positive steps are allowed for indexing in nounou!" )
     require( range.start <= range.end, "In nounous, start <= last is required for frame ranges. start=" + range.start + ", last=" + range.end)
 
-    //println( "1 " + new FrameRange(range.start, range.end, range.stepMs, false) )
-    new FrameRange(range.start, range.end, range.step, false)
-
+    new RangeFr(range.start, range.end, range.step, false)
   }
 
 
+  // <editor-fold defaultstate="collapsed" desc=" forJava ">
+
+  /** Provides a quick java-based for loop, avoiding Scala for-comprehensions
+    *
+    */
   def forJava(start: Int, endExclusive: Int, step: Int, function: (Int => Unit) ): Unit = {
     var count = start
     if( step>0 ) while( count < endExclusive){
@@ -44,49 +40,10 @@ package object nounou extends Logging {
       count = count + step
     } else throw new IllegalArgumentException
   }
-//  def forJava[@specialized(Int) T <: Int](start: T, endExclusive: T, stepMs: T, function: (T => Unit) ): Unit = {
-//    var count: T = start
-//    if( stepMs > 0 ) while( count < endExclusive){
-//      function(count)
-//      count = count + stepMs
-//    } else if (stepMs<0) while( count > endExclusive){
-//      function(count)
-//      count = count + stepMs
-//    } else throw new IllegalArgumentException
-//  }
 
-  final class SpecArrayIm[@specialized(Int, Double) V: ClassTag](n: Int){
-    val value = new Array[ V ](n)
-    def get(): Array[ V ] = value
-  }
-//  final class ArrayArrayIm[@specialized(Int, Double) V: ClassTag](n: Int, m: Int){
-//    val value = new Array[ Array[V] ](n)
-//    for(cnt <- 0 until n) { value(cnt) = new Array[V](m) }
-//
-//    def set(n0: Int, m0: Int, v: V): Unit = { value(n0)(m0) = v }
-//    def get(n0: Int, m0: Int): V = value(n0)(m0)
-//    def get(n0: Int): Array[V] = value(n0)
-//    def get(): Array[Array[V]] = value
-//  }
+  // </editor-fold>
 
-  // <editor-fold defaultstate="collapsed" desc=" Some Scala Implicit Pimps ">
-
-    def toLong(vect: Vector[Int]): Vector[Long] = {
-      val tempArr = new Array[Long](vect.length)
-      for( c <- 0 until tempArr.length ){
-          tempArr(c) = Int.int2long(vect(c))
-      }
-      tempArr.toVector
-  }
-
-  def toInt(vect: Vector[Long]): Vector[Int] = {
-    val tempArr = new Array[Int](vect.length)
-    for( c <- 0 until tempArr.length ){
-      tempArr(c) = vect(c).asInstanceOf[Int]
-    }
-    tempArr.toVector
-  }
-
+  // <editor-fold defaultstate="collapsed" desc=" trait LoggingExt (loggerError, loggerRequire) ">
 
   trait LoggingExt extends Logging {
 
@@ -105,9 +62,15 @@ package object nounou extends Logging {
 
   }
 
-  //def toArrayInt(vect: Vector[Int]): Array[Int] = vect.toArray
+  // </editor-fold>
+
+
 
   case object None extends Opt
   case object All extends Opt
+
+//  implicit val nounou.None => OptSpikeDetectorFlush.None
+//  implicit def noneExpandToOptSpikeDetectorFlush(none: nounou.None) = OptSpikeDetectorFlush.None
+
 
 }

@@ -3,7 +3,7 @@ package nounou.data.filters
 import org.scalatest.FunSuite
 import nounou.data.io.{XDataChannelNCS, FileAdapterNCS}
 import nounou.data.{XDataChannel, XDataChannelArray}
-import nounou.FrameRange
+import nounou.RangeFr
 
 /**
  * @author ktakagaki

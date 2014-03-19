@@ -32,12 +32,12 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
   /** Read a single trace from the data, in internal integer scaling.
     */
   final def readTrace(segment: Int): DV[Int] = {
-    val range = FrameRange.all.getValidRange( segmentLengths(segment) )
+    val range = RangeFr.All.getValidRange( segmentLengths(segment) )
     readTraceImpl(range, currentSegment = segment)
   }
   /** Read a single trace (within the span) from the data, in internal integer scaling.
     */
-  final def readTrace(range: FrameRange, segment: Int): DV[Int] = {
+  final def readTrace(range: RangeFr, segment: Int): DV[Int] = {
 
     val segLen =  segmentLengths(segment)
     val preLength = range.preLength( segLen )

@@ -2,7 +2,7 @@ package nounou.data.io
 
 import org.scalatest.FunSuite
 import java.io.File
-import nounou.{FrameRange, DataReader}
+import nounou.{RangeFr, DataReader}
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
 
 /**
