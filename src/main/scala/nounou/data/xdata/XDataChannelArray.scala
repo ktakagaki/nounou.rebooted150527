@@ -19,7 +19,7 @@ import nounou.data.traits.XConcatenatable
   override lazy val sampleRate = array(0).sampleRate
 
   // (from XChannelsImmutable)
-//  override lazy val channelNames = array.map(_.channelName)
+  override lazy val channelNames = array.map(_.channelName)
 
   // (from XAbsoluteImmutable)
   override lazy val absGain = array(0).absGain

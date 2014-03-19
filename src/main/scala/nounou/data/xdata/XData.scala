@@ -58,7 +58,8 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   // <editor-fold defaultstate="collapsed" desc=" XLayout related ">
 
   def layout(): XLayout
-  override final def channelNames() = layout().channelNames
+  //ToDo 2: make channelNames, etc, Array[] methods? Depends on mutability...
+  override def channelNames() = layout().channelNames
   override final def channelNamesA() = layout().channelNamesA
   //channelCount???
   // </editor-fold>
@@ -271,6 +272,7 @@ abstract class XDataImmutable extends XData with XFramesImmutable with XChannels
 
 
   //ToDo 4: channelNames as lazy val?
+
   // <editor-fold defaultstate="collapsed" desc=" DataSource related ">
 
   override def changedData(): Unit = logger.error("this is an immutable data source, and changedData() should not be invoked!")

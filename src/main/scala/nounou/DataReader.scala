@@ -186,7 +186,11 @@ class DataReader extends Logging {
       case n: String if (n.endsWith(".gsd") || n.endsWith(".gsh")) => FileAdapterGSDGSH.load( file )
       case n => throw new IllegalArgumentException("File format for " + n + " is not supported yet.")
     }
-    logger.info("loading file: {}", file.getName)
+    if(reload){
+      logger.info("Reloading file {}, obtained {} objects from FileAdapter.", file.getName, list.length.toString)
+    } else {
+      logger.info("Loading file: {}, obtained {} objects from FileAdapter.", file.getName, list.length.toString)
+    }
     list.foreach( loadImpl(_) )
   }
 
@@ -275,9 +279,11 @@ class DataReader extends Logging {
         } else if( dataORI.heldData == XDataNull /*reloadFlagData == 0, 1*/) {
           //both load and reload data if dataORI holds a null
           setData(x0)
+          logger.info("A new XData object was loaded onto dataORI.heldData: {}", x0.toString())
         } else if ( dataORI.isCompatible(x0)  /*reloadFlagData == 0, 2*/) {
           //if flag is NOT 0 and if what is already loaded is compatible
           setData(dataORI.heldData ::: x0)
+          logger.info("A new XData object was appended onto dataORI.heldData: {}", x0.toString())
           reloadFlagData = 2
         } else { //not compatible with data, try dataAux
           logger.warn("Incompatible data already loaded in data and dataAux, ignoring new data {}. Use clearData/clearDataAux first or reload() instead of load(), if this is unintended.", x0)
@@ -288,15 +294,18 @@ class DataReader extends Logging {
               case XDataNull => {
                 //if null, reload to regardless
                 setData( new XDataChannelArray( Vector[XDataChannel]( x0 ) ) )
+                logger.info("A new XDataChannel object was loaded onto dataORI.heldData: {}", x0.toString())
                 reloadFlagData = 2
               }
               case data0: XDataChannelArray => {
                 if( reloadFlagData == 1 ) {
                   //overwrite and load to data regardless, if the reload flag is 1
                   setData( new XDataChannelArray( Vector[XDataChannel]( x0 ) ) )
+                  logger.info("A new XDataChannel object was reloaded onto dataORI.heldData: {}", x0.toString())
                   reloadFlagData = 2
                 } else if ( data0(0).isCompatible(x0)  /*reloadFlagData == 0, 2*/) {
                   setData( data0 ::: x0 )
+                  logger.info("A new XDataChannel object was appended onto dataORI.heldData: {}", x0.toString())
                   reloadFlagData = 2
                 } else { //not compatible with data, try dataAux
                   logger.warn("Incompatible data already loaded in data, ignoring new data channel {}}. Use clearData first or reload() instead of load(), if this is unintended.", x0)
