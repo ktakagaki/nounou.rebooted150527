@@ -1,7 +1,5 @@
 package nounou.data.traits
 
-import scala.Vector
-
 /**This trait of XData objects encapsulates the channel names and count information for
   * electrophysiological and imaging recordings.
   *
@@ -24,6 +22,9 @@ trait XChannels {
 trait XChannelsImmutable extends XChannels {
 
   //override val channelNames: Vector[String]
-  override final lazy val channelCount = channelNames.length
+
+  //ToDo 1: Immutable? make all mutable or make all immutable!
+  def channelCount: Int //decouple from channelNames and dependence on XLayout
+  //override final lazy val channelCount = channelNames.length
 
 }

@@ -49,7 +49,7 @@ abstract class SpikeDetectorQuiroga extends SpikeDetector {
 
     val channels = trodes.flatMap( p => xSpikes.trodeLayout.trodeGroup(p) )
     val tempData = channels.map( p => xData.readTrace(p, frameRange, segment).toArray )
-    val thresholds = tempData.map( p => (median( abs(p) ) / 0.6745 * absThresholdSD).toInt )
+    val thresholds = tempData.map( p => (median( abs(DenseVector(p)) ) / 0.6745 * absThresholdSD).toInt )
     val blackoutSamples = xData.msToFrame( blackoutMs )
     val timestamps = thresholder(tempData, thresholds, blackoutSamples).map(p => xData.frameSegmentToTS(p+frameRange.start, segment))
 

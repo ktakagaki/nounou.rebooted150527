@@ -45,7 +45,8 @@ class XDataFilterMedianSubtract( override val upstream: XData ) extends XDataFil
     } else {
       //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
       val tempData = upstream.readTrace( channel, new FrameRange( ran.start - windowLengthHalf, ran.last + windowLengthHalf, 1), segment)
-      tempData - filterMedian(tempData, windowLength, OptOverhang.None)
+//      logger.info("windowLength {} tempData.length {} filterMedian length {} ", windowLength.toString, tempData.length.toString, filterMedian(tempData, windowLength, OptOverhang.None).length.toString)
+      tempData(windowLengthHalf to -windowLengthHalf-1) - filterMedian(tempData, windowLength, OptOverhang.None)
     }
 
   //  override def readFrameImpl(frame: Int, segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame, segment)
