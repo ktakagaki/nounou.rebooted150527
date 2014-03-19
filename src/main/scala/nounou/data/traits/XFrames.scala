@@ -2,7 +2,7 @@ package nounou.data.traits
 
 import nounou.data.X
 import scala.Vector
-import nounou.{LoggingExt, FrameRange}
+import nounou.{LoggingExt, RangeFr}
 import breeze.numerics.round
 
 /**This trait of XData and XDataChannel objects encapsulates segment,
@@ -60,7 +60,7 @@ trait XFrames extends X with LoggingExt {
   final def isValidFrame(frame: Int): Boolean = isValidFrame(frame, currentSegment)
 
   final def isRealisticFrame(frame: Int, segment: Int): Boolean = (-100000 <= frame && frame < segmentLengths(segment) + 100000)
-  final def isRealisticFrameRange(range: FrameRange, segment: Int): Boolean = (-100000 <= range.start && range.endMarker < segmentLengths(segment) + 100000)
+  final def isRealisticFrameRange(range: RangeFr, segment: Int): Boolean = (-100000 <= range.start && range.endMarker < segmentLengths(segment) + 100000)
 
   // </editor-fold>
 

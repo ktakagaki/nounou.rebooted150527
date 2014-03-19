@@ -2,15 +2,15 @@
 //
 //import breeze.linalg.{DenseVector => DV, mean}
 //import nounou.data.{XData}
-//import nounou.FrameRange
+//import nounou.RangeFr
 //
 ///** A passthrough object, which is overriden and inherited with various XDataFilterTr traits to create a filter block.
 //  */
 //class XDataFilterScale( override val upstream: XData ) extends XDataFilter(upstream) {
 //
 //  private var _fixedScale = false
-//  def fixScale(range: FrameRange) = fixScale(range, 0)
-//  def fixScale(range: FrameRange, seg: Int): Unit = {
+//  def fixScale(range: RangeFr) = fixScale(range, 0)
+//  def fixScale(range: RangeFr, seg: Int): Unit = {
 //    fixRange = range.getValidRange(this.segmentLengths(seg))
 //    fixSegment = seg
 //
@@ -21,7 +21,7 @@
 //
 //  /** Range for which the scaling is fixed, when _fixedScale is true
 //    */
-//  private var fixRange: FrameRange = null
+//  private var fixRange: RangeFr = null
 //  private var fixSegment: Int = 0
 //  private val fixedScale: Array[Boolean] = Array.tabulate[Boolean](channelCount)(p => false)
 //  private val fixOffset: DV[Int] = DV.zeros[Int](channelCount)

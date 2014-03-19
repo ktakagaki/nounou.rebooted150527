@@ -8,13 +8,14 @@ import nounou.data.traits.{XFrames}
  * @author ktakagaki
  * @date 2/9/14.
  */
-object FrameRange extends LoggingExt {
+object RangeFr extends LoggingExt {
 
-  final def all(): FrameRange = all(1)
+  final def All(): RangeFr = All(1)
 
-  final def all(step: Int): FrameRange = new FrameRange(0, 0 /*Integer.MAX_VALUE*/, step, true)
+  final def All(step: Int): RangeFr = new RangeFr(0, 0, step, true)
 
-  final def msRange(startMs: Double, endMs: Double, stepMs: Double, sampleRate:Double): FrameRange = {
+  //ToDo 2: transfer to RangeMS
+  final def msRange(startMs: Double, endMs: Double, stepMs: Double, sampleRate:Double): RangeFr = {
 
     loggerRequire(stepMs>0, "stepMs ({}) must be larger than zero!", stepMs.toString)
     loggerRequire(sampleRate>0, "sampleRate ({}) must be larger than zero!", sampleRate.toString)
@@ -23,32 +24,21 @@ object FrameRange extends LoggingExt {
     val endFr = (endMs/1000d * sampleRate).toInt
     val stepReal = (stepMs/1000d * sampleRate).toInt
 
-    new FrameRange(startFr, endFr, stepReal)
+    new RangeFr(startFr, endFr, stepReal)
   }
 
-  def msAnchorRange(anchorMs: Double, preMs: Double, postMs: Double, stepMs: Double, sampleRate:Double): FrameRange = {
+  def msAnchorRange(anchorMs: Double, preMs: Double, postMs: Double, stepMs: Double, sampleRate:Double): RangeFr = {
     msRange(anchorMs-preMs, anchorMs+postMs, stepMs, sampleRate)
   }
 
-//  def tsAnchorRange(anchor: Long, preFrames: Int, postFrames: Int, x: XFrames): FrameRange = {
-//
-//  }
-
-//  def tsAnchorRangeMs(anchorTs: Long, preMs: Double, postMs: Double, stepMs: Double, x: XFrames): (FrameRange, Int) = {
-//    val temp = x.tsToFrameSegment(anchorTs, true)
-//    val anchorMs = (temp._1).toDouble/1000d * x.sampleRate
-//    ( msAnchorRange( anchorMs, preMs, postMs, stepMs, x.sampleRate ), temp._2 )
-//  }
-
-
 }
 
-class FrameRange(val start: Int, val endMarker: Int, val step: Int = 1, val isAll: Boolean = false) extends LoggingExt {
+class RangeFr(val start: Int, val endMarker: Int, val step: Int = 1, val isAll: Boolean = false) extends LoggingExt {
 
   loggerRequire( step > 0, "In nounous, stepMs > 0 is required for frame ranges; stepMs = {}!", step.toString)
   loggerRequire( start <= endMarker, "In nounous, start <= last is required for frame ranges. start=" + start + ", last=" + endMarker)
 
-  override def toString() = "FrameRange(" + start + ", " + endMarker + ", " + step + ", isAll=" + isAll + ")"
+  override def toString() = "RangeFr(" + start + ", " + endMarker + ", " + step + ", isAll=" + isAll + ")"
 
   //private def getSamplesFromLength(len: Int) = (len -1)/step + 1
   private var buffRangeInclusive = new Range.Inclusive(0,0,1)
@@ -73,7 +63,7 @@ class FrameRange(val start: Int, val endMarker: Int, val step: Int = 1, val isAl
   }
 
   /** Inclusive last frame, taking into account step and overhang
-    * @param totalLength full length of this segment in frames, used to realize with FrameRange.all()
+    * @param totalLength full length of this segment in frames, used to realize with RangeFr.all()
     */
   def last(totalLength: Int): Int = {
     buffRefresh(totalLength)
@@ -86,7 +76,7 @@ class FrameRange(val start: Int, val endMarker: Int, val step: Int = 1, val isAl
   }
 
   /** Valid last frame, taking into account step and overhang
-    * @param totalLength full length of this segment in frames, used to realize with FrameRange.all()
+    * @param totalLength full length of this segment in frames, used to realize with RangeFr.all()
     */
   def lastValid(totalLength: Int): Int = {
     val realEnd = scala.math.min(totalLength -1, endMarker)
@@ -107,7 +97,7 @@ class FrameRange(val start: Int, val endMarker: Int, val step: Int = 1, val isAl
   // <editor-fold defaultstate="collapsed" desc=" conversion to Range.Inclusive ">
 
   /** Get a [[Range.Inclusive]] taking into account length and stepMs, so that the start and last are exactly present values
-    * @param totalLength full length of this segment in frames, used to realize with FrameRange.all()
+    * @param totalLength full length of this segment in frames, used to realize with RangeFr.all()
     */
   def getRange(totalLength: Int): Range.Inclusive =
     if(isAll) new Range.Inclusive(0, last(totalLength), step)
@@ -115,7 +105,7 @@ class FrameRange(val start: Int, val endMarker: Int, val step: Int = 1, val isAl
 
   /** Get a [[Range.Inclusive]] which fits inside the given data vector length, and takes into account length and stepMs,
     * so that the start and last are exactly present values.
-    * @param totalLength full length of this segment in frames, used to realize with FrameRange.all()
+    * @param totalLength full length of this segment in frames, used to realize with RangeFr.all()
     */
   def getValidRange(totalLength: Int): Range.Inclusive = {
 

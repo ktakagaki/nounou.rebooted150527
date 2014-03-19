@@ -1,7 +1,7 @@
 package nounou.data.filters
 
 import scala.beans.BeanProperty
-import nounou.FrameRange
+import nounou.RangeFr
 import nounou.data.XData
 import breeze.numerics.isOdd
 import breeze.stats.median
@@ -44,7 +44,7 @@ class XDataFilterMedianSubtract( override val upstream: XData ) extends XDataFil
       upstream.readTraceImpl(channel, ran, segment)
     } else {
       //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-      val tempData = upstream.readTrace( channel, new FrameRange( ran.start - windowLengthHalf, ran.last + windowLengthHalf, 1), segment)
+      val tempData = upstream.readTrace( channel, new RangeFr( ran.start - windowLengthHalf, ran.last + windowLengthHalf, 1), segment)
 //      logger.info("windowLength {} tempData.length {} filterMedian length {} ", windowLength.toString, tempData.length.toString, filterMedian(tempData, windowLength, OptOverhang.None).length.toString)
       tempData(windowLengthHalf to -windowLengthHalf-1) - filterMedian(tempData, windowLength, OptOverhang.None)
     }
