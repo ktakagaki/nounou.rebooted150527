@@ -45,6 +45,7 @@
     <orderEntry type="library" name="ch.qos.logback:logback-core:1.0.11" level="project" />
     <orderEntry type="library" name="org.scalafx:scalafx_2.10:1.0.0-M7" level="project" />
     <orderEntry type="library" name="com.github.fommil.netlib:core:1.1.2" level="project" />
+    <orderEntry type="library" name="junit-4.10" level="project" />
   </component>
 </module>
 

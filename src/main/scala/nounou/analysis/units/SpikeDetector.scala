@@ -2,7 +2,7 @@ package nounou.analysis.units
 
 import nounou.data.{XTrodes, XDataNull, XSpikes, XData}
 import nounou.data.filters.{XDataFilterNull, XDataFilterFIR, XDataFilter}
-import nounou.{LoggingExt, OptSpikeDetectorFlush, RangeFr}
+import nounou.{RangeFrAll, LoggingExt, OptSpikeDetectorFlush, RangeFr}
 import scala.beans.BeanProperty
 import breeze.linalg.DenseVector
 import breeze.numerics.abs
@@ -24,36 +24,38 @@ abstract class SpikeDetector extends LoggingExt {
   def setBlackoutMs(blackout: Double) = blackoutMs_=(blackout)
   def getBlackoutMs() = blackoutMs
 
-  final def apply(xData: XData, xSpikes: XSpikes, trode: Int, optSpikeDetectorFlush: OptSpikeDetectorFlush): Unit =
-        apply( xData, xSpikes, Array[Int](trode), optSpikeDetectorFlush )
+  final def apply(xData: XData, xTrodes: XTrodes, trode: Int): Array[Long] =
+        apply( xData, xTrodes, Array[Int](trode))
 
-  final def apply(xData: XData, xSpikes: XSpikes, trodes: Array[Int], optSpikeDetectorFlush: OptSpikeDetectorFlush): Unit =
-    apply( xData, xSpikes, trodes, RangeFr.All(), optSpikeDetectorFlush )
+  final def apply(xData: XData, xTrodes: XTrodes, trodes: Array[Int]): Array[Long] =
+    apply( xData, xTrodes, trodes, RangeFrAll())
 
-  def apply(xData: XData, xSpikes: XSpikes, trodes: Array[Int], frameRange: RangeFr, optSpikeDetectorFlush: OptSpikeDetectorFlush): Unit =
-    apply( xData, xSpikes, trodes, RangeFr.All(), 0, optSpikeDetectorFlush )
+  def apply(xData: XData, xTrodes: XTrodes, trodes: Array[Int], frameRange: RangeFr): Array[Long] =
+    apply( xData, xTrodes, trodes, RangeFrAll(), 0)
 
-  def apply(xData: XData, xSpikes: XSpikes, trodes: Array[Int], frameRange: RangeFr, segment: Int, optSpikeDetectorFlush: OptSpikeDetectorFlush): Unit
+  def apply(xData: XData, xTrodes: XTrodes, trodes: Array[Int], frameRange: RangeFr, segment: Int): Array[Long]
 
   //ToDo ability to handle traces/trace arrays directly
 
 }
 
-abstract class SpikeDetectorQuiroga extends SpikeDetector {
+object SpikeDetectorQuiroga extends SpikeDetector {
 
   @BeanProperty
   var absThresholdSD: Double = 3d
 
-  override def apply(xData: XData, xSpikes: XSpikes, trodes: Array[Int], frameRange: RangeFr, segment: Int, optSpikeDetectorFlush: OptSpikeDetectorFlush) = {
+  override def apply(xData: XData, xTrodes: XTrodes, trodes: Array[Int], frameRange: RangeFr, segment: Int): Array[Long] = {
     loggerRequire( frameRange.step == 1, "Currently, SpikeDetector classes must be called with a frame range with step = 1. {} is invalid", frameRange.step.toString)
 
-    val channels = trodes.flatMap( p => xSpikes.trodeLayout.trodeGroup(p) )
+    val channels = trodes.flatMap( p => xTrodes.trodeGroup(p) )
     val tempData = channels.map( p => xData.readTrace(p, frameRange, segment).toArray )
+    logger.info("Called with {} channels in {} trodes", channels.length.toString, trodes.length.toString)
+    println("Called with {} channels in {} trodes" + channels.length.toString + trodes.length.toString)
+    //ToDo 1: Not differentiating between different trodes!
+
     val thresholds = tempData.map( p => (median( abs(DenseVector(p)) ) / 0.6745 * absThresholdSD).toInt )
     val blackoutSamples = xData.msToFrame( blackoutMs )
-    val timestamps = thresholder(tempData, thresholds, blackoutSamples).map(p => xData.frameSegmentToTS(p+frameRange.start, segment))
-
-
+    thresholder(tempData, thresholds, blackoutSamples).map(p => xData.frameSegmentToTS(p+frameRange.start, segment))
   }
 
   //ToDo 4: make into general breeze function

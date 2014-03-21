@@ -2,11 +2,14 @@ package nounou
 
 import org.scalatest.FunSuite
 import java.io.File
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 /**
  * @author ktakagaki
  * @date 2/14/14.
  */
+@RunWith(classOf[JUnitRunner])
 class DataReaderTest extends FunSuite {
 
 //  val testFileTet4s = Array[String](

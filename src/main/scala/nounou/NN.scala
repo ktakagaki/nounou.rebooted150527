@@ -11,26 +11,22 @@ import breeze.numerics.round
  */
 object NN {
 
-  final val rangeFrAll: RangeFr = RangeFr.All()
-  final def rangeFrAll(step: Int) = RangeFr.All(step)
-  final def rangeFrAll(step: Double) = RangeFr.All( round(step).toInt )
+  final val RangeFrAll: RangeFr = nounou.RangeFrAll()
+  final def RangeFrAll(step: Int) = nounou.RangeFrAll(step)
+  final def RangeFrAll(step: Double) = nounou.RangeFrAll( round(step).toInt )
+  final def RangeFrAll(step: Int, segment: Int) = nounou.RangeFrAll(step, segment)
 
-  final def rangeFr(start: Int, endMarker: Int, step: Int): RangeFr = {
-    return new RangeFr(start, endMarker, step, false)
-  }
+  final def RangeFr(start: Int, endMarker: Int, step: Int, segment: Int): RangeFr = nounou.RangeFr(start, endMarker, step, segment)
+  final def RangeFr(start: Int, endMarker: Int, step: Int): RangeFr = nounou.RangeFr(start, endMarker, step)
+  final def RangeFr(start: Int, endMarker: Int): RangeFr = nounou.RangeFr(start, endMarker)
 
-  final def rangeFr(start: Int, endMarker: Int): RangeFr = {
-    return new RangeFr(start, endMarker, 1, false)
-  }
+  final def RangeFr(frame: Int): RangeFr = nounou.RangeFr(frame, frame, 1)
 
-  final def rangeFr(frame: Int): RangeFr = {
-    return new RangeFr(frame, frame, 1, false)
-  }
-  final def rangeFr(start: Double): RangeFr = rangeFr(round(start).toInt)
-  final def rangeFr(start: Double, endMarker: Double): RangeFr = rangeFr(round(start).toInt, round(endMarker).toInt)
-  final def rangeFr(start: Double, endMarker: Double, step: Double): RangeFr = rangeFr(round(start).toInt, round(endMarker).toInt, round(step).toInt)
+  final def RangeFr(start: Double, endMarker: Double): RangeFr = nounou.RangeFr(round(start).toInt, round(endMarker).toInt)
+  final def RangeFr(start: Double, endMarker: Double, step: Double): RangeFr = nounou.RangeFr(round(start).toInt, round(endMarker).toInt, round(step).toInt)
 
-  final def rangeTS(startTS: Long, endTS: Long, step: Long, segment: Int, isAll: Boolean) = new RangeTS(startTS, endTS, step, segment, isAll)
+
+  final def RangeTS(startTS: Long, endTS: Long, step: Long, segment: Int, isAll: Boolean) = new RangeTS(startTS, endTS, step, segment, isAll)
 
 
   @deprecated("Don't use this anymore, initialize nounous.DataReader()", "v 1")
@@ -38,8 +34,8 @@ object NN {
     return new DataReader
   }
 
-  final def msRange(startMs: Double, endMs: Double, stepMs: Double, sampleRate:Double): RangeFr =
-      RangeFr.msRange(startMs, endMs, stepMs, sampleRate)
+//  final def msRange(startMs: Double, endMs: Double, stepMs: Double, sampleRate:Double): RangeFr =
+//      RangeFr.msRange(startMs, endMs, stepMs, sampleRate)
 
 
 
