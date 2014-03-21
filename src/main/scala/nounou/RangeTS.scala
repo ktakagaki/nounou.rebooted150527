@@ -25,7 +25,7 @@ class RangeTS(val startTS: Long, val endTS: Long, val step: Long, val segment: I
     loggerRequire(stepReal>0, "This amounts to a negative or zero timestep! (stepMs=" + step + " ms)")
 
     if(isAll){
-      RangeFr.All( stepReal )
+      RangeFrAll( stepReal )
     } else {
       val startReal = x.tsToFrameSegment(startTS) //ToDo 2: expand to send segment info too in RangeFr
       val endReal = x.tsToFrameSegment(endTS)
