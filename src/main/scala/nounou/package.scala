@@ -17,11 +17,12 @@ package object nounou extends Logging {
 //  }
 
 
-  implicit def rangeInclusiveToFrameRange(range: Range.Inclusive): RangeFr = {
+  implicit def rangeInclusiveToFrameRange(range: Range.Inclusive): RangeFr = rangeInclusiveToFrameRange(range, 0)
+  implicit def rangeInclusiveToFrameRange(range: Range.Inclusive, segment: Int): RangeFr = {
     require( range.step > 0, "Only positive steps are allowed for indexing in nounou!" )
     require( range.start <= range.end, "In nounous, start <= last is required for frame ranges. start=" + range.start + ", last=" + range.end)
 
-    new RangeFr(range.start, range.end, range.step, false)
+    RangeFr(range.start, range.end, range.step, segment)
   }
 
 
@@ -66,10 +67,10 @@ package object nounou extends Logging {
 
 
 
-  case object None extends Opt
-  case object All extends Opt
-
-//  implicit val nounou.None => OptSpikeDetectorFlush.None
+//  case object None extends Opt
+//  case class All() extends Opt
+//
+//  implicit val noneImplicit: None = OptSpikeDetectorFlush.None
 //  implicit def noneExpandToOptSpikeDetectorFlush(none: nounou.None) = OptSpikeDetectorFlush.None
 
 

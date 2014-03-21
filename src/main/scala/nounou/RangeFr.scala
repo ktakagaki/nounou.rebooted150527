@@ -14,9 +14,9 @@ abstract class RangeFrSpecifier extends LoggingExt {
  */
 object RangeFr extends LoggingExt {
 
-  final def All(): RangeFr = All(1)
-
-  final def All(step: Int): RangeFr = new RangeFr(0, 0, step, true)
+  final def apply(start: Int, endMarker: Int, step: Int, segment: Int) = new RangeFr(start, endMarker, step, segment)
+  final def apply(start: Int, endMarker: Int, step: Int) = new RangeFr(start, endMarker, step, segment = 0)
+  final def apply(start: Int, endMarker: Int) = new RangeFr(start, endMarker, 1, segment = 0)
 
   //ToDo 2: transfer to RangeMS
   final def msRange(startMs: Double, endMs: Double, stepMs: Double, sampleRate:Double): RangeFr = {
@@ -36,10 +36,9 @@ object RangeFr extends LoggingExt {
   }
 
 }
+class RangeFr(val start: Int, val endMarker: Int, val step: Int = 1, val segment: Int = 0, val isAll: Boolean = false) extends LoggingExt {
 
-class RangeFr(val start: Int, val endMarker: Int, val step: Int = 1, val isAll: Boolean = false) extends LoggingExt {
-
-  loggerRequire( step > 0, "In nounous, stepMs > 0 is required for frame ranges; stepMs = {}!", step.toString)
+  loggerRequire( step > 0, "Step > 0 is required for frame ranges; step = {}! Did you mean to specify the segment variable instead? >> check calling syntax", step.toString)
   loggerRequire( start <= endMarker, "In nounous, start <= last is required for frame ranges. start=" + start + ", last=" + endMarker)
 
   override def toString() = "RangeFr(" + start + ", " + endMarker + ", " + step + ", isAll=" + isAll + ")"
@@ -163,5 +162,12 @@ class RangeFr(val start: Int, val endMarker: Int, val step: Int = 1, val isAll: 
   }
   // </editor-fold>
 
+}
 
+class RangeFrAll(override val step: Int = 1, override val segment: Int = 0) extends RangeFr(0, 0, step, segment, true)
+
+object RangeFrAll extends LoggingExt {
+  final def apply(): RangeFr = apply(1)
+  final def apply(step: Int): RangeFr = new RangeFrAll(step, 0)
+  final def apply(step: Int, segment: Int): RangeFr = new RangeFrAll(step, segment)
 }

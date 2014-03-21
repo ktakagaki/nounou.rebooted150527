@@ -20,7 +20,7 @@ import nounou.data.traits.XFrames
       require(stepReal>0, "This amounts to a negative or zero timestep! (stepMs=" + step + " ms)")
 
       if(isAll){
-        RangeFr.All( stepReal )
+        RangeFrAll( stepReal )
       } else {
         val startReal = x.msToFrame(start)
         val endReal = x.msToFrame(end)
