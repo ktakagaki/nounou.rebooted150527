@@ -55,7 +55,7 @@
         upstream.readPointImpl(channel, frame, segment)
       } else {
         //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-        val tempData = upstream.readTrace( channel, new RangeFr(frame * factor - kernel.overhangPre, frame * factor + kernel.overhangPost, 1 ), segment)
+        val tempData = upstream.readTrace( channel, new RangeFr(frame * factor - kernel.overhangPre, frame * factor + kernel.overhangPost, 1, segment ), segment)
         val tempRet = convolve( DV( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None )
         require( tempRet.length == 1, "something is wrong with the convolution!" )
         tempRet(0).toInt
@@ -66,7 +66,7 @@
           upstream.readTraceImpl(channel, range, segment)
       } else {
           //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-          val tempData = upstream.readTrace( channel, new RangeFr(range.start * factor - kernel.overhangPre, (range.last * factor + kernel.overhangPost), 1), segment)
+          val tempData = upstream.readTrace( channel, new RangeFr(range.start * factor - kernel.overhangPre, (range.last * factor + kernel.overhangPost), 1, segment), segment)
 //        println("tempData: " + tempData.length)
 //        println("kernel: " + kernel.kernel.length)
 //        println("start: " + range.start + " end: " + range.end+ " stepMs: " + range.stepMs+ " inclusive: " + range.isInclusive)
