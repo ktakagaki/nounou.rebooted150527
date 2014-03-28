@@ -38,27 +38,27 @@ class XDataFilterRMS( override val upstream: XData ) extends XDataFilter( upstre
         upstream.readPointImpl(channel, frame, segment)
       } else {
         //logger.info("2"+halfWindow + " ")
-        rootMeanSquare( upstream.readTrace(channel, new RangeFr(frame - halfWindow, frame + halfWindow), segment) ).toInt
+        rootMeanSquare( upstream.readTrace(channel, new RangeFr(frame - halfWindow, frame + halfWindow, 1, segment), segment) ).toInt
         //rootMeanSquare( DenseVector[Int]( upstream.readTrace(channel, frame - halfWindow to frame + halfWindow, segment).toArray ) ).toInt
       }
 
-    override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] = {
-      if(halfWindow == 0){
-        upstream.readTraceImpl(channel, range, segment)
-      } else {
-        val trace = upstream.readTrace(channel, new RangeFr(range.start - halfWindow, range.last + halfWindow), segment)
-        val tempret = DV[Int](range.length) //= new VectorBuilder[Int]()
-          //tempret.sizeHint(range.length)
-          val window = 2*halfWindow
-          var tempIndex = 0
-          for( cnt <- 0 to (range.end-range.start) by range.step) {
-            tempret(tempIndex) = rootMeanSquare( trace.slice(cnt, cnt + window)  ).toInt
-            tempIndex += 1
-          } //rootMeanSquare( DenseVector(trace.slice(cnt, cnt + windowMinus1).toArray) ).toInt
-        //logger.info(halfWindow + " " + windowMinus1)
-        tempret
-      }
+  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] = {
+    if(halfWindow == 0){
+      upstream.readTraceImpl(channel, range, segment)
+    } else {
+      val trace = upstream.readTrace(channel, new RangeFr(range.start - halfWindow, range.last + halfWindow, 1, segment), segment)
+      val tempret = DV[Int](range.length) //= new VectorBuilder[Int]()
+        //tempret.sizeHint(range.length)
+        val window = 2*halfWindow
+        var tempIndex = 0
+        for( cnt <- 0 to (range.end-range.start) by range.step) {
+          tempret(tempIndex) = rootMeanSquare( trace.slice(cnt, cnt + window)  ).toInt
+          tempIndex += 1
+        } //rootMeanSquare( DenseVector(trace.slice(cnt, cnt + windowMinus1).toArray) ).toInt
+      //logger.info(halfWindow + " " + windowMinus1)
+      tempret
     }
+  }
 
     //  override def channelNames: scala.Vector[String] = upstream.channelNames
 
