@@ -18,25 +18,25 @@ object RangeFr extends LoggingExt {
   final def apply(start: Int, endMarker: Int, step: Int) = new RangeFr(start, endMarker, step, segment = 0)
   final def apply(start: Int, endMarker: Int) = new RangeFr(start, endMarker, 1, segment = 0)
 
-  //ToDo 2: transfer to RangeMS
-  final def msRange(startMs: Double, endMs: Double, stepMs: Double, sampleRate:Double): RangeFr = {
-
-    loggerRequire(stepMs>0, "stepMs ({}) must be larger than zero!", stepMs.toString)
-    loggerRequire(sampleRate>0, "sampleRate ({}) must be larger than zero!", sampleRate.toString)
-
-    val startFr = (startMs/1000d * sampleRate).toInt
-    val endFr = (endMs/1000d * sampleRate).toInt
-    val stepReal = (stepMs/1000d * sampleRate).toInt
-
-    new RangeFr(startFr, endFr, stepReal)
-  }
-
-  def msAnchorRange(anchorMs: Double, preMs: Double, postMs: Double, stepMs: Double, sampleRate:Double): RangeFr = {
-    msRange(anchorMs-preMs, anchorMs+postMs, stepMs, sampleRate)
-  }
+//  final def msRange(startMs: Double, endMs: Double, stepMs: Double, sampleRate:Double): RangeFr = {
+//
+//    loggerRequire(stepMs>0, "stepMs ({}) must be larger than zero!", stepMs.toString)
+//    loggerRequire(sampleRate>0, "sampleRate ({}) must be larger than zero!", sampleRate.toString)
+//
+//    val startFr = (startMs/1000d * sampleRate).toInt
+//    val endFr = (endMs/1000d * sampleRate).toInt
+//    val stepReal = (stepMs/1000d * sampleRate).toInt
+//
+//    new RangeFr(startFr, endFr, stepReal)
+//  }
+//
+//  def msAnchorRange(anchorMs: Double, preMs: Double, postMs: Double, stepMs: Double, sampleRate:Double): RangeFr = {
+//    msRange(anchorMs-preMs, anchorMs+postMs, stepMs, sampleRate)
+//  }
 
 }
-class RangeFr(val start: Int, val endMarker: Int, val step: Int = 1, val segment: Int = 0, val isAll: Boolean = false) extends LoggingExt {
+class RangeFr(val start: Int, val endMarker: Int, val step: Int = 1, val segment: Int/* = 0*/, val isAll: Boolean = false)
+  extends RangeFrSpecifier with LoggingExt {
 
   loggerRequire( step > 0, "Step > 0 is required for frame ranges; step = {}! Did you mean to specify the segment variable instead? >> check calling syntax", step.toString)
   loggerRequire( start <= endMarker, "In nounous, start <= last is required for frame ranges. start=" + start + ", last=" + endMarker)
@@ -161,6 +161,10 @@ class RangeFr(val start: Int, val endMarker: Int, val step: Int = 1, val segment
     }
   }
   // </editor-fold>
+
+  /**Will return self, this is in order to comply with [[RangeFrSpecifier]]
+   */
+  override def getFrameRange(x: XFrames): RangeFr = this
 
 }
 

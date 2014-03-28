@@ -21,20 +21,20 @@ trait XFrames extends X with LoggingExt {
   def segmentLengths: Vector[Int]
   def segmentLengthsA = segmentLengths.toArray
 
-  private var _currentSegment = 0
-
-  /** Which segment is currently active? (initially 0) This variable allows syntax such as
-    * <code>readPoint(channel: Int, frame: Int)</code>, leaving out an explicitly specified segment.
-    * This is useful, for example, for file io which only feature one segment.
-    */
-  def currentSegment = _currentSegment
-  /** currentSegment getter, Scala style.*/
-  def currentSegment_=(segment: Int) : Int = {
-    if( _currentSegment != segment )
-      if( 0 <= segment && segment < segmentCount) _currentSegment = segment
-      else require(false, "new segment out of bounds!")
-    _currentSegment
-  }
+//  private var _currentSegment = 0
+//
+//  /** Which segment is currently active? (initially 0) This variable allows syntax such as
+//    * <code>readPoint(channel: Int, frame: Int)</code>, leaving out an explicitly specified segment.
+//    * This is useful, for example, for file io which only feature one segment.
+//    */
+//  def currentSegment = _currentSegment
+//  /** currentSegment getter, Scala style.*/
+//  def currentSegment_=(segment: Int) : Int = {
+//    if( _currentSegment != segment )
+//      if( 0 <= segment && segment < segmentCount) _currentSegment = segment
+//      else require(false, "new segment out of bounds!")
+//    _currentSegment
+//  }
   
   // </editor-fold>
   // <editor-fold desc="segment timestamps: segmentStartTSs/segmentEndTSs ">
@@ -57,7 +57,7 @@ trait XFrames extends X with LoggingExt {
   final def isValidFrame(frame: Int, segment: Int): Boolean = (0 <= frame && frame < segmentLengths(segment))
   /** Is this frame valid in the current segment?
     */
-  final def isValidFrame(frame: Int): Boolean = isValidFrame(frame, currentSegment)
+  final def isValidFrame(frame: Int): Boolean = isValidFrame(frame, 0)//currentSegment)
 
   final def isRealisticFrame(frame: Int, segment: Int): Boolean = (-100000 <= frame && frame < segmentLengths(segment) + 100000)
   final def isRealisticFrameRange(range: RangeFr, segment: Int): Boolean = (-100000 <= range.start && range.endMarker < segmentLengths(segment) + 100000)

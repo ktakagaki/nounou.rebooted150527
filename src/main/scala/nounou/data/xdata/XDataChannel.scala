@@ -20,7 +20,7 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
     */
   final def readPoint(frame: Int, segment: Int): Int = {
     //require(isValidFrame(frame, segment), "Invalid frame/segment: " + (frame, segment).toString)
-    if( isValidFrame(frame, segment) ) readPointImpl(frame, currentSegment = segment) else 0
+    if( isValidFrame(frame, segment) ) readPointImpl(frame, segment/*, currentSegment = segment*/) else 0
   }
   //</editor-fold>
 
@@ -33,7 +33,7 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
     */
   final def readTrace(segment: Int): DV[Int] = {
     val range = RangeFrAll().getValidRange( segmentLengths(segment) )
-    readTraceImpl(range, currentSegment = segment)
+    readTraceImpl(range, segment /*currentSegment = segment*/)
   }
   /** Read a single trace (within the span) from the data, in internal integer scaling.
     */
@@ -43,7 +43,7 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
     val preLength = range.preLength( segLen )
     val postLength = range.postLength( segLen )
 
-    DV.vertcat( DV.zeros[Int]( preLength ), readTraceImpl(range.getValidRange( segLen ), (currentSegment = segment)), DV.zeros[Int]( postLength ) )
+    DV.vertcat( DV.zeros[Int]( preLength ), readTraceImpl(range.getValidRange( segLen ), segment /*(currentSegment = segment)*/), DV.zeros[Int]( postLength ) )
 
   }
   //</editor-fold>
