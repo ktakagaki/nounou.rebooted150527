@@ -4,6 +4,7 @@ import nounou._
 import scala.collection.immutable.Vector
 import nounou.data.traits._
 import breeze.linalg.{DenseVector => DV}
+import nounou.ranges.{RangeFrAll, RangeFrSpecifier, RangeFr}
 
 /** Base class for data encoded as Int arrays.
   * This object is mutable, to allow inheritance by [[nounou.data.filters.XDataFilter]].

@@ -1,7 +1,8 @@
-package nounou.ranges
+package nounou
 
 import nounou.data.traits.XFrames
-import nounou.{RangeFr, RangeFrSpecifier}
+import nounou.RangeFrSpecifier
+import nounou.ranges.{RangeFrSpecifier, RangeFr}
 
 /**For specifying data extraction range in Ms.
  * @author ktakagaki

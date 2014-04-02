@@ -4,7 +4,7 @@ import scala.collection.immutable.{TreeMap}
 import scala.reflect.ClassTag
 import nounou.data.traits.XFrames
 import scala.collection.mutable.ArrayBuffer
-import nounou.RangeFr
+import nounou.ranges.RangeFr
 
 //ToDo 1: Mask serialization
 

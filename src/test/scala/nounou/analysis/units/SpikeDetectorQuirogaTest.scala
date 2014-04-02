@@ -3,9 +3,11 @@ package nounou.analysis.units
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import nounou.{RangeFr, DataReader}
+import nounou.DataReader
 import nounou.data.filters.XDataFilterMedianSubtract
 import nounou.data.XTrodesPreloaded
+import breeze.linalg.max
+import nounou.ranges.RangeFr
 
 /**
  * @author ktakagaki
@@ -30,8 +32,9 @@ class SpikeDetectorQuirogaTest  extends FunSuite{
 
     val xDataMedian = new XDataFilterMedianSubtract( reader.dataORI )
     xDataMedian.setWindowLength(32*10+1)
+    //println( max(xDataMedian.readTrace(0,RangeFr(0,500000))) )
 
-    println(SpikeDetectorQuiroga(xDataMedian, new XTrodesPreloaded( Array(Array(0,1,2,3))), Array(0), RangeFr(0, 500000), 0 ).length)
+    println(SpikeDetectorQuiroga(xDataMedian, new XTrodesPreloaded( Array(Array(0,1,2,3))), 0, RangeFr(0, 500000) ).length)
 
   }
 }
