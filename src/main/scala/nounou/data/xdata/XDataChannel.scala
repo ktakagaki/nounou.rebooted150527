@@ -5,6 +5,7 @@ import scala.Vector
 import java.io.DataInput
 import nounou.data.traits.{XConcatenatable, XFramesImmutable, XAbsoluteImmutable}
 import breeze.linalg.{DenseVector => DV}
+import nounou.ranges.{RangeFrAll, RangeFr}
 
 /**
  * Created by Kenta on 12/14/13.

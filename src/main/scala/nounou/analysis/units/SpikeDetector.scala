@@ -2,12 +2,13 @@ package nounou.analysis.units
 
 import nounou.data.{XTrodes, XDataNull, XSpikes, XData}
 import nounou.data.filters.{XDataFilterNull, XDataFilterFIR, XDataFilter}
-import nounou.{RangeFrAll, LoggingExt, OptSpikeDetectorFlush, RangeFr}
+import nounou.{LoggingExt, OptSpikeDetectorFlush}
 import scala.beans.BeanProperty
-import breeze.linalg.DenseVector
+import breeze.linalg.{max, DenseVector}
 import breeze.numerics.abs
 import breeze.stats.median
 import scala.collection.mutable.{ArrayBuffer}
+import nounou.ranges.{RangeFrAll, RangeFr}
 
 /**
  * @author ktakagaki
@@ -25,15 +26,15 @@ abstract class SpikeDetector extends LoggingExt {
   def getBlackoutMs() = blackoutMs
 
   final def apply(xData: XData, xTrodes: XTrodes, trode: Int): Array[Long] =
-        apply( xData, xTrodes, Array[Int](trode))
+        apply( xData, xTrodes, trode, RangeFrAll())
 
-  final def apply(xData: XData, xTrodes: XTrodes, trodes: Array[Int]): Array[Long] =
-    apply( xData, xTrodes, trodes, RangeFrAll())
-
-  def apply(xData: XData, xTrodes: XTrodes, trodes: Array[Int], frameRange: RangeFr): Array[Long] =
-    apply( xData, xTrodes, trodes, RangeFrAll(), 0)
-
-  def apply(xData: XData, xTrodes: XTrodes, trodes: Array[Int], frameRange: RangeFr, segment: Int): Array[Long]
+//  final def apply(xData: XData, xTrodes: XTrodes, trodes: Array[Int]): Array[Long] =
+//    apply( xData, xTrodes, trodes, RangeFrAll())
+//
+//  def apply(xData: XData, xTrodes: XTrodes, trodes: Array[Int], frameRange: RangeFr): Array[Long] =
+//    apply( xData, xTrodes, trodes, RangeFrAll(), 0)
+//
+  def apply(xData: XData, xTrodes: XTrodes, trode: Int, frameRange: RangeFr): Array[Long]
 
   //ToDo ability to handle traces/trace arrays directly
 
@@ -44,27 +45,35 @@ object SpikeDetectorQuiroga extends SpikeDetector {
   @BeanProperty
   var absThresholdSD: Double = 3d
 
-  override def apply(xData: XData, xTrodes: XTrodes, trodes: Array[Int], frameRange: RangeFr, segment: Int): Array[Long] = {
+  override def apply(xData: XData, xTrodes: XTrodes, trode: Int, frameRange: RangeFr): Array[Long] = {
     loggerRequire( frameRange.step == 1, "Currently, SpikeDetector classes must be called with a frame range with step = 1. {} is invalid", frameRange.step.toString)
 
-    val channels = trodes.flatMap( p => xTrodes.trodeGroup(p) )
-    val tempData = channels.map( p => xData.readTrace(p, frameRange, segment).toArray )
-    logger.info("Called with {} channels in {} trodes", channels.length.toString, trodes.length.toString)
-    println("Called with {} channels in {} trodes" + channels.length.toString + trodes.length.toString)
-    //ToDo 1: Not differentiating between different trodes!
+    val channels = xTrodes.trodeGroup(trode)//trodes.flatMap( p => xTrodes.trodeGroup(p) )
+    logger.trace("following channels for thresholding extracted from xTrodes: {}", DenseVector(channels).toString)
+    val tempData = channels.map( p => xData.readTrace(p, frameRange).toArray )
+    logger.trace("Called with {} channels in trode #{}", channels.length.toString, trode.toString)
+    logger.info("tempData channel 0 max is {}", max( tempData(0) ).toString )
 
     val thresholds = tempData.map( p => (median( abs(DenseVector(p)) ) / 0.6745 * absThresholdSD).toInt )
     val blackoutSamples = xData.msToFrame( blackoutMs )
-    thresholder(tempData, thresholds, blackoutSamples).map(p => xData.frameSegmentToTS(p+frameRange.start, segment))
+    thresholder(tempData, thresholds, blackoutSamples).map(p => xData.frameSegmentToTS(p+frameRange.start, frameRange.segment))
   }
 
   //ToDo 4: make into general breeze function
   def thresholder( vect: Array[Array[Int]], thresholds: Array[Int], blackout: Int): Array[Int] = {
+
+    loggerRequire( vect.length == thresholds.length,
+        "Must specify the same number of thresholds as data traces: {} != {} ",
+        vect.length.toString, thresholds.length.toString)
+
+    logger.info("threshold calculated as follows: {}", DenseVector(thresholds).toString)
+
     val tempRet = new ArrayBuffer[Int]()
     var index = 0
-    var channels = Range(0, vect.length)
-    var triggered = !channels.forall( p => vect(p)(0) < thresholds(0) )
-    while(index < vect.length){
+    val channels = Range(0, vect.length)
+    var triggered = !channels.forall( p => vect(p)(0) < thresholds(p) )
+
+    while(index < vect(0).length){
       if( !triggered ){
         if( !channels.forall(p => vect(p)(index) < thresholds(p) ) ){
           tempRet.append(index)
@@ -73,7 +82,7 @@ object SpikeDetectorQuiroga extends SpikeDetector {
         } else{
           index += 1
         }
-      } else{
+      } else {
         if( channels.forall(p => vect(p)(index) < thresholds(p) ) ) triggered = false
         index += 1
       }
@@ -87,8 +96,8 @@ object SpikeDetectorQuiroga extends SpikeDetector {
 //  @BeanProperty
 //  protected var filter: XDataFilter = XDataFilterNull
 
-  override def toString() = "Quiroga spike detection algorithm with threshold set at +/-" +
-    absThresholdSD + " deviations of the median estimate for standard deviation."
+//  override def toString() = "Quiroga spike detection algorithm with threshold set at +/-" +
+//    absThresholdSD + " deviations of the median estimate for standard deviation."
 
 }
 

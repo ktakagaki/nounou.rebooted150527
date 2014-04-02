@@ -1,12 +1,12 @@
 package nounou.data.filters
 
 import scala.beans.BeanProperty
-import nounou.RangeFr
 import nounou.data.XData
 import breeze.numerics.isOdd
 import breeze.stats.median
 import breeze.linalg.{DenseVector => DV}
 import breeze.signal.{filterMedian, OptOverhang}
+import nounou.ranges.RangeFr
 
 /**
  * @author ktakagaki

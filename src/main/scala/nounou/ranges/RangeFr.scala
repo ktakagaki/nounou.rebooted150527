@@ -1,6 +1,7 @@
-package nounou
+package nounou.ranges
 
-import nounou.data.traits.{XFrames}
+import nounou.LoggingExt
+import nounou.data.traits.XFrames
 
 //TODO 1: Should really streamline this code and test better, but it is a minefield!
 
@@ -35,6 +36,8 @@ object RangeFr extends LoggingExt {
 //  }
 
 }
+
+
 class RangeFr(val start: Int, val endMarker: Int, val step: Int = 1, val segment: Int/* = 0*/, val isAll: Boolean = false)
   extends RangeFrSpecifier with LoggingExt {
 
@@ -42,6 +45,9 @@ class RangeFr(val start: Int, val endMarker: Int, val step: Int = 1, val segment
   loggerRequire( start <= endMarker, "In nounous, start <= last is required for frame ranges. start=" + start + ", last=" + endMarker)
 
   override def toString() = "RangeFr(" + start + ", " + endMarker + ", " + step + ", isAll=" + isAll + ")"
+
+
+  // <editor-fold defaultstate="collapsed" desc=" length/last, using a buffered Range.Inclusive ">
 
   //private def getSamplesFromLength(len: Int) = (len -1)/step + 1
   private var buffRangeInclusive = new Range.Inclusive(0,0,1)
@@ -78,26 +84,47 @@ class RangeFr(val start: Int, val endMarker: Int, val step: Int = 1, val segment
 
   }
 
+  // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc=" isFullyValid/lastValid ">
+
+  /** Whether the frame range is completely contained within available data.
+    * @param xFrames data object to which to apply the frames
+    */
+  def isFullyValid(xFrames: XFrames): Boolean = {
+    if(isAll) true
+    else isFullyValid( xFrames.segmentLengths(segment) )
+  }
+  /** Whether the frame range is completely contained within available data.
+    * @param totalLength full length of this segment in frames, used to realize with RangeFr.all()
+    */
+  def isFullyValid(totalLength: Int): Boolean = {
+    if(isAll) true
+    else start >= 0 && last(totalLength) < totalLength
+  }
+
   /** Valid last frame, taking into account step and overhang
     * @param totalLength full length of this segment in frames, used to realize with RangeFr.all()
     */
   def lastValid(totalLength: Int): Int = {
-    val realEnd = scala.math.min(totalLength -1, endMarker)
-    if(start <= realEnd){
-      val tempRange = new Range.Inclusive(start, realEnd, step)
-      tempRange.last
-    }else{
-      -1  //give errorif start>realEnd
+    if(isAll){
+      last(totalLength)
+    } else {
+      val realEnd = scala.math.min(totalLength - 1, endMarker)
+      if (start <= realEnd) {
+        //      val tempLast = last(totalLength)
+        //      if(tempLast < totalLength) tempLast
+        //      else (totalLength - start - 1)/step*step + 1 + start //(new Range.Inclusive(start, totalLength-1, step)).last        //ToDo 3: make into more streamlined code
+        val tempRange = new Range.Inclusive(start, realEnd, step) //ToDo 5: streamline this to not use Range.Inclusive
+        tempRange.last
+      } else {
+        -1 //give errorif start>realEnd
+      }
     }
-//    if(isAll) (totalLength - 1)/step + 1
-//    else {
-//      val tempLast = last(totalLength)
-//      if(tempLast < totalLength) tempLast
-//      else (totalLength - start - 1)/step*step + 1 + start //(new Range.Inclusive(start, totalLength-1, step)).last        //ToDo 3: make into more streamlined code
-//    }
   }
 
-  // <editor-fold defaultstate="collapsed" desc=" conversion to Range.Inclusive ">
+  // </editor-fold>
+  // <editor-fold defaultstate="collapsed" desc=" getRange/getValidRange (conversion to Range.Inclusive) ">
 
   /** Get a [[Range.Inclusive]] taking into account length and stepMs, so that the start and last are exactly present values
     * @param totalLength full length of this segment in frames, used to realize with RangeFr.all()
@@ -112,18 +139,22 @@ class RangeFr(val start: Int, val endMarker: Int, val step: Int = 1, val segment
     */
   def getValidRange(totalLength: Int): Range.Inclusive = {
 
-    if(isAll) {                            //full range
+    if(isAll) {
+      //full range
       new Range.Inclusive(0, last(totalLength), step)
-    } else if(start >= totalLength ) {     //range starts after final data value
+    } else if(start >= totalLength ) {
+      //range starts after final data value
       new Range.Inclusive(0, -1, 1)// range with length zero
-    } else if(start >= 0 ) {               //range starts within data
+    } else if(start >= 0 ) {
+      //range starts within data
       new Range.Inclusive(start, lastValid(totalLength), step)
-    } else {                               //range starts in negative range
-        val realStart =
-          if(start<0){
-            start + ((- start - 1)/step + 1 ) * step
-          } else { start }
-        new Range.Inclusive(realStart, lastValid(totalLength), step)
+    } else {
+      //range starts in negative range
+      val realStart =
+        //if(start<0){
+          start + ((- start - 1)/step + 1 ) * step
+        //} else { start }
+      new Range.Inclusive(realStart, lastValid(totalLength), step)
     }
 
   }

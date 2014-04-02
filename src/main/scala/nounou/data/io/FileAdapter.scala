@@ -1,10 +1,11 @@
 package nounou.data.io
 
-import nounou.{RangeFrAll, RangeFr, LoggingExt}
+import nounou.LoggingExt
 import java.io.File
 import nounou.data.X
 import com.typesafe.scalalogging.slf4j.Logging
 import scala.collection.mutable
+import nounou.ranges.{RangeFrAll, RangeFr}
 
 
 //object FileAdapter {

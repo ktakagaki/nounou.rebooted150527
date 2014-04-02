@@ -4,7 +4,7 @@ import nounou.data.XData
 import breeze.signal.rootMeanSquare
 import breeze.linalg.{DenseVector => DV}
 import breeze.numerics.sqrt
-import nounou.RangeFr
+import nounou.ranges.RangeFr
 
 /**
  * @author ktakagaki
