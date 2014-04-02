@@ -2,13 +2,13 @@ package nounou.analysis.units
 
 import nounou.data.{XTrodes, XDataNull, XSpikes, XData}
 import nounou.data.filters.{XDataFilterNull, XDataFilterFIR, XDataFilter}
-import nounou.{LoggingExt, OptSpikeDetectorFlush}
+import nounou._
 import scala.beans.BeanProperty
 import breeze.linalg.{max, DenseVector}
 import breeze.numerics.abs
 import breeze.stats.median
 import scala.collection.mutable.{ArrayBuffer}
-import nounou.ranges.{RangeFrAll, RangeFr}
+import nounou.ranges._
 
 /**
  * @author ktakagaki
@@ -55,8 +55,8 @@ object SpikeDetectorQuiroga extends SpikeDetector {
     logger.info("tempData channel 0 max is {}", max( tempData(0) ).toString )
 
     val thresholds = tempData.map( p => (median( abs(DenseVector(p)) ) / 0.6745 * absThresholdSD).toInt )
-    val blackoutSamples = xData.msToFrame( blackoutMs )
-    thresholder(tempData, thresholds, blackoutSamples).map(p => xData.frameSegmentToTS(p+frameRange.start, frameRange.segment))
+    val blackoutSamples = xData.msToFr( blackoutMs )
+    thresholder(tempData, thresholds, blackoutSamples).map(p => xData.frsgToTs(p+frameRange.start, frameRange.segment))
   }
 
   //ToDo 4: make into general breeze function

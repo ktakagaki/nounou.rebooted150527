@@ -79,31 +79,31 @@ import nounou.ranges.RangeFr
 
   // <editor-fold defaultstate="collapsed" desc=" isMasked ">
 
-  def isMaskedTS( timeStamp: Long ): Boolean = {
+  def isMaskedTs( timeStamp: Long ): Boolean = {
     _masks.exists( p => p._1 <= timeStamp && timeStamp <= p._2 )
   }
 
-  def isMaskedTS( timeSegment: (Long, Long) ): Boolean = isMaskedTS( timeSegment._1, timeSegment._2 )
+  def isMaskedTs( timeSegment: (Long, Long) ): Boolean = isMaskedTs( timeSegment._1, timeSegment._2 )
 
-  def isMaskedTS( timeStampStart: Long, timeStampEnd: Long ): Boolean = {
+  def isMaskedTs( timeStampStart: Long, timeStampEnd: Long ): Boolean = {
     _masks.exists( elem => (timeStampStart <= elem._1 && elem._1 <= timeStampEnd) ||
       (elem._2 <= timeStampEnd && timeStampStart <= elem._2)    )
   }
 
   def isMaskedFrame( frameStart: Int, frameEnd: Int, segment: Int, x: XData ): Boolean =
-        isMaskedTS(x.frameSegmentToTS(frameStart, segment) , x.frameSegmentToTS(frameEnd, segment) )
+        isMaskedTs(x.frsgToTs(frameStart, segment) , x.frsgToTs(frameEnd, segment) )
 
   def isMaskedFrame( range: RangeFr, segment: Int, x: XData ): Boolean ={
-    val realRange = range.getRange(x.segmentLengths(segment))
+    val realRange = range.getRange(x.segmentLength(segment))
     isMaskedFrame( realRange, segment, x)
   }
 
   def isMaskedFrame( range: Range.Inclusive, segment: Int, x: XData ): Boolean ={
-    isMaskedTS(x.frameSegmentToTS(range.start, segment) , x.frameSegmentToTS(range.end, segment) )
+    isMaskedTs(x.frsgToTs(range.start, segment) , x.frsgToTs(range.end, segment) )
   }
 
   def isMaskedFrame( frame: Int, segment: Int, x: XData ): Boolean =
-    isMaskedTS(x.frameSegmentToTS(frame, segment) )
+    isMaskedTs(x.frsgToTs(frame, segment) )
 
   // </editor-fold>
 
@@ -119,7 +119,7 @@ import nounou.ranges.RangeFr
   // <editor-fold defaultstate="collapsed" desc=" getNextMask, getActiveMasks ">
 
   def getNextMask(frame: Int, segment: Int, x: XFrames) = {
-    _masks.find ( p => ( p._1 >= x.frameSegmentToTS(frame, segment) )  )
+    _masks.find ( p => ( p._1 >= x.frsgToTs(frame, segment) )  )
   }
 
   def getNextMaskA(frame: Int, segment: Int, x: XFrames): Array[Long] = {
@@ -131,7 +131,7 @@ import nounou.ranges.RangeFr
 
 
   def getActiveMasksA( frameStart: Int, frameEnd: Int, segment: Int, x: XFrames ): Array[Array[Long]]  =
-        getActiveMasks(x.frameSegmentToTS(frameStart, segment), x.frameSegmentToTS(frameEnd, segment)).map( ele => Array(ele._1, ele._2)).toArray
+        getActiveMasks(x.frsgToTs(frameStart, segment), x.frsgToTs(frameEnd, segment)).map( ele => Array(ele._1, ele._2)).toArray
 
   def getActiveMasks( timeStampStart: Long, timeStampEnd: Long ): TreeMap[Long, Long]  = {
     _masks.filter( elem => (timeStampStart <= elem._1 && elem._1 <= timeStampEnd) ||

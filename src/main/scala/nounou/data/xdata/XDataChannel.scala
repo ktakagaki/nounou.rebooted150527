@@ -33,14 +33,14 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
   /** Read a single trace from the data, in internal integer scaling.
     */
   final def readTrace(segment: Int): DV[Int] = {
-    val range = RangeFrAll().getValidRange( segmentLengths(segment) )
+    val range = RangeFrAll().getValidRange( segmentLength(segment) )
     readTraceImpl(range, segment /*currentSegment = segment*/)
   }
   /** Read a single trace (within the span) from the data, in internal integer scaling.
     */
   final def readTrace(range: RangeFr, segment: Int): DV[Int] = {
 
-    val segLen =  segmentLengths(segment)
+    val segLen =  segmentLength(segment)
     val preLength = range.preLength( segLen )
     val postLength = range.postLength( segLen )
 
@@ -60,7 +60,7 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
   def readTraceImpl(range: Range.Inclusive, segment: Int): DV[Int] = {
     //Impls only get real ranges
     //val realRange = range.getRangeWithoutNegativeIndexes( segmentLengths(segment) )
-    val totalLengths = segmentLengths( segment )
+    val totalLengths = segmentLength( segment )
     val res = DV.zeros[Int](range.length) //new Array[Int]( range.length )
     forJava(range.start, range.end + 1, range.step, (c: Int) => (res(c) = readPointImpl(c, segment)))
     res
@@ -101,7 +101,7 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
   // </editor-fold>
 
   override def toString() = {
-    "XDataChannel( " + segmentCount + " segments, with lengths " + segmentLengths + ", fs=" + sampleRate + ")"
+    "XDataChannel( " + segmentCount + " segments, with lengths " + segmentLength + ", fs=" + sampleRate + ")"
   }
 
 }
@@ -122,8 +122,8 @@ class XDataChannelNull extends XDataChannel {
   override val absUnit: String = "XDataChannelNull"
   override val scaleMax: Int = 0
   override val scaleMin: Int = 0
-  override val segmentLengths: Vector[Int] = Vector[Int]()
-  override val segmentStartTSs: Vector[Long] = Vector(0L)
+  override val segmentLength: Vector[Int] = Vector[Int]()
+  override val segmentStartTs: Vector[Long] = Vector(0L)
   override val sampleRate: Double = 1d
 }
 
@@ -135,11 +135,11 @@ class XDataChannelPreloaded(val data: Array[DV[Int]],
                             override val scaleMax: Int,
                             override val scaleMin: Int,
                             override val channelName: String,
-                            override val segmentStartTSs: Vector[Long],
+                            override val segmentStartTs: Vector[Long],
                             override val sampleRate: Double
  )  extends XDataChannel {
 
-  override lazy val segmentLengths = data.map( _.length ).toVector
+  override lazy val segmentLength = data.map( _.length ).toVector
   def readPointImpl(frame: Int, segment: Int): Int = data(segment)(frame)
 
 }

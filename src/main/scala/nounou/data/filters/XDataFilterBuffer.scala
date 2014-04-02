@@ -126,7 +126,7 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
 
     override def default( key: (Int, Int, Int)  ): DV[Int] = {
       val startFrame = key._2 * bufferPageLength
-      val endFramePlusOne: Int = scala.math.min( startFrame + bufferPageLength, segmentLengths( key._3 ) )
+      val endFramePlusOne: Int = scala.math.min( startFrame + bufferPageLength, segmentLength( key._3 ) )
       val returnValue = tempTraceReader( key._1, new Range.Inclusive(startFrame, endFramePlusOne-1, 1), key._3  )
       this.+=( key -> returnValue )
       returnValue
