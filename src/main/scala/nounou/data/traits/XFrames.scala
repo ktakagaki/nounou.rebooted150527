@@ -2,8 +2,9 @@ package nounou.data.traits
 
 import nounou.data.X
 import scala.Vector
-import nounou.{LoggingExt, RangeFr}
+import nounou.LoggingExt
 import breeze.numerics.round
+import nounou.ranges.RangeFr
 
 /**This trait of XData and XDataChannel objects encapsulates segment,
   * frame, and sampling information for electrophysiological and imaging recordings..
@@ -81,7 +82,7 @@ trait XFrames extends X with LoggingExt {
 
   // </editor-fold>
 
-  // <editor-fold defaultstate="collapsed" desc="Sample Rate: conversion between frame/segment, TS, and ms">
+  // <editor-fold defaultstate="collapsed" desc="Time specification: conversion between frame/segment and TS">
 
   /** Absolute timestamp of the given data frame index (in microseconds).
     */
@@ -89,6 +90,130 @@ trait XFrames extends X with LoggingExt {
     require( isValidFrame(frame, segment) )
     segmentStartTSs(segment) + (frame.toDouble * tsPerFrame).toLong
   }
+//  final def tsToFrameSegment(timestamp: Long): (Int, Int) = tsToFrameSegment(timestamp, false)
+
+  final def tsToFrameSegmentA(timestamp: Long): Array[Int] = {
+    val tempret = tsToFrameSegment(timestamp)//, false)
+    Array[Int]( tempret._1, tempret._2 )
+  }
+//  final def tsToFrameSegmentA(timestamp: Long, negativeIfOOB: Boolean): Array[Int] = {
+//    val tempret = tsToFrameSegment(timestamp, negativeIfOOB)
+//    Array[Int]( tempret._1, tempret._2 )
+//  }
+
+  /** Closest frame/segment index to the given absolute timestamp. Will give frames which are out of range (i.e. negative, etc)
+    * if necessary.
+    *
+    * @param timestamp in Long
+//    * @param negativeIfOOB If true, will give a frame stamp as negative or larger than data length. Useful for overhangs. If False, will throw error.
+    * @return
+    */
+  final def tsToFrameSegment(timestamp: Long): (Int, Int) = {
+
+    var tempret: (Int, Int) = (0 , 0)
+    var changed = false
+
+    //timestamp is before the start of the first segment
+    if( timestamp <= segmentStartTSs(0) ){
+      tempret = ( ((timestamp-segmentStartTSs(0)) * framesPerTS).toInt, 0)
+    } else {
+      //loop through segments to find appropriate segment which (contains) given timestamp
+      var seg = 0
+      while(seg < segmentCount - 1 && !changed ){
+        if( timestamp <= segmentEndTSs(seg) ){
+          // if the timestamp is smaller than the end of the current segment, it fits in the current segment
+          tempret = ( ((timestamp-segmentStartTSs(seg)) * framesPerTS).toInt, seg)
+          changed = true
+        } else if( timestamp < segmentStartTSs(seg+1) ) {
+          //The timestamp is between the end of the current segment and the beginning of the next segment...
+          if( timestamp - segmentEndTSs(seg) < segmentStartTSs(seg+1) - timestamp){
+            //  ...timestamp is closer to end of current segment than beginning of next segment
+            tempret = (((timestamp-segmentEndTSs(seg)) * framesPerTS).toInt, seg)
+            changed = true
+          } else {
+            //  ...timestamp is closer to beginning of next segment than end of current segment
+            tempret = (((timestamp-segmentStartTSs(seg + 1)) * framesPerTS).toInt, seg + 1)
+            changed = true
+          }
+        } else {
+          //go on to next segment
+          seg += 1
+        }
+      }
+
+      //deal with the last segment separately
+      if( !changed ){
+        if(timestamp <= segmentEndTSs(segmentCount -1)){
+          // if the timestamp is smaller than the end of the current segment, it fits in the current segment
+          tempret = ( ((timestamp - segmentStartTSs(segmentCount-1)) * framesPerTS).toInt, segmentCount - 1 )
+        } else {
+          // if the timestamp is larger than the end of the last segment
+          tempret = ( ((timestamp - segmentEndTSs(segmentCount-1)) * framesPerTS).toInt, segmentCount - 1 )
+        }
+      }
+
+    }
+
+    tempret
+
+  }
+//  final def tsToFrameSegment(timestamp: Long, negativeIfOOB: Boolean): (Int, Int) = {
+//    var tempret: (Int, Int) = (0 , 0 )
+//    var changed = false
+//
+//    if( /* TS cond */ timestamp <= segmentStartTSs(0) ){
+//      if( negativeIfOOB )  tempret = ( ((timestamp-segmentStartTSs(0)) * framesPerTS).toInt, 0)
+//      else {
+//        logger.error("timestamp {} is smaller than first frame of first segment!", timestamp.toString)
+//        throw new IllegalArgumentException("text")
+//      }//tempret = (0, 0)
+//    } else {
+//      var seg = 0
+//      while(seg < segmentCount - 1 && !changed ){
+//        if(        /* TS cond */  timestamp <= segmentEndTSs(seg) ){
+//          tempret = ( ((timestamp-segmentStartTSs(seg)) * framesPerTS).toInt, seg)
+//          changed = true
+//        } else if( /* TS cond */ timestamp < segmentStartTSs(seg+1) ) {
+//          if(    /* TS cond */ timestamp - segmentEndTSs(seg) < segmentStartTSs(seg+1) - timestamp){
+//            if( negativeIfOOB )  tempret = (((timestamp-segmentStartTSs(seg)) * framesPerTS).toInt, seg)
+//            else {
+//              logger.error("timestamp is in the gap between segments {} and {}!", seg.toString, (seg+1).toString)
+//              throw new IllegalArgumentException//tempret = ( segmentLengths(seg) - 1, seg )
+//            }
+//            changed = true
+//          } else {
+//            if( negativeIfOOB )  tempret = (((timestamp-segmentStartTSs(seg + 1)) * framesPerTS).toInt, seg + 1)
+//            else {
+//              logger.error("timestamp is in the gap between segments "+seg+" and "+(seg+1)+"!")
+//              throw new IllegalArgumentException()
+//            }//tempret = (0, seg + 1)
+//            changed = true
+//          }
+//        } else {
+//          seg += 1
+//        }
+//      }
+//      if( !changed ){
+//        if(timestamp <= segmentEndTSs(segmentCount -1)){
+//          tempret = ( ((timestamp - segmentStartTSs(segmentCount-1)) * framesPerTS).toInt, segmentCount - 1 )
+//        } else {
+//          if( negativeIfOOB )  tempret = ( ((timestamp - segmentStartTSs(segmentCount-1)) * framesPerTS).toInt, segmentCount - 1 )
+//          else {
+//            loggerError("timestamp {} is larger than last frame {} of last segment {}!",
+//              timestamp.toString, (segmentLengths.last - 1).toString, (segmentCount - 1).toString )
+//          }//tempret = ( segmentLengths(segmentCount-1)-1, segmentCount -1)
+//        }
+//      }
+//    }
+//
+//    //if( !negativeIfOOB )  logger.error("this must be a bug in tsToFrameSegment!", new IllegalArgumentException )//require( tempret._1 >= 0 && tempret._1 < segmentLengths( tempret._2 ), "This must be a bug!")
+//
+//    tempret
+//
+//  }
+
+  // </editor-fold>
+  // <editor-fold defaultstate="collapsed" desc="Time specification: conversion between frame/segment and ms">
 
   /** Time of the given data frame and segment (in milliseconds, with t=0 being the time for frame 0 within the segment).
     */
@@ -102,84 +227,20 @@ trait XFrames extends X with LoggingExt {
     * out of range.
     */
   final def msToFrame(ms: Double): Int = {
-    val tempret = (ms*sampleRate*0.001).toInt
-    require(tempret>=0, "frame index must be >0, not checking upper range. Input ms=" + ms + ", calculated output=" + tempret)
-    tempret
+    //val tempret =
+      (ms*sampleRate*0.001).toInt
+    //require(tempret>=0, "frame index must be >0, not checking upper range. Input ms=" + ms + ", calculated output=" + tempret)
+    //tempret
     //tsToFrameSegment( (ms*1000).toLong + frameSegmentToTS(0, 0), negativeIfOOB )
   }
 
+  // </editor-fold>
+  // <editor-fold defaultstate="collapsed" desc="Time specification: conversion between ts and ms">
+
   final def tsToMs(timestamp: Long): Double = frameToMs( tsToFrameSegment(timestamp)._1 )
 
-  final def tsToFrameSegment(timestamp: Long): (Int, Int) = tsToFrameSegment(timestamp, false)
+  // </editor-fold>
 
-  final def tsToFrameSegmentA(timestamp: Long): Array[Int] = {
-    val tempret = tsToFrameSegment(timestamp, false)
-    Array[Int]( tempret._1, tempret._2 )
-  }
-  final def tsToFrameSegmentA(timestamp: Long, negativeIfOOB: Boolean): Array[Int] = {
-    val tempret = tsToFrameSegment(timestamp, negativeIfOOB)
-    Array[Int]( tempret._1, tempret._2 )
-  }
-  /** Closest frame/segment index to the given absolute timestamp. Will give beginning or last frames, if timestamp is
-    * out of range.
-   * @param timestamp in Long
-   * @param negativeIfOOB If true, will give a frame stamp as negative or larger than data length. Useful for overhangs. If False, will throw error.
-   * @return
-   */
-  final def tsToFrameSegment(timestamp: Long, negativeIfOOB: Boolean): (Int, Int) = {
-    var tempret: (Int, Int) = (0 , 0 )
-    var changed = false
-
-    if( /* TS cond */ timestamp <= segmentStartTSs(0) ){
-        if( negativeIfOOB )  tempret = ( ((timestamp-segmentStartTSs(0)) * framesPerTS).toInt, 0)
-        else {
-          logger.error("timestamp {} is smaller than first frame of first segment!", timestamp.toString)
-          throw new IllegalArgumentException("text")
-        }//tempret = (0, 0)
-    } else {
-        var seg = 0
-        while(seg < segmentCount - 1 && !changed ){
-            if(        /* TS cond */  timestamp <= segmentEndTSs(seg) ){
-                tempret = ( ((timestamp-segmentStartTSs(seg)) * framesPerTS).toInt, seg)
-                changed = true
-            } else if( /* TS cond */ timestamp < segmentStartTSs(seg+1) ) {
-                if(    /* TS cond */ timestamp - segmentEndTSs(seg) < segmentStartTSs(seg+1) - timestamp){
-                    if( negativeIfOOB )  tempret = (((timestamp-segmentStartTSs(seg)) * framesPerTS).toInt, seg)
-                    else {
-                      logger.error("timestamp is in the gap between segments {} and {}!", seg.toString, (seg+1).toString)
-                      throw new IllegalArgumentException//tempret = ( segmentLengths(seg) - 1, seg )
-                    }
-                    changed = true
-                } else {
-                    if( negativeIfOOB )  tempret = (((timestamp-segmentStartTSs(seg + 1)) * framesPerTS).toInt, seg + 1)
-                    else {
-                      logger.error("timestamp is in the gap between segments "+seg+" and "+(seg+1)+"!")
-                      throw new IllegalArgumentException()
-                    }//tempret = (0, seg + 1)
-                    changed = true
-                }
-            } else {
-              seg += 1
-            }
-        }
-        if( !changed ){
-          if(timestamp <= segmentEndTSs(segmentCount -1)){
-              tempret = ( ((timestamp - segmentStartTSs(segmentCount-1)) * framesPerTS).toInt, segmentCount - 1 )
-          } else {
-              if( negativeIfOOB )  tempret = ( ((timestamp - segmentStartTSs(segmentCount-1)) * framesPerTS).toInt, segmentCount - 1 )
-              else {
-                loggerError("timestamp {} is larger than last frame {} of last segment {}!",
-                  timestamp.toString, (segmentLengths.last - 1).toString, (segmentCount - 1).toString )
-              }//tempret = ( segmentLengths(segmentCount-1)-1, segmentCount -1)
-          }
-        }
-    }
-
-    //if( !negativeIfOOB )  logger.error("this must be a bug in tsToFrameSegment!", new IllegalArgumentException )//require( tempret._1 >= 0 && tempret._1 < segmentLengths( tempret._2 ), "This must be a bug!")
-
-    tempret
-
-  }
 
 
   /** Closest segment index to the given timestamp.

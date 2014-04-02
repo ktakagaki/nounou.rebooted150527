@@ -3,6 +3,7 @@ package nounou
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import nounou.ranges.RangeFr
 
 /**
  * @author ktakagaki

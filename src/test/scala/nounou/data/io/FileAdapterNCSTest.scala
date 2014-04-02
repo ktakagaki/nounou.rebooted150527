@@ -4,6 +4,7 @@ import nounou._
 import org.scalatest.FunSuite
 import java.io.{File}
 import breeze.numerics.abs
+import nounou.ranges.RangeFrAll
 
 /**
  * @author ktakagaki

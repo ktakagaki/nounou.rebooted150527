@@ -1,10 +1,10 @@
 package nounou.data.filters
 
 import nounou.data.XData
-import nounou.RangeFr
 import breeze.math.Complex
 import breeze.linalg.{DenseVector}
 import breeze.signal.{rootMeanSquare, fourierTr}
+import nounou.ranges.RangeFr
 
 /**
  * @author ktakagaki
