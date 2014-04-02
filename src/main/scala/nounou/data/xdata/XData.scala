@@ -14,7 +14,7 @@ import nounou.ranges.{RangeFrAll, RangeFrSpecifier, RangeFr}
   */
 abstract class XData extends X with XConcatenatable with XFrames with XChannels with XAbsolute {
 
-  override def toString(): String = "XData: " + channelCount + " ch, "+ segmentCount + " seg, lengths=" + segmentLengths + ", fs=" + sampleRate + ")"
+  override def toString(): String = "XData: " + channelCount + " ch, "+ segmentCount + " seg, length=" + segmentLength + ", fs=" + sampleRate + ")"
 
   /** Provides a textual representation of the child hierarchy starting from this data object.
     * If multiple XDataFilter objects (e.g. an XDataFilterFIR object) is chained after this data,
@@ -107,7 +107,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   /** Read a single trace (within the span) from current segment (or segment 0 if not initialized), in internal integer scaling.
     */
   //final def readTrace(channel: Int, range: RangeFr): DV[Int] = readTrace(channel, range, currentSegment)
-  final def readTraceA(channel: Int, range: RangeFr) = readTrace(channel, range).toArray
+//  final def readTraceA(channel: Int, range: RangeFr) = readTrace(channel, range).toArray
   final def readTrace(channel: Int, range: RangeFrSpecifier): DV[Int] = readTrace(channel, range.getFrameRange(this))//, currentSegment)
   final def readTraceA(channel: Int, range: RangeFrSpecifier) = readTrace(channel, range.getFrameRange(this)).toArray
 
@@ -120,7 +120,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     require(isRealisticFrameRange(range, range.segment), "Unrealistic frame/segment: " + (range, range.segment).toString)
     require(isValidChannel(channel), "Invalid channel: " + channel.toString)
 
-    val totalLength =  segmentLengths(range.segment)
+    val totalLength =  segmentLength(range.segment)
         val preLength = range.preLength( totalLength )
         val postLength = range.postLength( totalLength )
 
@@ -287,8 +287,8 @@ abstract class XDataNullImpl extends XDataImmutable {
   override val absUnit: String = "Null unit"
   override val scaleMax: Int = 0
   override val scaleMin: Int = 0
-  override val segmentLengths: Vector[Int] = Vector[Int]()
-  override val segmentStartTSs: Vector[Long] = Vector[Long]()
+  override val segmentLength: Vector[Int] = Vector[Int]()
+  override val segmentStartTs: Vector[Long] = Vector[Long]()
   override val sampleRate: Double = 1d
   override val layout: XLayout = XLayoutNull
 }

@@ -183,8 +183,8 @@ object FileAdapterNCS extends FileAdapterNLX {
       absGain = 1.0E6 * tempADBitVolts / xBitsD,
       scaleMax = Short.MaxValue.toInt*xBits,
       scaleMin = Short.MinValue.toInt*xBits,
-      segmentLengths = tempLengths,
-      segmentStartTSs = tempStartTimestamps,
+      segmentLength = tempLengths,
+      segmentStartTs = tempStartTimestamps,
       channelName = tempAcqEntName
     )
 
@@ -201,8 +201,8 @@ class XDataChannelNCS
                        override val absGain: Double,
                        override val scaleMax: Int,
                        override val scaleMin: Int,
-                       override val segmentLengths: Vector[Int],
-                       override val segmentStartTSs: Vector[Long],
+                       override val segmentLength: Vector[Int],
+                       override val segmentStartTs: Vector[Long],
                        override val channelName: String
                        ) extends XDataChannelFilestream {
 

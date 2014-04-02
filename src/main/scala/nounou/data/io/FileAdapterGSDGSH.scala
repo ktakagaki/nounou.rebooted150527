@@ -191,11 +191,11 @@ class XDataGSD(
                 scaleMax: Int,
                 scaleMin: Int,
                 /*channelNames: Vector[String],*/
-                segmentStartTS: Long,
+                segmentStartTs: Long,
                 sampleRate: Double,
                 layout: XLayout,
                 val backgroundFrame: DV[Int]
-                ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, /*channelNames,*/ segmentStartTS, sampleRate, layout)
+                ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, /*channelNames,*/ segmentStartTs, sampleRate, layout)
 
 class XDataGSDAux(
                 data: DM[Int],
@@ -206,7 +206,7 @@ class XDataGSDAux(
                 scaleMax: Int,
                 scaleMin: Int,
                 //channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
-                segmentStartTS: Long,
+                segmentStartTs: Long,
                 sampleRate: Double,
                 layout: XLayout
-                   ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, /*channelNames,*/ segmentStartTS, sampleRate, layout) with XDataAux
+                   ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, /*channelNames,*/ segmentStartTs, sampleRate, layout) with XDataAux

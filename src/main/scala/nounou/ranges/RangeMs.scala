@@ -1,8 +1,6 @@
-package nounou
+package nounou.ranges
 
 import nounou.data.traits.XFrames
-import nounou.RangeFrSpecifier
-import nounou.ranges.{RangeFrSpecifier, RangeFr}
 
 /**For specifying data extraction range in Ms.
  * @author ktakagaki
@@ -34,8 +32,8 @@ class RangeMs(val start: Double, val end: Double, val step: Double, val segment:
 //    if(isAll){
 //      RangeFrAll( stepReal )
 //    } else {
-      val startReal = x.msToFrame(start)
-      val endReal = x.msToFrame(end)
+      val startReal = x.msToFr(start)
+      val endReal = x.msToFr(end)
 
       new RangeFr(startReal, endReal, stepReal, segment)
 //    }

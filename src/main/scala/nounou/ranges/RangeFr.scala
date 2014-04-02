@@ -19,22 +19,6 @@ object RangeFr extends LoggingExt {
   final def apply(start: Int, endMarker: Int, step: Int) = new RangeFr(start, endMarker, step, segment = 0)
   final def apply(start: Int, endMarker: Int) = new RangeFr(start, endMarker, 1, segment = 0)
 
-//  final def msRange(startMs: Double, endMs: Double, stepMs: Double, sampleRate:Double): RangeFr = {
-//
-//    loggerRequire(stepMs>0, "stepMs ({}) must be larger than zero!", stepMs.toString)
-//    loggerRequire(sampleRate>0, "sampleRate ({}) must be larger than zero!", sampleRate.toString)
-//
-//    val startFr = (startMs/1000d * sampleRate).toInt
-//    val endFr = (endMs/1000d * sampleRate).toInt
-//    val stepReal = (stepMs/1000d * sampleRate).toInt
-//
-//    new RangeFr(startFr, endFr, stepReal)
-//  }
-//
-//  def msAnchorRange(anchorMs: Double, preMs: Double, postMs: Double, stepMs: Double, sampleRate:Double): RangeFr = {
-//    msRange(anchorMs-preMs, anchorMs+postMs, stepMs, sampleRate)
-//  }
-
 }
 
 
@@ -93,7 +77,7 @@ class RangeFr(val start: Int, val endMarker: Int, val step: Int = 1, val segment
     */
   def isFullyValid(xFrames: XFrames): Boolean = {
     if(isAll) true
-    else isFullyValid( xFrames.segmentLengths(segment) )
+    else isFullyValid( xFrames.segmentLength(segment) )
   }
   /** Whether the frame range is completely contained within available data.
     * @param totalLength full length of this segment in frames, used to realize with RangeFr.all()
