@@ -19,7 +19,7 @@ class FileAdapterNCSTest extends FunSuite {
     val d = new DataReader
     d.reload( testFileTet4a )
 
-    println(d.dataORI.segmentLengths)
+    println(d.dataORI.segmentLength)
     //println(d.dataORI.readTrace(0, RangeFr.All, 0).length)
     //println(d.dataORI.readTrace(0, RangeFr.All, 1).length)
 

@@ -40,7 +40,7 @@ object FileAdapterKlustaDAT extends FileAdapter {
         case _ => loggerError("{} is not a valid option for OptFileAdapter!", opt.toString ); throw new IllegalArgumentException
       }
 
-      val realRange = parsedOpt.range.getValidRange( data.segmentLengths(parsedOpt.segment) )
+      val realRange = parsedOpt.range.getValidRange( data.segmentLength(parsedOpt.segment) )
       val writeFrameLength = 1024 //32kb if 16 channels
 
       var currentFrameStart = 0

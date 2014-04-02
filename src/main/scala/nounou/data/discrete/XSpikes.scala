@@ -47,8 +47,9 @@ import scala.beans.BeanProperty
       that match {
         case x: XSpikes => {
           if( this.isCompatible(x) ) {
-            val temp = new XSpikes( waveFormLength )
-            temp.spikes = this.spikes ++ x.spikes
+            val temp = new XSpikes//( waveFormLength )
+            temp.spikes ++: this.spikes
+            temp.spikes ++: x.spikes
             temp
           }
           else throw new IllegalArgumentException("cannot concatenate spikes with different waveform lengths")
@@ -62,7 +63,7 @@ import scala.beans.BeanProperty
 
     override def isCompatible(that: X): Boolean =
       that match {
-        case x: XSpikes => if(this.waveFormLength == x.waveFormLength) true else false
+        case x: XSpikes => true // if(this.waveFormLength == x.waveFormLength) true else false
         case _ => false
       }
 

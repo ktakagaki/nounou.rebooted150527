@@ -45,7 +45,7 @@ class DataReader extends Logging {
 
   def setData(x: XData): Unit = {
     dataORI.heldData = x
-    if(dataORI.sampleRate > 2000 && dataORI.segmentLengths.reduce(_+_) > 200000) dataDecimate.factor_=(math.min(16, (dataORI.sampleRate / 2000).toInt))
+    if(dataORI.sampleRate > 2000 && dataORI.segmentLength.reduce(_+_) > 200000) dataDecimate.factor_=(math.min(16, (dataORI.sampleRate / 2000).toInt))
     val halfWindow = (dataRMSFIR.sampleRate * 0.05).toInt //50 ms
     dataRMS.setHalfWindow(halfWindow)
     dataMAX.setHalfWindow(halfWindow)
@@ -71,11 +71,11 @@ class DataReader extends Logging {
     val absThreshold = dataRMS.absToInternal( absAbsThreshold )
 
     for(seg <- 0 until dataRMS.segmentCount)
-    for(frame <- 0 until dataRMS.segmentLengths(seg) by stepSize ) {
+    for(frame <- 0 until dataRMS.segmentLength(seg) by stepSize ) {
       if( mean( (for(ch <- (0 until dataMAX.channelCount) ) yield dataMAX.readPoint(ch, frame, seg)).toVector ) >= absThreshold ||
             mean( (for(ch <- (0 until dataRMS.channelCount) ) yield dataRMS.readPoint(ch, frame, seg)).toVector ) >= rmsThreshold ){
-        val frameTS = dataRMS.frameSegmentToTS(frame, seg)
-        mask.mask( frameTS - maskHalfWindow, frameTS + maskHalfWindow )
+        val frameTs = dataRMS.frsgToTs(frame, seg)
+        mask.mask( frameTs - maskHalfWindow, frameTs + maskHalfWindow )
       }
     }
 

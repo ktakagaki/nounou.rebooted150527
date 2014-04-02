@@ -19,13 +19,13 @@ class XDataPreloaded(  val data: Array[DM[Int]],
                        override val scaleMax: Int,
                        override val scaleMin: Int,
                        //override val channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
-                       override val segmentStartTSs: Vector[Long],
+                       override val segmentStartTs: Vector[Long],
                        override val sampleRate: Double,
                        override val layout: XLayout = XLayoutNull
                       )
   extends XDataImmutable with XConcatenatable {
 
-    override val segmentLengths = data.map( (p: DM[Int]) => p.rows ).toVector
+    override final lazy val segmentLength = data.map( (p: DM[Int]) => p.rows ).toVector
 
 
     require(channelCount == data(0).cols,
@@ -54,7 +54,7 @@ class XDataPreloaded(  val data: Array[DM[Int]],
                                 scaleMax = oriThis.scaleMax,
                                 scaleMin = oriThis.scaleMin,
                                 //channelNames = oriThis.channelNames ++ t.channelNames,
-                                segmentStartTSs = oriThis.segmentStartTSs,
+                                segmentStartTs = oriThis.segmentStartTs,
                                 sampleRate = oriThis.sampleRate,
                                 layout = oriThis.layout ::: t.layout
             )
@@ -79,8 +79,8 @@ class XDataPreloadedSingleSegment(
                     scaleMax: Int,
                     scaleMin: Int,
                     //channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
-                    segmentStartTS: Long,
+                    segmentStartTs: Long,
                     sampleRate: Double,
                     layout: XLayout = XLayoutNull
                     )
-  extends XDataPreloaded( Array(data), xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, /*channelNames,*/ Vector[Long](segmentStartTS), sampleRate, layout)
+  extends XDataPreloaded( Array(data), xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, /*channelNames,*/ Vector[Long](segmentStartTs), sampleRate, layout)

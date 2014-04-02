@@ -14,8 +14,8 @@ import nounou.data.traits.XConcatenatable
 
   def apply(channel: Int) = array(channel)
 
-  override lazy val segmentLengths = array(0).segmentLengths
-  override lazy val segmentStartTSs = array(0).segmentStartTSs
+  override lazy val segmentLength = array(0).segmentLength
+  override lazy val segmentStartTs = array(0).segmentStartTs
   override lazy val sampleRate = array(0).sampleRate
 
   // (from XChannelsImmutable)

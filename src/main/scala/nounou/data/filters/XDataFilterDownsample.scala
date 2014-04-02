@@ -67,23 +67,23 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
   override def sampleRate: Double = upstream.sampleRate / factor
 
   // override def segmentStartTSs: Vector[Long] = upstream.segmentStartTSs
-  override def segmentEndTSs: Vector[Long] = if( factor == currentSegEndTSFactor ) currentSegEndTSBuffer
+  override def segmentEndTs: Vector[Long] = if( factor == currentSegEndTSFactor ) currentSegEndTSBuffer
   else {
-    currentSegEndTSBuffer = ( for(seg <- 0 until segmentCount) yield upstream.segmentStartTSs(seg) + ((this.segmentLengths(seg)-1)*tsPerFrame).toLong ).toVector
+    currentSegEndTSBuffer = ( for(seg <- 0 until segmentCount) yield upstream.segmentStartTs(seg) + ((this.segmentLength(seg)-1)*tsPerFrame).toLong ).toVector
     currentSegEndTSFactor = factor
     currentSegEndTSBuffer
   }
   private var currentSegEndTSFactor = 0
-  private var currentSegEndTSBuffer = upstream.segmentEndTSs
+  private var currentSegEndTSBuffer = upstream.segmentEndTs
 
-  override def segmentLengths: Vector[Int] = if( factor == currentSegLenFactor ) currentSegLenBuffer
+  override def segmentLength: Vector[Int] = if( factor == currentSegLenFactor ) currentSegLenBuffer
   else {
-    currentSegLenBuffer = ( for(seg <- 0 until segmentCount) yield ( upstream.segmentLengths(seg) - 1 )/factor + 1 ).toVector
+    currentSegLenBuffer = ( for(seg <- 0 until segmentCount) yield ( upstream.segmentLength(seg) - 1 )/factor + 1 ).toVector
     currentSegLenFactor = factor
     currentSegLenBuffer
   }
   private var currentSegLenFactor = 0
-  private var currentSegLenBuffer = upstream.segmentLengths
+  private var currentSegLenBuffer = upstream.segmentLength
 
   //  override def segmentCount: Int = upstream.segmentCount
 
