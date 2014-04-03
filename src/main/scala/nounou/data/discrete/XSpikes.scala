@@ -27,9 +27,14 @@ object XSpikes extends LoggingExt {
 /** A database of [[XSpikeWaveform]] objects for display and processing
     *
     */
-class XSpikes(val waveformLength: Int, xTrodes: XTrodes = XTrodesOne ) extends X with XConcatenatable {
+class XSpikes(val waveformLength: Int, private var xtr: XTrodes, private var xdat: XData ) extends X with XConcatenatable {
 
-  protected var spikes: Array[TreeMap[Long, XSpikeWaveform]] = Array.tabulate(xTrodes.trodeCount)(p => new TreeMap[Long, XSpikeWaveform]())
+  def this(waveformLength: Int) = this(waveformLength, XTrodesNull, XDataNull)
+  def this(waveformLength: Int, xtr: XTrodes) = this(waveformLength, xtr, XDataNull)
+  def this(waveformLength: Int, xdat: XData) = this(waveformLength, XTrodesNull, xdat)
+  def this(waveformLength: Int, xdat: XData, xtr: XTrodes) = this(waveformLength, xtr, xdat)
+
+  private var spikes: Array[TreeMap[Long, XSpikeWaveform]] = Array.tabulate(xTrodes.trodeCount)(p => new TreeMap[Long, XSpikeWaveform]())
   def isValidTrode(trode: Int) = trode >=0 && trode < spikes.length
 
 //  def checkDataCompatibility(xData: XData): Unit = {
@@ -56,6 +61,44 @@ class XSpikes(val waveformLength: Int, xTrodes: XTrodes = XTrodesOne ) extends X
 //      }
 //    }
 //  }
+
+  // <editor-fold defaultstate="collapsed" desc=" set/getXTrodes ">
+
+  def xTrodes_=( xTrodes: XTrodes ): Unit = {
+    if( xtr == XTrodesNull) {
+      if( xdat != XDataNull ) {
+        loggerRequire( xTrodes.channelCount == xdat.channelCount,
+          "You tried to load an XTrode object with channel count {}, when an XData object with channel count {} is already loaded!",
+          xTrodes.channelCount.toString, xdat.channelCount.toString
+        )
+      }
+      xtr = xTrodes
+    }
+  }
+  def xTrodes(): XTrodes = xtr
+  def setXTrodes( xTrodes: XTrodes ): Unit = { xTrodes_=( xTrodes ) }
+  def getXTrodes(): XTrodes = xTrodes()
+
+  // </editor-fold>
+  // <editor-fold defaultstate="collapsed" desc=" set/getXData ">
+
+  def xData_=( xData: XData ): Unit = {
+    if( xdat == XDataNull) {
+      if( xtr != XTrodesNull ) {
+        loggerRequire( xData.channelCount == xtr.channelCount,
+          "You tried to load an XData object with channel count {}, when a XTrode object with channel count {} is already loaded!",
+          xData.channelCount.toString, xtr.channelCount.toString
+        )
+      }
+      xdat = xData
+    }
+  }
+  def xData(): XData = xdat
+  def setXData( xData: XData ): Unit = { xData_=( xData ) }
+  def getXData(): XData = xData()
+
+  // </editor-fold>
+
 
   // <editor-fold desc="addSpike/addSpikes">
 
@@ -113,7 +156,7 @@ class XSpikes(val waveformLength: Int, xTrodes: XTrodes = XTrodesOne ) extends X
     that match {
       case x: XSpikes => {
         if( this.isCompatible(x) ) {
-          val temp = new XSpikes( waveformLength )
+          val temp = new XSpikes( waveformLength, x.xTrodes, x.xData )
           temp.spikes ++: this.spikes
           temp.spikes ++: x.spikes
           temp
@@ -129,13 +172,15 @@ class XSpikes(val waveformLength: Int, xTrodes: XTrodes = XTrodesOne ) extends X
 
   override def isCompatible(that: X): Boolean =
     that match {
-      case x: XSpikes => true // if(this.waveFormLength == x.waveFormLength) true else false
+      case x: XSpikes => {
+        this.waveformLength == x.waveformLength && this.xTrodes.isCompatible(x.xTrodes) && this.xData.channelCount == x.xData.channelCount
+      }
       case _ => false
     }
 
   // </editor-fold>
 
-  override def toString() = "XSpikes( " + DenseVector(spikeCounts()).toString +
+  override def toString() = "XSpikes( " + (DenseVector( spikeCounts() )).toString +
     " spikes, waveFormLength=" + waveformLength.toString + ", xTrodes=" + xTrodes.toString()+")"
 
 }
