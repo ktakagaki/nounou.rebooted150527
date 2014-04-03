@@ -2,11 +2,9 @@ package nounou.data
 
 import scala.collection.immutable.TreeMap
 import nounou.data.traits.XConcatenatable
-import scala.beans.BeanProperty
 import nounou.ranges.RangeTsEvent
 import breeze.linalg.DenseVector
 import nounou.LoggingExt
-import scala.collection.mutable.ArrayBuffer
 
 object XSpikes extends LoggingExt {
   def initialize(xData: XData, trodeLayout: XTrodes, waveformLength: Int): XSpikes = {
