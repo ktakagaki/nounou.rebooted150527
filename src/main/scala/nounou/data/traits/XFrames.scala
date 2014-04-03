@@ -11,8 +11,13 @@ import nounou.ranges.RangeFr
   */
 trait XFrames extends X with LoggingExt {
 
-  private def warnIfMultipleSegments(func:String, altFunc:String): Unit = {
-    if(segmentCount != 1) logger.warn("{}} should not be used if the file has more than one segment. Use {} instead", func, altFunc)
+  /** Throws IllegalArgumentException if segmentCount != 1... use as check for functions which assume segment = 0.
+    * @param func name of current function/signature called (which assumes segment = 0 )
+    * @param altFunc  name of function/signature which should be called instead, with explicit specification of segment = 0
+    */
+  @throws[IllegalArgumentException]
+  private def errorIfMultipleSegments(func:String, altFunc:String): Unit = {
+    loggerRequire(segmentCount != 1, "{} should not be used if the file has more than one segment. Use {} instead", func, altFunc)
   }
 
   // <editor-fold desc="segment related: segmentCount, segmentLength/length ">
@@ -24,9 +29,13 @@ trait XFrames extends X with LoggingExt {
   /**Total number of frames in each segment.
     */
   def segmentLength: Vector[Int]
+  /**Return [[segmentLength]] as Array, for easy access from Java/Mathematica/MatLab.
+    */
   final def segmentLengthA = segmentLength.toArray
+  /**Length in frames of data. Use [[segmentLength]] instead, for data which has more than one segment.
+    */
   final lazy val length: Long = {
-    warnIfMultipleSegments("length", "segmentLength(segment: Int)")
+    errorIfMultipleSegments("length", "segmentLength(segment: Int)")
     segmentLength(0)
   }
 
@@ -37,18 +46,24 @@ trait XFrames extends X with LoggingExt {
     */
   def segmentStartTs: Vector[Long]
   final def startTs: Long = {
-    warnIfMultipleSegments("startTs", "segmentStartTS(segment: Int)")
+    errorIfMultipleSegments("startTs", "segmentStartTS(segment: Int)")
     segmentStartTs(0)
   }
+  /**Return [[segmentStartTs]] as Array, for easy access from Java/Mathematica/MatLab.
+    */
   final def segmentStartTsA = segmentStartTs.toArray
   /** OVERRIDE: End timestamp for each segment. Implement by overriding _endTimestamp
     */
   def segmentEndTs: Vector[Long]
+  /**Return [[segmentEndTs]] as Array, for easy access from Java/Mathematica/MatLab.
+    */
+  final def segmentEndTsA = segmentEndTs.toArray
+  /**End timestamp for data. Use [[segmentEndTs]] instead, for data which has more than one segment.
+    */
   final def EndTs: Long = {
-    warnIfMultipleSegments("endTs", "segmentEndTS(segment: Int)")
+    errorIfMultipleSegments("endTs", "segmentEndTS(segment: Int)")
     segmentEndTs(0)
   }
-  final def segmentEndTsA = segmentEndTs.toArray
 
   // </editor-fold>
 
@@ -92,7 +107,7 @@ trait XFrames extends X with LoggingExt {
     segmentStartTs(segment) + (frame.toDouble * tsPerFr).toLong
   }
   final def frToTs(frame:Int): Long = {
-    warnIfMultipleSegments("length", "segmentLength(segment: Int)")
+    errorIfMultipleSegments("length", "segmentLength(segment: Int)")
     frsgToTs(frame, 0)
   }
   final def frToTs(frameSegment:(Int, Int)): Long = frsgToTs(frameSegment._1, frameSegment._2)
@@ -159,7 +174,7 @@ trait XFrames extends X with LoggingExt {
     Array[Int]( tempret._1, tempret._2 )
   }
   final def tsToFr(timestamp: Long): Int = {
-    warnIfMultipleSegments("length", "segmentLength(segment: Int)")
+    errorIfMultipleSegments("length", "segmentLength(segment: Int)")
     tsToFrsg(timestamp)._1
   }
 
