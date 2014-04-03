@@ -6,6 +6,8 @@ import com.typesafe.scalalogging.slf4j.Logging
 import nounou.data._
 import nounou.data.io.{FileAdapterGSDGSH, FileAdapterNEV, FileAdapterNCS, FileAdapterNEX}
 import nounou.data.filters._
+import scala.beans.BeanProperty
+import nounou.data.headers.{XHeaderNull, XHeader}
 
 
 /**
@@ -26,13 +28,18 @@ class DataReader extends Logging {
 //  /**Layout of data*/
 //  var layout: XLayout = XLayoutNull
   /**Time masks (by timestamp) to deactivate segments of data--for example, to mark artifact areas*/
+  @BeanProperty
   var mask: XMask = new XMask
 
   /**Events*/
+  @BeanProperty
   var events: XEvents = XEventsNull
   /**Spikes*/
+  @BeanProperty
   var spikes: XSpikes = XSpikesNull
-
+  def initializeSpikes(xData: XData, xTrodes: XTrodes, waveformLength: Int): Unit = {
+    spikes = XSpikes.initialize(xData, xTrodes, waveformLength)
+  }
   // <editor-fold defaultstate="collapsed" desc=" filters, setting data/dataORI and dataAux/dataAuxORI ">
 
   val dataDecimate: XDataFilterDecimate = new XDataFilterDecimate( dataORI )

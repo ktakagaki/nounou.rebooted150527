@@ -14,19 +14,19 @@ object RangeTs {
     * @param step must amount to a real frame step that is > 0, when converted with the appropriate frame rate
     * @param segment this parameter specifies the recording segment, active in certain file formats
     */
-  def apply(startTS: Long, endTS: Long, step: Long, segment: Int) = new RangeTs(startTS, endTS, step, segment, false)
+  def apply(startTs: Long, endTs: Long, step: Long, segment: Int) = new RangeTs(startTs, endTs, step, segment, false)
 
   /** Most common constructor, with default segment = 0.
     * @param step must amount to a real frame step that is > 0, when converted with the appropriate frame rate
     */
-  def apply(startTS: Long, endTS: Long, step: Long) = new RangeTs(startTS, endTS, step, 0, false)
+  def apply(startTs: Long, endTs: Long, step: Long) = new RangeTs(startTs, endTs, step, 0, false)
 
 }
 
-class RangeTs(val startTS: Long, val endTS: Long, val step: Long, val segment: Int, val isAll: Boolean) extends RangeFrSpecifier {
+class RangeTs(val startTs: Long, val endTs: Long, val step: Long, val segment: Int, val isAll: Boolean) extends RangeFrSpecifier {
 
-//  def this(startTS: Long, endTS: Long, step: Long, segment: Int) = this(startTS, endTS, step, segment, false)
-//  def this(startTS: Long, endTS: Long, step: Long) = this(startTS, endTS, step, 0, false)
+//  def this(startTs: Long, endTs: Long, step: Long, segment: Int) = this(startTs, endTs, step, segment, false)
+//  def this(startTs: Long, endTs: Long, step: Long) = this(startTs, endTs, step, 0, false)
 
   def this(segment: Int, isAll: Boolean) = this(0L, 0L, 0L, segment, true)
   def this(isAll: Boolean) = this(0, true)
@@ -40,8 +40,8 @@ class RangeTs(val startTS: Long, val endTS: Long, val step: Long, val segment: I
       val stepReal = (step * x.sampleInterval/* * 1000d*/).toInt
       loggerRequire(stepReal>0, "This amounts to a negative or zero timestep! (stepMs=" + step + " ms)")
 
-      val startReal = x.tsToFrsg(startTS) //ToDo 2: expand to send segment info too in RangeFr
-      val endReal = x.tsToFrsg(endTS)
+      val startReal = x.tsToFrsg(startTs) //ToDo 2: expand to send segment info too in RangeFr
+      val endReal = x.tsToFrsg(endTs)
       loggerRequire(startReal._2 == endReal._2, "The two specified timestamps belong to different recording segments {}  and {}.", startReal._2.toString, endReal._2.toString)
 
       new RangeFr(startReal._1, endReal._1, stepReal, segment)
@@ -52,14 +52,6 @@ class RangeTs(val startTS: Long, val endTS: Long, val step: Long, val segment: I
 
 
 object RangeTsEvent {
-
-  /** Most common constructor for a frame specification based on timestamps and pre/post data points.
-    * @param preFrames number of data points to take prior to given timestamp. Data points will be taken in steps of `step`
-    * @param postFrames number of data points to take following given timestamp. Data points will be taken in steps of `step`
-    * @param segment this parameter specifies the recording segment, active in certain file formats
-    */
-  def apply(eventTS: Long, preFrames: Int, postFrames: Int, step: Int, segment: Int) =
-    new RangeTsEvent(eventTS,  preFrames, postFrames, step, segment)
 
   /** Constructor for a frame specification based on timestamps and pre/post data points, with default segment = 0.
     * @param preFrames number of data points to take prior to given timestamp. Data points will be taken in steps of `step`

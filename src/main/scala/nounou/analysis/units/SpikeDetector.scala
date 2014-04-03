@@ -28,11 +28,11 @@ abstract class SpikeDetector extends LoggingExt {
   final def apply(xData: XData, xTrodes: XTrodes, trode: Int): Array[Long] =
         apply( xData, xTrodes, trode, RangeFrAll())
 
-//  final def apply(xData: XData, xTrodes: XTrodes, trodes: Array[Int]): Array[Long] =
-//    apply( xData, xTrodes, trodes, RangeFrAll())
+//  final def apply(xData: XData, xTrodes: XTrodes, trodeCount: Array[Int]): Array[Long] =
+//    apply( xData, xTrodes, trodeCount, RangeFrAll())
 //
-//  def apply(xData: XData, xTrodes: XTrodes, trodes: Array[Int], frameRange: RangeFr): Array[Long] =
-//    apply( xData, xTrodes, trodes, RangeFrAll(), 0)
+//  def apply(xData: XData, xTrodes: XTrodes, trodeCount: Array[Int], frameRange: RangeFr): Array[Long] =
+//    apply( xData, xTrodes, trodeCount, RangeFrAll(), 0)
 //
   def apply(xData: XData, xTrodes: XTrodes, trode: Int, frameRange: RangeFr): Array[Long]
 
@@ -48,7 +48,7 @@ object SpikeDetectorQuiroga extends SpikeDetector {
   override def apply(xData: XData, xTrodes: XTrodes, trode: Int, frameRange: RangeFr): Array[Long] = {
     loggerRequire( frameRange.step == 1, "Currently, SpikeDetector classes must be called with a frame range with step = 1. {} is invalid", frameRange.step.toString)
 
-    val channels = xTrodes.trodeGroup(trode)//trodes.flatMap( p => xTrodes.trodeGroup(p) )
+    val channels = xTrodes.trodeChannels(trode)//trodeCount.flatMap( p => xTrodes.trodeGroup(p) )
     logger.trace("following channels for thresholding extracted from xTrodes: {}", DenseVector(channels).toString)
     val tempData = channels.map( p => xData.readTrace(p, frameRange).toArray )
     logger.trace("Called with {} channels in trode #{}", channels.length.toString, trode.toString)
@@ -124,7 +124,7 @@ object SpikeDetectorQuiroga extends SpikeDetector {
 //    }
 //  }
 //
-//  override def apply(xData: XData, xSpikes: XSpikes, trodes: Array[Int], frameRange: RangeFr, optSpikeDetectorFlush: OptSpikeDetectorFlush) = {
+//  override def apply(xData: XData, xSpikes: XSpikes, trodeCount: Array[Int], frameRange: RangeFr, optSpikeDetectorFlush: OptSpikeDetectorFlush) = {
 //
 //  }
 //

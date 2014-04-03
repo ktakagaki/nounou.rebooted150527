@@ -5,6 +5,11 @@ import breeze.linalg.max
 import breeze.util.JavaArrayOps.array2IToDm
 import scala.collection.mutable.Set
 
+object XTrodes {
+  def apply( trodeGroups: Array[Array[Int]] ) = new XTrodesPreloaded( trodeGroups )
+  def apply( channelCount: Int ) = new XTrodesIndividual( channelCount )
+}
+
 /**Immutable class to encapsulate trode layouts.
  * @author ktakagaki
  * @date 3/14/14.
@@ -17,7 +22,10 @@ abstract class XTrodes extends X with XConcatenatable {
   /**Returns the total number of defined trodes.*/
   def trodeCount: Int
   /**Returns the channels included in each trode.*/
-  def trodeGroup(trode: Int): Array[Int]
+  def trodeChannels(trode: Int): Array[Int]
+  /**Returns the number of channels included in each trode.*/
+  final def trodeSize(trode: Int) = trodeChannels(trode).length
+
   def trodeNeighbors( channel: Int ): Array[Int]
   def channelCount: Int
 
@@ -32,8 +40,8 @@ abstract class XTrodes extends X with XConcatenatable {
 class XTrodesPreloaded(private val trodeGroups: Array[Array[Int]]) extends XTrodes {
 
   override def toString() = {
-    "XTrodesPreloaded, channelCount = " + channelCount + ", trodeCount = " + trodeCount +
-    "\n      trodeGroups: " + array2IToDm(trodeGroups)
+    "XTrodesPreloaded( channelCount = " + channelCount + ", trodeCount = " + trodeCount +
+    "\n      trodeGroups: " //ToDo3 print ragged arrays + trodeGroups.map()
   }
 
   //constructer argument checks
@@ -49,16 +57,15 @@ class XTrodesPreloaded(private val trodeGroups: Array[Array[Int]]) extends XTrod
   }
 
   override val trodeCount = trodeGroups.length
-  override def trodeGroup( trode: Int ) = trodeGroups(trode)
+  override def trodeChannels( trode: Int ) = trodeGroups(trode)
   override def trodeNeighbors( channel: Int ) = {
     val grp = trodeGroups.filter( _.contains(channel) ).apply(0)
     grp.filterNot( _ == channel )
   }
-  override lazy val channelCount: Int = max( trodeGroups.flatten ) + 1
+  override lazy val channelCount: Int = trodeGroupChecker.size//max( trodeGroups.flatten ) + 1
 
 
   // <editor-fold defaultstate="collapsed" desc=" XConcatenable ">
-
 
   override def isCompatible(that: X): Boolean = {
     that match {
@@ -90,6 +97,7 @@ class XTrodesPreloaded(private val trodeGroups: Array[Array[Int]]) extends XTrod
 
 class XTrodesIndividual( channels: Int ) extends XTrodesPreloaded( Array.tabulate( channels )( Array( _ ) )  )
 
-object XTrodesNull extends XTrodesPreloaded( Array[Array[Int]]() )
+object XTrodesOne extends XTrodesPreloaded( Array(Array[Int](0)) )
+object XTrodesNull extends XTrodesPreloaded( Array(Array[Int]()) )
 
 

@@ -20,8 +20,8 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
     * Implement via readPointImpl.
     */
   final def readPoint(frame: Int, segment: Int): Int = {
-    //require(isValidFrame(frame, segment), "Invalid frame/segment: " + (frame, segment).toString)
-    if( isValidFrame(frame, segment) ) readPointImpl(frame, segment/*, currentSegment = segment*/) else 0
+    //require(isValidFr(frame, segment), "Invalid frame/segment: " + (frame, segment).toString)
+    if( isValidFr(frame, segment) ) readPointImpl(frame, segment/*, currentSegment = segment*/) else 0
   }
   //</editor-fold>
 
