@@ -9,6 +9,8 @@ import nounou.data.{XTrodesPreloaded, XSpikes, XTrodes}
  */
 object NN {
 
+  // <editor-fold defaultstate="collapsed" desc=" RangeFrAll/RangeFr ">
+
   final def RangeFrAll(): ranges.RangeFr = ranges.RangeFrAll()
   final def RangeFrAll(step: Int): ranges.RangeFr = ranges.RangeFrAll(step)
   final def RangeFrAll(step: Double): ranges.RangeFr = ranges.RangeFrAll( round(step).toInt )
@@ -22,6 +24,8 @@ object NN {
 
   final def RangeFr(start: Double, endMarker: Double): ranges.RangeFr = ranges.RangeFr(round(start).toInt, round(endMarker).toInt)
   final def RangeFr(start: Double, endMarker: Double, step: Double): ranges.RangeFr = ranges.RangeFr(round(start).toInt, round(endMarker).toInt, round(step).toInt)
+
+  // </editor-fold>
 
 
   final def RangeTs(startTs: Long, endTs: Long, step: Long, segment: Int): ranges.RangeTs =

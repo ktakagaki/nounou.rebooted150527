@@ -109,66 +109,6 @@ class DataReader extends Logging {
   def setDecimate(factor: Int) = dataDecimate.factor_=( factor )
   def getDecimate() = dataDecimate.factor
   // </editor-fold>
-  // <editor-fold defaultstate="collapsed" desc=" Java convenience accessors (basic) ">
-
-//  def dataAbsUnit() = data.absUnit
-//  def dataAbsGain() = data.absGain
-//  def dataAbsOffset() = data.absOffset
-//
-//  def dataChannelName(ch: Int) = data.channelNames(ch)
-//  def dataChannelNames() = data.channelNames.toArray
-//  def dataChannelCount = data.channelCount
-
-
-
-
-//  def dataSampleRate() = data.sampleRate
-//  def dataFrameToMs(fr: Int) = data.frameToMs(fr)
-////  def dataFrameSegmentToTS(fr: Int, seg: Int) = data.frameSegmentToTS(fr, seg)
-////  def dataFrameSegmentToTS(fr: Int) = data.frameSegmentToTS(fr, 0)
-//  def dataTSToFrameSegment(ms: Long) = {
-//    val temp = data.tsToFrameSegment( ms, false )
-//    Array[Int]( temp._1, temp._2 )
-//  }
-//  def dataMsToFrame(ms: Double) = {
-//    data.msToFrame( ms)
-//  }
-//  def dataORISampleRate() = dataORI.sampleRate
-//  def dataORIFrameToMs(fr: Int) = dataORI.frameToMs(fr)
-//  def dataORITSToFrameSegment(ms: Long) = {
-//    val temp = dataORI.tsToFrameSegment( ms, false )
-//    Array[Int]( temp._1, temp._2 )
-//  }
-//  def dataORIMsToFrame(ms: Double) = {
-//    dataORI.msToFrame( ms)
-//  }
-//
-
-
-
-//  def dataPoint(channel: Int, frame: Int): Int = data.readPoint(channel, frame)
-//  def dataPointAbs(channel: Int, frame: Int): Double = data.readPointAbs(channel, frame)
-
-//  // <editor-fold defaultstate="collapsed" desc=" trace accessor methods ">
-//
-//  //def readTrace(channel: Int): Array[Int] = data.readTrace(channel).toArray
-//  def dataTrace(channel: Int, range: RangeFr): Array[Int] = data.readTrace(channel, range, 0).toArray
-//  def dataTrace(channel: Int, range: RangeFr, segment: Int): Array[Int] = data.readTrace(channel, range, segment).toArray
-//  def dataORITrace(channel: Int, range: RangeFr): Array[Int] = dataORI.readTrace(channel, range, 0).toArray
-//  def dataORITrace(channel: Int, range: RangeFr, segment: Int): Array[Int] = dataORI.readTrace(channel, range, segment).toArray
-//
-//  //def readTraceAbs(channel: Int): Array[Double] = data.readTraceAbs(channel).toArray
-//  def dataTraceAbs(channel: Int, range: RangeFr): Array[Double] = data.readTraceAbs(channel, range, 0).toArray
-//  def dataTraceAbs(channel: Int, range: RangeFr, segment: Int): Array[Double] = data.readTraceAbs(channel, range, segment).toArray
-//  def dataTraceAbs(channel: Int, range: RangeMs): Array[Double] = dataTraceAbs(channel, range.getFrameRange(data), 0)
-//  def dataTraceAbs(channel: Int, range: RangeMs, segment: Int): Array[Double] = dataTraceAbs(channel, range.getFrameRange(data), segment)
-//  def dataORITraceAbs(channel: Int, range: RangeFr): Array[Double] = dataORI.readTraceAbs(channel, range).toArray
-//  def dataORITraceAbs(channel: Int, range: RangeFr, segment: Int): Array[Double] = dataORI.readTraceAbs(channel, range, segment).toArray
-//  def dataORITraceAbs(channel: Int, range: RangeMs): Array[Double] = dataORITraceAbs(channel, range.getFrameRange(data), 0)
-//  def dataORITraceAbs(channel: Int, range: RangeMs, segment: Int): Array[Double] = dataORITraceAbs(channel, range.getFrameRange(data), segment)
-//  // </editor-fold>
-//
-//  // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc=" load/reload ">
 
@@ -207,12 +147,12 @@ class DataReader extends Logging {
 
   /** 0=load(not reload) 1=marked for reload 2=reloading/cleared
     */
-  private var reloadFlagHead, reloadFlagData, reloadFlagDataAux,  reloadFlagMask, reloadFlagEvents = 0    //Layout has been encapsulated into XData // reloadFlagLayout
+  private var reloadFlagHead, reloadFlagData, reloadFlagDataAux,  reloadFlagMask, reloadFlagEvents, reloadFlagSpikes = 0    //Layout has been encapsulated into XData // reloadFlagLayout
   private def setReloadFlags(value: Int): Unit = {
     reloadFlagHead = value
     reloadFlagData = value; reloadFlagDataAux = value
     //reloadFlagLayout = value;
-    reloadFlagMask = value; reloadFlagEvents = value
+    reloadFlagMask = value; reloadFlagEvents = value, reloadFlagSpikes = value
   }
   def reload(files: Array[File]): Unit = {
     setReloadFlags(1)
@@ -354,7 +294,27 @@ class DataReader extends Logging {
             }
           }
       }
-      case x0: XSpikes => sys.error("ToDo: have not implemented spike loading yet!")
+      case x0: XSpikes => {
+        if( spikes == XSpikesNull ) {
+          spikes = x0
+          if(reloadFlagEvents == 1) reloadFlagEvents = 2
+        } else {
+          reloadFlagEvents match {
+            case 0 => { //not reloading, but concatenating
+              if( spikes.isCompatible(x0) ) spikes = spikes ::: x0
+              else logger.warn("Incompatible spike objects already loaded, ignoring new XSpikes {}. Use clearSpikes first or reload() instead of load(), if this is unintended.", x0)
+            }
+            case 1 => { //reloading, not cleared previous data yet
+              spikes = x0
+              reloadFlagEvents = 2
+            }
+            case 2 => { //reloading, has already cleared
+              if( spikes.isCompatible(x0) ) spikes = spikes ::: x0
+              else logger.warn("Trying to load incompatible spike objects, ignoring further new XSpike {}.", x0)
+            }
+          }
+        }
+      }
       case x0: X => logger.warn("Loading of this type of {} has not been implemented!", x0)
     }
   }
