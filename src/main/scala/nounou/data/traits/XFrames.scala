@@ -31,7 +31,7 @@ trait XFrames extends X with LoggingExt {
   }
 
   // </editor-fold>
-  // <editor-fold desc="segment timestamps: segmentStartTs/startTS/segmentEndTs/endTS ">
+  // <editor-fold desc="segment timestamps: segmentStartTs/startTs/segmentEndTs/endTs ">
 
   /** OVERRIDE: List of starting timestamps for each segment.
     */
@@ -52,21 +52,21 @@ trait XFrames extends X with LoggingExt {
 
   // </editor-fold>
 
-  // <editor-fold defaultstate="collapsed" desc="isValidFrame">
+  // <editor-fold defaultstate="collapsed" desc="isValidFr/isRealisticFr">
 
   /** Is this frame valid?
     */
-  final def isValidFrame(frame: Int, segment: Int): Boolean = (0 <= frame && frame < segmentLength(segment))
+  final def isValidFr(frame: Int, segment: Int): Boolean = (0 <= frame && frame < segmentLength(segment))
   /** Is this frame valid in the current segment?
     */
-  final def isValidFrame(frame: Int): Boolean = isValidFrame(frame, 0)//currentSegment)
+  final def isValidFr(frame: Int): Boolean = isValidFr(frame, 0)//currentSegment)
 
-  final def isRealisticFrame(frame: Int, segment: Int): Boolean = (-100000 <= frame && frame < segmentLength(segment) + 100000)
-  final def isRealisticFrameRange(range: RangeFr, segment: Int): Boolean = (-100000 <= range.start && range.endMarker < segmentLength(segment) + 100000)
+  final def isRealisticFr(frame: Int, segment: Int): Boolean = (-100000 <= frame && frame < segmentLength(segment) + 100000)
+  final def isRealisticFr(range: RangeFr, segment: Int): Boolean = (-100000 <= range.start && range.endMarker < segmentLength(segment) + 100000)
 
   // </editor-fold>
 
-  // <editor-fold defaultstate="collapsed" desc="Sample Rate: sampleRate/sampleInterval/tsPerFrame/framesPerTS">
+  // <editor-fold defaultstate="collapsed" desc="Sample Rate: sampleRate/sampleInterval/tsPerFr/frPerTs">
 
   /**OVERRIDE: Sampling rate of frame data in Hz
     */
@@ -76,10 +76,10 @@ trait XFrames extends X with LoggingExt {
   def sampleInterval = 1.0/sampleRate
   /**Buffered timestamps (microseconds) between frames.
     */
-  def tsPerFrame = sampleInterval * 1000000D
+  def tsPerFr = sampleInterval * 1000000D
   /**Buffered frames between timestamps (microseconds).
     */
-  def framesPerTs = 1D/tsPerFrame
+  def frPerTs = 1D/tsPerFr
 
   // </editor-fold>
 
@@ -88,8 +88,8 @@ trait XFrames extends X with LoggingExt {
   /** Absolute timestamp of the given data frame index (in microseconds).
     */
   final def frsgToTs(frame:Int, segment: Int): Long = {
-    require( isValidFrame(frame, segment) )
-    segmentStartTs(segment) + (frame.toDouble * tsPerFrame).toLong
+    require( isValidFr(frame, segment) )
+    segmentStartTs(segment) + (frame.toDouble * tsPerFr).toLong
   }
   final def frToTs(frame:Int): Long = {
     warnIfMultipleSegments("length", "segmentLength(segment: Int)")
@@ -112,24 +112,24 @@ trait XFrames extends X with LoggingExt {
 
     //timestamp is before the start of the first segment
     if( timestamp <= segmentStartTs(0) ){
-      tempret = ( ((timestamp-segmentStartTs(0)) * framesPerTs).toInt, 0)
+      tempret = ( ((timestamp-segmentStartTs(0)) * frPerTs).toInt, 0)
     } else {
       //loop through segments to find appropriate segment which (contains) given timestamp
       var seg = 0
       while(seg < segmentCount - 1 && !changed ){
         if( timestamp <= segmentEndTs(seg) ){
           // if the timestamp is smaller than the end of the current segment, it fits in the current segment
-          tempret = ( ((timestamp-segmentStartTs(seg)) * framesPerTs).toInt, seg)
+          tempret = ( ((timestamp-segmentStartTs(seg)) * frPerTs).toInt, seg)
           changed = true
         } else if( timestamp < segmentStartTs(seg+1) ) {
           //The timestamp is between the end of the current segment and the beginning of the next segment...
           if( timestamp - segmentEndTs(seg) < segmentStartTs(seg+1) - timestamp){
             //  ...timestamp is closer to end of current segment than beginning of next segment
-            tempret = (((timestamp-segmentEndTs(seg)) * framesPerTs).toInt, seg)
+            tempret = (((timestamp-segmentEndTs(seg)) * frPerTs).toInt, seg)
             changed = true
           } else {
             //  ...timestamp is closer to beginning of next segment than end of current segment
-            tempret = (((timestamp-segmentStartTs(seg + 1)) * framesPerTs).toInt, seg + 1)
+            tempret = (((timestamp-segmentStartTs(seg + 1)) * frPerTs).toInt, seg + 1)
             changed = true
           }
         } else {
@@ -142,10 +142,10 @@ trait XFrames extends X with LoggingExt {
       if( !changed ){
         if(timestamp <= segmentEndTs(segmentCount -1)){
           // if the timestamp is smaller than the end of the current segment, it fits in the current segment
-          tempret = ( ((timestamp - segmentStartTs(segmentCount-1)) * framesPerTs).toInt, segmentCount - 1 )
+          tempret = ( ((timestamp - segmentStartTs(segmentCount-1)) * frPerTs).toInt, segmentCount - 1 )
         } else {
           // if the timestamp is larger than the end of the last segment
-          tempret = ( ((timestamp - segmentEndTs(segmentCount-1)) * framesPerTs).toInt, segmentCount - 1 )
+          tempret = ( ((timestamp - segmentEndTs(segmentCount-1)) * frPerTs).toInt, segmentCount - 1 )
         }
       }
 
@@ -154,9 +154,13 @@ trait XFrames extends X with LoggingExt {
     tempret
 
   }
-  final def tsToFrameSegmentA(timestamp: Long): Array[Int] = {
+  final def tsToFrsgA(timestamp: Long): Array[Int] = {
     val tempret = tsToFrsg(timestamp)//, false)
     Array[Int]( tempret._1, tempret._2 )
+  }
+  final def tsToFr(timestamp: Long): Int = {
+    warnIfMultipleSegments("length", "segmentLength(segment: Int)")
+    tsToFrsg(timestamp)._1
   }
 
   // </editor-fold>
@@ -185,10 +189,11 @@ trait XFrames extends X with LoggingExt {
   // <editor-fold defaultstate="collapsed" desc="Time specification: conversion between ts and ms">
 
   final def tsToMs(timestamp: Long): Double = frToMs( tsToFrsg(timestamp)._1 )
+  final def mssgToTs(ms: Double, segment: Int): Long = frToTs( msToFr(ms), segment )
+  final def msToTs(ms: Double): Long = frToTs( msToFr(ms) )
 
   // </editor-fold>
-
-
+  // <editor-fold defaultstate="collapsed" desc="Time specification: tsToClosestSg">
 
   /** Closest segment index to the given timestamp.
     */
@@ -246,12 +251,7 @@ trait XFrames extends X with LoggingExt {
 
 trait XFramesImmutable extends XFrames {
 
-  /** Number of segmentCount.
-    */
   final override lazy val segmentCount: Int = segmentLength.length
-
-  /**Total number of frames in each segment.
-    */
   override val segmentLength: Vector[Int]
 
   /**Cumulative frame numbers for segment starts.
@@ -262,29 +262,15 @@ trait XFramesImmutable extends XFrames {
   }
   //=  DenseVector( accumulate(DenseVector(length.toArray)).toArray.map( _ + 1 ).+:(0).take(length.length) ).toArray.toVector
 
-  /** OVERRIDE: List of starting timestamps for each segment.
-    */
   override val segmentStartTs: Vector[Long]
-  /** OVERRIDE: End timestamp for each segment. Implement by overriding _endTimestamp
-    */
   override final lazy val segmentEndTs: Vector[Long] = {
-    ( for(seg <- 0 until segmentCount) yield segmentStartTs(seg) + ((segmentLength(seg)-1)*tsPerFrame).toLong ).toVector
+    ( for(seg <- 0 until segmentCount) yield segmentStartTs(seg) + ((segmentLength(seg)-1)*tsPerFr).toLong ).toVector
   }
 
-
   //sampling rate information
-  /**OVERRIDE: Sampling rate of frame data in Hz
-    */
   override val sampleRate: Double
-  /**Buffered inverse of sampling, in seconds: Double
-    */
   override final lazy val sampleInterval = 1.0/sampleRate
-  /**Buffered timestamps (microseconds) between frames.
-    */
-  override final lazy val tsPerFrame = sampleInterval * 1000000D
-  /**Buffered frames between timestamps (microseconds).
-    */
-  override final lazy val framesPerTs = 1D/tsPerFrame
-
+  override final lazy val tsPerFr = sampleInterval * 1000000D
+  override final lazy val frPerTs = 1D/tsPerFr
 
 }

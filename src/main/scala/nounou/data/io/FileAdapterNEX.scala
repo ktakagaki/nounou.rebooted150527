@@ -7,6 +7,7 @@ import nounou.data.XDataPreloaded
 import scala.collection.immutable.TreeMap
 import scala.collection.mutable.ArrayBuffer
 import breeze.linalg.{DenseVector => DV}
+import nounou.data.headers.{HeaderValue, XHeader}
 
 /**Reads in single NEX files. Partial implementation, with only waveforms processed.
 *

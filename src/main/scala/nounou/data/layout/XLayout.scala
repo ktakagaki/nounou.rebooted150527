@@ -82,7 +82,7 @@ class XLayoutPoint(override val channelNames: Vector[String]) extends XLayout {
 
 }
 
-//ToDo 4: XLayoutPoints, with multiple points, graphable as image with trodes grouped
+//ToDo 4: XLayoutPoints, with multiple points, graphable as image with trodeCount grouped
 
 object XLayoutNull extends XLayout {
 
