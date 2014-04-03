@@ -62,7 +62,6 @@ class DataReader extends Logging {
   }
   // </editor-fold>
 
-
   // <editor-fold defaultstate="collapsed" desc=" artifact masking ">
 
   def maskMovementArtifacts(f0: Double, f1: Double, rmsAbsThreshold: Double, absAbsThreshold: Double, stepSize: Int, maskHalfWindow: Long): Unit = {
@@ -100,7 +99,6 @@ class DataReader extends Logging {
 
   // </editor-fold>
 
-
   // <editor-fold defaultstate="collapsed" desc=" Java convenience accessors (filtering, decimation, fourier) ">
 
   def setFilterHz(f0: Double, f1: Double) = dataFIR.setFilterHz(f0, f1)
@@ -109,6 +107,7 @@ class DataReader extends Logging {
   def setDecimate(factor: Int) = dataDecimate.factor_=( factor )
   def getDecimate() = dataDecimate.factor
   // </editor-fold>
+
 
   // <editor-fold defaultstate="collapsed" desc=" load/reload ">
 
@@ -145,6 +144,9 @@ class DataReader extends Logging {
 
   def load(string: String): Unit = load( new File(string) )
 
+  // </editor-fold>
+  // <editor-fold defaultstate="collapsed" desc=" reloadFlagXXX/reload ">
+
   /** 0=load(not reload) 1=marked for reload 2=reloading/cleared
     */
   private var reloadFlagHead, reloadFlagData, reloadFlagDataAux,  reloadFlagMask, reloadFlagEvents, reloadFlagSpikes = 0    //Layout has been encapsulated into XData // reloadFlagLayout
@@ -152,7 +154,7 @@ class DataReader extends Logging {
     reloadFlagHead = value
     reloadFlagData = value; reloadFlagDataAux = value
     //reloadFlagLayout = value;
-    reloadFlagMask = value; reloadFlagEvents = value, reloadFlagSpikes = value
+    reloadFlagMask = value; reloadFlagEvents = value; reloadFlagSpikes = value
   }
   def reload(files: Array[File]): Unit = {
     setReloadFlags(1)
@@ -318,7 +320,6 @@ class DataReader extends Logging {
       case x0: X => logger.warn("Loading of this type of {} has not been implemented!", x0)
     }
   }
-
 
     // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" clearing ">
