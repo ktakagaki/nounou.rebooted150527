@@ -1,4 +1,4 @@
-package nounou.data
+package nounou.data.headers
 
 /**
  * Created by Kenta on 12/5/13.
