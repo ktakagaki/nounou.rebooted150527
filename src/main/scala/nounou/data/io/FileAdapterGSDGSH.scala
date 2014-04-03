@@ -6,6 +6,7 @@ import java.io.File
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
 import scala.collection.immutable.{TreeMap}
 import breeze.linalg.{DenseMatrix => DM, DenseVector => DV}
+import nounou.data.headers.{HeaderValue, XHeader}
 
 /**Reader for MiCAM unified form data (gsd/gsh).
   * Currently, it actually only reads from the gsd, and ignores the accompanying gsh file.

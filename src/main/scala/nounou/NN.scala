@@ -1,6 +1,7 @@
 package nounou
 
 import breeze.numerics.round
+import nounou.data.{XTrodesPreloaded, XSpikes, XTrodes}
 
 /**
  * @author ktakagaki
@@ -26,8 +27,12 @@ object NN {
   final def RangeTs(startTs: Long, endTs: Long, step: Long, segment: Int): ranges.RangeTs =
     ranges.RangeTs(startTs, endTs, step, segment)
 
-  final def RangeTsEvent(eventTS: Long, preFrames: Int, postFrames: Int, step: Int, segment: Int): ranges.RangeTsEvent =
-    ranges.RangeTsEvent(eventTS,  preFrames, postFrames, step, segment)
+  final def RangeTsEvent(eventTS: Long, preFrames: Int, postFrames: Int, step: Int): ranges.RangeTsEvent =
+    ranges.RangeTsEvent(eventTS,  preFrames, postFrames, step)
+
+  final def XTrodes( trodeGroup: Array[Array[Int]] ): XTrodes = data.XTrodes( trodeGroup )
+
+  final def XSpikes(waveformLength: Int, xTrodes: XTrodes ) = new XSpikes(waveformLength, xTrodes)
 
 
   @deprecated("Don't use this anymore, initialize nounous.DataReader()", "v 1")

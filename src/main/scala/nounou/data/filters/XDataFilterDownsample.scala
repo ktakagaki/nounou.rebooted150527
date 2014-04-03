@@ -69,7 +69,7 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
   // override def segmentStartTSs: Vector[Long] = upstream.segmentStartTSs
   override def segmentEndTs: Vector[Long] = if( factor == currentSegEndTSFactor ) currentSegEndTSBuffer
   else {
-    currentSegEndTSBuffer = ( for(seg <- 0 until segmentCount) yield upstream.segmentStartTs(seg) + ((this.segmentLength(seg)-1)*tsPerFrame).toLong ).toVector
+    currentSegEndTSBuffer = ( for(seg <- 0 until segmentCount) yield upstream.segmentStartTs(seg) + ((this.segmentLength(seg)-1)*tsPerFr).toLong ).toVector
     currentSegEndTSFactor = factor
     currentSegEndTSBuffer
   }
