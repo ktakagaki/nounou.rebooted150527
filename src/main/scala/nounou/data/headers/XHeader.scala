@@ -1,5 +1,6 @@
-package nounou.data
+package nounou.data.headers
 
+import nounou.data.X
 import scala.collection.immutable.TreeMap
 
 /**
