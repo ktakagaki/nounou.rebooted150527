@@ -2,7 +2,6 @@ package nounou.data
 
 import nounou.data.traits.XConcatenatable
 import breeze.linalg.max
-import breeze.util.JavaArrayOps.array2IToDm
 import scala.collection.mutable.Set
 
 object XTrodes {
