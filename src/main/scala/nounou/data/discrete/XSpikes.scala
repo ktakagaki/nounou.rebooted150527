@@ -29,12 +29,14 @@ object XSpikes extends LoggingExt {
     */
 class XSpikes(val waveformLength: Int, private var xtr: XTrodes, private var xdat: XData ) extends X with XConcatenatable {
 
+  var channelCount = scala.math.max(xtr.channelCount, xdat.channelCount)
+
   def this(waveformLength: Int) = this(waveformLength, XTrodesNull, XDataNull)
   def this(waveformLength: Int, xtr: XTrodes) = this(waveformLength, xtr, XDataNull)
   def this(waveformLength: Int, xdat: XData) = this(waveformLength, XTrodesNull, xdat)
   def this(waveformLength: Int, xdat: XData, xtr: XTrodes) = this(waveformLength, xtr, xdat)
 
-  private var spikes: Array[TreeMap[Long, XSpikeWaveform]] = Array.tabulate(xTrodes.trodeCount)(p => new TreeMap[Long, XSpikeWaveform]())
+  private var spikes: Array[TreeMap[Long, XSpikeWaveform]] = ??? // Array.tabulate(xTrodes.trodeCount)(p => new TreeMap[Long, XSpikeWaveform]())
   def isValidTrode(trode: Int) = trode >=0 && trode < spikes.length
 
 //  def checkDataCompatibility(xData: XData): Unit = {
@@ -67,10 +69,12 @@ class XSpikes(val waveformLength: Int, private var xtr: XTrodes, private var xda
   def xTrodes_=( xTrodes: XTrodes ): Unit = {
     if( xtr == XTrodesNull) {
       if( xdat != XDataNull ) {
-        loggerRequire( xTrodes.channelCount == xdat.channelCount,
+        loggerRequire( xTrodes.channelCount == channelCount,
           "You tried to load an XTrode object with channel count {}, when an XData object with channel count {} is already loaded!",
           xTrodes.channelCount.toString, xdat.channelCount.toString
         )
+      } else {
+        channelCount = xTrodes.channelCount
       }
       xtr = xTrodes
     }
@@ -85,10 +89,12 @@ class XSpikes(val waveformLength: Int, private var xtr: XTrodes, private var xda
   def xData_=( xData: XData ): Unit = {
     if( xdat == XDataNull) {
       if( xtr != XTrodesNull ) {
-        loggerRequire( xData.channelCount == xtr.channelCount,
+        loggerRequire( xData.channelCount == channelCount,
           "You tried to load an XData object with channel count {}, when a XTrode object with channel count {} is already loaded!",
           xData.channelCount.toString, xtr.channelCount.toString
         )
+      } else {
+        channelCount = xData.channelCount
       }
       xdat = xData
     }
