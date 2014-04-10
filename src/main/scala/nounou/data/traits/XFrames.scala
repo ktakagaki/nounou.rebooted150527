@@ -34,7 +34,7 @@ trait XFrames extends X with LoggingExt {
   final def segmentLengthA = segmentLength.toArray
   /**Length in frames of data. Use [[segmentLength]] instead, for data which has more than one segment.
     */
-  final lazy val length: Long = {
+  final def length: Long = {
     errorIfMultipleSegments("length", "segmentLength(segment: Int)")
     segmentLength(0)
   }
