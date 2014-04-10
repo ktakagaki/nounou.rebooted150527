@@ -94,7 +94,7 @@ import nounou.ranges.RangeFr
         isMaskedTs(x.frsgToTs(frameStart, segment) , x.frsgToTs(frameEnd, segment) )
 
   def isMaskedFrame( range: RangeFr, segment: Int, x: XData ): Boolean ={
-    val realRange = range.getRange(x.segmentLength(segment))
+    val realRange = range.getValidRange(x.segmentLength(segment))
     isMaskedFrame( realRange, segment, x)
   }
 

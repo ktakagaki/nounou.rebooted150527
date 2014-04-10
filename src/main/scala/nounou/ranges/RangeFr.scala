@@ -110,12 +110,12 @@ class RangeFr(val start: Int, val endMarker: Int, val step: Int = 1, val segment
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" getRange/getValidRange (conversion to Range.Inclusive) ">
 
-  /** Get a [[Range.Inclusive]] taking into account length and stepMs, so that the start and last are exactly present values
-    * @param totalLength full length of this segment in frames, used to realize with RangeFr.all()
-    */
-  def getRange(totalLength: Int): Range.Inclusive =
-    if(isAll) new Range.Inclusive(0, last(totalLength), step)
-    else new Range.Inclusive(start, endMarker, step)
+//  /** Get a [[Range.Inclusive]] taking into account length and stepMs, so that the start and last are exactly present values
+//    * @param totalLength full length of this segment in frames, used to realize with RangeFr.all()
+//    */
+//  def getRange(totalLength: Int): Range.Inclusive =
+//    if(isAll) new Range.Inclusive(0, last(totalLength), step)
+//    else new Range.Inclusive(start, endMarker, step)
 
   /** Get a [[Range.Inclusive]] which fits inside the given data vector length, and takes into account length and stepMs,
     * so that the start and last are exactly present values.

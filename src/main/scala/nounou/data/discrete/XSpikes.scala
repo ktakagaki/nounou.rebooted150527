@@ -24,7 +24,9 @@ object XSpikes extends LoggingExt {
   }
 }
 
-/** A database of [[XSpikeWaveform]] objects for display and processing
+/** A database of [[XSpikeWaveform]] objects for display and processing. Also encapsulates
+  * a trode layout compatible with the spike data, and a copy of the XData upon which the
+  * waveforms were based.
     *
     */
 class XSpikes(val waveformLength: Int, private var xtr: XTrodes, private var xdat: XData ) extends X with XConcatenatable {
@@ -36,7 +38,11 @@ class XSpikes(val waveformLength: Int, private var xtr: XTrodes, private var xda
   def this(waveformLength: Int, xdat: XData) = this(waveformLength, XTrodesNull, xdat)
   def this(waveformLength: Int, xdat: XData, xtr: XTrodes) = this(waveformLength, xtr, xdat)
 
-  private var spikes: Array[TreeMap[Long, XSpikeWaveform]] = ??? // Array.tabulate(xTrodes.trodeCount)(p => new TreeMap[Long, XSpikeWaveform]())
+  private var spikes: Array[TreeMap[Long, XSpikeWaveform]] = new Array[TreeMap[Long, XSpikeWaveform]](0)
+  xTrodes_=(xtr)
+  xData_=(xdat)
+
+
   def isValidTrode(trode: Int) = trode >=0 && trode < spikes.length
 
 //  def checkDataCompatibility(xData: XData): Unit = {
