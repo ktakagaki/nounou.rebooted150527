@@ -236,65 +236,34 @@ class XDataChannelNCS
 
   override def readTraceImpl(range: Range.Inclusive, segment: Int): DV[Int] = {
     var (currentRecord: Int, currentIndex: Int) = frameSegmentToRecordIndex( range.start, segment )
-    val (endReadRecord: Int, endReadIndex: Int) = frameSegmentToRecordIndex( range.end, segment ) //range is exclusive of last
-    //println( range.start + " d " + range.end)
-    //println( "err eri " + (endReadRecord, endReadIndex) )
+    val (endReadRecord: Int, endReadIndex: Int) = frameSegmentToRecordIndex( range.end, segment ) //range is inclusive of last
 
-    var tempRet = DV[Int]() // ListBuffer[Int]()//var tempRet = Vector[Int]()
+    var tempRet = DV[Int]()
 
     fileHandle.seek( dataByteLocationRI(currentRecord, currentIndex) )
-    tempRet = DV.vertcat(tempRet, DV( fileHandle.readInt16(512 - currentIndex).map( _.toInt* xBits ) ))
-    currentRecord += 1
-    fileHandle.jumpBytes(t.recordNonDataBytes)
-    while(currentRecord < endReadRecord){
-      tempRet = DV.vertcat(tempRet, DV( fileHandle.readInt16(512 /*- currentIndex*/).map( _.toInt* xBits ) ))
-      //tempRet = tempRet ++ fileHandle.readInt16(512 - currentIndex).map( _.toInt* xBits )
+
+    if(currentRecord == endReadRecord){
+      tempRet = DV(fileHandle.readInt16(endReadIndex - currentIndex + 1).map(_.toInt * xBits))
+    } else {
+      //read data contained in first record
+      tempRet = DV(fileHandle.readInt16(512 - currentIndex).map(_.toInt * xBits))
       currentRecord += 1
-      //currentIndex = 0
       fileHandle.jumpBytes(t.recordNonDataBytes)
+
+      //read data from subsequent records, excluding last record
+      while (currentRecord < endReadRecord) {
+        tempRet = DV.vertcat(tempRet, DV(fileHandle.readInt16(512 /*- currentIndex*/).map(_.toInt * xBits)))
+        currentRecord += 1
+        fileHandle.jumpBytes(t.recordNonDataBytes)
+      }
+
+      //read data contained in last record
+      tempRet = DV.vertcat(tempRet, DV(fileHandle.readInt16(endReadIndex + 1).map(_.toInt * xBits)))
+
     }
-    //if(currentIndex <= endReadIndex){
-      //fileHandle.seek( dataByteLocationRI(currentRecord, 0) )
-      tempRet= DV.vertcat(tempRet, DV( fileHandle.readInt16(endReadIndex /*- currentIndex*/ + 1).map( _.toInt* xBits ) ))
-    //}
 
     tempRet
 
 }
 
-
-  //
-  //    //val res = new Array[Int]( range.length )
-  //    val ((startRec, startIndex), (endRec, endIndex)) =
-  //      if(range.stepMs > 0) ( frameToRecordIndex( range.start ), frameToRecordIndex( range.end ))
-  //      else ( frameToRecordIndex( range.end ), frameToRecordIndex( range.start ) )
-  //
-  //    val tempret =
-  //      if(startRec == endRec){
-  //        readRecord(startRec, startIndex, endIndex)
-  //      } else {
-  //        val startRecData = readRecord(startRec, startIndex, t.recordBytes - 1)
-  //        val endRecData = readRecord(endRec, 0, endIndex )
-  //
-  //        if(startRec + 1 < endRec){
-  //          startRecData ++:
-  //          (for( rec <- startRec + 1 until endRec) yield readRecord(rec)).flatten ++:
-  //          endRecData
-  //        } else {
-  //          startRecData ++: endRecData
-  //        }
-  //      }
-  //
-  //    if(range.stepMs > 0) tempret else tempret.reverse
 }
-
-//  def readRecord(recNo: Int): Vector[Int] = {
-//    fileHandle.seek( recordStartByte(recNo) )
-//    fileHandle.readInt16(t.recordSampleCount).toVector.map(_ * xBits)
-//  }
-//
-//  def readRecord(recNo: Int, startI: Int, endI: Int): Vector[Int] = {
-//    require( startI >= 0 && endI < 512 && startI <= endI)
-//    fileHandle.seek( recordStartByte(recNo) + startI*2 )
-//    fileHandle.readInt16( (endI-startI) ).toVector.map(_ * xBits)
-//  }

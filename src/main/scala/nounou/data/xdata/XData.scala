@@ -115,7 +115,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     require(isRealisticFr(range, range.segment), "Unrealistic frame/segment: " + (range, range.segment).toString)
     require(isValidChannel(channel), "Invalid channel: " + channel.toString)
 
-    val totalLength =  segmentLength(range.segment)
+    val totalLength =  segmentLength( range.segment )
     val preLength = range.preLength( totalLength )
     val postLength = range.postLength( totalLength )
 
