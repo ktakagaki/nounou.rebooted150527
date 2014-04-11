@@ -50,32 +50,33 @@ object SpikeDetectorQuiroga extends SpikeDetector {
 
     val channels = xTrodes.trodeChannels(trode)//trodeCount.flatMap( p => xTrodes.trodeGroup(p) )
     logger.trace("following channels for thresholding extracted from xTrodes: {}", DenseVector(channels).toString)
-    val tempData = channels.map( p => xData.readTrace(p, frameRange).toArray )
+    val tempDataAbs = channels.map( p => abs(xData.readTrace(p, frameRange)).toArray )
     logger.trace("Called with {} channels in trode #{}", channels.length.toString, trode.toString)
-    logger.info("tempData channel 0 max is {}", max( tempData(0) ).toString )
+    logger.info("tempData channel 0 maxAbs is {}", max( tempDataAbs(0) ).toString )
 
-    val thresholds = tempData.map( p => (median( abs(DenseVector(p)) ) / 0.6745 * absThresholdSD).toInt )
+    val thresholds = tempDataAbs.map( p => ( median( DenseVector(p) ) / 0.6745 * absThresholdSD).toInt )
     val blackoutSamples = xData.msToFr( blackoutMs )
-    thresholder(tempData, thresholds, blackoutSamples).map(p => xData.frsgToTs(p+frameRange.start, frameRange.segment))
+    println(blackoutSamples)
+    thresholder(tempDataAbs, thresholds, blackoutSamples).map(p => xData.frsgToTs(p+frameRange.start, frameRange.segment))
   }
 
   //ToDo 4: make into general breeze function
-  def thresholder( vect: Array[Array[Int]], thresholds: Array[Int], blackout: Int): Array[Int] = {
+  def thresholder( tempDataAbs: Array[Array[Int]], thresholds: Array[Int], blackout: Int): Array[Int] = {
 
-    loggerRequire( vect.length == thresholds.length,
+    loggerRequire( tempDataAbs.length == thresholds.length,
         "Must specify the same number of thresholds as data traces: {} != {} ",
-        vect.length.toString, thresholds.length.toString)
+      tempDataAbs.length.toString, thresholds.length.toString)
 
     logger.info("threshold calculated as follows: {}", DenseVector(thresholds).toString)
 
     val tempRet = new ArrayBuffer[Int]()
     var index = 0
-    val channels = Range(0, vect.length)
-    var triggered = !channels.forall( p => vect(p)(0) < thresholds(p) )
+    val channels = Range(0, tempDataAbs.length)
+    var triggered = !channels.forall( p => tempDataAbs(p)(0) < thresholds(p) )
 
-    while(index < vect(0).length){
+    while(index < tempDataAbs(0).length){
       if( !triggered ){
-        if( !channels.forall(p => vect(p)(index) < thresholds(p) ) ){
+        if( !channels.forall(p => tempDataAbs(p)(index) < thresholds(p) ) ){
           tempRet.append(index)
           triggered = true
           index += blackout
@@ -83,7 +84,7 @@ object SpikeDetectorQuiroga extends SpikeDetector {
           index += 1
         }
       } else {
-        if( channels.forall(p => vect(p)(index) < thresholds(p) ) ) triggered = false
+        if( channels.forall(p => tempDataAbs(p)(index) < thresholds(p) ) ) triggered = false
         index += 1
       }
     }
