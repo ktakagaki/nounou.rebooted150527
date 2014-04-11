@@ -4,7 +4,7 @@ import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import nounou.DataReader
-import nounou.data.filters.XDataFilterMedianSubtract
+import nounou.data.filters.{XDataFilterBuffer, XDataFilterMedianSubtract}
 import nounou.data.XTrodesPreloaded
 import breeze.linalg.max
 import nounou.ranges.RangeFr
@@ -14,7 +14,7 @@ import nounou.ranges.RangeFr
  * @date 3/20/14.
  */
 @RunWith(classOf[JUnitRunner])
-class SpikeDetectorQuirogaTest  extends FunSuite{
+class SpkDetQuirogaTest  extends FunSuite{
 
   val bigTestFilesHead = "V:/data/project.SPP/Nlx/SPP010/2013-12-02_17-07-31/"
   val bigTestFiles = Array[String](
@@ -33,8 +33,9 @@ class SpikeDetectorQuirogaTest  extends FunSuite{
     val xDataMedian = new XDataFilterMedianSubtract( reader.dataORI )
     xDataMedian.setWindowLength(32*10+1)
     //println( max(xDataMedian.readTrace(0,RangeFr(0,500000))) )
+    val xDataBuffer = new XDataFilterBuffer( xDataMedian )
 
-    println(SpikeDetectorQuiroga(xDataMedian, new XTrodesPreloaded( Array(Array(0,1,2,3))), 0, RangeFr(0, 500000) ).length)
+    println(SpkDetQuiroga(xDataMedian, new XTrodesPreloaded( Array(Array(0,1,2,3))), 0, RangeFr(0, 5000000) ).length)
 
   }
 }
