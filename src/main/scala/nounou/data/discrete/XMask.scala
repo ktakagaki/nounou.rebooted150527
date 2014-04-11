@@ -4,7 +4,7 @@ import scala.collection.immutable.{TreeMap}
 import scala.reflect.ClassTag
 import nounou.data.traits.XFrames
 import scala.collection.mutable.ArrayBuffer
-import nounou.ranges.RangeFr
+import nounou.ranges.{RangeFrSpecifier, RangeFr}
 
 //ToDo 1: Mask serialization
 
@@ -129,6 +129,15 @@ import nounou.ranges.RangeFr
     }
   }
 
+
+  def getActiveMasks( rangeFr: RangeFrSpecifier, xFrames: XFrames ): TreeMap[Long, Long]  = {
+    val realRange = rangeFr.getValidRange(xFrames)
+    getActiveMasks(realRange.start, realRange.last)
+  }
+
+  def getActiveMasksA( rangeFr: RangeFrSpecifier, xFrames: XFrames ): Array[Array[Long]]  = {
+    getActiveMasks( rangeFr, xFrames ).map( ele => Array(ele._1, ele._2)).toArray
+  }
 
   def getActiveMasksA( frameStart: Int, frameEnd: Int, segment: Int, x: XFrames ): Array[Array[Long]]  =
         getActiveMasks(x.frsgToTs(frameStart, segment), x.frsgToTs(frameEnd, segment)).map( ele => Array(ele._1, ele._2)).toArray
