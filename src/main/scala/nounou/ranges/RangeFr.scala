@@ -7,6 +7,7 @@ import nounou.data.traits.XFrames
 
 abstract class RangeFrSpecifier extends LoggingExt {
   def getFrameRange(x: XFrames): RangeFr
+  def getValidRange(x: XFrames): Range.Inclusive = getFrameRange(x).getValidRange(x)
 }
 
 /**
@@ -117,6 +118,8 @@ class RangeFr(val start: Int, val endMarker: Int, val step: Int = 1, val segment
 //    if(isAll) new Range.Inclusive(0, last(totalLength), step)
 //    else new Range.Inclusive(start, endMarker, step)
 
+  override def getValidRange(xFrames: XFrames) = getValidRange(xFrames.segmentLength(segment))
+
   /** Get a [[Range.Inclusive]] which fits inside the given data vector length, and takes into account length and stepMs,
     * so that the start and last are exactly present values.
     * @param totalLength full length of this segment in frames, used to realize with RangeFr.all()
@@ -139,6 +142,30 @@ class RangeFr(val start: Int, val endMarker: Int, val step: Int = 1, val segment
           start + ((- start - 1)/step + 1 ) * step
         //} else { start }
       new Range.Inclusive(realStart, lastValid(totalLength), step)
+    }
+
+  }
+
+  def getValidRangeFr(xFrames: XFrames): RangeFr =  getValidRangeFr(xFrames.segmentLength(segment))
+
+  def getValidRangeFr(totalLength: Int): RangeFr = {
+
+    if(isAll) {
+      //full range
+      RangeFr(0, last(totalLength), step)
+    } else if(start >= totalLength ) {
+      //range starts after final data value
+      RangeFr(0, -1, 1)// range with length zero   //ToDo 1: This will throw error!
+    } else if(start >= 0 ) {
+      //range starts within data
+      RangeFr(start, lastValid(totalLength), step)
+    } else {
+      //range starts in negative range
+      val realStart =
+      //if(start<0){
+        start + ((- start - 1)/step + 1 ) * step
+      //} else { start }
+      RangeFr(realStart, lastValid(totalLength), step)
     }
 
   }

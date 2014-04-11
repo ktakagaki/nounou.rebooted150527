@@ -125,10 +125,12 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     DV.vertcat( DV.zeros[Int]( preLength ), tempData, DV.zeros[Int]( postLength ) )
 
   }
-  final def readTrace(channel: Int, range: RangeFrSpecifier): DV[Int] = readTrace(channel, range.getFrameRange(this))//, currentSegment)
+  final def readTrace(channel: Int, range: RangeFrSpecifier): DV[Int] = readTrace(channel, range.getFrameRange(this))
   final def readTraceA(channel: Int, range: RangeFrSpecifier) = readTrace(channel, range.getFrameRange(this)).toArray
+  final def readTraceA(channels: Array[Int], range: RangeFrSpecifier): Array[Array[Int]] = channels.map(readTraceA(_, range.getFrameRange(this)))
+
   final def readTraceAbs(channel: Int, range: RangeFrSpecifier): DV[Double] = toAbs(readTrace(channel, range))
-  //final def readTraceAbsA(channel: Int, range: RangeFr): Array[Double] = readTraceAbs(channel, range).toArray
+  final def readTraceAbsA(channels: Array[Int], range: RangeFrSpecifier): Array[Array[Double]] = channels.map(readTraceAbsA(_, range.getFrameRange(this)))
   final def readTraceAbsA(channel: Int, range: RangeFrSpecifier): Array[Double] = readTraceAbs(channel, range).toArray
 
 

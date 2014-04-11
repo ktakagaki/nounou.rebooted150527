@@ -17,7 +17,7 @@ trait XFrames extends X with LoggingExt {
     */
   @throws[IllegalArgumentException]
   private def errorIfMultipleSegments(func:String, altFunc:String): Unit = {
-    loggerRequire(segmentCount != 1, "{} should not be used if the file has more than one segment. Use {} instead", func, altFunc)
+    loggerRequire(segmentCount != 1, func + " should not be used if the file has more than one segment. Use " + altFunc + " instead")
   }
 
   // <editor-fold desc="segment related: segmentCount, segmentLength/length ">
