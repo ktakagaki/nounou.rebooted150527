@@ -4,11 +4,12 @@ import nounou.data._
 import nounou.data.filters.{XDataFilterNull, XDataFilterFIR, XDataFilter}
 import nounou._
 import scala.beans.BeanProperty
-import breeze.linalg.{max, DenseVector}
+import breeze.linalg.{convert, sum, max, DenseVector}
 import breeze.numerics.abs
-import breeze.stats.median
+import breeze.stats.{median, mean}
 import scala.collection.mutable.{ArrayBuffer}
 import nounou.ranges._
+import scala.collection.mutable
 
 /**
  * @author ktakagaki
@@ -167,14 +168,14 @@ class SpkDetPeak extends SpkDetQuiroga {
   }
   def slopeWindow = _slopeWindow
   def setSlopeWindow(frames: Int): Unit = { slopeWindow = frames }
-  def getSlopeWindow() = peakWindow
+  def getSlopeWindow() = slopeWindow
 
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" get/setBaselineWindow ">
 
   var _baselineWindow = 16 // baseline over 0.5 ms at 32 kHz
   def baselineWindow_=(frames: Int): Unit = {
-    loggerRequire( frames > 0, "Peak windows must be > 0, value {} is invalid!", frames.toString )
+    loggerRequire( frames > 0, "Baseline windows must be > 0, value {} is invalid!", frames.toString )
     _baselineWindow = frames
   }
   def baselineWindow = _baselineWindow
@@ -192,10 +193,10 @@ class SpkDetPeak extends SpkDetQuiroga {
 
     logger.info("Thresholding respective channels with values: {}", DenseVector(thresholds).toString)
     
-    val tempDataAdj: Array[Array[Int]] = if(getSpikeDirection() == 1){
-                        tempData
+    val tempDataAdj: Array[DenseVector[Int]] = if(getSpikeDirection() == 1){
+                        tempData.map(p => (DenseVector(p)))
                       } else if (getSpikeDirection() == -1 ) {
-                        tempData.map(p => (DenseVector(p) * -1).toArray)
+                        tempData.map(p => (DenseVector(p) * -1))
                       } else {
                         throw loggerError("spike direction must be set to +/- 1")
                       }
@@ -205,16 +206,20 @@ class SpkDetPeak extends SpkDetQuiroga {
     val triggered = Array.tabulate(tempDataAdj.length)(p => -1)
     val windowMaxIndex = Array.tabulate(tempDataAdj.length)(p => -1)
     val windowMax = Array.tabulate(tempDataAdj.length)(p => Integer.MIN_VALUE)
-    val sw = getSlopeWindow()
-    val pw = getPeakWindow()
+    val sw = slopeWindow
+    val pw = peakWindow
+    val bw = baselineWindow
+    val baselineQueue: Array[mutable.Queue[Int]] = Array.tabulate(tempDataAdj.length)(p => mutable.Queue[Int]() )
 
-    var index = sw
+    var index = scala.math.max( sw, bw )
+    for(channel <- 0 until tempDataAdj.length) { baselineQueue(channel) ++= tempDataAdj(channel)( index - bw to index -1 ).toArray }
+    val baselineSum: Array[Long] = baselineQueue.map( p => sum( convert( new DenseVector( p.toArray ), Long ) ) )
     var ch = 0
     while(index < tempDataAdj(0).length){
       ch = 0
       while(ch < tempDataAdj.length){
         if(triggered(ch)<0) {
-          if( tempDataAdj(ch)( index ) - tempDataAdj(ch)( index - sw ) >= thresholds(ch)) {
+          if( tempDataAdj(ch)( index ) -  baselineSum(ch) / bw >= thresholds(ch) ) {
             //if the channel isn't triggered yet, but now meets trigger criteria
             triggered(ch) = index// - sw
             windowMax(ch) = tempDataAdj(ch)(index)
@@ -239,9 +244,13 @@ class SpkDetPeak extends SpkDetQuiroga {
             windowMaxIndex(ch) = index
           }
         }
+        baselineSum(ch) -= baselineQueue(ch).dequeue()
+        baselineQueue(ch) += tempDataAdj(ch)(index)
+        baselineSum(ch) += tempDataAdj(ch)(index)
         ch += 1
       }
       index += 1
+
     }
 
     tempRet.toArray
