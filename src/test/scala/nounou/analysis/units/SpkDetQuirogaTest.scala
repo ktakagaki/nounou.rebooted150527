@@ -35,7 +35,9 @@ class SpkDetQuirogaTest  extends FunSuite{
     //println( max(xDataMedian.readTrace(0,RangeFr(0,500000))) )
     val xDataBuffer = new XDataFilterBuffer( xDataMedian )
 
-    println(SpkDetQuiroga(xDataMedian, new XTrodesPreloaded( Array(Array(0,1,2,3))), 0, RangeFr(0, 5000000) ).length)
+    SpkDetQuiroga.setTriggerData(xDataMedian)
+    SpkDetQuiroga.setTrodes(new XTrodesPreloaded( Array(Array(0,1,2,3))))
+    println(SpkDetQuiroga.detectSpikeTs(0, RangeFr(0, 5000000) ).length)
 
   }
 }
