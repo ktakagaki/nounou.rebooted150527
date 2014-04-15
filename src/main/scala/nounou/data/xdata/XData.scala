@@ -125,13 +125,26 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     DV.vertcat( DV.zeros[Int]( preLength ), tempData, DV.zeros[Int]( postLength ) )
 
   }
+
   final def readTrace(channel: Int, range: RangeFrSpecifier): DV[Int] = readTrace(channel, range.getFrameRange(this))
-  final def readTraceA(channel: Int, range: RangeFrSpecifier) = readTrace(channel, range.getFrameRange(this)).toArray
-  final def readTraceA(channels: Array[Int], range: RangeFrSpecifier): Array[Array[Int]] = channels.map(readTraceA(_, range.getFrameRange(this)))
+  final def readTrace(channels: Array[Int], range: RangeFrSpecifier): Array[DV[Int]] = channels.map( readTrace(_, range) )
+  final def readTrace(channel: Int, ranges: Array[RangeFrSpecifier]): Array[DV[Int]] = ranges.map( readTrace(channel, _) )
+  final def readTrace(channels: Array[Int], ranges: Array[RangeFrSpecifier]): Array[Array[DV[Int]]] = ranges.map( readTrace(channels, _) )
+
+  final def readTraceA(channel: Int, range: RangeFrSpecifier) = readTrace(channel, range).toArray
+  final def readTraceA(channels: Array[Int], range: RangeFrSpecifier): Array[Array[Int]] = channels.map(readTraceA(_, range))
+  final def readTraceA(channel: Int, ranges: Array[RangeFrSpecifier]): Array[Array[Int]] = ranges.map( readTraceA(channel, _) )
+  final def readTraceA(channels: Array[Int], ranges: Array[RangeFrSpecifier]): Array[Array[Array[Int]]] = ranges.map( readTraceA(channels, _) )
 
   final def readTraceAbs(channel: Int, range: RangeFrSpecifier): DV[Double] = toAbs(readTrace(channel, range))
-  final def readTraceAbsA(channels: Array[Int], range: RangeFrSpecifier): Array[Array[Double]] = channels.map(readTraceAbsA(_, range.getFrameRange(this)))
+  final def readTraceAbs(channels: Array[Int], range: RangeFrSpecifier): Array[DV[Double]] = channels.map( readTraceAbs(_, range) )
+  final def readTraceAbs(channel: Int, ranges: Array[RangeFrSpecifier]): Array[DV[Double]] = ranges.map( readTraceAbs(channel, _) )
+  final def readTraceAbs(channels: Array[Int], ranges: Array[RangeFrSpecifier]): Array[Array[DV[Double]]] = ranges.map( readTraceAbs(channels, _) )
+
   final def readTraceAbsA(channel: Int, range: RangeFrSpecifier): Array[Double] = readTraceAbs(channel, range).toArray
+  final def readTraceAbsA(channels: Array[Int], range: RangeFrSpecifier): Array[Array[Double]] = channels.map(readTraceAbsA(_, range))
+  final def readTraceAbsA(channel: Int, ranges: Array[RangeFrSpecifier]): Array[Array[Double]] = ranges.map( readTraceAbsA(channel, _) )
+  final def readTraceAbsA(channels: Array[Int], ranges: Array[RangeFrSpecifier]): Array[Array[Array[Double]]] = ranges.map( readTraceAbsA(channels, _) )
 
 
   @deprecated
