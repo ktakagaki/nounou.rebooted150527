@@ -44,30 +44,32 @@ class RangeTs(val startTs: Long, val endTs: Long, val step: Long, val segment: I
 
 object RangeTsEvent {
 
-  /** Constructor for a frame specification based on timestamps and pre/post data points.
-    * @param preFrames number of data points to take prior to given timestamp. Data points will be taken in steps of `step`
-    * @param postFrames number of data points to take following given timestamp. Data points will be taken in steps of `step`
-    */
-  def apply(eventTs: Long, preFrames: Int, postFrames: Int, step: Int, segment: Int) =
-    new RangeTsEvent(eventTs,  preFrames, postFrames, step, segment)
+//  /** Constructor for a frame specification based on timestamps and pre/post data points.
+//    * @param preFrames number of data points to take prior to given timestamp. Data points will be taken in steps of `step`
+//    * @param postFrames number of data points to take following given timestamp. Data points will be taken in steps of `step`
+//    */
+//  def apply(eventTs: Long, preFrames: Int, postFrames: Int, step: Int, segment: Int) =
+//    new RangeTsEvent(eventTs,  preFrames, postFrames, step, segment)
 
   /** Constructor for a frame specification based on timestamps and pre/post data points, with default segment = 0.
     * @param preFrames number of data points to take prior to given timestamp. Data points will be taken in steps of `step`
     * @param postFrames number of data points to take following given timestamp. Data points will be taken in steps of `step`
     */
-  def apply(eventTs: Long, preFrames: Int, postFrames: Int, step: Int) =
-    new RangeTsEvent(eventTs, preFrames, postFrames, step)
+  def apply(eventTs: Long, preFrames: Int, postFrames: Int, step: Int) = new RangeTsEvent(eventTs, preFrames, postFrames, step)
+  def apply(eventTs: Long, preFrames: Int, postFrames: Int) = new RangeTsEvent(eventTs, preFrames, postFrames)
+  def apply(eventTss: Array[Long], preFrames: Int, postFrames: Int, step: Int) = eventTss.map(new RangeTsEvent(_, preFrames, postFrames, step))
+  def apply(eventTss: Array[Long], preFrames: Int, postFrames: Int) = eventTss.map(new RangeTsEvent(_, preFrames, postFrames))
 
 }
 
 
-class RangeTsEvent(val eventTS: Long, val preFrames: Int, val postFrames: Int, val step: Int, val segment: Int) extends RangeFrSpecifier {
+class RangeTsEvent(val eventTS: Long, val preFrames: Int, val postFrames: Int, val step: Int) extends RangeFrSpecifier {
 
-  def this(eventTS: Long, preFrames: Int, postFrames: Int, step: Int) = this(eventTS, preFrames, postFrames, step, 0)
+  def this(eventTS: Long, preFrames: Int, postFrames: Int) = this(eventTS, preFrames, postFrames, 1)
 
   def getFrameRange(x: XFrames): RangeFr = {
     val eventFrame = x.tsToFrsg(eventTS)
-    RangeFr(eventFrame._1 - preFrames*step, eventFrame._1 + postFrames*step, step, segment)
+    RangeFr(eventFrame._1 - preFrames*step, eventFrame._1 + postFrames*step, step, eventFrame._2)
   }
 
 }
