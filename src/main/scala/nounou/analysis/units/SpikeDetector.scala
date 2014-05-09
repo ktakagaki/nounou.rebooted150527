@@ -1,7 +1,7 @@
 package nounou.analysis.units
 
 import nounou.data._
-import nounou.data.filters.{XDataFilterNull, XDataFilterFIR, XDataFilter}
+import nounou.data.filters._
 import nounou._
 import scala.beans.BeanProperty
 import breeze.linalg._
@@ -11,6 +11,7 @@ import scala.collection.mutable.{ArrayBuffer}
 import nounou.ranges._
 import scala.collection.mutable
 import scala.collection.parallel.mutable.ParHashSet
+import breeze.stats.distributions.RandBasis
 
 /**
  * @author ktakagaki
@@ -180,7 +181,13 @@ class SpkDetPeak extends SpkDetQuiroga {
                         throw loggerError("spike direction must be set to +/- 1")
                       }
 
-    val thresholds: Array[Int] = tempDataAdj.map( p => ( median( abs(p) ) / 0.6745 * thresholdSD).toInt )
+    val thresholds: Array[Int] =
+      if( tempDataAdj(0).length < 32000){
+        tempDataAdj.map( p => ( median( abs(p) ) / 0.6745 * thresholdSD).toInt )
+      } else {
+        val samps = tempDataAdj.map( dv => DenseVector.rand(32000).map( p => dv( (p * tempDataAdj(0).length).toInt ) ) )
+        samps.map( p => ( median( abs(p) ) / 0.6745 * thresholdSD).toInt )
+      }
     logger.info("Thresholding respective channels with values: {}", DenseVector(thresholds).toString)
 
     val tempRet = new ArrayBuffer[Int]()//new ParHashSet[Int]()
@@ -224,6 +231,127 @@ class SpkDetPeak extends SpkDetQuiroga {
 
 // </editor-fold>
 
+// <editor-fold defaultstate="collapsed" desc=" SpkDetPeakWidth ">
+
+object SpkDetPeakWidth extends SpkDetPeakWidth {
+  def it = this
+}
+
+class SpkDetPeakWidth extends SpkDetQuiroga {
+
+  _thresholdSD = 2d
+
+  def getInverted() = -1
+
+  @BeanProperty
+  var peakWidthMin = 0.1 //3.2 frames at 32kHz (spikes will look thinner with higher baseline)
+  @BeanProperty
+  var peakWidthMax = 0.4 //12.8 frames at 32kHz
+  @BeanProperty
+  var medianFilterWindowLength = 2.5 // 80 frames at 32 kHz
+
+  override def detectSpikeTsImpl(trode: Int, frameRange: RangeFr): Array[Int] = {
+
+    loggerRequire( frameRange.step == 1, "step size for spike detection must be 1! {} is invalid!", frameRange.step.toString )
+
+    val channels = getTrodes.trodeChannels(trode)
+    val channelIndex = Range(0, channels.length)
+    logger.trace("Thresholding with {} channels in trode #{}", channels.length.toString, trode.toString)
+
+    //set median filter for detection
+    val medianData = new XDataFilterMedianSubtract( getTriggerData() )
+    medianData.setWindowLength( medianData.msToFr( getMedianFilterWindowLength() ) )
+    val invertedData = new XDataFilterInvert( medianData )
+    invertedData.setInverted( getInverted() )
+    val bufferedData = new XDataFilterBuffer( invertedData )
+
+    val fr = frameRange.getFrameRange(medianData).getValidRange(medianData)
+
+    //calculate thresholds
+    val thresholds: Array[Int] =
+      if( fr.length < 10000 ){
+      //if the data range is short enough, take the median estimate from the whole data range
+        channels.map( ch => ( median( abs(  invertedData.readTrace(ch, frameRange)  ) ) / 0.6745 * thresholdSD).toInt )
+      } else {
+        //if the data range is long, take random samples for cutoff SD estimate
+        val samps = channels.map( ch => randomInt( 1000, (0, invertedData.segmentLength( frameRange.segment )-1 ) ).toArray.map( p => invertedData.readPoint( ch, p ) ) )
+        samps.map( p => ( median( abs( DenseVector(p) ) ) / 0.6745 * getThresholdSD() ).toInt )
+      }
+    logger.info("Thresholding respective channels with values: {}", DenseVector(thresholds).toString)
+
+    //val tempRet = new ArrayBuffer[Int]()// with mutable.SynchronizedBuffer[Int]//new ParHashSet[Int]()
+    val pwMin = invertedData.msToFr(getPeakWidthMin())
+    val pwMax = invertedData.msToFr(getPeakWidthMax())
+
+    //var index = pwMax
+    //val parch = channelIndex
+    //val parch = channelIndex.par
+    //val tempData = channelIndex.map( ch => )
+    channelIndex.flatMap( ch => detectSpikeTsImplImpl(bufferedData.readTrace(ch, frameRange), thresholds(ch), pwMin, pwMax) ).toSet[Int].toArray.sorted
+  }
+
+
+  def detectSpikeTsImplImpl( trace: DenseVector[Int], threshold: Int, pwMin: Int, pwMax: Int ): Array[Int] = {
+    var index = pwMax
+    val tempRet2 = new ArrayBuffer[Int]()
+    while(index < trace.length - pwMax) {
+      val tempPeakVal = trace(index)
+      val tempCutoff = (tempPeakVal + threshold)/2d   //cutoff is the half point between peak and 2SD
+
+      var break = false
+      if( tempCutoff > threshold ) {
+
+        var preIndex = index
+        var postIndex = index
+        break = false
+        while (!break && preIndex >= index - pwMax) {
+          val pointVal = trace(preIndex)
+          if (pointVal > tempPeakVal) {
+            //if there is a data point that increases above the peak, the peak is not a peak
+            preIndex = Int.MinValue
+            break = true
+          } else if (pointVal <= tempCutoff) {
+            //if the data point goes under the cutoff, we have our trigger point for the width
+            break = true
+          } else {
+            //otherwise, just step backward in time
+            preIndex -= 1
+          }
+        }
+
+        if (preIndex != Int.MinValue) {
+          //loop after the peak only if the part before the peak passes muster
+          break = false
+          while (!break && postIndex <= index + pwMax) {
+            val pointVal = trace(postIndex)
+            if (pointVal > tempPeakVal) {
+              //if there is a data point that increases above the peak, the peak is not a peak
+              postIndex = Int.MaxValue
+              break = true
+            } else if (pointVal <= tempCutoff) {
+              //if the data point goes under the cutoff, we have our trigger point for the width
+              break = true
+            } else {
+              //otherwise, just step forward in time
+              postIndex += 1
+            }
+          }
+
+        }
+
+        //if the spike width is within the prespecified range, append the peak index to the return list
+        val spikeWidth = postIndex-preIndex
+        if( pwMin <= spikeWidth && spikeWidth <= pwMax ) tempRet2 += index
+      }
+      index += 1
+    }
+    tempRet2.toArray
+  }
+
+
+}
+
+// </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc=" SpkDetSlope ">
 

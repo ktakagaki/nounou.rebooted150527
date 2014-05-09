@@ -41,7 +41,7 @@ class DataReaderTest extends FunSuite {
      val reader = new DataReader
      reader.load(bigTestFiles)
      println(reader.toStringChain())
-     reader.maskMovementArtifacts(500., 800., 10., 400., 100, 150000)
+     reader.maskMovementArtifacts(500d, 800d, 10d, 400d, 100, 150000)
    }
 
 

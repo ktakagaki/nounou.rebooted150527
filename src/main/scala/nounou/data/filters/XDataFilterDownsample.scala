@@ -29,7 +29,7 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
   def factor_=( factor: Int ) = {
     loggerRequire( factor >= 1, "new factor {} cannot be less than 1!", factor.toString )
     if( factor == this.factor ){
-      logger.trace( "factor is already {}}, not changing. ", factor.toString )
+      logger.trace( "factor is already {}, not changing. ", factor.toString )
     } else {
       _factor = factor
       logger.info( "changed factor to {}", factor.toString )
