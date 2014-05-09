@@ -8,6 +8,7 @@
         <option name="compilerLibraryName" value="scala-compiler" />
         <option name="explainTypeErrors" value="true" />
         <option name="fsc" value="true" />
+        <option name="languageLevel" value="Scala 2.11" />
       </configuration>
     </facet>
   </component>
@@ -27,25 +28,26 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jfxrt.jar" level="project" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/../../../gh/breeze/target/scala-2.10/classes" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" name="scala-compiler" level="application" />
     <orderEntry type="library" scope="TEST" name="org.scalatest:scalatest_2.10.0-RC5:2.0.M5-B1" level="project" />
-    <orderEntry type="library" name="org.scalanlp:breeze-macros_2.10:0.1" level="project" />
-    <orderEntry type="library" name="com.typesafe:scalalogging-slf4j_2.10:1.1.0" level="project" />
-    <orderEntry type="library" name="org.slf4j:slf4j-api:1.7.6" level="project" />
-    <orderEntry type="library" name="ch.qos.logback:logback-classic:1.0.11" level="project" />
-    <orderEntry type="library" name="ch.qos.logback:logback-core:1.0.11" level="project" />
     <orderEntry type="library" name="org.scalafx:scalafx_2.10:1.0.0-M7" level="project" />
     <orderEntry type="library" name="com.github.fommil.netlib:core:1.1.2" level="project" />
     <orderEntry type="library" name="junit-4.10" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../../../gh/breeze/target/idea_output/artifacts" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/../../../gh/breeze/target/idea_output/artifacts" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="org.scalanlp:breeze-macros_2.11:0.3.1" level="project" />
+    <orderEntry type="library" name="breeze_lib" level="project" />
+    <orderEntry type="library" name="breeze" level="project" />
+    <orderEntry type="library" name="com.typesafe:scalalogging-slf4j_2.10:1.1.0" level="project" />
+    <orderEntry type="library" name="org.slf4j:slf4j-api:1.7.6" level="project" />
   </component>
 </module>
 

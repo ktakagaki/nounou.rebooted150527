@@ -45,14 +45,14 @@ package object nounou extends Logging {
   trait LoggingExt extends Logging {
 
     def loggerError(message: String, params: AnyRef*): IllegalArgumentException = {
-      logger.error(message, params: _*)
+      logger.error(message, params )
       new IllegalArgumentException(message)
     }
 
     @throws[IllegalArgumentException]
     def loggerRequire(boolean: Boolean, message: String, params: AnyRef*): Unit = {
       if(!boolean){
-          logger.error(message, params: _* )
+          logger.error(message, params )
           throw new IllegalArgumentException( "require:" +message)
       }
     }
