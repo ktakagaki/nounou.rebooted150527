@@ -10,8 +10,8 @@ import breeze.linalg.DenseVector
  */
 class XDataFilterInvert(override val upstream: XData ) extends XDataFilter( upstream ) {
 
-  @BooleanBeanProperty
   var inverted = false
+  def setInverted(trueFalse: Boolean) = { inverted = trueFalse }
   def setInverted(trueFalse: Int) = trueFalse match {
     case 1 => inverted = false
     case -1 => inverted = true
