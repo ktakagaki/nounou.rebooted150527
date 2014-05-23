@@ -19,7 +19,7 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
   var garbageQue: ArrayBuffer[(Int, Int, Int)] = new ArrayBuffer[(Int, Int, Int)]()
 
   lazy val bufferPageLength: Int = (32768 / 2) //default page length will be 32 kB
-  lazy val garbageQueBound: Int = 1024 * 16 //32MB in data + //1073741824 / 8 / (bufferPageLength * 2)  //default buffer maximum size will be 128 MB
+  lazy val garbageQueBound: Int = 1024 // * 16 //32MB in data + //1073741824 / 8 / (bufferPageLength * 2)  //default buffer maximum size will be 128 MB
 
   logger.debug("initialized XDataFilterTrBuffer w/ bufferPageLength={} and garbageQueBound={}", bufferPageLength.toString, garbageQueBound.toString)
 
