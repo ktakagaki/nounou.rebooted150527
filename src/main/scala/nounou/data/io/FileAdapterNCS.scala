@@ -237,28 +237,40 @@ class XDataChannelNCS
   override def readTraceImpl(range: Range.Inclusive, segment: Int): DV[Int] = {
     var (currentRecord: Int, currentIndex: Int) = frameSegmentToRecordIndex( range.start, segment )
     val (endReadRecord: Int, endReadIndex: Int) = frameSegmentToRecordIndex( range.end, segment ) //range is inclusive of last
+    val step = range.step
 
-    var tempRet = DV[Int]()
+    val tempRet = DV.zeros[Int](range.length)//DV[Int]()
+    var currentTempRetPos = 0
 
     fileHandle.seek( dataByteLocationRI(currentRecord, currentIndex) )
 
     if(currentRecord == endReadRecord){
-      tempRet = DV(fileHandle.readInt16(endReadIndex - currentIndex + 1).map(_.toInt * xBits))
+    //if the whole requested trace fits in one record
+      val writeEnd = currentTempRetPos + (endReadIndex - currentIndex) + 1
+      tempRet(currentTempRetPos until writeEnd ) := DV(fileHandle.readInt16(endReadIndex - currentIndex + 1).map(_.toInt * xBits))
+      currentTempRetPos = writeEnd
     } else {
+    //if the requested trace spans multiple records
+
       //read data contained in first record
-      tempRet = DV(fileHandle.readInt16(512 - currentIndex).map(_.toInt * xBits))
+      var writeEnd = currentTempRetPos + (512 - currentIndex)
+      tempRet(currentTempRetPos until writeEnd ) := DV(fileHandle.readInt16(512 - currentIndex).map(_.toInt * xBits))
       currentRecord += 1
+      currentTempRetPos = writeEnd
       fileHandle.jumpBytes(t.recordNonDataBytes)
 
       //read data from subsequent records, excluding last record
       while (currentRecord < endReadRecord) {
-        tempRet = DV.vertcat(tempRet, DV(fileHandle.readInt16(512 /*- currentIndex*/).map(_.toInt * xBits)))
+        writeEnd = currentTempRetPos + 512
+        tempRet(currentTempRetPos until writeEnd ) := DV.vertcat(tempRet, DV(fileHandle.readInt16(512 /*- currentIndex*/).map(_.toInt * xBits)))
         currentRecord += 1
+        currentTempRetPos = writeEnd
         fileHandle.jumpBytes(t.recordNonDataBytes)
       }
 
       //read data contained in last record
-      tempRet = DV.vertcat(tempRet, DV(fileHandle.readInt16(endReadIndex + 1).map(_.toInt * xBits)))
+      writeEnd = currentTempRetPos + endReadIndex + 1
+      tempRet(currentTempRetPos until writeEnd ) := DV.vertcat(tempRet, DV(fileHandle.readInt16(endReadIndex + 1).map(_.toInt * xBits)))
 
     }
 
