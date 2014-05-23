@@ -15,6 +15,7 @@ import nounou.ranges.RangeFr
 class XDataFilterMedianSubtract( override val upstream: XData ) extends XDataFilter( upstream ) {
 
   private var _windowLength = 1
+  private val upstreamBuff: XData = new XDataFilterBuffer(upstream)
 
   var windowLengthHalf = 0
   def setWindowLength( value: Int ): Unit = {
@@ -32,19 +33,19 @@ class XDataFilterMedianSubtract( override val upstream: XData ) extends XDataFil
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
     if(windowLength == 1){
-      upstream.readPointImpl(channel, frame, segment)
+      upstreamBuff.readPointImpl(channel, frame, segment)
     } else {
       //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-      val tempData = upstream.readTrace( channel, RangeFr(frame - windowLengthHalf, frame + windowLengthHalf, 1, segment) )
+      val tempData = upstreamBuff.readTrace( channel, RangeFr(frame - windowLengthHalf, frame + windowLengthHalf, 1, segment) )
       median(tempData)
     }
 
   override def readTraceImpl(channel: Int, ran: Range.Inclusive, segment: Int): DV[Int] =
     if(windowLength == 1){
-      upstream.readTraceImpl(channel, ran, segment)
+      upstreamBuff.readTraceImpl(channel, ran, segment)
     } else {
       //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-      val tempData = upstream.readTrace( channel, RangeFr( ran.start - windowLengthHalf, ran.last + windowLengthHalf, 1, segment) )
+      val tempData = upstreamBuff.readTrace( channel, RangeFr( ran.start - windowLengthHalf, ran.last + windowLengthHalf, 1, segment) )
 //      logger.info("windowLength {} tempData.length {} filterMedian length {} ", windowLength.toString, tempData.length.toString, filterMedian(tempData, windowLength, OptOverhang.None).length.toString)
       tempData(windowLengthHalf to -windowLengthHalf-1) - filterMedian(tempData, windowLength, OptOverhang.None)
     }
