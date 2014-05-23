@@ -26,13 +26,6 @@ abstract class SpikeDetector extends LoggingExt {
   def getTriggerData(): XData = triggerData
 
   // </editor-fold>
-//  // <editor-fold defaultstate="collapsed" desc=" set/getWaveformData ">
-//
-//  private var waveformData: XData = XDataNull
-//  def setWaveformData(xData: XData): Unit = {waveformData=xData}
-//  def getWaveformData(): XData = waveformData
-//
-//  // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" set/getTrodes ">
 
   private var trodes: XTrodes = XTrodesNull
@@ -68,25 +61,33 @@ trait SpkDetBlackout extends SpikeDetector {
 
 }
 
-// <editor-fold defaultstate="collapsed" desc=" SpkDetQuiroga ">
+// <editor-fold defaultstate="collapsed" desc=" SpkDetPeakWidth ">
 
-object SpkDetQuiroga extends SpkDetQuiroga{
+object SpkDetPeakWidth extends SpkDetPeakWidth {
   def it = this
 }
-class SpkDetQuiroga extends SpkDetBlackout {
+
+class SpkDetPeakWidth extends SpikeDetector with SpkDetBlackout {
 
   // <editor-fold defaultstate="collapsed" desc=" thresholdSD ">
 
-  protected var _thresholdSD = 3d
-  def thresholdSD_=(threshold: Double): Unit = {
+  protected var thresholdSD = 2d
+  def setThresholdSD(threshold: Double): Unit = {
     loggerRequire( threshold > 0, "Threshold SD multiple must be > 0, value {} is invalid!", threshold.toString )
-    _thresholdSD = threshold
+    thresholdSD = threshold
   }
-  def thresholdSD = _thresholdSD
-  def setThresholdSD(thresholdSD: Double): Unit = { _thresholdSD=thresholdSD }
   def getThresholdSD() = thresholdSD
 
   // </editor-fold>
+
+  def isInverted() = true
+
+  @BeanProperty
+  var peakWidthMin = 0.1 //3.2 frames at 32kHz (spikes will look thinner with higher baseline)
+  @BeanProperty
+  var peakWidthMax = 0.4 //12.8 frames at 32kHz
+  @BeanProperty
+  var medianFilterWindowLength = 2.5 // 80 frames at 32 kHz
 
   override def detectSpikeTs(trode: Int, frameRange: RangeFr): Array[Long] = {
     loggerRequire( frameRange.step == 1, "Currently, SpikeDetector classes must be called with a frame range with step = 1. {} is invalid", frameRange.step.toString)
@@ -99,158 +100,26 @@ class SpkDetQuiroga extends SpkDetBlackout {
     detectSpikeTsImpl(trode, frameRange).map(p => getTriggerData().frsgToTs(p+frameRange.start, frameRange.segment))
   }
 
+  def traceSD(channel: Int, frameRange: RangeFr): Int ={
+    //set median filter for detection
+    val medianData = new XDataFilterMedianSubtract( getTriggerData() )
+    medianData.setWindowLength( medianData.msToFr( getMedianFilterWindowLength() ) )
+
+    //buffer data for calculations
+    val bufferedData = new XDataFilterBuffer( medianData )
+    val fr = frameRange.getFrameRange(bufferedData).getValidRange(bufferedData)
+    if( fr.length < 64000 ){
+      //if the data range is short enough, take the median estimate from the whole data range
+      (median( abs(  bufferedData.readTrace(channel, frameRange)  ) ).toDouble / 0.6745 * thresholdSD).intValue
+    } else {
+      //if the data range is long, take random samples for cutoff SD estimate
+      val samp = randomInt( 64000, (0, medianData.segmentLength( frameRange.segment )-1 ) ).toArray.map( p => medianData.readPoint( channel, p ) )
+      (median( DenseVector(samp) ).toDouble / 0.6745 * getThresholdSD()).intValue
+    }
+
+  }
+
   def detectSpikeTsImpl(trode: Int, frameRange: RangeFr): Array[Int] = {
-
-    val channels = getTrodes.trodeChannels(trode)//trodeCount.flatMap( p => xTrodes.trodeGroup(p) )
-    val tempData: Array[Array[Int]] = channels.map( p => getTriggerData.readTrace(p, frameRange).toArray )
-    logger.trace("Thresholding with {} channels in trode #{}", channels.length.toString, trode.toString)
-
-    val thresholds: Array[Int] = tempData.map( p => ( median( abs(DenseVector(p)) ) / 0.6745 * thresholdSD).toInt )
-//    loggerRequire( tempData.length == thresholds.length,
-//        "Must specify the same number of thresholds as data traces: {} != {} ",
-//      tempData.length.toString, thresholds.length.toString)
-    logger.info("Thresholding respective channels with values: {}", DenseVector(thresholds).toString)
-
-    val tempDataAbs = tempData.map( p=> abs(DenseVector(p)).toArray )
-
-    val tempRet = new ArrayBuffer[Int]()
-    var index = 0
-    val channelRange = Range(0, tempDataAbs.length)
-    var triggered = !channelRange.forall( p => tempDataAbs(p)(0) < thresholds(p) )
-    val blackout = getBlackoutFr()
-
-    while(index < tempDataAbs(0).length){
-      if( !triggered ){
-        if( !channelRange.forall(p => tempDataAbs(p)(index) < thresholds(p) ) ){
-          tempRet.append(index)
-          triggered = true
-          index += blackout
-        } else{
-          index += 1
-        }
-      } else {
-        if( channelRange.forall(p => tempDataAbs(p)(index) < thresholds(p) ) ) triggered = false
-        index += 1
-      }
-    }
-
-    tempRet.toArray
-  }
-
-}
-
-// </editor-fold>
-
-// <editor-fold defaultstate="collapsed" desc=" SpkDetPeak ">
-
-
-object SpkDetPeak extends SpkDetPeak{
-  def it = this
-}
-class SpkDetPeak extends SpkDetQuiroga {
-
-  _thresholdSD = 2d
-
-  def getSpikeDirection() = -1
-
-  // <editor-fold defaultstate="collapsed" desc=" get/setPeakWindow ">
-
-  var _peakWindow = 16 //0.5 ms at 32kHz
-  def peakWindow_=(frames: Int): Unit = {
-    loggerRequire( frames > 0, "Peak windows must be > 0, value {} is invalid!", frames.toString )
-    _peakWindow = frames
-  }
-  def peakWindow = _peakWindow
-  def setPeakWindow(frames: Int): Unit = { peakWindow = frames }
-  def getPeakWindow() = peakWindow
-
-  // </editor-fold>
-
-
-  override def detectSpikeTsImpl(trode: Int, frameRange: RangeFr): Array[Int] = {
-
-    val channels = getTrodes.trodeChannels(trode)//trodeCount.flatMap( p => xTrodes.trodeGroup(p) )
-
-    logger.trace("Thresholding with {} channels in trode #{}", channels.length.toString, trode.toString)
-
-    val tempDataAdj: Array[DenseVector[Int]] = if(getSpikeDirection() == 1){
-                        channels.map( p => getTriggerData.readTrace(p, frameRange) )
-                      } else if (getSpikeDirection() == -1 ) {
-                        channels.map( p => getTriggerData.readTrace(p, frameRange) * -1 )
-                      } else {
-                        throw loggerError("spike direction must be set to +/- 1")
-                      }
-
-    val thresholds: Array[Int] =
-      if( tempDataAdj(0).length < 32000){
-        tempDataAdj.map( p => ( median( abs(p) ) / 0.6745 * thresholdSD).toInt )
-      } else {
-        val samps = tempDataAdj.map( dv => DenseVector.rand(32000).map( p => dv( (p * tempDataAdj(0).length).toInt ) ) )
-        samps.map( p => ( median( abs(p) ) / 0.6745 * thresholdSD).toInt )
-      }
-    logger.info("Thresholding respective channels with values: {}", DenseVector(thresholds).toString)
-
-    val tempRet = new ArrayBuffer[Int]()//new ParHashSet[Int]()
-    val pw = peakWindow
-
-    var index = pw
-    //val parch = Range(0, tempDataAdj.length).par
-    while(index < tempDataAdj(0).length - 2*pw){
-//    for(index <- Range(pw, tempDataAdj(0).length - 2* pw).par ){
-    //      parch.map( ch => {
-//        val temppeak = tempDataAdj(ch)(index)
-//        if (
-//          tempDataAdj(ch).slice(index - pw, index + 2 * pw + 1).forallValues((p: Int) => temppeak >= p) &&
-//            temppeak - min(tempDataAdj(ch).slice(index - pw, index)) > thresholds(ch) &&
-//            temppeak - min(tempDataAdj(ch).slice(index + 1, index + 2 * pw + 1)) > thresholds(ch)
-//        ) {
-//          tempRet.+:(index)
-//        }
-//      })
-//      }
-//      index += 1
-      var ch = 0
-      while(ch < tempDataAdj.length){
-        val temppeak = tempDataAdj(ch)(index)
-        if(
-          tempDataAdj(ch).slice(index - pw, index + 2*pw + 1).forallValues( (p: Int) => temppeak >= p) &&
-          temppeak - min( tempDataAdj(ch).slice(index - pw, index) ) > thresholds(ch) &&
-          temppeak - min( tempDataAdj(ch).slice(index + 1, index + 2*pw + 1) ) > thresholds(ch)
-        ){
-          tempRet += index
-        }
-        ch += 1
-      }
-      index += 1
-    }
-    tempRet.toArray//.sorted
-  }
-
-
-}
-
-// </editor-fold>
-
-// <editor-fold defaultstate="collapsed" desc=" SpkDetPeakWidth ">
-
-object SpkDetPeakWidth extends SpkDetPeakWidth {
-  def it = this
-}
-
-class SpkDetPeakWidth extends SpkDetQuiroga {
-
-  _thresholdSD = 2d
-
-  def getInverted() = -1
-
-  @BeanProperty
-  var peakWidthMin = 0.1 //3.2 frames at 32kHz (spikes will look thinner with higher baseline)
-  @BeanProperty
-  var peakWidthMax = 0.4 //12.8 frames at 32kHz
-  @BeanProperty
-  var medianFilterWindowLength = 2.5 // 80 frames at 32 kHz
-
-  override def detectSpikeTsImpl(trode: Int, frameRange: RangeFr): Array[Int] = {
 
     loggerRequire( frameRange.step == 1, "step size for spike detection must be 1! {} is invalid!", frameRange.step.toString )
 
@@ -261,208 +130,171 @@ class SpkDetPeakWidth extends SpkDetQuiroga {
     //set median filter for detection
     val medianData = new XDataFilterMedianSubtract( getTriggerData() )
     medianData.setWindowLength( medianData.msToFr( getMedianFilterWindowLength() ) )
-    val invertedData = new XDataFilterInvert( medianData )
-    invertedData.setInverted( getInverted() )
+
+    //set inversion if operative
+    val invertedData = if(isInverted){
+      val temp = new XDataFilterInvert( medianData )
+      temp.setInverted( isInverted() )
+      temp
+    } else {
+      medianData
+    }
+
+    //buffer data for calculations
     val bufferedData = new XDataFilterBuffer( invertedData )
 
-    val fr = frameRange.getFrameRange(medianData).getValidRange(medianData)
+    val fr = frameRange.getFrameRange(bufferedData).getValidRange(bufferedData)
 
     //calculate thresholds
-    val thresholds: Array[Int] =
-      if( fr.length < 10000 ){
-      //if the data range is short enough, take the median estimate from the whole data range
-        channels.map( ch => ( median( abs(  invertedData.readTrace(ch, frameRange)  ) ) / 0.6745 * thresholdSD).toInt )
-      } else {
-        //if the data range is long, take random samples for cutoff SD estimate
-        val samps = channels.map( ch => randomInt( 1000, (0, invertedData.segmentLength( frameRange.segment )-1 ) ).toArray.map( p => invertedData.readPoint( ch, p ) ) )
-        samps.map( p => ( median( abs( DenseVector(p) ) ) / 0.6745 * getThresholdSD() ).toInt )
-      }
+    val thresholds: Array[Int] = channels.map( traceSD(_, frameRange) )
     logger.info("Thresholding respective channels with values: {}", DenseVector(thresholds).toString)
 
     //val tempRet = new ArrayBuffer[Int]()// with mutable.SynchronizedBuffer[Int]//new ParHashSet[Int]()
     val pwMin = invertedData.msToFr(getPeakWidthMin())
     val pwMax = invertedData.msToFr(getPeakWidthMax())
 
-    //var index = pwMax
-    //val parch = channelIndex
-    //val parch = channelIndex.par
-    //val tempData = channelIndex.map( ch => )
-    channelIndex.flatMap( ch => detectSpikeTsImplImpl(bufferedData.readTrace(ch, frameRange), thresholds(ch), pwMin, pwMax) ).toSet[Int].toArray.sorted
+    val tempTraces = channels.map( ch => bufferedData.readTrace(ch, frameRange) ).zipWithIndex
+    tempTraces.par.flatMap( trace => detectSpikeTsImplImpl(trace._1, thresholds(trace._2), pwMin, pwMax)).toSet[Int].toArray.sorted
   }
 
 
-  def detectSpikeTsImplImpl( trace: DenseVector[Int], threshold: Int, pwMin: Int, pwMax: Int ): Array[Int] = {
-    var index = pwMax
-    val tempRet2 = new ArrayBuffer[Int]()
-    while(index < trace.length - pwMax) {
-      val tempPeakVal = trace(index)
-      val tempCutoff = (tempPeakVal + threshold)/2d   //cutoff is the half point between peak and 2SD
-
-      var break = false
-      if( tempCutoff > threshold ) {
-
-        var preIndex = index
-        var postIndex = index
-        break = false
-        while (!break && preIndex >= index - pwMax) {
-          val pointVal = trace(preIndex)
-          if (pointVal > tempPeakVal) {
-            //if there is a data point that increases above the peak, the peak is not a peak
-            preIndex = Int.MinValue
-            break = true
-          } else if (pointVal <= tempCutoff) {
-            //if the data point goes under the cutoff, we have our trigger point for the width
-            break = true
-          } else {
-            //otherwise, just step backward in time
-            preIndex -= 1
-          }
-        }
-
-        if (preIndex != Int.MinValue) {
-          //loop after the peak only if the part before the peak passes muster
-          break = false
-          while (!break && postIndex <= index + pwMax) {
-            val pointVal = trace(postIndex)
-            if (pointVal > tempPeakVal) {
-              //if there is a data point that increases above the peak, the peak is not a peak
-              postIndex = Int.MaxValue
-              break = true
-            } else if (pointVal <= tempCutoff) {
-              //if the data point goes under the cutoff, we have our trigger point for the width
-              break = true
-            } else {
-              //otherwise, just step forward in time
-              postIndex += 1
-            }
-          }
-
-        }
-
-        //if the spike width is within the prespecified range, append the peak index to the return list
-        val spikeWidth = postIndex-preIndex
-        if( pwMin <= spikeWidth && spikeWidth <= pwMax ) tempRet2 += index
+  def maxIndex( data: DenseVector[Int]): Int = {
+    var index = 0
+    var tempPos = 0
+    var tempMax = Integer.MIN_VALUE
+    while( index < data.length ){
+      if( data(index) > tempMax ){
+        tempPos = index
+        tempMax = data(index)
       }
       index += 1
     }
+    tempPos
+  }
+
+  def detectSpikeTsImplImpl( trace: DenseVector[Int], threshold: Int, pwMin: Int, pwMax: Int ): Array[Int] = {
+
+    //this is where the return values are accumulated
+    val tempRet2 = new ArrayBuffer[Int]()
+    //    var (tempMax, tempMaxPos) = ((tr: DenseVector[Int]) => (max(tr), maxIndex(tr)))( trace(index - pwMax to index + pwMax)  )
+
+    var index = 0
+    //make sure that the start index is under the threshold, if the trace starts over the threshold
+    var continueLoopThreshold = (trace(0) >= threshold)
+    while (continueLoopThreshold && index < trace.length) {
+      //keep looping until first trace value which is smaller than the threshold
+      if (trace(index) < threshold) continueLoopThreshold = false
+      index += 1
+    }
+    //we are now under threshold at the index position
+
+    //main loop
+    while (index < trace.length - 2 * pwMax) {
+
+      if (trace(index) >= threshold) {
+        //if the threshold is newly crossed...
+
+        //...continue advancing the index until the local maximum position, within 2 spike halfwidths
+        var continueLoopLocalMax = true
+        while (continueLoopLocalMax) {
+          val maxI = maxIndex(trace(index to index + pwMax * 2))
+          //local maximum found
+          if (maxI < pwMax * 2) continueLoopLocalMax = false
+          index += maxI
+        }
+
+        //next, see if the local maximum point satisfies the spike width conditions
+        val tempCutoff = (trace(index) /*+ threshold*/) / 2d //cutoff is the half point between peak and zero //2SD
+        var indexFromLocalMax = 1
+        var widthStartIndex = 0
+        var widthEndIndex = 0
+        //keep advancing outwards from index point, until subthreshold is found or pwMax reached
+        while (widthStartIndex * widthEndIndex == 0 && indexFromLocalMax < pwMax) {
+          //if the trace drops below the cutoff before the peak, the widthStartIndex has been found
+          if (trace(index - indexFromLocalMax) < tempCutoff) widthStartIndex = index - indexFromLocalMax
+          //if the trace drops below the cutoff after the peak, the widthEndIndex has been found
+          if (trace(index + indexFromLocalMax) < tempCutoff) widthEndIndex = index + indexFromLocalMax
+          indexFromLocalMax += 1
+        }
+        val width =
+          if (widthStartIndex * widthEndIndex == 0) Integer.MAX_VALUE
+          else widthEndIndex - widthStartIndex
+        //if the "spike" meets the width conditions, add index to tempRet2
+        if (width <= pwMax && width >= pwMin) tempRet2 += index
+
+        //zoom forward by pwMax
+        index += pwMin
+        continueLoopThreshold = (trace(index) >= threshold)
+        //keep zooming forward until lower than threshold
+        while (continueLoopThreshold && index < trace.length) {
+          //keep advancing until first trace value which is smaller than the threshold again
+          if (trace(index) < threshold) continueLoopThreshold = false
+          index += 1
+        }
+        //we are now under threshold at the index position
+
+      } else {
+        //if the threshold is not crossed, then continue the loop
+        index += 1
+      }
+
+    }
+
     tempRet2.toArray
   }
 
-
-}
-
-// </editor-fold>
-
-// <editor-fold defaultstate="collapsed" desc=" SpkDetSlope ">
-
-object SpkDetSlope extends SpkDetSlope{
-  def it = this
-}
-
-class SpkDetSlope extends SpkDetPeak {
-
-  _thresholdSD = 2d
-
-  // <editor-fold defaultstate="collapsed" desc=" get/setSlopeWindow ">
-
-  var _slopeWindow = 3  //integrate over 3 segments, 4 points
-  def slopeWindow_=(frames: Int): Unit = {
-    loggerRequire( frames > 0, "Peak windows must be > 0, value {} is invalid!", frames.toString )
-    _slopeWindow = frames
-  }
-  def slopeWindow = _slopeWindow
-  def setSlopeWindow(frames: Int): Unit = { slopeWindow = frames }
-  def getSlopeWindow() = slopeWindow
-
-  // </editor-fold>
-  // <editor-fold defaultstate="collapsed" desc=" get/setBaselineWindow ">
-
-  var _baselineWindow = 16 // baseline over 0.5 ms at 32 kHz
-  def baselineWindow_=(frames: Int): Unit = {
-    loggerRequire( frames > 0, "Baseline windows must be > 0, value {} is invalid!", frames.toString )
-    _baselineWindow = frames
-  }
-  def baselineWindow = _baselineWindow
-  def setBaselineWindow(frames: Int): Unit = { baselineWindow = frames }
-  def getBaselineWindow() = baselineWindow
-
-  // </editor-fold>
-
-
-  override def detectSpikeTsImpl(trode: Int, frameRange: RangeFr): Array[Int] = {
-
-    val channels = getTrodes.trodeChannels(trode)//trodeCount.flatMap( p => xTrodes.trodeGroup(p) )
-    val tempData: Array[Array[Int]] = channels.map( p => getTriggerData.readTrace(p, frameRange).toArray )
-    logger.trace("Thresholding with {} channels in trode #{}", channels.length.toString, trode.toString)
-
-    val thresholds: Array[Int] = tempData.map( p => ( median( abs(DenseVector(p)) ) / 0.6745 * thresholdSD).toInt )
-    //    loggerRequire( tempData.length == thresholds.length,
-    //        "Must specify the same number of thresholds as data traces: {} != {} ",
-    //      tempData.length.toString, thresholds.length.toString)
-    logger.info("Thresholding respective channels with values: {}", DenseVector(thresholds).toString)
-
-    val tempDataAdj: Array[DenseVector[Int]] = if(getSpikeDirection() == 1){
-      tempData.map(p => (DenseVector(p)))
-    } else if (getSpikeDirection() == -1 ) {
-      tempData.map(p => (DenseVector(p) * -1))
-    } else {
-      throw loggerError("spike direction must be set to +/- 1")
-    }
-
-    val tempRet = new ArrayBuffer[Int]()
-    //val channels = Range(0, tempDataAbs.length)
-    val triggered = Array.tabulate(tempDataAdj.length)(p => -1)
-    val windowMaxIndex = Array.tabulate(tempDataAdj.length)(p => -1)
-    val windowMax = Array.tabulate(tempDataAdj.length)(p => Integer.MIN_VALUE)
-    val sw = slopeWindow
-    val pw = peakWindow
-    val bw = baselineWindow
-    val baselineQueue: Array[mutable.Queue[Int]] = Array.tabulate(tempDataAdj.length)(p => mutable.Queue[Int]() )
-
-    var index = scala.math.max( sw, bw )
-    for(channel <- 0 until tempDataAdj.length) { baselineQueue(channel) ++= tempDataAdj(channel)( index - bw to index -1 ).toArray }
-    val baselineSum: Array[Long] = baselineQueue.map( p => sum( convert( new DenseVector( p.toArray ), Long ) ) )
-    var ch = 0
-    while(index < tempDataAdj(0).length){
-      ch = 0
-      while(ch < tempDataAdj.length){
-        if(triggered(ch)<0) {
-          if( tempDataAdj(ch)( index ) -  baselineSum(ch) / bw >= thresholds(ch) ) {
-            //if the channel isn't triggered yet, but now meets trigger criteria
-            triggered(ch) = index// - sw
-            windowMax(ch) = tempDataAdj(ch)(index)
-            windowMaxIndex(ch) = index
-          }
-        } else {
-          //if the trigger has previously been triggered
-          if( index > triggered(ch) + pw ){
-            //If the peak return window has already passed, (and the value has not sunken below the original value; implied)
-            triggered(ch) = -1
-            windowMax(ch) = Integer.MIN_VALUE
-            windowMaxIndex(ch) = -1
-          } else if (tempDataAdj(ch)(index) <= tempDataAdj(ch)(triggered(ch))) {
-            //The value has just sunken below the triggered value => register as detected spike and reset triggered, etc.
-            tempRet += windowMaxIndex(ch)
-            triggered(ch) = -1
-            windowMax(ch) = Integer.MIN_VALUE
-            windowMaxIndex(ch) = -1
-          } else if ( tempDataAdj(ch)(index) > windowMax(ch) ){
-            //(the value is still above original), but the current value is bigger than the previous max
-            windowMax(ch) = tempDataAdj(ch)(index)
-            windowMaxIndex(ch) = index
-          }
-        }
-        baselineSum(ch) -= baselineQueue(ch).dequeue()
-        baselineQueue(ch) += tempDataAdj(ch)(index)
-        baselineSum(ch) += tempDataAdj(ch)(index)
-        ch += 1
-      }
-      index += 1
-
-    }
-
-    tempRet.toArray
-  }
+//      val tempPeakVal = trace(index)
+//      val tempCutoff = (tempPeakVal + threshold)/2d   //cutoff is the half point between peak and 2SD
+//
+//      var break = false
+//      if( tempCutoff > threshold ) {
+//
+//        var preIndex = index
+//        var postIndex = index
+//        break = false
+//        while (!break && preIndex >= index - pwMax) {
+//          val pointVal = trace(preIndex)
+//          if (pointVal > tempPeakVal) {
+//            //if there is a data point that increases above the peak, the peak is not a peak
+//            preIndex = Int.MinValue
+//            break = true
+//          } else if (pointVal <= tempCutoff) {
+//            //if the data point goes under the cutoff, we have our trigger point for the width
+//            break = true
+//          } else {
+//            //otherwise, just step backward in time
+//            preIndex -= 1
+//          }
+//        }
+//
+//        if (preIndex != Int.MinValue) {
+//          //loop after the peak only if the part before the peak passes muster
+//          break = false
+//          while (!break && postIndex <= index + pwMax) {
+//            val pointVal = trace(postIndex)
+//            if (pointVal > tempPeakVal) {
+//              //if there is a data point that increases above the peak, the peak is not a peak
+//              postIndex = Int.MaxValue
+//              break = true
+//            } else if (pointVal <= tempCutoff) {
+//              //if the data point goes under the cutoff, we have our trigger point for the width
+//              break = true
+//            } else {
+//              //otherwise, just step forward in time
+//              postIndex += 1
+//            }
+//          }
+//
+//        }
+//
+//        //if the spike width is within the prespecified range, append the peak index to the return list
+//        val spikeWidth = postIndex-preIndex
+//        if( pwMin <= spikeWidth && spikeWidth <= pwMax ) tempRet2 += index
+//      }
+//      index += 1
+//    }
+//    tempRet2.toArray
+//  }
 
 
 }
