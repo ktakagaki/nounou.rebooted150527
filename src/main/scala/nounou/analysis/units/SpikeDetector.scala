@@ -113,7 +113,7 @@ class SpkDetPeakWidth extends SpikeDetector with SpkDetBlackout {
       (median( abs(  bufferedData.readTrace(channel, frameRange)  ) ).toDouble / 0.6745 * thresholdSD).intValue
     } else {
       //if the data range is long, take random samples for cutoff SD estimate
-      val samp = randomInt( 64000, (0, medianData.segmentLength( frameRange.segment )-1 ) ).toArray.map( p => medianData.readPoint( channel, p ) )
+      val samp = randomInt( 64000, (0, medianData.segmentLength( frameRange.segment )-1 ) ).toArray.sorted.map( p => medianData.readPoint( channel, p ) )
       (median( DenseVector(samp) ).toDouble / 0.6745 * getThresholdSD()).intValue
     }
 
@@ -158,19 +158,19 @@ class SpkDetPeakWidth extends SpikeDetector with SpkDetBlackout {
   }
 
 
-  def maxIndex( data: DenseVector[Int]): Int = {
-    var index = 0
-    var tempPos = 0
-    var tempMax = Integer.MIN_VALUE
-    while( index < data.length ){
-      if( data(index) > tempMax ){
-        tempPos = index
-        tempMax = data(index)
-      }
-      index += 1
-    }
-    tempPos
-  }
+//  def maxIndex( data: DenseVector[Int]): Int = {
+//    var index = 0
+//    var tempPos = 0
+//    var tempMax = Integer.MIN_VALUE
+//    while( index < data.length ){
+//      if( data(index) > tempMax ){
+//        tempPos = index
+//        tempMax = data(index)
+//      }
+//      index += 1
+//    }
+//    tempPos
+//  }
 
   def detectSpikeTsImplImpl( trace: DenseVector[Int], threshold: Int, pwMin: Int, pwMax: Int ): Array[Int] = {
 
@@ -196,42 +196,48 @@ class SpkDetPeakWidth extends SpikeDetector with SpkDetBlackout {
 
         //...continue advancing the index until the local maximum position, within 2 spike halfwidths
         var continueLoopLocalMax = true
-        while (continueLoopLocalMax) {
-          val maxI = maxIndex(trace(index to index + pwMax * 2))
+        while (continueLoopLocalMax && index < trace.length - 2 * pwMax) {
+          val maxI = argmax(trace(index to index + pwMax * 2))//maxIndex(trace(index to index + pwMax * 2))
           //local maximum found
           if (maxI < pwMax * 2) continueLoopLocalMax = false
           index += maxI
         }
 
         //next, see if the local maximum point satisfies the spike width conditions
-        val tempCutoff = (trace(index) /*+ threshold*/) / 2d //cutoff is the half point between peak and zero //2SD
-        var indexFromLocalMax = 1
-        var widthStartIndex = 0
-        var widthEndIndex = 0
-        //keep advancing outwards from index point, until subthreshold is found or pwMax reached
-        while (widthStartIndex * widthEndIndex == 0 && indexFromLocalMax < pwMax) {
-          //if the trace drops below the cutoff before the peak, the widthStartIndex has been found
-          if (trace(index - indexFromLocalMax) < tempCutoff) widthStartIndex = index - indexFromLocalMax
-          //if the trace drops below the cutoff after the peak, the widthEndIndex has been found
-          if (trace(index + indexFromLocalMax) < tempCutoff) widthEndIndex = index + indexFromLocalMax
-          indexFromLocalMax += 1
+        if( index < trace.length - pwMax ) {
+          val tempCutoff = (trace(index) /*+ threshold*/) / 2d //cutoff is the half point between peak and zero //2SD
+          var indexFromLocalMax = 1
+          var widthStartIndex = 0
+          var widthEndIndex = 0
+          //keep advancing outwards from index point, until subthreshold is found or pwMax reached
+          while (widthStartIndex * widthEndIndex == 0 && indexFromLocalMax < pwMax) {
+            //if the trace drops below the cutoff before the peak, the widthStartIndex has been found
+            if (trace(index - indexFromLocalMax) < tempCutoff) widthStartIndex = index - indexFromLocalMax
+            //if the trace drops below the cutoff after the peak, the widthEndIndex has been found
+            if (trace(index + indexFromLocalMax) < tempCutoff) widthEndIndex = index + indexFromLocalMax
+            indexFromLocalMax += 1
+          }
+
+          val width =
+            if (widthStartIndex * widthEndIndex == 0) Integer.MAX_VALUE
+            else widthEndIndex - widthStartIndex
+
+          //if the "spike" meets the width conditions, add index to tempRet2
+          if (width <= pwMax && width >= pwMin) tempRet2 += index
         }
-        val width =
-          if (widthStartIndex * widthEndIndex == 0) Integer.MAX_VALUE
-          else widthEndIndex - widthStartIndex
-        //if the "spike" meets the width conditions, add index to tempRet2
-        if (width <= pwMax && width >= pwMin) tempRet2 += index
 
         //zoom forward by pwMax
-        index += pwMin
-        continueLoopThreshold = (trace(index) >= threshold)
-        //keep zooming forward until lower than threshold
-        while (continueLoopThreshold && index < trace.length) {
-          //keep advancing until first trace value which is smaller than the threshold again
-          if (trace(index) < threshold) continueLoopThreshold = false
-          index += 1
-        }
-        //we are now under threshold at the index position
+        index += pwMax //pwMin
+        if( index < trace.length ) {
+          continueLoopThreshold = (trace(index) >= threshold)
+          //keep zooming forward until lower than threshold
+          while (continueLoopThreshold && index < trace.length) {
+            //keep advancing until first trace value which is smaller than the threshold again
+            if (trace(index) < threshold) continueLoopThreshold = false
+            index += 1
+          }
+          //we are now under threshold at the index position
+        } // else { the while loop will fall through due to index value
 
       } else {
         //if the threshold is not crossed, then continue the loop

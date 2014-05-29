@@ -1,10 +1,10 @@
-import com.typesafe.scalalogging.slf4j.Logging
+import com.typesafe.scalalogging.slf4j.LazyLogging
 
 /**
  * @author ktakagaki
  * @date 2/4/14.
  */
-package object nounou extends Logging {
+package object nounou extends LazyLogging {
 
   // <editor-fold defaultstate="collapsed" desc=" Range related ">
 
@@ -42,7 +42,7 @@ package object nounou extends Logging {
 
   // <editor-fold defaultstate="collapsed" desc=" trait LoggingExt (loggerError, loggerRequire) ">
 
-  trait LoggingExt extends Logging {
+  trait LoggingExt extends LazyLogging {
 
     def loggerError(message: String, params: AnyRef*): IllegalArgumentException = {
       logger.error(message, params )

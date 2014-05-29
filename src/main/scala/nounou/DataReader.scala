@@ -2,7 +2,7 @@ package nounou
 
 import java.io.File
 
-import com.typesafe.scalalogging.slf4j.Logging
+import com.typesafe.scalalogging.slf4j.LazyLogging
 import nounou.data._
 import nounou.data.io.{FileAdapterGSDGSH, FileAdapterNEV, FileAdapterNCS, FileAdapterNEX}
 import nounou.data.filters._
@@ -13,7 +13,7 @@ import nounou.data.headers.{XHeaderNull, XHeader}
 /**
  * @author ktakagaki
  */
-class DataReader extends Logging {
+class DataReader extends LazyLogging {
 
   /**Header object covering the whole block.*/
   var header: XHeader = XHeaderNull
