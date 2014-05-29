@@ -4,7 +4,7 @@ import java.io.File
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
 import nounou.data.{X, XDataChannelFilestream}
 import scala.collection.mutable.ListBuffer
-import breeze.linalg.{DenseVector => DV}
+import breeze.linalg.{DenseVector => DV, convert}
 
 /**
  * @author ktakagaki
@@ -221,8 +221,6 @@ class XDataChannelNCS
 
   def frameSegmentToRecordIndex(frame: Int, segment: Int) = {
     val cumFrame = segmentStartFrames(segment) + frame
-//    println("cf " + cumFrame + " rl " + t.recordSampleCount)
-//    println( ( cumFrame / t.recordSampleCount, cumFrame % t.recordSampleCount) )
     ( cumFrame / t.recordSampleCount, cumFrame % t.recordSampleCount)
   }
 
@@ -237,6 +235,8 @@ class XDataChannelNCS
   override def readTraceImpl(range: Range.Inclusive, segment: Int): DV[Int] = {
     var (currentRecord: Int, currentIndex: Int) = frameSegmentToRecordIndex( range.start, segment )
     val (endReadRecord: Int, endReadIndex: Int) = frameSegmentToRecordIndex( range.end, segment ) //range is inclusive of last
+
+    //ToDo1 program step
     val step = range.step
 
     val tempRet = DV.zeros[Int](range.length)//DV[Int]()
@@ -247,14 +247,14 @@ class XDataChannelNCS
     if(currentRecord == endReadRecord){
     //if the whole requested trace fits in one record
       val writeEnd = currentTempRetPos + (endReadIndex - currentIndex) + 1
-      tempRet(currentTempRetPos until writeEnd ) := DV(fileHandle.readInt16(endReadIndex - currentIndex + 1).map(_.toInt * xBits))
+      tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(endReadIndex - currentIndex + 1)), Int)  * xBits
       currentTempRetPos = writeEnd
     } else {
     //if the requested trace spans multiple records
 
       //read data contained in first record
       var writeEnd = currentTempRetPos + (512 - currentIndex)
-      tempRet(currentTempRetPos until writeEnd ) := DV(fileHandle.readInt16(512 - currentIndex).map(_.toInt * xBits))
+      tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(512 - currentIndex)), Int)  * xBits
       currentRecord += 1
       currentTempRetPos = writeEnd
       fileHandle.jumpBytes(t.recordNonDataBytes)
@@ -262,7 +262,7 @@ class XDataChannelNCS
       //read data from subsequent records, excluding last record
       while (currentRecord < endReadRecord) {
         writeEnd = currentTempRetPos + 512
-        tempRet(currentTempRetPos until writeEnd ) := DV.vertcat(tempRet, DV(fileHandle.readInt16(512 /*- currentIndex*/).map(_.toInt * xBits)))
+        tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(512 /*- currentIndex*/)), Int) * xBits
         currentRecord += 1
         currentTempRetPos = writeEnd
         fileHandle.jumpBytes(t.recordNonDataBytes)
@@ -270,7 +270,7 @@ class XDataChannelNCS
 
       //read data contained in last record
       writeEnd = currentTempRetPos + endReadIndex + 1
-      tempRet(currentTempRetPos until writeEnd ) := DV.vertcat(tempRet, DV(fileHandle.readInt16(endReadIndex + 1).map(_.toInt * xBits)))
+      tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(endReadIndex + 1)), Int) * xBits
 
     }
 

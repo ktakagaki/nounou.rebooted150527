@@ -3,8 +3,7 @@ package nounou.data.io
 import nounou.LoggingExt
 import java.io.File
 import nounou.data.X
-import com.typesafe.scalalogging.slf4j.Logging
-import scala.collection.mutable
+import com.typesafe.scalalogging.Logging   //slf4j.
 import nounou.ranges.{RangeFrAll, RangeFr}
 
 

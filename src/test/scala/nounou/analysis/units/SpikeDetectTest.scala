@@ -35,7 +35,7 @@ class SpkDetPeakWidthTest  extends FunSuite{
     SpkDetPeakWidth.setTriggerData(reader.dataORI)
     SpkDetPeakWidth.setTrodes(new XTrodesPreloaded( Array(Array(0,1,2,3))))
     SpkDetPeakWidth.setPeakWidthMin(0.1)
-    SpkDetPeakWidth.setPeakWidthMax(0.4)
+    SpkDetPeakWidth.setPeakWidthMax(0.9)
     SpkDetPeakWidth.setMedianFilterWindowLength(2.53125)
     println(SpkDetPeakWidth.detectSpikeTs(0, RangeFr(0, 5000000) ).length)
 
