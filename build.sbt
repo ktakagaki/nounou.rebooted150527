@@ -1,14 +1,18 @@
 name := "nounous"
 
-scalaVersion := "2.10.3"
+scalaVersion := "2.11.1"
 
 publishMavenStyle := true
 
 libraryDependencies ++= Seq(
-  "org.scalacheck" %% "scalacheck" % "1.10.0" % "test",
-  "org.scalatest" %% "scalatest" % "2.0.M5b" % "test",
-  "com.typesafe" %% "scalalogging-slf4j" % "1.0.1",
-  "org.scalafx" % "scalafx_2.10" % "1.0.0-M7"
+  "org.scalatest" %% "scalatest" % "2.1.7" % "test",
+  "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
+  "com.typesafe.scala-logging" %% "scala-logging-api" % "2.1.2",
+  "com.github.fommil.netlib" % "core" % "1.1.2",
+  "org.scalafx" % "scalafx_2.11" % "8.0.0-R4",
+  "org.scalanlp" %% "breeze" % "0.8.1",
+  "org.scalanlp" %% "breeze-natives" % "0.8.1",
+  "org.scalanlp" %% "breeze-macros" % "0.3.1"
   )
 
 unmanagedJars in Compile += Attributed.blank(file(System.getenv("JAVA_HOME") + "/jre/lib/jfxrt.jar"))
