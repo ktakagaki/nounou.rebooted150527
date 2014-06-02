@@ -38,6 +38,7 @@ class SpkDetPeakWidthTest  extends FunSuite{
     SpkDetPeakWidth.setPeakWidthMax(0.9)
     SpkDetPeakWidth.setMedianFilterWindowLength(2.53125)
     println(SpkDetPeakWidth.detectSpikeTs(0, RangeFr(0, 5000000) ).length)
+    //println(SpkDetPeakWidth.detectSpikeTs(0, RangeFr(0, 5000) ).length)
 
   }
 }
