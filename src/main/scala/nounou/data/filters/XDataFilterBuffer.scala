@@ -1,12 +1,11 @@
 package nounou.data.filters
 
-import scala.collection.mutable.{ArrayBuffer, HashMap}
+import scala.collection.mutable.{ArrayBuffer, WeakHashMap}
 import nounou.data.XData
-import breeze.linalg.{DenseVector => DV}
+import breeze.linalg.DenseVector
+import breeze.numerics.pow
 
 
-
-//ToDo: buffer timing info?
 //ToDo: HashMap to Int or Long Hash key
 //ToDo: parallelize?
 //ToDo: anticipate?
@@ -15,11 +14,21 @@ import breeze.linalg.{DenseVector => DV}
   */
 class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstream) {
 
-  var buffer: HashMap[(Int, Int, Int), DV[Int]] = new ReadingHashMapBuffer()
-  var garbageQue: ArrayBuffer[(Int, Int, Int)] = new ArrayBuffer[(Int, Int, Int)]()
+  var buffer: WeakHashMap[Long, DenseVector[Int]] = new ReadingHashMapBuffer()
+  var garbageQue: ArrayBuffer[Long] = new ArrayBuffer[Long]()
 
-  lazy val bufferPageLength: Int = (32768 / 2) //default page length will be 32 kB
+  val bufferPageLength: Int = (32768 / 2) //default page length will be 32 kB
   lazy val garbageQueBound: Int = 1024 // * 16 //32MB in data + //1073741824 / 8 / (bufferPageLength * 2)  //default buffer maximum size will be 128 MB
+  val maxInt64: Long = Long.MaxValue // pow(2d, 64d).toLong
+  val maxChannel = 131072L
+  val maxSegment = 1073741824L / maxChannel
+  val maxPage = maxInt64 / maxChannel / maxSegment
+  val maxPageChannel = maxPage * maxChannel
+
+  def bufferHashKey(channel: Int, startPage: Int, segment: Int): Long = startPage + maxPage*channel + maxPageChannel*segment
+  def bufferHashKeyToPage( hashKey: Long ): Int = (hashKey % maxPage).toInt
+  def bufferHashKeyToChannel( hashKey: Long ): Int = ((hashKey / maxPage) % maxChannel).toInt
+  def bufferHashKeyToSegment( hashKey: Long ): Int = (hashKey / maxPageChannel).toInt
 
   logger.debug("initialized XDataFilterTrBuffer w/ bufferPageLength={} and garbageQueBound={}", bufferPageLength.toString, garbageQueBound.toString)
 
@@ -48,14 +57,14 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
 
   def flushBuffer(channel: Int): Unit = {
     logger.debug( "flushBuffer({}) conducted", channel.toString )
-    buffer = buffer.filter( ( p:((Int, Int, Int), DV[Int]) ) => ( p._1._1 != channel ) )
-    garbageQue = garbageQue.filter( ( p:(Int, Int, Int) ) => (p._1 != channel) )
+    buffer = buffer.filter( ( p:(Long, DenseVector[Int]) ) => ( bufferHashKeyToChannel(p._1) != channel ) )
+    garbageQue = garbageQue.filter( ( p: Long ) => (bufferHashKeyToChannel(p) != channel) )
   }
 
   def flushBuffer(channels: Vector[Int]): Unit = {
     logger.debug( "flushBuffer({}) conducted", channels.toString )
-    buffer = buffer.filterNot( ( p:((Int, Int, Int), DV[Int]) ) => ( channels.contains( p._1._1 ) ) )
-    garbageQue = garbageQue.filterNot( ( p:(Int, Int, Int) ) => ( channels.contains( p._1 ) ) )
+    buffer = buffer.filterNot( ( p:(Long, DenseVector[Int]) ) => ( channels.contains( bufferHashKeyToChannel(p._1) ) ) )
+    garbageQue = garbageQue.filterNot( ( p:Long ) => ( channels.contains( bufferHashKeyToChannel(p) ) ) )
   }
 
   // </editor-fold>
@@ -66,50 +75,69 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
   def getBufferIndex(frame: Int) = frame%bufferPageLength
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = {
-    buffer( (channel, getBufferPage(frame), segment) )( getBufferIndex(frame) )
+    loggerRequire(channel<maxChannel, "Cannot buffer more than {} channels!", maxChannel.toString)
+    loggerRequire(segment<maxSegment, "Cannot buffer more than {} segments!", maxSegment.toString)
+    buffer( bufferHashKey(channel, getBufferPage(frame), segment) )( getBufferIndex(frame) )
   }
 
-  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] = {
+  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DenseVector[Int] = {
+    loggerRequire(channel<maxChannel, "Cannot buffer more than {} channels!", maxChannel.toString)
+    loggerRequire(segment<maxSegment, "Cannot buffer more than {} segments!", maxSegment.toString)
 
-        //val totalLength = segmentLengths(segment)
+      //val totalLength = segmentLengths(segment)
 //        val tempret = ArrayBuffer[Int]()
 //          tempret.sizeHint(range.length )
-        var tempret: DV[Int] = DV[Int]()//Array[Int] = null
-        val startPage =  getBufferPage( range.start)
-        val startIndex = getBufferIndex(range.start)
-        val endPage =    getBufferPage( range.last )
-        val endIndex =   getBufferIndex(range.last )
+      var tempret: DenseVector[Int] = DenseVector[Int]()//Array[Int] = null
+      val startPage =  getBufferPage( range.start)
+      val startIndex = getBufferIndex(range.start)
+      val endPage =    getBufferPage( range.last )
+      val endIndex =   getBufferIndex(range.last )
 
-        if(startPage == endPage) {
-          tempret = buffer( (channel, startPage, segment) ).slice(startIndex, endIndex + 1)//.toArray
-        } else {
-          tempret = DV.vertcat( tempret, buffer( (channel, startPage, segment) ).slice(startIndex, bufferPageLength) )  //deal with startPage separately
-          //if( startPage + 1 <= endPage ) {
-            for( page <- (startPage + 1 to endPage)/*.par*/ ){//endPage - 1) {
-              tempret = DV.vertcat( tempret, buffer( (channel, page, segment) ) )
-            }
-          //}
-          //tempret ++= buffer( (channel, endPage, segment) ).slice(0, endIndex + 1)  //deal with endPage separately
-          //tempretArr = tempret.toArray
+      if(startPage == endPage) {
+        //if only one buffer page is involved...
+        tempret = buffer( bufferHashKey(channel, startPage, segment) ).slice(startIndex, endIndex + 1)
+
+      } else {
+        //if more than one buffer page is involved...
+        tempret = DenseVector( new Array[Int](range.length) )  //initialize return array
+        var currentIndex = 0 //index within tempret
+
+        //deal with startPage separately... startPage will run to end
+        var increment = (bufferPageLength-startIndex)
+        tempret(currentIndex until currentIndex + increment ) := buffer( bufferHashKey(channel, startPage, segment) ).slice(startIndex, bufferPageLength)
+        currentIndex += increment
+
+        var page = startPage + 1
+
+        //read full pages until right before endPage
+        increment = bufferPageLength
+        while( page < endPage ) {
+          tempret(currentIndex until currentIndex + increment) := buffer(bufferHashKey(channel, page, segment)).slice(0, bufferPageLength)
+          currentIndex += increment
+          page += 1
         }
 
-//        val realRet = new Array[Int]( range.length )
-//        var index = 0
-//        for(cnt <- 0 until range.length){
-//          realRet(cnt) = tempretArr(index)
-//          index += range.stepMs
-//        }
-//        realRet.toVector
+        //deal with endPage separately
+        increment = endIndex + 1
+        tempret(currentIndex until currentIndex + increment ) := buffer( bufferHashKey(channel, endPage, segment) ).slice(0, increment)
+
+      }
+
     tempret
   }
+
+  // </editor-fold>
+
+
+  // <editor-fold defaultstate="collapsed" desc=" ReadingHashMapBuffer ">
 
   //redirection function to deal with scope issues regarding super
   private def tempTraceReader(ch: Int, range: Range.Inclusive, segment: Int) = upstream.readTraceImpl(ch, range, segment)
 
-  class ReadingHashMapBuffer extends HashMap[(Int, Int, Int), DV[Int]] {
+  class ReadingHashMapBuffer extends WeakHashMap[Long, DenseVector[Int]] {
 
     //do not use applyOrElse!
-    override def apply( key: (Int, Int, Int)  ): DV[Int] = {
+    override def apply( key: Long  ): DenseVector[Int] = {
       val index = garbageQue.indexOf( key )
       if( index == -1 ){
         if(garbageQue.size >= garbageQueBound ){
@@ -125,10 +153,10 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
       }
     }
 
-    override def default( key: (Int, Int, Int)  ): DV[Int] = {
-      val startFrame = key._2 * bufferPageLength
-      val endFramePlusOne: Int = scala.math.min( startFrame + bufferPageLength, segmentLength( key._3 ) )
-      val returnValue = tempTraceReader( key._1, new Range.Inclusive(startFrame, endFramePlusOne-1, 1), key._3  )
+    override def default( key: Long  ): DenseVector[Int] = {
+      val startFrame = bufferHashKeyToPage(key) * bufferPageLength
+      val endFramePlusOne: Int = scala.math.min( startFrame + bufferPageLength, segmentLength( bufferHashKeyToSegment(key) ) )
+      val returnValue = tempTraceReader( bufferHashKeyToChannel(key), new Range.Inclusive(startFrame, endFramePlusOne-1, 1), bufferHashKeyToSegment(key)  )
       this.+=( key -> returnValue )
       returnValue
     }
