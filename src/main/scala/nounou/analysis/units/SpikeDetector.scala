@@ -108,12 +108,15 @@ class SpkDetPeakWidth extends SpikeDetector with SpkDetBlackout {
     //buffer data for calculations
     val bufferedData = new XDataFilterBuffer( medianData )
     val fr = frameRange.getFrameRange(bufferedData).getValidRange(bufferedData)
-    if( fr.length < 64000 ){
+    val readLength = 6400
+    if( fr.length < readLength*10 ){
       //if the data range is short enough, take the median estimate from the whole data range
       (median( abs(  bufferedData.readTrace(channel, frameRange)  ) ).toDouble / 0.6745 * thresholdSD).intValue
     } else {
       //if the data range is long, take random samples for cutoff SD estimate
-      val samp = randomInt( 64000, (0, medianData.segmentLength( frameRange.segment )-1 ) ).toArray.sorted.map( p => medianData.readPoint( channel, p ) )
+      val samp = randomInt( 10, (0, medianData.segmentLength( frameRange.segment )-1-readLength ) ).toArray.sorted.map(
+        (p: Int) => median(abs(medianData.readTrace( channel, RangeFr(p, p + readLength - 1, 1, frameRange.segment)) ))
+      )
       (median( DenseVector(samp) ).toDouble / 0.6745 * getThresholdSD()).intValue
     }
 
