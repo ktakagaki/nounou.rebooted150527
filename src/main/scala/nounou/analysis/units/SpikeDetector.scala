@@ -161,27 +161,13 @@ class SpkDetPeakWidth extends SpikeDetector with SpkDetBlackout {
   }
 
 
-//  def maxIndex( data: DenseVector[Int]): Int = {
-//    var index = 0
-//    var tempPos = 0
-//    var tempMax = Integer.MIN_VALUE
-//    while( index < data.length ){
-//      if( data(index) > tempMax ){
-//        tempPos = index
-//        tempMax = data(index)
-//      }
-//      index += 1
-//    }
-//    tempPos
-//  }
-
   def detectSpikeTsImplImpl( trace: DenseVector[Int], threshold: Int, pwMin: Int, pwMax: Int ): Array[Int] = {
 
     //this is where the return values are accumulated
     val tempRet2 = new ArrayBuffer[Int]()
     //    var (tempMax, tempMaxPos) = ((tr: DenseVector[Int]) => (max(tr), maxIndex(tr)))( trace(index - pwMax to index + pwMax)  )
 
-    var index = 0
+    var index = 2 * pwMax
     //make sure that the start index is under the threshold, if the trace starts over the threshold
     var continueLoopThreshold = (trace(0) >= threshold)
     while (continueLoopThreshold && index < trace.length) {
@@ -226,7 +212,10 @@ class SpkDetPeakWidth extends SpikeDetector with SpkDetBlackout {
             else widthEndIndex - widthStartIndex
 
           //if the "spike" meets the width conditions, add index to tempRet2
-          if (width <= pwMax && width >= pwMin) tempRet2 += index
+          if (width <= pwMax && width >= pwMin &&
+              max(trace(index - 2*pwMax to widthStartIndex))  < tempCutoff && //outside of the spikes, the window should be low
+              max(trace(widthEndIndex to index + 2*pwMax)  )  < tempCutoff    //outside of the spikes, the window should be low
+          ) tempRet2 += index
         }
 
         //zoom forward by pwMax
@@ -251,59 +240,6 @@ class SpkDetPeakWidth extends SpikeDetector with SpkDetBlackout {
 
     tempRet2.toArray
   }
-
-//      val tempPeakVal = trace(index)
-//      val tempCutoff = (tempPeakVal + threshold)/2d   //cutoff is the half point between peak and 2SD
-//
-//      var break = false
-//      if( tempCutoff > threshold ) {
-//
-//        var preIndex = index
-//        var postIndex = index
-//        break = false
-//        while (!break && preIndex >= index - pwMax) {
-//          val pointVal = trace(preIndex)
-//          if (pointVal > tempPeakVal) {
-//            //if there is a data point that increases above the peak, the peak is not a peak
-//            preIndex = Int.MinValue
-//            break = true
-//          } else if (pointVal <= tempCutoff) {
-//            //if the data point goes under the cutoff, we have our trigger point for the width
-//            break = true
-//          } else {
-//            //otherwise, just step backward in time
-//            preIndex -= 1
-//          }
-//        }
-//
-//        if (preIndex != Int.MinValue) {
-//          //loop after the peak only if the part before the peak passes muster
-//          break = false
-//          while (!break && postIndex <= index + pwMax) {
-//            val pointVal = trace(postIndex)
-//            if (pointVal > tempPeakVal) {
-//              //if there is a data point that increases above the peak, the peak is not a peak
-//              postIndex = Int.MaxValue
-//              break = true
-//            } else if (pointVal <= tempCutoff) {
-//              //if the data point goes under the cutoff, we have our trigger point for the width
-//              break = true
-//            } else {
-//              //otherwise, just step forward in time
-//              postIndex += 1
-//            }
-//          }
-//
-//        }
-//
-//        //if the spike width is within the prespecified range, append the peak index to the return list
-//        val spikeWidth = postIndex-preIndex
-//        if( pwMin <= spikeWidth && spikeWidth <= pwMax ) tempRet2 += index
-//      }
-//      index += 1
-//    }
-//    tempRet2.toArray
-//  }
 
 
 }
