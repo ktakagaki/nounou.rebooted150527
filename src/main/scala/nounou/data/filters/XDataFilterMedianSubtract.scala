@@ -6,7 +6,7 @@ import breeze.numerics.isOdd
 import breeze.stats.median
 import breeze.linalg.{DenseVector => DV}
 import breeze.signal.{filterMedian, OptOverhang}
-import nounou.ranges.RangeFr
+import nounou.data.ranges.RangeFr
 
 /**
  * @author ktakagaki

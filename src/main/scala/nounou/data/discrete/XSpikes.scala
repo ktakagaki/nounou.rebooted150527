@@ -2,9 +2,8 @@ package nounou.data
 
 import scala.collection.immutable.TreeMap
 import nounou.data.traits.XConcatenatable
-import nounou.ranges.RangeTsEvent
 import breeze.linalg.DenseVector
-import nounou.LoggingExt
+import nounou.util.LoggingExt
 
 object XSpikes extends LoggingExt {
   def initialize(xData: XData, trodeLayout: XTrodes, waveformLength: Int): XSpikes = {
@@ -38,7 +37,7 @@ class XSpikes(val waveformLength: Int, private var xtr: XTrodes, private var xda
   def this(waveformLength: Int, xdat: XData) = this(waveformLength, XTrodesNull, xdat)
   def this(waveformLength: Int, xdat: XData, xtr: XTrodes) = this(waveformLength, xtr, xdat)
 
-  private var spikes: Array[TreeMap[Long, XSpikeWaveform]] = new Array[TreeMap[Long, XSpikeWaveform]](0)
+  private var spikes: Array[TreeMap[Long, XSpike]] = new Array[TreeMap[Long, XSpike]](0)
   xTrodes_=(xtr)
   xData_=(xdat)
 
@@ -114,36 +113,36 @@ class XSpikes(val waveformLength: Int, private var xtr: XTrodes, private var xda
 
   // <editor-fold desc="addSpike/addSpikes">
 
-  def addSpike(trode: Int, ts: Long, xSpikeWf: XSpikeWaveform) = {
-    loggerRequire(xSpikeWf.length == waveformLength, "tried to add a spike {} which does not have waveformLength {}!", xSpikeWf.toString, waveformLength.toString)
-    loggerRequire(isValidTrode(trode), "trode={} is invalid. spikes.length={}", trode.toString, spikes.length.toString)
-    spikes(trode) = spikes(trode) + (ts -> xSpikeWf)
-  }
-
-  def addSpikes(trode: Int, ts: Array[Long], xData: XData, wfPre: Int, wfPost: Int) = {
-    loggerRequire(isValidTrode(trode), "trode={} is invalid. spikes.length={}", trode.toString, spikes.length.toString)
-    loggerRequire(wfPre+wfPost+1 == waveformLength, "wfPre={} and wfPost={} are incompatible with waveformLength={}",
-      wfPre.toString, wfPost.toString, waveformLength.toString)
-    spikes(trode) = spikes(trode) ++ ts.map( t => {
-        t -> new XSpikeWaveform(
-          Array.tabulate(xTrodes.trodeSize(trode))(
-            trCh => xData.readTraceA(xTrodes.trodeChannels(trode)(trCh), RangeTsEvent(t, wfPre, wfPost, 1))
-          )
-        )
-      }
-    ).filter(p => p._2.length == waveformLength)
-  }
+//  def addSpike(trode: Int, ts: Long, xSpikeWf: XSpikeWaveform) = {
+//    loggerRequire(xSpikeWf.length == waveformLength, "tried to add a spike {} which does not have waveformLength {}!", xSpikeWf.toString, waveformLength.toString)
+//    loggerRequire(isValidTrode(trode), "trode={} is invalid. spikes.length={}", trode.toString, spikes.length.toString)
+//    spikes(trode) = spikes(trode) + (ts -> xSpikeWf)
+//  }
+//
+//  def addSpikes(trode: Int, ts: Array[Long], xData: XData, wfPre: Int, wfPost: Int) = {
+//    loggerRequire(isValidTrode(trode), "trode={} is invalid. spikes.length={}", trode.toString, spikes.length.toString)
+//    loggerRequire(wfPre+wfPost+1 == waveformLength, "wfPre={} and wfPost={} are incompatible with waveformLength={}",
+//      wfPre.toString, wfPost.toString, waveformLength.toString)
+//    spikes(trode) = spikes(trode) ++ ts.map( t => {
+//        t -> new XSpikeWaveform(
+//          Array.tabulate(xTrodes.trodeSize(trode))(
+//            trCh => xData.readTraceA(xTrodes.trodeChannels(trode)(trCh), RangeTsEvent(t, wfPre, wfPost, 1))
+//          )
+//        )
+//      }
+//    ).filter(p => p._2.length == waveformLength)
+//  }
 
   // </editor-fold>
 
   // <editor-fold desc="readSpikes/readSpikeTimes">
 
-  def readSpikes(trode: Int): Array[Array[Array[Int]]] = {
-    loggerRequire(isValidTrode(trode), "trode={} is invalid. spikes.length={}", trode.toString, spikes.length.toString)
-//    val tempret = new ArrayBuffer[Array[Array[Int]]]()
-//    tempret.sizeHint( spikeCount(trode ))
-    spikes(trode).map( p => p._2.waveform ).toArray
-  }
+//  def readSpikes(trode: Int): Array[Array[Array[Int]]] = {
+//    loggerRequire(isValidTrode(trode), "trode={} is invalid. spikes.length={}", trode.toString, spikes.length.toString)
+////    val tempret = new ArrayBuffer[Array[Array[Int]]]()
+////    tempret.sizeHint( spikeCount(trode ))
+//    spikes(trode).map( p => p._2.waveform ).toArray
+//  }
 
   def readSpikeTimes(trode: Int): Array[Long] = {
     loggerRequire(isValidTrode(trode), "trode={} is invalid. spikes.length={}", trode.toString, spikes.length.toString)

@@ -1,6 +1,6 @@
 package nounou.data
 
-import nounou.LoggingExt
+import nounou.util.LoggingExt
 
 /** Base class for all sources
   */

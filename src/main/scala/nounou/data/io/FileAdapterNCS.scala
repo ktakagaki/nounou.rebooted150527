@@ -159,7 +159,7 @@ object FileAdapterNCS extends FileAdapterNLX {
 
             //Loop advancement
             if( rec == tempNoRecords -1 ){
-              //was on last record
+              //was on lastValid record
               rec += 1 //this will cause break in while
             } else if (rec + lastTriedJump < tempNoRecords ) {
               //try the jump in lastTriedJump
@@ -234,7 +234,7 @@ class XDataChannelNCS
 
   override def readTraceImpl(range: Range.Inclusive, segment: Int): DV[Int] = {
     var (currentRecord: Int, currentIndex: Int) = frameSegmentToRecordIndex( range.start, segment )
-    val (endReadRecord: Int, endReadIndex: Int) = frameSegmentToRecordIndex( range.end, segment ) //range is inclusive of last
+    val (endReadRecord: Int, endReadIndex: Int) = frameSegmentToRecordIndex( range.end, segment ) //range is inclusive of lastValid
 
     //ToDo1 program step
     val step = range.step
@@ -259,7 +259,7 @@ class XDataChannelNCS
       currentTempRetPos = writeEnd
       fileHandle.jumpBytes(t.recordNonDataBytes)
 
-      //read data from subsequent records, excluding last record
+      //read data from subsequent records, excluding lastValid record
       while (currentRecord < endReadRecord) {
         writeEnd = currentTempRetPos + 512
         tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(512 /*- currentIndex*/)), Int) * xBits
@@ -268,7 +268,7 @@ class XDataChannelNCS
         fileHandle.jumpBytes(t.recordNonDataBytes)
       }
 
-      //read data contained in last record
+      //read data contained in lastValid record
       writeEnd = currentTempRetPos + endReadIndex + 1
       tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(endReadIndex + 1)), Int) * xBits
 

@@ -1,10 +1,9 @@
 package nounou.data.io
 
-import nounou.LoggingExt
+import nounou.util.LoggingExt
 import java.io.File
 import nounou.data.X
-import com.typesafe.scalalogging.Logging   //slf4j.
-import nounou.ranges.{RangeFrAll, RangeFr}
+import nounou.data.ranges.{RangeFrSpecifier, RangeFrAll, RangeFr}
 
 
 //object FileAdapter {
@@ -146,6 +145,6 @@ trait FileAdapter extends LoggingExt {
 class OptFileAdapter
 object OptFileAdapter{
   case object Automatic extends OptFileAdapter
-  case class XDataFrames(range: RangeFr = RangeFrAll(), segment: Int = 0) extends OptFileAdapter
+  case class XDataFrames(range: RangeFrSpecifier = RangeFrAll(), segment: Int = 0) extends OptFileAdapter
   //case class ListOpt(list: List[OptFileAdapter]) extends OptFileAdapter
 }
