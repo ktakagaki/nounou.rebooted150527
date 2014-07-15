@@ -1,4 +1,4 @@
-package nounou.ranges
+package nounou.data.ranges
 
 import nounou.data.traits.XFrames
 
@@ -27,7 +27,7 @@ class RangeTs(val startTs: Long, val endTs: Long, val step: Long, val segment: I
 
   def this(startTs: Long, endTs: Long, step: Long) = this(startTs, endTs, step, 0)
 
-  def getFrameRange(x: XFrames): RangeFr = {
+  def getRangeFr(x: XFrames): RangeFr = {
 
       val stepReal = (step * x.sampleInterval/* * 1000d*/).toInt
       loggerRequire(stepReal>0, "This amounts to a negative or zero timestep! (stepMs=" + step + " ms)")
@@ -63,11 +63,11 @@ object RangeTsEvent {
 }
 
 
-class RangeTsEvent(val eventTS: Long, val preFrames: Int, val postFrames: Int, val step: Int) extends RangeFrSpecifier {
+class RangeTsEvent(val eventTS: Long, val preFrames: Int, val postFrames: Int, val step: Int, val segment: Int = 0) extends RangeFrSpecifier {
 
   def this(eventTS: Long, preFrames: Int, postFrames: Int) = this(eventTS, preFrames, postFrames, 1)
 
-  def getFrameRange(x: XFrames): RangeFr = {
+  def getRangeFr(x: XFrames): RangeFr = {
     val eventFrame = x.tsToFrsg(eventTS)
     RangeFr(eventFrame._1 - preFrames*step, eventFrame._1 + postFrames*step, step, eventFrame._2)
   }

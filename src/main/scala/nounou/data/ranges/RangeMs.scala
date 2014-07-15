@@ -1,4 +1,4 @@
-package nounou.ranges
+package nounou.data.ranges
 
 import nounou.data.traits.XFrames
 
@@ -23,7 +23,7 @@ class RangeMs(val start: Double, val end: Double, val step: Double, val segment:
   def this(start: Double, end: Double, step: Double) = this(start, end, step, 0)
   def this(start: Double, end: Double) = this(start, end, 0d, 0)
 
-  def getFrameRange(x: XFrames): RangeFr = {
+  def getRangeFr(x: XFrames): RangeFr = {
     val stepReal = if(step == 0d) 1
       else (step * x.sampleInterval * 1000d).toInt
 
