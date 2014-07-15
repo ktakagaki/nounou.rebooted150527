@@ -5,7 +5,7 @@
   import breeze.linalg.{DenseVector => DV, convert}
   import breeze.signal._
   import scala.beans.BeanProperty
-  import nounou.ranges.RangeFr
+  import nounou.data.ranges.RangeFr
   import breeze.signal.support.FIRKernel1D
 
   /**

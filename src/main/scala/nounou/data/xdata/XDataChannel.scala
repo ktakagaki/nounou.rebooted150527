@@ -5,7 +5,7 @@ import scala.Vector
 import java.io.DataInput
 import nounou.data.traits.{XConcatenatable, XFramesImmutable, XAbsoluteImmutable}
 import breeze.linalg.{DenseVector => DV}
-import nounou.ranges.{RangeFrAll, RangeFr}
+import nounou.data.ranges.{RangeFrAll, RangeFr}
 
 /**
  * Created by Kenta on 12/14/13.
@@ -33,7 +33,7 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
   /** Read a single trace from the data, in internal integer scaling.
     */
   final def readTrace(segment: Int): DV[Int] = {
-    val range = RangeFrAll().getValidRange( segmentLength(segment) )
+    val range = RangeFrAll().getValidRange( this )
     readTraceImpl(range, segment /*currentSegment = segment*/)
   }
   /** Read a single trace (within the span) from the data, in internal integer scaling.
@@ -44,7 +44,7 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
     val preLength = range.preLength( segLen )
     val postLength = range.postLength( segLen )
 
-    DV.vertcat( DV.zeros[Int]( preLength ), readTraceImpl(range.getValidRange( segLen ), segment /*(currentSegment = segment)*/), DV.zeros[Int]( postLength ) )
+    DV.vertcat( DV.zeros[Int]( preLength ), readTraceImpl(range.getValidRange( this ), segment /*(currentSegment = segment)*/), DV.zeros[Int]( postLength ) )
 
   }
   //</editor-fold>
@@ -58,11 +58,11 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
     * Should return a defensive clone.
     */
   def readTraceImpl(range: Range.Inclusive, segment: Int): DV[Int] = {
-    //Impls only get real ranges
+    //Impls only get real nounou.data.ranges
     //val realRange = range.getRangeWithoutNegativeIndexes( segmentLengths(segment) )
     val totalLengths = segmentLength( segment )
     val res = DV.zeros[Int](range.length) //new Array[Int]( range.length )
-    forJava(range.start, range.end + 1, range.step, (c: Int) => (res(c) = readPointImpl(c, segment)))
+    nounou.util.forJava(range.start, range.end + 1, range.step, (c: Int) => (res(c) = readPointImpl(c, segment)))
     res
   }
 

@@ -7,7 +7,7 @@ import java.lang.IllegalArgumentException
  * @author ktakagaki
  * @date 2/12/14.
  */
-class XFramesTest extends XPreloadedTestDataTest {
+class FramesTest extends XPreloadedTestDataTest {
 
 
   // <editor-fold defaultstate="collapsed" desc=" tsToFrameSegment ">
