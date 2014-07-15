@@ -123,7 +123,17 @@ class RangeFr(val xFrameStart: Frame, val xFrameEnd: Frame, opts: Opt*)
   /** Inclusive last valid frame, taking into account step and overhang
     */
   def firstValid(data: XFrames): Int = firstValid(data.segmentLength(segment))
+  private var fvBuffTL = -1
+  private var fvBuff = - 156111
   def firstValid(totalLength: Int) = {
+    if( fvBuffTL == totalLength ) fvBuff
+    else {
+      fvBuff = firstValidImpl(totalLength)
+      fvBuffTL = totalLength
+      fvBuff
+    }
+  }
+  private def firstValidImpl(totalLength: Int) = {
     if(start >= totalLength ) Int.MaxValue //no valid values
     else if( start >= 0 ) start
     else if( step == 1 ) 0
@@ -139,7 +149,17 @@ class RangeFr(val xFrameStart: Frame, val xFrameEnd: Frame, opts: Opt*)
   /** Valid lastValid frame, taking into account step and overhang
     * @param totalLength full length of this segment in frames, used to realize with RangeFr.all()
     */
+  private var lvBuffTL = -1
+  private var lvBuff = - 156112
   def lastValid(totalLength: Int) = {
+    if( lvBuffTL == totalLength ) lvBuff
+    else {
+      lvBuff = lastValidImpl(totalLength)
+      lvBuffTL = totalLength
+      lvBuff
+    }
+  }
+  def lastValidImpl(totalLength: Int) = {
     if(end < 0 ) Int.MinValue //no valid values
     else if( 0 == end ) {
       val temp = firstValid(totalLength)
