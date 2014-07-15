@@ -162,7 +162,7 @@ class RangeFrTest extends FunSuite {
     // <editor-fold defaultstate="collapsed" desc=" getValidRange ">
 
     assert( testFrRange11.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )
-    println( testFrRange21.getValidRange(totalLen) )
+    //println( testFrRange21.getValidRange(totalLen) )
     assert( testFrRange21.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )
     assert( testFrRange31.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )
     assert( testFrRange41.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )
