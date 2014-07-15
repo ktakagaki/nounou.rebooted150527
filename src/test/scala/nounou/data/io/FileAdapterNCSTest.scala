@@ -3,7 +3,7 @@ package nounou.data.io
 import nounou._
 import org.scalatest.FunSuite
 import java.io.{File}
-import nounou.ranges.{RangeFr, RangeFrAll}
+import nounou.data.ranges.{RangeFr, RangeFrAll}
 import nounou.data.XDataChannelArray
 import nounou.data.filters.XDataFilterHolder
 

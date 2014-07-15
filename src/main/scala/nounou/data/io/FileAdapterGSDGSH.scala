@@ -132,7 +132,7 @@ object FileAdapterGSDGSH extends FileAdapter {
     var tempDataCnt = 0
 
     val backgroundReturn = DV.zeros[Int](tempFrameShorts)
-    forJava(0, tempFrameShorts, 1, (p: Int) => (backgroundReturn(p) = xBits * backgroundOri(p)) )
+    nounou.util.forJava(0, tempFrameShorts, 1, (p: Int) => (backgroundReturn(p) = xBits * backgroundOri(p)) )
 
     //Handle Data Frames
     tempFrCnt = 0

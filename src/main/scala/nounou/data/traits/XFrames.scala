@@ -1,15 +1,13 @@
 package nounou.data.traits
 
-import nounou.data.X
-import scala.Vector
-import nounou.LoggingExt
+import nounou.data.{Frame, X}
 import breeze.numerics.round
-import nounou.ranges.RangeFr
+import nounou.data.ranges.RangeFr
 
 /**This trait of XData and XDataChannel objects encapsulates segment,
   * frame, and sampling information for electrophysiological and imaging recordings..
   */
-trait XFrames extends X with LoggingExt {
+trait XFrames extends X {
 
   /** Throws IllegalArgumentException if segmentCount != 1... use as check for functions which assume segment = 0.
     * @param func name of current function/signature called (which assumes segment = 0 )
@@ -20,7 +18,7 @@ trait XFrames extends X with LoggingExt {
     loggerRequire(segmentCount != 1, func + " should not be used if the file has more than one segment. Use " + altFunc + " instead")
   }
 
-  // <editor-fold desc="segment related: segmentCount, segmentLength/length ">
+  // <editor-fold defaultstate="collapsed" desc="segment related: segmentCount, segmentLength/length ">
   
   /** Number of segments in data.
     */
@@ -40,7 +38,7 @@ trait XFrames extends X with LoggingExt {
   }
 
   // </editor-fold>
-  // <editor-fold desc="segment timestamps: segmentStartTs/startTs/segmentEndTs/endTs ">
+  // <editor-fold defaultstate="collapsed" desc="segment timestamps: segmentStartTs/startTs/segmentEndTs/endTs ">
 
   /** OVERRIDE: List of starting timestamps for each segment.
     */
@@ -77,7 +75,7 @@ trait XFrames extends X with LoggingExt {
   final def isValidFr(frame: Int): Boolean = isValidFr(frame, 0)//currentSegment)
 
   final def isRealisticFr(frame: Int, segment: Int): Boolean = (-100000 <= frame && frame < segmentLength(segment) + 100000)
-  final def isRealisticFr(range: RangeFr, segment: Int): Boolean = (-100000 <= range.start && range.endMarker < segmentLength(segment) + 100000)
+  final def isRealisticFr(range: RangeFr, segment: Int): Boolean = (-100000 <= range.start && range.end < segmentLength(segment) + 100000)
 
   // </editor-fold>
 
@@ -100,18 +98,20 @@ trait XFrames extends X with LoggingExt {
 
   // <editor-fold defaultstate="collapsed" desc="Time specification: conversion between frame/segment and TS">
 
-  /** Absolute timestamp of the given data frame index (in microseconds).
-    */
-  final def frsgToTs(frame:Int, segment: Int): Long = {
+  final def frToTs(xFrame: Frame): Long = frToTsImpl(xFrame.frame, xFrame.segment)
+  final def frToTs(frameSegment:(Int, Int)): Long = frToTsImpl(frameSegment._1, frameSegment._2)
+  final def frToTs(frame:Int): Long = {
+    errorIfMultipleSegments("length", "segmentLength(segment: Int)")
+    frToTsImpl(frame, 0)
+  }
+  private def frToTsImpl(frame:Int, segment: Int): Long = {
     require( isValidFr(frame, segment) )
     segmentStartTs(segment) + (frame.toDouble * tsPerFr).toLong
   }
-  final def frToTs(frame:Int): Long = {
-    errorIfMultipleSegments("length", "segmentLength(segment: Int)")
-    frsgToTs(frame, 0)
-  }
-  final def frToTs(frameSegment:(Int, Int)): Long = frsgToTs(frameSegment._1, frameSegment._2)
-//  final def tsToFrameSegment(timestamp: Long): (Int, Int) = tsToFrameSegment(timestamp, false)
+  /** Absolute timestamp of the given data frame index (in microseconds).
+    */
+  @deprecated
+  final def frsgToTs(frame:Int, segment: Int): Long = frToTsImpl(frame, segment)
 
   /** Closest frame/segment index to the given absolute timestamp. Will give frames which are out of range (i.e. negative, etc)
     * if necessary.
@@ -153,13 +153,13 @@ trait XFrames extends X with LoggingExt {
         }
       }
 
-      //deal with the last segment separately
+      //deal with the lastValid segment separately
       if( !changed ){
         if(timestamp <= segmentEndTs(segmentCount -1)){
           // if the timestamp is smaller than the end of the current segment, it fits in the current segment
           tempret = ( ((timestamp - segmentStartTs(segmentCount-1)) * frPerTs).toInt, segmentCount - 1 )
         } else {
-          // if the timestamp is larger than the end of the last segment
+          // if the timestamp is larger than the end of the lastValid segment
           tempret = ( ((timestamp - segmentEndTs(segmentCount-1)) * frPerTs).toInt, segmentCount - 1 )
         }
       }
@@ -189,7 +189,7 @@ trait XFrames extends X with LoggingExt {
   }
   final def frToMs(frame: Double): Double = frToMs(round(frame).toInt)
 
-  /** Closest frame/segment index to the given timestamp in ms (frame 0 within segment being time 0). Will give beginning or last frames, if timestamp is
+  /** Closest frame/segment index to the given timestamp in ms (frame 0 within segment being time 0). Will give beginning or lastValid frames, if timestamp is
     * out of range.
     */
   final def msToFr(ms: Double): Int = {
