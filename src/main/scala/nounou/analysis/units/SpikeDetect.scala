@@ -3,7 +3,7 @@ package nounou.analysis.units
 import breeze.linalg.{argmax, randomInt, DenseVector}
 import breeze.stats.median
 import breeze.numerics._
-import nounou.{OptNull, Opt}
+import nounou.{OptSegment, OptNull, Opt}
 import nounou.util.LoggingExt
 import nounou.data.{Frame, XTrodeN, XData}
 import nounou.data.filters.{XDataFilterInvert, XDataFilterBuffer, XDataFilterMedianSubtract}
@@ -45,8 +45,8 @@ class SpikeDetect extends LoggingExt {
       (median( abs(  data.readTrace(channel, frameRange)  ) ).toDouble / 0.6745).intValue
     } else {
       //if the data range is long, take random samples for cutoff SD estimate
-      val samp = randomInt( 10, (0, data.segmentLength( frameRange.segment )-1-optTraceSDReadLengthFr ) ).toArray.sorted.map(
-        (p: Int) => median(abs(data.readTrace( channel, RangeFr(p, p + optTraceSDReadLengthFr - 1, 1, frameRange.segment)) ))
+      val samp = randomInt( 10, (0, data.segmentLength( frameRange.segment() )-1-optTraceSDReadLengthFr ) ).toArray.sorted.map(
+        (p: Int) => median(abs(data.readTrace( channel, RangeFr(p, p + optTraceSDReadLengthFr - 1, 1, OptSegment(frameRange.segment))) ))
       )
       (median( DenseVector(samp) ).toDouble / 0.6745).intValue
     }
@@ -84,23 +84,23 @@ class SpikeDetect extends LoggingExt {
 
     val validRange = frameRange.getValidRange(data)
     loggerRequire( validRange.step == 1, "step size for spike detection must be 1! {} is invalid!", validRange.step.toString )
-    var startRange = validRange.start
+    var start = validRange.start
 
     val rangeFrs = new ArrayBuffer[RangeFr]()
     if( validRange.length > optThresholdPeakDetectWindow ){
       //var bufferedData: Array[Array[Int]] = null
-      while (startRange < validRange.last - optThresholdPeakDetectWindow){
-        rangeFrs += new RangeFr( Frame(startRange, frameRange.segment), Frame(startRange + optThresholdPeakDetectWindow, frameRange.segment))
-        startRange += optThresholdPeakDetectWindow
+      while (start < validRange.last - optThresholdPeakDetectWindow){
+        rangeFrs += RangeFr( start, frameRange.segment, start + optThresholdPeakDetectWindow, OptSegment(frameRange.segment))
+        start += optThresholdPeakDetectWindow
       }
-      if(startRange < validRange.last){
-        rangeFrs += new RangeFr( Frame(startRange, frameRange.segment), Frame(validRange.last, frameRange.segment))
+      if(start < validRange.last){
+        rangeFrs += RangeFr( start, validRange.last, OptSegment(frameRange.segment))
       }
       //ToDo 2: parallelize here
       tempRet = rangeFrs.map( thresholdPeakDetectImpl(data, trode.channels, _, thresholds, opts:_*) ).flatten.toArray
     } else {
       val bufferedData = (for(ch <- trode.channels) yield data.readTraceA(ch, frameRange)).toArray
-      tempRet = thresholdPeakDetectImplImpl(bufferedData, thresholds, opts:_*).map( _ + startRange)
+      tempRet = thresholdPeakDetectImplImpl(bufferedData, thresholds, opts:_*).map( _ + start)
     }
 
     tempRet.toSet.toArray.map( new Frame(_, frameRange.segment) )

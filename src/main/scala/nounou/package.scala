@@ -15,7 +15,7 @@ package object nounou extends LoggingExt {
     require( range.step > 0, "Only positive steps are allowed for indexing in nounou!" )
     require( range.start <= range.end, "In nounous, start <= lastValid is required for frame nounou.data.ranges. start=" + range.start + ", lastValid=" + range.end)
 
-    new RangeFr(Frame(range.start, segment), Frame(range.end, segment), OptStep(range.step))
+    RangeFr(range.start, range.end, range.step, OptSegment(segment))
   }
 
   // </editor-fold>
@@ -24,9 +24,14 @@ package object nounou extends LoggingExt {
 
   abstract class Opt extends breeze.util.Opt
 
-  case class OptStep(step: Int) extends Opt {
-    require(step>0, "optStep must be one or larger!")
+//  case class OptStep(step: Int) extends Opt {
+//    require(step>0, "optStep must be one or larger!")
+//  }
+//  val OptStep1 = OptStep(1)
+  case class OptSegment(segment: Int) extends Opt {
+    require(segment > -1, "optSegment must be -1 (non-specified) or larger!")
   }
+  val OptSegmentNone = OptSegment(-1)
   case object OptNull extends Opt
 
 }

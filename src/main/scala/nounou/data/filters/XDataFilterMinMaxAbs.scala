@@ -1,7 +1,9 @@
 package nounou.data.filters
 
+import nounou.OptSegment
 import nounou.data.XData
 import breeze.linalg.{DenseVector => DV, max, min}
+import nounou.data.ranges.RangeFr
 import scala.collection.immutable.VectorBuilder
 import scala.collection.mutable.{ArrayBuffer, HashMap}
 import nounou.data.filters.XDataFilterMinMaxAbs.{ABS, MIN, MAX}
@@ -45,7 +47,7 @@ class XDataFilterMinMaxAbs( override val upstream: XData ) extends XDataFilterRM
       if(halfWindow == 0){
         upstream.readPointImpl(channel, frame, segment)
       } else {
-        val tempdata = upstream.readTrace(channel, frame - halfWindow to frame + halfWindow, segment)
+        val tempdata = upstream.readTrace(channel, RangeFr(frame - halfWindow, frame + halfWindow, OptSegment(segment)))
         mode match {
           case ABS => absMinMax(tempdata) //scala.math.max( abs(max(tempdata)), abs(min(tempdata)) )
           case MIN => min(tempdata)
@@ -58,7 +60,7 @@ class XDataFilterMinMaxAbs( override val upstream: XData ) extends XDataFilterRM
       if(halfWindow == 1){
         upstream.readTraceImpl(channel, range, segment)
       } else {
-        val trace = upstream.readTrace(channel, new Range.Inclusive(range.start - halfWindow, range.end + halfWindow, 1), segment)
+        val trace = upstream.readTrace(channel, RangeFr(range.start - halfWindow, range.end + halfWindow, 1, OptSegment(segment)))
         var tempret = DV[Int]() //= new VectorBuilder[Int]()
             //tempret.sizeHint(range.length)
         val window = 2*halfWindow
