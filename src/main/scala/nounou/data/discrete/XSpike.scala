@@ -1,6 +1,7 @@
 package nounou.data
 
 import breeze.linalg.{DenseVector, DenseMatrix}
+import nounou.OptSegment
 import nounou.data.ranges.RangeFr
 
 object XSpike {
@@ -15,7 +16,7 @@ object XSpike {
     val tempWF = new DenseVector( new Array[Int]( channels.length * length ) )
     for(ch <- 0 until channels.length){
       tempWF(ch*length until (ch+1)*length) :=
-        xData.readTrace(ch, new RangeFr(xFrame.frame-trigger, xFrame.frame-trigger + length - 1, step = 1, segment=xFrame.segment))
+        xData.readTrace(ch, RangeFr(xFrame.frame-trigger, xFrame.frame-trigger + length - 1, step = 1, OptSegment(xFrame.segment)))
     }
     new XSpike( new DenseMatrix( rows = length, cols = channels.length, data = tempWF.toArray ),
                 xFrame, trigger, unitNo = 0)

@@ -167,7 +167,7 @@ import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
 
 
 
-//ToDo 3: unmask(startTs: Long, endTs: Long)
+//ToDo 3: unmask(startTs: Long, lastTs: Long)
 //  def findOverlapMasks( timeStamp: Long ) = _masks.find( p => p._1 <= timeStamp && timeStamp <= p._2 )
 //  def findOverlapMasksZip( timeStamp: Long ) = _masks.zipWithIndex.find( p => p._1._1 <= timeStamp && timeStamp <= p._1._2 )
 //  def findFirstMaskAfter( timeStamp: Long ) = _masks.zipWithIndex.find( p => p._1._1 > timeStamp )

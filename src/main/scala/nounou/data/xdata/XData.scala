@@ -112,7 +112,9 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     */
   final def readTrace(channel: Int, range: RangeFr): DV[Int] = {
 
-    require(isRealisticFr(range, range.segment), "Unrealistic frame/segment: " + (range, range.segment).toString)
+    val realRange = range.getValidRange(this)
+
+    require(isRealisticFr(realRange, range.segment), "Unrealistic frame/segment: " + (realRange, range.segment).toString)
     require(isValidChannel(channel), "Invalid channel: " + channel.toString)
 
     val totalLength =  segmentLength( range.segment )
@@ -147,14 +149,14 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   final def readTraceAbsA(channels: Array[Int], ranges: Array[RangeFrSpecifier]): Array[Array[Array[Double]]] = ranges.map( readTraceAbsA(channels, _) )
 
 
-  @deprecated
-  final def readTrace(channel: Int, range: RangeFr, segment: Int): DV[Int] = readTrace(channel, range)
-  @deprecated
-  final def readTraceA(channel: Int, range: RangeFr, segment: Int) = readTrace(channel, range, segment).toArray
-  @deprecated
-  final def readTrace(channel: Int, range: RangeFrSpecifier, segment: Int): DV[Int] = readTrace(channel, range.getRangeFr(this), segment)
-  @deprecated
-  final def readTraceA(channel: Int, range: RangeFrSpecifier, segment: Int) = readTrace(channel, range.getRangeFr(this), segment).toArray
+//  @deprecated
+//  final def readTrace(channel: Int, range: RangeFr, segment: Int): DV[Int] = readTrace(channel, range)
+//  @deprecated
+//  final def readTraceA(channel: Int, range: RangeFr, segment: Int) = readTrace(channel, range, segment).toArray
+//  @deprecated
+//  final def readTrace(channel: Int, range: RangeFrSpecifier, segment: Int): DV[Int] = readTrace(channel, range.getRangeFr(this), segment)
+//  @deprecated
+//  final def readTraceA(channel: Int, range: RangeFrSpecifier, segment: Int) = readTrace(channel, range.getRangeFr(this), segment).toArray
 
 
 
@@ -162,17 +164,17 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 //    */
 //  final def readTraceAbs(channel: Int, range: RangeFr = RangeFrAll()): DV[Double] = toAbs(readTrace(channel, range))
 
-  /** Read a single trace (within the span) from the data, in absolute unit scaling (as recorded).
-    */
-  @deprecated
-  final def readTraceAbs(channel: Int, range: RangeFr, segment: Int): DV[Double] = toAbs(readTrace(channel, range, segment))
-  @deprecated
-  final def readTraceAbs(channel: Int, range: RangeFrSpecifier, segment: Int): DV[Double] = toAbs(readTrace(channel, range, segment))
-
-  @deprecated
-  final def readTraceAbsA(channel: Int, range: RangeFr, segment: Int): Array[Double] = readTraceAbs(channel, range, segment).toArray
-  @deprecated
-  final def readTraceAbsA(channel: Int, range: RangeFrSpecifier, segment: Int): Array[Double] = readTraceAbs(channel, range, segment).toArray
+//  /** Read a single trace (within the span) from the data, in absolute unit scaling (as recorded).
+//    */
+//  @deprecated
+//  final def readTraceAbs(channel: Int, range: RangeFr, segment: Int): DV[Double] = toAbs(readTrace(channel, range, segment))
+//  @deprecated
+//  final def readTraceAbs(channel: Int, range: RangeFrSpecifier, segment: Int): DV[Double] = toAbs(readTrace(channel, range, segment))
+//
+//  @deprecated
+//  final def readTraceAbsA(channel: Int, range: RangeFr, segment: Int): Array[Double] = readTraceAbs(channel, range, segment).toArray
+//  @deprecated
+//  final def readTraceAbsA(channel: Int, range: RangeFrSpecifier, segment: Int): Array[Double] = readTraceAbs(channel, range, segment).toArray
   //  /** Read a single trace (within the span) from current segment (or segment 0 if not initialized), in internal integer scaling.
   //    */
   //final def readTrace(channel: Int, range: RangeFr): DV[Int] = readTrace(channel, range, currentSegment)

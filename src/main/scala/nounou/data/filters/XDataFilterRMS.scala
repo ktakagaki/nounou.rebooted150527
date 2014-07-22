@@ -1,5 +1,6 @@
 package nounou.data.filters
 
+import nounou.OptSegment
 import nounou.data.XData
 import breeze.signal.rootMeanSquare
 import breeze.linalg.{DenseVector => DV}
@@ -38,7 +39,7 @@ class XDataFilterRMS( override val upstream: XData ) extends XDataFilter( upstre
         upstream.readPointImpl(channel, frame, segment)
       } else {
         //logger.info("2"+halfWindow + " ")
-        rootMeanSquare( upstream.readTrace(channel, new RangeFr(frame - halfWindow, frame + halfWindow, 1, segment), segment) ).toInt
+        rootMeanSquare( upstream.readTrace(channel, new RangeFr(frame - halfWindow, frame + halfWindow, 1, OptSegment(segment)) ) ).toInt
         //rootMeanSquare( DenseVector[Int]( upstream.readTrace(channel, frame - halfWindow to frame + halfWindow, segment).toArray ) ).toInt
       }
 
@@ -46,7 +47,7 @@ class XDataFilterRMS( override val upstream: XData ) extends XDataFilter( upstre
     if(halfWindow == 0){
       upstream.readTraceImpl(channel, range, segment)
     } else {
-      val trace = upstream.readTrace(channel, new RangeFr(range.start - halfWindow, range.last + halfWindow, 1, segment), segment)
+      val trace = upstream.readTrace(channel, new RangeFr(range.start - halfWindow, range.last + halfWindow, 1, OptSegment(segment)))
       val tempret = DV[Int](range.length) //= new VectorBuilder[Int]()
         //tempret.sizeHint(range.length)
         val window = 2*halfWindow
