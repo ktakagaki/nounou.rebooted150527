@@ -14,10 +14,11 @@ object XSpike {
   def readSpike(xData: XData, channels: Array[Int], xFrame: Frame, length: Int, trigger: Int) = {
     val tempWF = new DenseVector( new Array[Int]( channels.length * length ) )
     for(ch <- 0 until channels.length){
-      tempWF(ch*length until ch*(length + 1)) :=
+      tempWF(ch*length until (ch+1)*length) :=
         xData.readTrace(ch, new RangeFr(xFrame.frame-trigger, xFrame.frame-trigger + length - 1, step = 1, segment=xFrame.segment))
     }
-    new DenseMatrix( length, channels.length, tempWF.toArray )
+    new XSpike( new DenseMatrix( rows = length, cols = channels.length, data = tempWF.toArray ),
+                xFrame, trigger, unitNo = 0)
   }
 
 }
@@ -32,9 +33,9 @@ class XSpike(val waveform: DenseMatrix[Int],
              val unitNo: Int = 0) extends X {
 
   lazy val channels = waveform.cols
-  lazy val length = waveform.rows
+  val length = waveform.rows
 
-  loggerRequire( waveform.rows == 0, "waveform must have some samples!")
+  loggerRequire( length != 0, "waveform must have some samples!")
   loggerRequire( trigger < length, "trigger point must be negative or smaller than length!")
   //if(xTrode.channelCount != waveform.cols) throw loggerError("waveform must include same number of channels as xTrode!")
 

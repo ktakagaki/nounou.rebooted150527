@@ -1,6 +1,7 @@
 package nounou
 
 import breeze.numerics.round
+import nounou.data.ranges.RangeFrAll
 import nounou.data.{XSpike, XData, Frame, XTrodeN, ranges}
 
 /**
@@ -9,9 +10,17 @@ import nounou.data.{XSpike, XData, Frame, XTrodeN, ranges}
  */
 object NN {
 
+  // <editor-fold defaultstate="collapsed" desc=" options ">
+
+  def OptNull() = nounou.OptNull
+  def OptStep(step: Int) = nounou.OptStep(step)
+
+  // </editor-fold>
+
   // <editor-fold defaultstate="collapsed" desc=" RangeFrAll/RangeFr ">
 
-  final def RangeFrAll(): ranges.RangeFrAll = RangeFrAll( 0 )
+  final def RangeFrAll(): ranges.RangeFrAll = new RangeFrAll( 0, OptStep(1) )
+  final def RangeFrAll(segment:Int, optStep: OptStep): ranges.RangeFrAll = new RangeFrAll( 0, optStep )
   @deprecated
   final def RangeFrAll(step: Int): ranges.RangeFrAll = new ranges.RangeFrAll( 0, OptStep(step) )
   @deprecated
