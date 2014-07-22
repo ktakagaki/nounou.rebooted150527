@@ -7,7 +7,7 @@ import nounou.{OptNull, Opt}
 import nounou.util.LoggingExt
 import nounou.data.{Frame, XTrodeN, XData}
 import nounou.data.filters.{XDataFilterInvert, XDataFilterBuffer, XDataFilterMedianSubtract}
-import nounou.data.ranges.RangeFr
+import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -23,10 +23,10 @@ object SpikeDetect extends SpikeDetect {
 
 class SpikeDetect extends LoggingExt {
 
-  def traceSD(data: XData, channel: Int, frameRange: RangeFr): Int =
-    traceSD(data: XData, channel: Int, frameRange: RangeFr, OptNull)
+  def traceSD(data: XData, channel: Int, frameRange: RangeFrSpecifier): Int =
+    traceSD(data: XData, channel: Int, frameRange: RangeFrSpecifier, OptNull)
 
-  def traceSD(data: XData, channel: Int, frameRange: RangeFr, opts: Opt* ): Int ={
+  def traceSD(data: XData, channel: Int, frameRange: RangeFrSpecifier, opts: Opt* ): Int ={
 
     var optTraceSDReadLengthFr = 6400
     // <editor-fold defaultstate="collapsed" desc=" Handle options ">
@@ -40,7 +40,7 @@ class SpikeDetect extends LoggingExt {
 
     // </editor-fold>
 
-    if( frameRange.length(data) < optTraceSDReadLengthFr*10 ){
+    if( frameRange.getValidRange(data).length < optTraceSDReadLengthFr*10 ){
       //if the data range is short enough, take the median estimate from the whole data range
       (median( abs(  data.readTrace(channel, frameRange)  ) ).toDouble / 0.6745).intValue
     } else {
@@ -52,16 +52,75 @@ class SpikeDetect extends LoggingExt {
     }
   }
 
-  def thresholdPeakDetectImpl(data: Array[Array[Int]], thresholds: Array[Int]): Array[Int] =
-    thresholdPeakDetectImpl(data: Array[Array[Int]], thresholds: Array[Int], OptNull)
-  def thresholdPeakDetectImpl(data: Array[Array[Int]], thresholds: Array[Int], opts: Opt*): Array[Int] = {
+
+  def thresholdPeakDetect(data: XData, trode: XTrodeN, frameRange: RangeFrSpecifier, thresholds: Array[Int]): Array[Frame] =
+    thresholdPeakDetect(data: XData, trode: XTrodeN, frameRange: RangeFrSpecifier, thresholds: Array[Int], OptNull)
+  def thresholdPeakDetect(data: XData, trode: XTrodeN, frameRange: RangeFrSpecifier, thresholds: Array[Int], opts: Opt*): Array[Frame] = {
+
+    //this is where the return values are accumulated
+    var tempRet = new Array[Int](1)
+
+    var optThresholdPeakDetectWindow = 3200000
+
+    // <editor-fold defaultstate="collapsed" desc=" Handle options ">
+
+    for( opt <- opts ) opt match {
+      case OptThresholdPeakDetectWindow( fr ) => optThresholdPeakDetectWindow = fr
+      case _ => {}
+    }
+
+    if(optThresholdPeakDetectWindow < 32000) throw loggerError("optThresholdPeakDetectWindow must be 32000 or larger!")
+
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc=" check input ">
+
+    if( trode.channelCount != thresholds.length )
+      throw loggerError("thresholdSDMultiples must have same length as trode channel count!")
+    if( thresholds.filter( (p: Int) => ( p <= 0 ) ).length != 0 )
+      throw loggerError("thresholds must all be positive!")
+
+    // </editor-fold>
+
+    val validRange = frameRange.getValidRange(data)
+    loggerRequire( validRange.step == 1, "step size for spike detection must be 1! {} is invalid!", validRange.step.toString )
+    var startRange = validRange.start
+
+    val rangeFrs = new ArrayBuffer[RangeFr]()
+    if( validRange.length > optThresholdPeakDetectWindow ){
+      //var bufferedData: Array[Array[Int]] = null
+      while (startRange < validRange.last - optThresholdPeakDetectWindow){
+        rangeFrs += new RangeFr( Frame(startRange, frameRange.segment), Frame(startRange + optThresholdPeakDetectWindow, frameRange.segment))
+        startRange += optThresholdPeakDetectWindow
+      }
+      if(startRange < validRange.last){
+        rangeFrs += new RangeFr( Frame(startRange, frameRange.segment), Frame(validRange.last, frameRange.segment))
+      }
+      //ToDo 2: parallelize here
+      tempRet = rangeFrs.map( thresholdPeakDetectImpl(data, trode.channels, _, thresholds, opts:_*) ).flatten.toArray
+    } else {
+      val bufferedData = (for(ch <- trode.channels) yield data.readTraceA(ch, frameRange)).toArray
+      tempRet = thresholdPeakDetectImplImpl(bufferedData, thresholds, opts:_*).map( _ + startRange)
+    }
+
+    tempRet.toSet.toArray.map( new Frame(_, frameRange.segment) )
+  }
+
+  def thresholdPeakDetectImpl(xData: XData, channels: Vector[Int], rangeFr: RangeFr, thresholds: Array[Int], opts: Opt*): Array[Int] = {
+    val bufferedData = (for(ch <- channels) yield xData.readTraceA(ch, rangeFr)).toArray
+    thresholdPeakDetectImplImpl(bufferedData, thresholds, opts:_*).map( _ + rangeFr.start)
+  }
+
+  def thresholdPeakDetectImplImpl(data: Array[Array[Int]], thresholds: Array[Int]): Array[Int] =
+    thresholdPeakDetectImplImpl(data: Array[Array[Int]], thresholds: Array[Int], OptNull)
+  def thresholdPeakDetectImplImpl(data: Array[Array[Int]], thresholds: Array[Int], opts: Opt*): Array[Int] = {
 
     //this is where the return values are accumulated
     val tempRet2 = new ArrayBuffer[Int]()
 
     var optBlackoutFr = 64
-    var optPeakHalfWidthMaxFr = 12 //0.75ms at 32kHz
-    var optPeakHalfWidthMinFr = 1  //0.03125ms at 32kHz
+    var optPeakHalfWidthMaxFr = 16 //1 ms full width at 32kHz
+    var optPeakHalfWidthMinFr = 1  //0.03125ms full width at 32kHz
     // The analysis window will be [index - 2 * optPeakHalfWidthMaxFr, index + 2 * optPeakHalfWidthMaxFr]
     // *2 allows for a bit of conservatism to lessen double spike detection
 
@@ -198,58 +257,58 @@ class SpikeDetect extends LoggingExt {
     while ( index < lastCenterP1 ) {
 
       if ( checkThresholdAcrossChannels(index) ) {
-      //if the threshold is newly crossed...
-          var localMaxIndex = Int.MinValue
-          var localMaxValue = Int.MinValue
+        //if the threshold is newly crossed...
+        var localMaxIndex = Int.MinValue
+        var localMaxValue = Int.MinValue
 
-          //...continue advancing the index until the local maximum position, within 2 spike halfwidths
-          var continueLoopLocalMax = true
-          var localMaxFound = false
-          while ( continueLoopLocalMax && index < lastCenterP1 ) {
-            val temp = findLocalRelativeMaxArgAcrossChannels( index - 2 * optPeakHalfWidthMaxFr, index + 2 * optPeakHalfWidthMaxFr )
-            localMaxIndex = temp._1
-            localMaxValue = temp._2
+        //...continue advancing the index until the local maximum position, within 2 spike halfwidths
+        var continueLoopLocalMax = true
+        var localMaxFound = false
+        while ( continueLoopLocalMax && index < lastCenterP1 ) {
+          val temp = findLocalRelativeMaxArgAcrossChannels( index - 2 * optPeakHalfWidthMaxFr, index + 2 * optPeakHalfWidthMaxFr )
+          localMaxIndex = temp._1
+          localMaxValue = temp._2
 
-            //local maximum found
-            if (localMaxIndex == index) {
-              continueLoopLocalMax = false
-              localMaxFound = true
+          //local maximum found
+          if (localMaxIndex == index) {
+            continueLoopLocalMax = false
+            localMaxFound = true
+          }
+          //past local max, zoom forward to next subthreshold
+          else if (localMaxIndex < index) {
+            index += 1
+            var continueInnerZoomLoop = true
+            while( continueInnerZoomLoop && index < lastCenterP1 ) {
+              if (checkThresholdAcrossChannels(index)) index += 1
+              else continueInnerZoomLoop = false
             }
-            //past local max, zoom forward to next subthreshold
-            else if (localMaxIndex < index) {
-              index += 1
-              var continueInnerZoomLoop = true
-              while( continueInnerZoomLoop && index < lastCenterP1 ) {
-                if (checkThresholdAcrossChannels(index)) index += 1
-                else continueInnerZoomLoop = false
-              }
-              continueLoopLocalMax = false
-              localMaxFound = false
-            }
-            //not local maximum yet
-            else {
-              index = localMaxIndex // go forward (ostensibly) to next max
-              continueLoopLocalMax = true
-              localMaxFound = false
+            continueLoopLocalMax = false
+            localMaxFound = false
+          }
+          //not local maximum yet
+          else {
+            index = localMaxIndex // go forward (ostensibly) to next max
+            continueLoopLocalMax = true
+            localMaxFound = false
+          }
+        }
+        //index is now set to a local maximum value
+
+        //next, see if the local maximum point satisfies the spike width conditions
+        if( localMaxFound ) {
+          var ch = 0
+          var contSpikeDetLoop = true
+          while (contSpikeDetLoop && ch < normData.length) {
+            if (localMaxIsSpike(ch, index)) {
+              tempRet2 += index
+              contSpikeDetLoop = false
+            } else {
+              ch += 1
             }
           }
-          //index is now set to a local maximum value
-
-          //next, see if the local maximum point satisfies the spike width conditions
-          if( localMaxFound ) {
-            var ch = 0
-            var contSpikeDetLoop = true
-            while (contSpikeDetLoop && ch < normData.length) {
-              if (localMaxIsSpike(ch, index)) {
-                tempRet2 += index
-                contSpikeDetLoop = false
-              } else {
-                ch += 1
-              }
-            }
-            //zoom forward by blackout regardless of whether local max met spike criteria or not
-            index += optBlackoutFr
-          }
+          //zoom forward by blackout regardless of whether local max met spike criteria or not
+          index += optBlackoutFr
+        }
 
       } else {
         //if the threshold is not crossed, then continue the loop
@@ -260,61 +319,5 @@ class SpikeDetect extends LoggingExt {
 
     tempRet2.toArray
   }
-
-  def thresholdPeakDetect(data: XData, trode: XTrodeN, frameRange: RangeFr, thresholds: Array[Int]): Array[Frame] =
-    thresholdPeakDetect(data: XData, trode: XTrodeN, frameRange: RangeFr, thresholds: Array[Int], OptNull)
-  def thresholdPeakDetect(data: XData, trode: XTrodeN, frameRange: RangeFr, thresholds: Array[Int], opts: Opt*): Array[Frame] = {
-
-    //this is where the return values are accumulated
-    val tempRet = new ArrayBuffer[Int]()
-
-    var optThresholdPeakDetectWindow = 640000
-
-    // <editor-fold defaultstate="collapsed" desc=" Handle options ">
-
-    for( opt <- opts ) opt match {
-      case OptThresholdPeakDetectWindow( fr ) => optThresholdPeakDetectWindow = fr
-      case _ => {}
-    }
-
-    if(optThresholdPeakDetectWindow < 32000) throw loggerError("optThresholdPeakDetectWindow must be 32000 or larger!")
-
-    // </editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc=" check input ">
-
-    if( trode.channelCount != thresholds.length )
-      throw loggerError("thresholdSDMultiples must have same length as trode channel count!")
-    if( thresholds.filter( (p: Int) => ( p <= 0 ) ).length != 0 )
-      throw loggerError("thresholds must all be positive!")
-
-    // </editor-fold>
-
-    loggerRequire( frameRange.step == 1, "step size for spike detection must be 1! {} is invalid!", frameRange.step.toString )
-    val validRange = frameRange.getValidRange(data)
-    var startRange = validRange.start
-
-    if( validRange.length > optThresholdPeakDetectWindow ){
-      var bufferedData: Array[Array[Int]] = null
-      while (startRange < validRange.last - optThresholdPeakDetectWindow){
-        bufferedData = (for(ch <- trode.channels) yield
-          data.readTraceA(ch, RangeFr(startRange, startRange + optThresholdPeakDetectWindow ) )).toArray
-        tempRet ++= thresholdPeakDetectImpl(bufferedData, thresholds, opts:_*).map( _ + startRange)
-        startRange += optThresholdPeakDetectWindow
-      }
-      if(startRange < validRange.last){
-        bufferedData = (for(ch <- trode.channels) yield
-          data.readTraceA(ch, RangeFr(startRange, validRange.last ) )).toArray
-        tempRet ++= thresholdPeakDetectImpl(bufferedData, thresholds, opts:_*).map( _ + startRange)
-      }
-
-    } else {
-      val bufferedData = (for(ch <- trode.channels) yield data.readTraceA(ch, frameRange)).toArray
-      tempRet ++= thresholdPeakDetectImpl(bufferedData, thresholds, opts:_*).map( _ + startRange)
-    }
-
-    tempRet.toSet.toArray.map( new Frame(_, frameRange.segment) )
-  }
-
 
 }
