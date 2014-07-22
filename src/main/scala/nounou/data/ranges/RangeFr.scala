@@ -1,51 +1,12 @@
 package nounou.data.ranges
 
-//import nounou.analysis.units.OptThresholdPeakDetectWindow
 import nounou._
 import nounou.util.LoggingExt
-import nounou.data.{Frame, XData}
+import nounou.data.{Frame}
 import nounou.data.traits.XFrames
-
-
-abstract class RangeFrSpecifier extends LoggingExt {
-  def segment(): Int
-
-  def getRangeFr(x: XFrames): RangeFr// = getRangeFr( x.segmentLength(segment) )
-  //def getRangeFr(totalLength: Int): RangeFr
-  def getValidRange(x: XFrames): Range.Inclusive = getRangeFr(x).getValidRange(x)
-  //def getValidRange(totalLength: Int): Range.Inclusive
-}
-
 
 // <editor-fold defaultstate="collapsed" desc=" RangeFrAll ">
 
-object RangeFrAll extends LoggingExt {
-
-  final def apply(): RangeFrAll = new RangeFrAll(0, OptStep(1))
-  @deprecated
-  final def apply(step: Int): RangeFrAll = new RangeFrAll(0, OptStep(step))
-  @deprecated
-  final def apply(step: Int, segment: Int): RangeFrAll = new RangeFrAll(segment, OptStep(step))
-
-}
-
-class RangeFrAll(val segment: Int, val opts: Opt*) extends RangeFrSpecifier {
-
-  private var optStep = 1
-  def step = optStep
-  // <editor-fold defaultstate="collapsed" desc=" Handle options ">
-
-  for( opt <- opts ) opt match {
-    case OptStep( fr ) => optStep = fr
-    case _ => {}
-  }
-
-  // </editor-fold>
-
-  def this(segment: Int) = this(segment, OptNull)
-
-  override def getRangeFr(xFrames: XFrames): RangeFr = RangeFr( Frame(0, segment), Frame(xFrames.segmentLength(segment), segment), opts:_* )
-}
 
 // </editor-fold>
 
@@ -57,47 +18,34 @@ class RangeFrAll(val segment: Int, val opts: Opt*) extends RangeFrSpecifier {
  */
 object RangeFr {
 
-  final def apply(xFrameStart: Frame, xFrameEnd: Frame, opts: Opt*) = new RangeFr(xFrameStart, xFrameEnd, opts:_*)
+  final def apply(start: Int, last: Int, step: Int, optSegment: OptSegment) = new RangeFr(start, last, step, optSegment)
+  final def apply(start: Int, last: Int, step: Int) = new RangeFr(start, last, step)
+  final def apply(start: Int, last: Int, optSegment: OptSegment) = new RangeFr(start, last, optSegment)
+  final def apply(start: Int, last: Int) = new RangeFr(start, last)
 
   @deprecated
-  final def apply(start: Int, endMarker: Int, step: Int, segment: Int) = new RangeFr(start, endMarker, step, segment)
-  @deprecated
-  final def apply(start: Int, endMarker: Int, step: Int) = new RangeFr(Frame(start, 0), Frame(endMarker, 0), OptStep(step) )
-  @deprecated
-  final def apply(start: Int, endMarker: Int) = new RangeFr(start, endMarker, 1, segment = 0)
+  def apply(startFr: Frame, lastFr: Frame, step: Int) = {
+    loggerRequire( startFr.segment == lastFr.segment,
+      "RangeFr cannot span segments. startFr segment={}, endFr segment={}", startFr.segment.toString, lastFr.segment.toString)
+    new RangeFr(startFr.frame, lastFr.frame, step, OptSegment(startFr.segment))
+  }
 
 }
 
-class RangeFr(val xFrameStart: Frame, val xFrameEnd: Frame, opts: Opt*)
+class RangeFr(val start: Int, val last: Int, val step: Int, optSegment: OptSegment)
   extends RangeFrSpecifier with LoggingExt {
 
-  private var optStep = 1
-  def step = optStep
-  // <editor-fold defaultstate="collapsed" desc=" Handle options ">
+  def this(start: Int, last: Int, step: Int) = this(start, last, step, OptSegmentNone)
+  def this(start: Int, last: Int, optSegment: OptSegment) = this(start, last, 1, optSegment)
+  def this(start: Int, last: Int) = this(start, last, 1, OptSegmentNone)
 
-  for( opt <- opts ) opt match {
-    case OptStep( fr ) => optStep = fr
-    case _ => {}
-  }
+  loggerRequire( start <= last, "RangeFr requires start <= last. start={}, last={}", start.toString, last.toString)
 
-  // </editor-fold>
+  val segment = optSegment.segment
 
-  @deprecated
-  def this(start: Int, endMarker: Int, step: Int = 1, segment: Int/* = 0*/, isAll: Boolean = false) =
-    this( Frame(start, segment), Frame(endMarker, segment), OptStep(step) )
+  override def toString() = "RangeFr(" + start + ", " + last + ", " + step + ", " + optSegment.toString + ")"
 
-  val segment = xFrameStart.segment
-  val start = xFrameStart.frame
-  val end = xFrameEnd.frame
-
-  loggerRequire( start <= end,
-    "RangeFr requires start <= lastValid. start={}, end={}", start.toString, end.toString)
-  loggerRequire( xFrameStart.segment == xFrameEnd.segment,
-    "RangeFr cannot span segments. start segment={}, end segment={}", xFrameStart.segment.toString, xFrameStart.segment.toString)
-
-  override def toString() = "RangeFr(" + xFrameStart + ", " + xFrameEnd+ ", " + step + ")"
-
-  // <editor-fold defaultstate="collapsed" desc=" utility functions: intervalContains/intervalMod ">
+  // <editor-fold defaultstate="collapsed" desc=" protected utility functions: intervalContains/intervalMod ">
 
   protected[ranges] def intervalContains(start: Int, end: Int, step: Int): Int = {
     if (start > end) 0
@@ -120,11 +68,13 @@ class RangeFr(val xFrameStart: Frame, val xFrameEnd: Frame, opts: Opt*)
 
   // <editor-fold defaultstate="collapsed" desc=" first/lastValid ">
 
-  /** Inclusive last valid frame, taking into account step and overhang
+  /** Inclusive first valid frame, taking into account step and overhang
     */
   def firstValid(data: XFrames): Int = firstValid(data.segmentLength(segment))
   private var fvBuffTL = -1
   private var fvBuff = - 156111
+  /** Inclusive first valid frame, taking into account step and overhang
+    */
   def firstValid(totalLength: Int) = {
     if( fvBuffTL == totalLength ) fvBuff
     else {
@@ -147,10 +97,11 @@ class RangeFr(val xFrameStart: Frame, val xFrameEnd: Frame, opts: Opt*)
     */
   def lastValid(data: XFrames): Int = lastValid(data.segmentLength(segment))
   /** Valid lastValid frame, taking into account step and overhang
-    * @param totalLength full length of this segment in frames, used to realize with RangeFr.all()
     */
   private var lvBuffTL = -1
   private var lvBuff = - 156112
+  /** Inclusive last valid frame, taking into account step and overhang
+    */
   def lastValid(totalLength: Int) = {
     if( lvBuffTL == totalLength ) lvBuff
     else {
@@ -160,17 +111,17 @@ class RangeFr(val xFrameStart: Frame, val xFrameEnd: Frame, opts: Opt*)
     }
   }
   def lastValidImpl(totalLength: Int) = {
-    if(end < 0 ) Int.MinValue //no valid values
-    else if( 0 == end ) {
+    if(last < 0 ) Int.MinValue //no valid values
+    else if( 0 == last ) {
       val temp = firstValid(totalLength)
       if( temp == 0 ) 0
       else Int.MinValue //no valid values
     }
-    else if( /*0 < end*/ end < totalLength ) {
+    else if( /*0 < end*/ last < totalLength ) {
       val fv = firstValid(totalLength)
-      if (fv == end) fv
+      if (fv == last) fv
       else {
-        val temp = intervalContains(fv, end, step)
+        val temp = intervalContains(fv, last, step)
         if (temp > 0) fv + (temp - 1) * step
         else Int.MinValue //no valid values
       }
@@ -192,7 +143,7 @@ class RangeFr(val xFrameStart: Frame, val xFrameEnd: Frame, opts: Opt*)
 
   /** range length, can include zero padding if start<0 or totalLength<=end
     */
-  def length(totalLength: Int): Int = intervalContains(start, end, step)
+  def length(totalLength: Int): Int = intervalContains(start, last, step)
 
   /**range length, can include zero padding if start<0 or totalLength<=end
     */
@@ -202,20 +153,24 @@ class RangeFr(val xFrameStart: Frame, val xFrameEnd: Frame, opts: Opt*)
 
   // <editor-fold defaultstate="collapsed" desc=" preLength/postLength ">
 
+  /** How many points to pad at the beginning given the valid data range.
+    */
   def preLength(totalLength: Int): Int = {
     if( start >= 0 ) 0    //all post padding or no padding
-    else if (end < 0) { //all pre padding
-      (end - start)/step + 1
+    else if (last < 0) { //all pre padding
+      (last - start)/step + 1
     } else{
       intervalContains(start, -1, step)
     }
   }
 
+  /** How many points to pad at the end given the valid data range.
+    */
   def postLength(totalLength: Int): Int = {
-    if( start >= totalLength )  (end - start)/step + 1   //all post padding
-    else if (end < totalLength) 0   //all pre padding or no padding
+    if( start >= totalLength )  (last - start)/step + 1   //all post padding
+    else if (last < totalLength) 0   //all pre padding or no padding
     else{
-      intervalContains(lastValid(totalLength), end, step) - 1
+      intervalContains(lastValid(totalLength), last, step) - 1
     }
   }
 
@@ -252,7 +207,7 @@ class RangeFr(val xFrameStart: Frame, val xFrameEnd: Frame, opts: Opt*)
   /**Will return self, this is in order to comply with [[RangeFrSpecifier]]
    */
   def getRangeFr(xFrames: XFrames): RangeFr = this
-  def getRangeFr(totalLength: Int): RangeFr = this
+  //def getRangeFr(totalLength: Int): RangeFr = this
 
 
 }

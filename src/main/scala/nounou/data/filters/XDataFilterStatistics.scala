@@ -14,8 +14,8 @@ class XDataFilterStatistics( override val upstream: XData ) extends XDataFilter(
 
   override def toString() =  "XDataFilterStatistics: "
 
-  def readTraceAbsFourier( ch: Int, range: RangeFr, segment: Int ): DenseVector[Complex] = {
-    val tempTrace = readTraceAbs( ch, range, segment )
+  def readTraceAbsFourier( ch: Int, range: RangeFr ): DenseVector[Complex] = {
+    val tempTrace = readTraceAbs( ch, range )
     fourierTr( DenseVector( tempTrace.toArray ) )
   }
 
@@ -24,8 +24,8 @@ class XDataFilterStatistics( override val upstream: XData ) extends XDataFilter(
 //    mean( fourierTr( DenseVector( tempTrace.toArray ), fourierRange ) )
 //  }
 
-  def readTraceAbsRMS( ch: Int, range: RangeFr, segment: Int ): Double = {
-    val tempTrace = readTraceAbs( ch, range, segment )
+  def readTraceAbsRMS( ch: Int, range: RangeFr ): Double = {
+    val tempTrace = readTraceAbs( ch, range )
     rootMeanSquare( tempTrace )
   }
 

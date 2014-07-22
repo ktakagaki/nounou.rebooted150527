@@ -38,7 +38,7 @@ trait XFrames extends X {
   }
 
   // </editor-fold>
-  // <editor-fold defaultstate="collapsed" desc="segment timestamps: segmentStartTs/startTs/segmentEndTs/endTs ">
+  // <editor-fold defaultstate="collapsed" desc="segment timestamps: segmentStartTs/startTs/segmentEndTs/lastTs ">
 
   /** OVERRIDE: List of starting timestamps for each segment.
     */
@@ -59,7 +59,7 @@ trait XFrames extends X {
   /**End timestamp for data. Use [[segmentEndTs]] instead, for data which has more than one segment.
     */
   final def EndTs: Long = {
-    errorIfMultipleSegments("endTs", "segmentEndTS(segment: Int)")
+    errorIfMultipleSegments("lastTs", "segmentEndTS(segment: Int)")
     segmentEndTs(0)
   }
 
@@ -75,7 +75,7 @@ trait XFrames extends X {
   final def isValidFr(frame: Int): Boolean = isValidFr(frame, 0)//currentSegment)
 
   final def isRealisticFr(frame: Int, segment: Int): Boolean = (-100000 <= frame && frame < segmentLength(segment) + 100000)
-  final def isRealisticFr(range: RangeFr, segment: Int): Boolean = (-100000 <= range.start && range.end < segmentLength(segment) + 100000)
+  final def isRealisticFr(range: Range.Inclusive, segment: Int): Boolean = (-100000 <= range.start && range.end < segmentLength(segment) + 100000)
 
   // </editor-fold>
 

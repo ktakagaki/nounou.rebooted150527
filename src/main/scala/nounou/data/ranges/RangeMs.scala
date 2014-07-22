@@ -1,5 +1,6 @@
 package nounou.data.ranges
 
+import nounou._
 import nounou.data.traits.XFrames
 
 /**For specifying data extraction range in Ms.
@@ -7,35 +8,32 @@ import nounou.data.traits.XFrames
  * @date 2/17/14.
  */
 object RangeMs {
-  def apply(start: Double, end: Double, step: Double, segment: Int) = new RangeMs(start, end, step, 0)
-  def apply(start: Double, end: Double, step: Double) = new RangeMs(start, end, step)
-  def apply(start: Double, end: Double) = new RangeMs(start, end)
+  def apply(startMs: Double, endMs: Double, stepMs: Double, optSegment: OptSegment) = new RangeMs(startMs, endMs, stepMs, optSegment)
+  def apply(startMs: Double, endMs: Double, optSegment: OptSegment) = new RangeMs(startMs, endMs, optSegment)
+  def apply(startMs: Double, endMs: Double, stepMs: Double) = new RangeMs(startMs, endMs, stepMs)
+  def apply(startMs: Double, endMs: Double) = new RangeMs(startMs, endMs)
 
  // class All(step: Double) extends RangeMs(0, 0, step, true)
 }
 
-object RangeMsAnchor{
-  def apply(anchorMs: Double, preMs: Double, postMs: Double, step: Double, segment: Int) = new RangeMs(anchorMs-preMs, anchorMs+postMs, step, segment)
-  def apply(anchorMs: Double, preMs: Double, postMs: Double, step: Double) = new RangeMs(anchorMs-preMs, anchorMs+postMs, step)
-}
+class RangeMs(val startMs: Double, val endMs: Double, val stepMs: Double, val optSegment: OptSegment) extends RangeFrSpecifier {
 
-class RangeMs(val start: Double, val end: Double, val step: Double, val segment: Int) extends RangeFrSpecifier {
-  def this(start: Double, end: Double, step: Double) = this(start, end, step, 0)
-  def this(start: Double, end: Double) = this(start, end, 0d, 0)
+  def segment() = optSegment.segment
+
+  def this(startMs: Double, endMs: Double, optSegment: OptSegment) = this(startMs, endMs, -1d, optSegment)
+  def this(startMs: Double, endMs: Double, stepMs: Double) = this(startMs, endMs, stepMs, OptSegmentNone)
+  def this(startMs: Double, endMs: Double) = this(startMs, endMs, -1, OptSegmentNone)
 
   def getRangeFr(x: XFrames): RangeFr = {
-    val stepReal = if(step == 0d) 1
-      else (step * x.sampleInterval * 1000d).toInt
+    val stepReal = if(stepMs == -1d) 1
+      else (stepMs * x.sampleRate * 1000d).toInt
 
-  loggerRequire(stepReal>0, "This amounts to a negative timestep! (stepMs=" + step + " ms)")
+    loggerRequire(stepReal>0, "This amounts to a negative timestep! (stepMs=" + stepMs + " ms)")
 
-//    if(isAll){
-//      RangeFrAll( stepReal )
-//    } else {
-      val startReal = x.msToFr(start)
-      val endReal = x.msToFr(end)
+      val startReal = x.msToFr(startMs)
+      val endReal = x.msToFr(endMs)
 
-      new RangeFr(startReal, endReal, stepReal, segment)
+      RangeFr(startReal, endReal, stepReal, optSegment)
 //    }
   }
 
