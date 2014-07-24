@@ -15,11 +15,11 @@ Nounou is a JVM-based interface for loading neurophysiological data, written mai
 Many of Nounou's routines are based on the numerical processing library [breeze](http://github.com/scalanlp/breeze).
 
 ## Why Scala?
-     - Since nounou is JVM-based, it is easily accessed from MATLAB/Mathematica for advanced analyses and graphing.
-     - Ability to use fast compiled routines even from a REPL.
-     - The object-oriented nature of Scala is key to keep track of complex data structures. The functional capabilities make parallelization and streaming safer/much easier
-     - Why not Python: speed issues with uncompiled Python, and there is already a relatively large Python project available  ([neo](http://neuralensemble.org/neo/))
-       (A Python bridge should be relatively simple to make)
+- Since nounou is JVM-based, it is easily accessed from MATLAB/Mathematica for advanced analyses and graphing.
+- Ability to use fast compiled routines even from a REPL.
+- The object-oriented nature of Scala is key to keep track of complex data structures. The functional capabilities make parallelization and streaming safer/much easier
+- Why not Python: speed issues with uncompiled Python, and there is already a relatively large Python project available  ([neo](http://neuralensemble.org/neo/))
+(A Python bridge should be relatively simple to make)
      
 
 
