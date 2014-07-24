@@ -15,15 +15,18 @@ Nounou is a JVM-based interface for loading neurophysiological data, written mai
 Many of Nounou's routines are based on the numerical processing library [breeze](http://github.com/scalanlp/breeze).
 
 ## Why [Scala](http://www.scala-lang.org/)?
-- Since Scala is JVM-based, it is easily accessed from MATLAB/Mathematica for advanced analyses and graphing.
-- Ability to use fast compiled routines even from a REPL.
-- Takes advantage of the latest processor-specific optimizations in the Oracle JVM. This can make tightly-written Java-based programs faster than non-optimized generic C code.
-- Scala makes parallel/distributed programming simple and relatively safe
-- The object-oriented nature of Scala is key to keep track of complex data structures
-- The functional programming capabilities of Scala make parallelization and streaming safer/much easier
+- JVM Benefits
+     - Since Scala is JVM-based, it is easily accessed from MATLAB/Mathematica for further advanced analyses and graphing.
+     - The JVM ensures unmatched cross-platform compatiblity.
+     - Takes advantage of the latest processor-specific optimizations in the Oracle JVM. This can make tightly-written Java-based programs faster than non-optimized generic C code in certain circumstances.
+- Scala Benefits
+     - Fast compiled routines can be used even from a REPL.
+     - Scala makes parallel/distributed programming simple and relatively safe
+     - The object-oriented nature of Scala is key to keep track of complex data structures
+     - The functional programming capabilities of Scala make parallelization and streaming safer/much easier
+     - Scala is both theoretically well concieved and also practical. It is cool.
 - Why not Python: speed issues with uncompiled Python,  there is already a relatively large Python project available  ([neo](http://neuralensemble.org/neo/))
 (A Python bridge should be relatively simple to make at some point)
-- Scala is both theoretically well concieved and also practical. It is cool.
      
 
 
