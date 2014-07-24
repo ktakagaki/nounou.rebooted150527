@@ -5,18 +5,22 @@ Nounou is a JVM-based interface for loading neurophysiological data, written mai
 ## Package Goals
 
 1. **to provide an adapter to dynamically load neurophysiology data** into MATLAB, Mathematica, Scala REPL, and Java (and Python). 
-     - Other file readers are designed to read the whole data file into memory at once. This becomes quite problematic for large/long files. Nounou is designed around data streams, where the data can be loaded on demand from disk/network.
-     - Since nounou is JVM-based, it is easily accessed from MATLAB/Mathematica for advanced analyses and graphing.
-     - At some point, we will use a Java/Python bridge to allow transparent access from Python. I have avoided direct implementation in Python for this rewrite, because of (1) the large project already available ([neo](http://neuralensemble.org/neo/)), because (2) Python requires C compilation to run at reasonable speeds, and because (3) the speed/elegance benefits of Scala/breeze as listed below, especially in terms of parallelization.  
+     - Other file readers are designed to read whole data files into memory at once. This can become quite problematic for large/long files.
+     - Nounou is designed around data streams, where the data can be loaded as-needed on demand from disk/network.
+     - Nounou can handle channel layout data within the main data structure to facilitate geometric analyses. This was originally for voltage-sensitive dye/intrinsic imaging, but is applicable for ECoG arrays and multishank electrodes too.
 2. **to provide building blocks for computationally intensive neurophysiology analysis algorithms**, such as flow-analysis [1]. 
-     * Scala is suited for this, because of its easy-and-safe parallelization, and because of its ability to use fast compiled routines even from a REPL.
-     * The object-oriented nature of Scala is key to keep track of complex data structures.
-     * functional paradigms and the Scala collections framework allow for easy distributed computing with clean code.
-3. (perhaps) to provide a JavaFX-based graphical interface for browsing neurophysiology data
-4. Nounou is in no way intended as an "uber package" to serve as a one-step analysis tool. Instead, it is intended for interactive use with a REPL/notebook such as Mathematica/Matlab/iPython and for incorporation into your custom programs as a citable, Git-versioned library. **Nounou focuses only on loading data in a coherent way, and performing very very basic but calculation-intensive analyses.**   
+3. (perhaps at some point) to provide a rudimentary JavaFX-based graphical interface for browsing neurophysiology data
+4. Nounou is in no way intended as an "uber package" to serve as a one-step analysis tool. Instead, it is intended for interactive use with a REPL/notebook such as Mathematica/Matlab/iPython Notebook and for incorporation into your custom programs as a citable, Git-versioned library. **Nounou focuses only on (1) loading data in a coherent way, and (2) performing very basic but calculation-intensive analyses taking advantage of the newest processor-specific optimizations in the JVM and the simple parallelization of Scala.**   
 
 Many of Nounou's routines are based on the numerical processing library [breeze](http://github.com/scalanlp/breeze).
 
+## Why Scala?
+     - Since nounou is JVM-based, it is easily accessed from MATLAB/Mathematica for advanced analyses and graphing.
+     - Ability to use fast compiled routines even from a REPL.
+     - The object-oriented nature of Scala is key to keep track of complex data structures. The functional capabilities make parallelization and streaming safer/much easier
+     - Why not Python: speed issues with uncompiled Python, and there is already a relatively large Python project available  ([neo](http://neuralensemble.org/neo/))
+       (A Python bridge should be relatively simple to make)
+     
 
 
 ## Documentation
