@@ -65,7 +65,7 @@ object FileAdapterKlustaDAT extends FileAdapter {
         currentIndex = 0
         for(fr <- currentFrameStart until realRange.length)
           for(ch <- 0 until data.channelCount) {
-            writeArray( currentIndex ) = (data.readPoint(ch, fr, parsedOpt.segment) / data.xBits).toShort
+            writeArray( currentIndex ) = (data.readPoint(ch, fr, parsedOpt.range.segment()) / data.xBits).toShort
             currentIndex += 1
           }
         fileObj.writeInt16( writeArray)

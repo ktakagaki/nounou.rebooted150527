@@ -1,5 +1,6 @@
 package nounou.data.io
 
+import nounou.Opt
 import nounou.util.LoggingExt
 import java.io.File
 import nounou.data.X
@@ -142,9 +143,10 @@ trait FileAdapter extends LoggingExt {
 
 
 
-class OptFileAdapter
+class OptFileAdapter extends Opt
+
 object OptFileAdapter{
   case object Automatic extends OptFileAdapter
-  case class XDataFrames(range: RangeFrSpecifier = RangeFrAll(), segment: Int = 0) extends OptFileAdapter
+  case class XDataFrames(range: RangeFrSpecifier = RangeFrAll()) extends OptFileAdapter
   //case class ListOpt(list: List[OptFileAdapter]) extends OptFileAdapter
 }
