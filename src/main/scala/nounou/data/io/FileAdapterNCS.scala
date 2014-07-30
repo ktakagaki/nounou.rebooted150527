@@ -195,7 +195,8 @@ object FileAdapterNCS extends FileAdapterNLX {
 
 }
 
-
+/**A specialized immutable [nounou.data.XDataChannelFileStream] for NCS files.
+ */
 class XDataChannelNCS
 ( override val fileHandle: RandomAccessFile,
                        override val absGain: Double,
