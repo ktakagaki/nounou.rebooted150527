@@ -47,7 +47,7 @@ trait XAbsolute extends X {
     * absUnit (e.g. "mV")
     */
   final def toAbs(data: DenseVector[Int]): DenseVector[Double] = data.map( toAbs _ )
-//  final def toAbsA(data: Array[Int]): Array[Double] = toAbs(data)
+  final def toAbsA(data: Array[Int]): Array[Double] = toAbs(DenseVector(data)).toArray
   //ToDo 3: toAbs erasure
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
     * absUnit (e.g. "mV")

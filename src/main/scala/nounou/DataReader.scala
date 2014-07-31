@@ -17,6 +17,7 @@ class DataReader extends LazyLogging {
 
   /**Header object covering the whole block.*/
   var header: XHeader = XHeaderNull
+
   /**Main data output.*/
   def data(): XData = dataFIR
   val dataORI: XDataFilterHolder = new XDataFilterHolder()
@@ -34,6 +35,7 @@ class DataReader extends LazyLogging {
   /**Events*/
   @BeanProperty
   var events: XEvents = XEventsNull
+
   /**Spikes*/
   @BeanProperty
   var spikes: XSpikes = XSpikesNull
