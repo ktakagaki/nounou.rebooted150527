@@ -70,47 +70,40 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   // <editor-fold defaultstate="collapsed" desc=" READING ACTUAL DATA ">
 
   //<editor-fold defaultstate="collapsed" desc="reading a point">
-  /** Read a single point from the data, in internal integer scaling, after checking values.
-    * Implement via readPointImpl.
-    */
-  final def readPoint(channel: Int, frame: Int, segment: Int): Int = {
 
+  /** Read a single point from the data, in internal integer scaling, after checking values.
+    * Implement via readPointImpl. Prefer [[readTrace()]] and [[readFrame()]]
+    * when possible, as these will avoid repeated function calling overhead.
+    */
+  def readPoint(channel: Int, frame: Int, segment: Int): Int = {
     require(isRealisticFr(frame, segment), "Unrealistic frame/segment: " + (frame, segment).toString)
     require(isValidChannel(channel), "Invalid channel: " + channel.toString)
     //require(isValidFr(frame, segment), "Invalid frame/segment: " + (frame, segment).toString)
     if( isValidFr(frame, segment) ) readPointImpl(channel, frame, segment)/*, currentSegment = segment)*/ else 0
   }
 
-  /** Read a single point from current segment (or segment 0 if not initialized), in internal integer scaling.
+  /** [[readPoint()]] but with a default segment of zero.
     */
   final def readPoint(channel: Int, frame: Int): Int = readPoint(channel, frame, 0)//, currentSegment)
-  /** Read a single point from the data, in absolute unit scaling (as recorded).
+  /** [[readPoint()]] but in physical units with a default segment of zero.
     */
   final def readPointAbs(channel: Int, frame: Int, segment: Int): Double = toAbs(readPoint(channel, frame, segment))
-  /** Read a single point from current segment (or segment 0 if not initialized), in absolute unit scaling (as recorded).
+  /** [[readPoint()]] but in physical units.
     */
   final def readPointAbs(channel: Int, frame: Int): Double = toAbs(readPoint(channel, frame))
+
   //</editor-fold>
 
   /** MUST OVERRIDE: Read a single point from the data, in internal integer scaling.
     */
-  def readPointImpl(channel: Int, frame: Int, segment: Int): Int
+  protected[data] def readPointImpl(channel: Int, frame: Int, segment: Int): Int
 
 
   //<editor-fold defaultstate="collapsed" desc="reading a trace">
 
-  /** Read a single trace from current segment (or segment 0 if not initialized), in internal integer scaling.
-    */
-  final def readTrace(channel: Int): DV[Int] = readTrace(channel, RangeFrAll())//, currentSegment)
-  /** Read a single trace from current segment (or segment 0 if not initialized),  in absolute unit scaling (as recorded).
-    */
-  final def readTraceAbs(channel: Int): DV[Double] = toAbs(readTrace(channel))
-  final def readTraceA(channel: Int) = readTrace(channel).toArray
-  final def readTraceAbsA(channel: Int): Array[Double] = readTraceAbs(channel).toArray
-
   /** Read a single trace from the data, in internal integer scaling.
     */
-  final def readTrace(channel: Int, range: RangeFr): DV[Int] = {
+  def readTrace(channel: Int, range: RangeFr): DV[Int] = {
 
     val realRange = range.getValidRange(this)
 
@@ -128,15 +121,24 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   }
 
-  final def readTrace(channel: Int,         range: RangeFrSpecifier): DV[Int] = readTrace(channel, range.getRangeFr(this))
-  final def readTrace(channels: Array[Int], range: RangeFrSpecifier): Array[DV[Int]] = channels.map( readTrace(_, range) )
-  final def readTrace(channel: Int,         ranges: Array[RangeFrSpecifier]): Array[DV[Int]] = ranges.map( readTrace(channel, _) )
-  final def readTrace(channels: Array[Int], ranges: Array[RangeFrSpecifier]): Array[Array[DV[Int]]] = ranges.map( readTrace(channels, _) )
+  /** Read a single trace from current segment (or segment 0 if not initialized), in internal integer scaling.
+    */
+  final def readTrace(channel: Int): DV[Int] = readTrace(channel, RangeFrAll())//, currentSegment)
+  /** Read a single trace from current segment (or segment 0 if not initialized),  in absolute unit scaling (as recorded).
+    */
+  final def readTraceAbs(channel: Int): DV[Double] = toAbs(readTrace(channel))
+  final def readTraceA(channel: Int) = readTrace(channel).toArray
+  final def readTraceAbsA(channel: Int): Array[Double] = readTraceAbs(channel).toArray
 
-  final def readTraceA(channel: Int,         range: RangeFrSpecifier) = readTrace(channel, range).toArray
-  final def readTraceA(channels: Array[Int], range: RangeFrSpecifier): Array[Array[Int]] = channels.map(readTraceA(_, range))
-  final def readTraceA(channel: Int,         ranges: Array[RangeFrSpecifier]): Array[Array[Int]] = ranges.map( readTraceA(channel, _) )
-  final def readTraceA(channels: Array[Int], ranges: Array[RangeFrSpecifier]): Array[Array[Array[Int]]] = ranges.map( readTraceA(channels, _) )
+  final def readTrace(channel: Int,            range: RangeFrSpecifier): DV[Int] = readTrace(channel, range.getRangeFr(this))
+  final def readTrace(channels: Array[Int],    range: RangeFrSpecifier): Array[DV[Int]] = channels.map( readTrace(_, range) )
+  final def readTrace(channel: Int,            ranges: Array[RangeFrSpecifier]): Array[DV[Int]] = ranges.map( readTrace(channel, _) )
+  final def readTrace(channels: Array[Int],    ranges: Array[RangeFrSpecifier]): Array[Array[DV[Int]]] = ranges.map( readTrace(channels, _) )
+
+  final def readTraceA(channel: Int,           range: RangeFrSpecifier) = readTrace(channel, range).toArray
+  final def readTraceA(channels: Array[Int],   range: RangeFrSpecifier): Array[Array[Int]] = channels.map(readTraceA(_, range))
+  final def readTraceA(channel: Int,           ranges: Array[RangeFrSpecifier]): Array[Array[Int]] = ranges.map( readTraceA(channel, _) )
+  final def readTraceA(channels: Array[Int],   ranges: Array[RangeFrSpecifier]): Array[Array[Array[Int]]] = ranges.map( readTraceA(channels, _) )
 
   final def readTraceAbs(channel: Int,         range: RangeFrSpecifier): DV[Double] = toAbs(readTrace(channel, range))
   final def readTraceAbs(channels: Array[Int], range: RangeFrSpecifier): Array[DV[Double]] = channels.map( readTraceAbs(_, range) )

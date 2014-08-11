@@ -1,6 +1,7 @@
 package nounou.data.filters
 
 import nounou._
+import nounou.data.ranges.RangeFr
 import nounou.data.{XDataNull, XLayout, X, XData}
 import breeze.linalg.{DenseVector => DV}
 
@@ -9,6 +10,33 @@ import breeze.linalg.{DenseVector => DV}
 class XDataFilter( val upstream: XData ) extends XData {
 
   upstream.setChild(this)
+
+  // <editor-fold defaultstate="collapsed" desc=" setActive/getActive ">
+
+  private var _active = true
+  final def setActive(active: Boolean) = if(_active != active){
+    _active = active
+    changedData()
+  }
+  final def getActive = _active
+
+  // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc=" adjust reading functions for active state ">
+
+  override final def readPoint(channel: Int, frame: Int, segment: Int): Int = if(_active){
+    super.readPoint(channel, frame, segment)
+  }else{
+    upstream.readPoint(channel, frame, segment)
+  }
+
+  override final def readTrace(channel: Int, range: RangeFr): DV[Int] = if(_active){
+    super.readTrace(channel, range)
+  }else{
+    upstream.readTrace(channel, range)
+  }
+    // </editor-fold>
+
 
 //  override def channelNames: scala.Vector[String] = upstream.channelNames
   override def channelCount = upstream.channelCount
