@@ -24,10 +24,10 @@ class XDataFilter( val upstream: XData ) extends XData {
 
   // <editor-fold defaultstate="collapsed" desc=" adjust reading functions for active state ">
 
-  override final def readPoint(channel: Int, frame: Int, segment: Int): Int = if(_active){
-    super.readPoint(channel, frame, segment)
+  override final def readPoint(channel: Int, frame: Int/*, segment: Int*/): Int = if(_active){
+    super.readPoint(channel, frame)//, segment)
   }else{
-    upstream.readPoint(channel, frame, segment)
+    upstream.readPoint(channel, frame)//, segment)
   }
 
   override final def readTrace(channel: Int, range: RangeFr): DV[Int] = if(_active){
@@ -41,10 +41,10 @@ class XDataFilter( val upstream: XData ) extends XData {
 //  override def channelNames: scala.Vector[String] = upstream.channelNames
   override def channelCount = upstream.channelCount
 
-  override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = upstream.readPointImpl(channel, frame, segment)
-  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] = upstream.readTraceImpl(channel, range, segment)
-  override def readFrameImpl(frame: Int, segment: Int): DV[Int] = upstream.readFrameImpl(frame, segment)
-  override def readFrameImpl(frame: Int, channels: Vector[Int], segment: Int): DV[Int] = upstream.readFrameImpl(frame, channels, segment)
+  override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int = upstream.readPointImpl(channel, frame)//, segment)
+  override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/): DV[Int] = upstream.readTraceImpl(channel, range)//, segment)
+  override def readFrameImpl(frame: Int/*, segment: Int*/): DV[Int] = upstream.readFrameImpl(frame)//, segment)
+  override def readFrameImpl(frame: Int, channels: Vector[Int]/*, segment: Int*/): DV[Int] = upstream.readFrameImpl(frame, channels/*, segment*/)
 
   override def absUnit: String = upstream.absUnit
   override def absOffset: Double = upstream.absOffset

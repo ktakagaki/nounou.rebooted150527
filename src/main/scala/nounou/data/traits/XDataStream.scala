@@ -1,5 +1,6 @@
 package nounou.data.traits
 
+import breeze.linalg.DenseVector
 import nounou.data.XData
 import nounou.data.filters.XDataFilter
 import nounou.data.ranges.RangeFrSpecifier
@@ -17,7 +18,7 @@ trait XDataFilterParallel extends XDataFilter {
   def chunkSize: Int
   def lastChunk: Int
 
-  override def readTrace(channels: Array[Int], range: RangeFrSpecifier): Array[Int] = ???
+  override def readTraceImpl(channel: Int, range: Range.Inclusive): DenseVector[Int] = ???
 
 }
 
@@ -28,6 +29,6 @@ trait XDataFilterParallel extends XDataFilter {
  */
 trait XDataFilterParallelAnticipate extends XDataFilterParallel {
 
-  override def readTrace(channels: Array[Int], range: RangeFrSpecifier): Array[Int] = ???
+  override def readTraceImpl(channel: Int, range: Range.Inclusive): DenseVector[Int] = ???
 
 }

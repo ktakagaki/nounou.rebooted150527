@@ -41,22 +41,22 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
   def setFactor( factor: Int ): Unit = factor_=( factor )
   protected var  _factor: Int = 0
 
-  override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
+  override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int =
     if(factor == 1){
-      upstream.readPointImpl(channel, frame, segment)
+      upstream.readPointImpl(channel, frame)//, segment)
     } else {
-      upstream.readPointImpl(channel, frame*factor, segment)
+      upstream.readPointImpl(channel, frame*factor)//, segment)
     }
 
-  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] =
+  override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/): DV[Int] =
     if(factor == 1){
-        upstream.readTraceImpl(channel, range, segment)
+        upstream.readTraceImpl(channel, range)//, segment)
     } else {
-        upstream.readTraceImpl(channel, new Range.Inclusive(range.start * factor, range.end * factor, factor), segment)
+        upstream.readTraceImpl(channel, new Range.Inclusive(range.start * factor, range.end * factor, factor))//, segment)
     }
 
-  override def readFrameImpl(frame: Int, segment: Int): DV[Int] = super[XDataFilter].readFrameImpl(frame * factor, segment)
-  override def readFrameImpl(frame: Int, channels: Vector[Int], segment: Int): DV[Int] = super[XDataFilter].readFrameImpl(frame * factor, channels, segment)
+  override def readFrameImpl(frame: Int/*, segment: Int*/): DV[Int] = super[XDataFilter].readFrameImpl(frame * factor)//, segment)
+  override def readFrameImpl(frame: Int, channels: Vector[Int]/*, segment: Int*/): DV[Int] = super[XDataFilter].readFrameImpl(frame * factor, channels/*, segment*/)
 
   //  override def channelNames: scala.Vector[String] = upstream.channelNames
 

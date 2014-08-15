@@ -11,7 +11,7 @@ import breeze.linalg.{DenseMatrix => DM, DenseVector => DV}
  * Time: 18:50
  * To change this template use File | Settings | File Templates.
  */
-class XDataPreloaded(  val data: Array[DM[Int]],
+class XDataPreloaded(  val data: DM[Int],//Array[DM[Int]],
                        override val xBits: Int,
                        override val absGain: Double,
                        override val absOffset: Double,
@@ -20,22 +20,24 @@ class XDataPreloaded(  val data: Array[DM[Int]],
                        override val scaleMin: Int,
                        //override val channelNames: Vector[String], // = Vector.tabulate[String](data.length)(i => "no channel name")
                        override val segmentStartTs: Vector[Long],
+              override val segmentLength: Vector[Int],
                        override val sampleRate: Double,
                        override val layout: XLayout = XLayoutNull
                       )
   extends XData with XConcatenatable with XFramesImmutable {
 
-    override final lazy val segmentLength = data.map( (p: DM[Int]) => p.rows ).toVector
+//    override final lazy val segmentLength = data.map( (p: DM[Int]) => p.rows ).toVector
 
 
-    require(channelCount == data(0).cols,
-      "number of channels " + channelCount + " does not match data.length " + data.length + "!")
+    require(channelCount == data.cols,//data(0).cols,
+      "number of channels " + channelCount + " does not match the data columns" + data.cols + "!")
 
     //reading
-    override def readPointImpl(channel: Int, frame: Int, segment: Int) = data(segment)(channel, frame)
+    override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/) = data(channel, frame)//(segment)(channel, frame)
 
-    override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int) = {
-      data(segment)( range, channel ).toDenseVector
+    override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/) = {
+      data( range, channel ).toDenseVector
+      //data(segment)( range, channel ).toDenseVector
     }
 
   // <editor-fold desc="XConcatenatable">
@@ -46,7 +48,7 @@ class XDataPreloaded(  val data: Array[DM[Int]],
           if(this.isCompatible(that)){
 
             val oriThis = this
-            new XDataPreloaded( data = oriThis.data ++ t.data,
+            new XDataPreloaded( data = DM.horzcat(oriThis.data, t.data),
                                 xBits = oriThis.xBits,
                                 absGain = oriThis.absGain,
                                 absOffset = oriThis.absOffset,
@@ -55,6 +57,7 @@ class XDataPreloaded(  val data: Array[DM[Int]],
                                 scaleMin = oriThis.scaleMin,
                                 //channelNames = oriThis.channelNames ++ t.channelNames,
                                 segmentStartTs = oriThis.segmentStartTs,
+                    segmentLength = oriThis.segmentLength,
                                 sampleRate = oriThis.sampleRate,
                                 layout = oriThis.layout ::: t.layout
             )
@@ -83,4 +86,11 @@ class XDataPreloadedSingleSegment(
                     sampleRate: Double,
                     layout: XLayout = XLayoutNull
                     )
-  extends XDataPreloaded( Array(data), xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, /*channelNames,*/ Vector[Long](segmentStartTs), sampleRate, layout)
+  extends XDataPreloaded( data/*Array(data)*/,
+                          xBits,
+                          absGain, absOffset, absUnit,
+                          scaleMax, scaleMin, /*channelNames,*/ Vector[Long](segmentStartTs),
+    Vector[Int](data.rows),
+                          sampleRate, layout){
+
+}

@@ -70,23 +70,23 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
 
   // <editor-fold defaultstate="collapsed" desc=" calculate data ">
 
-  override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
+  override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int =
     if(kernel == null){
-      upstream.readPointImpl(channel, frame, segment)
+      upstream.readPointImpl(channel, frame)//, segment)
     } else {
       //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-      val tempData = upstream.readTrace( channel, RangeFr(frame - kernel.overhangPre, frame + kernel.overhangPost, 1, OptSegment(segment)))
+      val tempData = upstream.readTrace( channel, RangeFr(frame - kernel.overhangPre, frame + kernel.overhangPost, 1))//, OptSegment(segment)))
       val tempRet = convolve( DV( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None )
       require( tempRet.length == 1, "something is wrong with the convolution!" )
       tempRet(0).toInt
     }
 
-  override def readTraceImpl(channel: Int, ran: Range.Inclusive, segment: Int): DV[Int] =
+  override def readTraceImpl(channel: Int, ran: Range.Inclusive/*, segment: Int*/): DV[Int] =
     if(kernel == null){
-        upstream.readTraceImpl(channel, ran, segment)
+        upstream.readTraceImpl(channel, ran)//, segment)
     } else {
         //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-        val tempData = upstream.readTrace( channel, RangeFr( ran.start - kernel.overhangPre, ran.last + kernel.overhangPost, 1, OptSegment(segment)))
+        val tempData = upstream.readTrace( channel, RangeFr( ran.start - kernel.overhangPre, ran.last + kernel.overhangPost, 1))//, OptSegment(segment)))
 //      println( "1: " + tempData.length )
 //      println(OptRange.rangeToRangeOpt(ran))
         val tempRes: DV[Long] = convolve(
