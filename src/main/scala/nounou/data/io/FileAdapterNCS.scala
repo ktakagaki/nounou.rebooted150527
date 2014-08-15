@@ -2,6 +2,7 @@ package nounou.data.io
 
 import java.io.File
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
+import nounou.data.traits.XFramesImmutable
 import nounou.data.{X, XDataChannelFilestream}
 import scala.collection.mutable.ListBuffer
 import breeze.linalg.{DenseVector => DV, convert}
@@ -33,7 +34,7 @@ object FileAdapterNCS extends FileAdapterNLX {
   val xBits = 1024
   lazy val xBitsD = xBits.toDouble
 
-  override def loadImpl(file: File): List[X] = {
+  override def loadImpl(file: File): Array[X] = {
 
       fHand = new RandomAccessFile(file, "r")(ByteConverterLittleEndian)
 
@@ -189,7 +190,7 @@ object FileAdapterNCS extends FileAdapterNLX {
     )
 
     logger.info( "loaded {}", xDataChannelNCS )
-    List[X]( xDataChannelNCS )
+    Array[X]( xDataChannelNCS )
 
   }
 
@@ -205,7 +206,7 @@ class XDataChannelNCS
                        override val segmentLength: Vector[Int],
                        override val segmentStartTs: Vector[Long],
                        override val channelName: String
-                       ) extends XDataChannelFilestream {
+                       ) extends XDataChannelFilestream with XFramesImmutable {
 
   val t = FileAdapterNCS
   override val absOffset: Double = t.absOffset

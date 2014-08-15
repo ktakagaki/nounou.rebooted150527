@@ -4,6 +4,7 @@ import nounou._
 import nounou.data._
 import java.io.File
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
+import nounou.data.traits.XFramesImmutable
 import scala.collection.immutable.{TreeMap}
 import breeze.linalg.{DenseMatrix => DM, DenseVector => DV}
 import nounou.data.headers.{HeaderValue, XHeader}
@@ -19,7 +20,7 @@ object FileAdapterGSDGSH extends FileAdapter {
   override def writeImpl(file: File, data: X, options: OptFileAdapter) = writeCannotImpl(file, data, options)
   override val canLoadExt: List[String] = List[String]( "gsd", "gsh" )
 
-  override def loadImpl(file: File): List[X] = {
+  override def loadImpl(file: File): Array[X] = {
 
     val gshfile = """([^ \t\r\n\v\f]*).(gsh)""".r//("strippedName","extension")
 
@@ -37,7 +38,7 @@ object FileAdapterGSDGSH extends FileAdapter {
 
   }
 
-  private def loadImplGSD(file: File): List[X] = {
+  private def loadImplGSD(file: File): Array[X] = {
 
     val raf = new RandomAccessFile(file)(ByteConverterLittleEndian)
     raf.seek(256)
@@ -172,7 +173,7 @@ object FileAdapterGSDGSH extends FileAdapter {
 
 
     //Return Results
-    List(
+    Array(
       header,
       new XDataGSD( dataReturn, xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, /*layout.channelNames, */0L, sampleRate, layout, backgroundReturn ),
       new XDataGSDAux( dataAuxReturn, xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, /*chNamesAuxReturn.toVector,*/ 0L, sampleRateAux, layoutAux ),
@@ -197,6 +198,7 @@ class XDataGSD(
                 layout: XLayout,
                 val backgroundFrame: DV[Int]
                 ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, /*channelNames,*/ segmentStartTs, sampleRate, layout)
+                  with XFramesImmutable
 
 class XDataGSDAux(
                 data: DM[Int],
@@ -210,4 +212,5 @@ class XDataGSDAux(
                 segmentStartTs: Long,
                 sampleRate: Double,
                 layout: XLayout
-                   ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, /*channelNames,*/ segmentStartTs, sampleRate, layout) with XDataAux
+                   ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, /*channelNames,*/ segmentStartTs, sampleRate, layout)
+                     with XDataAux with XFramesImmutable

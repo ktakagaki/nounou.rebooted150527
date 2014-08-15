@@ -1,5 +1,6 @@
 package nounou.data.io
 
+import nounou.data.XEvents
 import org.scalatest.FunSuite
 import java.io.File
 import nounou.DataReader
@@ -13,21 +14,29 @@ class FileLoaderNEVTest extends FunSuite {
 
   val testFileEvents = new File( getClass.getResource("/_testFiles/Neuralynx/t130911/Events.nev").getPath() )
 
+  test("toPortValue"){
+    assert( FileAdapterNEV.toPortValue("TTL Input on AcqSystem1_2 board 200 port 4 value") == 102200004 )
+    assert( FileAdapterNEV.toPortValue("TTL Input on AcqSystem1_0 board 0 port 1 value (0x0001).") == 100000001 )
+    assert( FileAdapterNEV.fromPortValue(102200004) == (1,2,200,4) )
+  }
+
   test("read events"){
-    val d = new DataReader
-    d.reload( testFileEvents )
 
-    val tempSlice = d.events.events.slice(0, 3).toArray
-    assert( tempSlice(0)._2.eventCode == 1, "Event code 0 is incorrect!" )
-    assert( tempSlice(1)._2.eventCode == 8, "Event code 1 is incorrect!" )
-    assert( tempSlice(2)._2.eventCode == 6, "Event code 2 is incorrect!" )
+    val loaded = DataReader.load( testFileEvents ) // FileAdapterNEV.load( testFileEvents )
+    assert(loaded(0).isInstanceOf[XEvents])
+    val events = loaded(0).asInstanceOf[XEvents]
+    //println(events.portCount)
+    assert(events.portCount == 2)
+    assert( events.ports.toList == List(0, 100000001))
+    assert( events.lengths.toList == List(5, 2702) )
+    val eventArray = events.filterByPort(100000001).toArray
+    assert( eventArray(1-1).code == 1)
+    assert( eventArray(1-1).timestamp == -9223372015441894693L)
+    assert( eventArray(1-1).duration == 203562)
+    assert( eventArray(2702-1).code == 7)
+    assert( eventArray(2702-1).timestamp == -9223372012967273693L)
+    assert( eventArray(2702-1).duration == 203844)
 
-    assert( tempSlice(0)._1 == (21412881115L - 9223372036854775807L -1 ), "Event timestamp 0 is incorrect!" )
-    assert( tempSlice(1)._1 == (21413605959L - 9223372036854775807l -1 ), "Event timestamp 1 is incorrect!" )
-    assert( tempSlice(2)._1 == (21414493771L - 9223372036854775807l -1 ), "Event timestamp 2 is incorrect!" )
-
-    assert( d.events.length == 91, "Event counts are incorrect!" )
-    assert( d.events.getEventsByCode(8).size == 10, "Event extraction is not working!" )
   }
 
 }

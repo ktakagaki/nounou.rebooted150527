@@ -16,6 +16,6 @@ class FileAdapterXML extends FileAdapter {
   override val canWriteExt: List[String] = List[String]()
   override def writeImpl(file: File, data: X, options: OptFileAdapter) = writeCannotImpl(file, data, options)
   override val canLoadExt: List[String] = List[String]( "xml" )
-  override def loadImpl(file: File): List[X] = loadCannotImpl(file)
+  override def loadImpl(file: File): Array[X] = loadCannotImpl(file)
 
 }

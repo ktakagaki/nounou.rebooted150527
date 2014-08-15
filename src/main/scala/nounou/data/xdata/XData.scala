@@ -151,6 +151,13 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   final def readTraceAbsA(channels: Array[Int], ranges: Array[RangeFrSpecifier]): Array[Array[Array[Double]]] = ranges.map( readTraceAbsA(channels, _) )
 
 
+  private def convertArrayToRangeFr(array: Array[Int]): RangeFrSpecifier = {
+    loggerRequire(array != null, "Input array cannot be null!")
+    array.length match {
+      case 0 => RangeFrAll
+    }
+  }
+
 //  @deprecated
 //  final def readTrace(channel: Int, range: RangeFr, segment: Int): DV[Int] = readTrace(channel, range)
 //  @deprecated
@@ -259,48 +266,48 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
 
 
-/** Immutable version of XData.
-  *
-  * Must override the following:
-  * +  def readPointImpl(channel: Int, frame: Int, segment: Int): Int
-  * +  (from XFramesImmutable)
-  * ++   val segmentCount: Int
-  * ++   val length: : Vector[Int]
-  * ++   val segmentStartTSs: Vector[Long]
-  * ++   val sampleRate: Double
-  * +  (from XChannelsImmutable)
-  * ++   val channelNames: Vector[String]
-  * +  (from XAbsoluteImmutable)
-  * ++   val absGain: Double
-  * ++   val absOffset: Double
-  * ++   val absUnit: String
-  *
-  * Can override the following:
-  * +   def readTraceImpl(channel: Int, segment: Int): Vector[Int]
-  * +   def readTraceImpl(channel: Int, span:Span, segment: Int): Vector[Int]
-  * +   def readFrameImpl(frame: Int, segment: Int): Vector[Int]
-  * +   def readFrameImpl(frame: Int, channels: Vector[Int], segment: Int): Vector[Int]
-  * +  (from XAbsoluteImmutable)
-  * ++   val xBits: Int = 1024
-  */
-abstract class XDataImmutable extends XData with XFramesImmutable with XChannelsImmutable with XAbsoluteImmutable {
+///** Immutable version of XData.
+//  *
+//  * Must override the following:
+//  * +  def readPointImpl(channel: Int, frame: Int, segment: Int): Int
+//  * +  (from XFramesImmutable)
+//  * ++   val segmentCount: Int
+//  * ++   val length: : Vector[Int]
+//  * ++   val segmentStartTSs: Vector[Long]
+//  * ++   val sampleRate: Double
+//  * +  (from XChannelsImmutable)
+//  * ++   val channelNames: Vector[String]
+//  * +  (from XAbsoluteImmutable)
+//  * ++   val absGain: Double
+//  * ++   val absOffset: Double
+//  * ++   val absUnit: String
+//  *
+//  * Can override the following:
+//  * +   def readTraceImpl(channel: Int, segment: Int): Vector[Int]
+//  * +   def readTraceImpl(channel: Int, span:Span, segment: Int): Vector[Int]
+//  * +   def readFrameImpl(frame: Int, segment: Int): Vector[Int]
+//  * +   def readFrameImpl(frame: Int, channels: Vector[Int], segment: Int): Vector[Int]
+//  * +  (from XAbsoluteImmutable)
+//  * ++   val xBits: Int = 1024
+//  */
+//abstract class XDataImmutable extends XData with XFramesImmutable with XChannelsImmutable with XAbsoluteImmutable {
+//
+//
+//  //ToDo 4: channelNames as lazy val?
+//
+//  // <editor-fold defaultstate="collapsed" desc=" DataSource related ">
+//
+//  override def changedData(): Unit = logger.error("this is an immutable data source, and changedData() should not be invoked!")
+//  override def changedData(channel: Int): Unit = logger.error("this is an immutable data source, and changedData() should not be invoked!")
+//  override def changedData(channels: Vector[Int]): Unit = logger.error("this is an immutable data source, and changedData() should not be invoked!")
+//  override def changedTiming(): Unit = logger.error("this is an immutable data source, and changedTiming() should not be invoked!")
+//
+//  // </editor-fold>
+//
+//}
 
 
-  //ToDo 4: channelNames as lazy val?
-
-  // <editor-fold defaultstate="collapsed" desc=" DataSource related ">
-
-  override def changedData(): Unit = logger.error("this is an immutable data source, and changedData() should not be invoked!")
-  override def changedData(channel: Int): Unit = logger.error("this is an immutable data source, and changedData() should not be invoked!")
-  override def changedData(channels: Vector[Int]): Unit = logger.error("this is an immutable data source, and changedData() should not be invoked!")
-  override def changedTiming(): Unit = logger.error("this is an immutable data source, and changedTiming() should not be invoked!")
-
-  // </editor-fold>
-
-}
-
-
-abstract class XDataNullImpl extends XDataImmutable {
+class XDataNull extends XData {
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = 0
   override val absGain: Double = 1D
   override val absOffset: Double = 0D
@@ -311,22 +318,30 @@ abstract class XDataNullImpl extends XDataImmutable {
   override val segmentStartTs: Vector[Long] = Vector[Long]()
   override val sampleRate: Double = 1d
   override val layout: XLayout = XLayoutNull
-}
-
-object XDataNull extends XDataNull
-
-class XDataNull extends XDataNullImpl {
-  override def :::(x: X): XDataImmutable = x match {
+  override def :::(x: X): XData = x match {
     case XDataNull => this
     case _ => require(false, "cannot append incompatible data types (XDataNull)"); this
   }
   override def toString() = "XDataNull()"
+
+  /** Number of segments in data.
+    */
+  override val segmentCount: Int = 0
+
+  /** OVERRIDE: End timestamp for each segment. Implement by overriding _endTimestamp
+    */
+  override val segmentEndTs: scala.Vector[Long] = Vector[Long]()
 }
 
-object XDataAuxNull extends XDataNullImpl with XDataAux {
-  override def :::(x: X): XDataImmutable = x match {
-    case XDataAuxNull => this
+object XDataNull extends XDataNull
+
+
+class XDataAuxNull extends XDataNull with XDataAux {
+  override def :::(x: X): XDataAux = x match {
+    case _: XDataAux => this
     case _ => require(false, "cannot append incompatible data types (XDataAuxNull)"); this
   }
   override def toString() = "XDataAuxNull()"
 }
+
+object XDataAuxNull extends XDataAuxNull

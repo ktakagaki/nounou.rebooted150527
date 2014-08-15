@@ -1,28 +1,64 @@
 package nounou.data
 
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.TreeSet
 import scala.collection.immutable.TreeMap
 import nounou.data.traits.XConcatenatable
 
-/**Immutable class to encapsulate marked events in data recording, with onset time and duration.
- *
- * @author ktakagaki
+/**Database to encapsulate marked events in data recording.
+  * Events are stored as [[XEvent]] objects, which encapsulate timestamp, duration, code, and comment string.
+  * An [[XEvents]] database consists of TreeSet(s) of XEvents.
+  * Each event "port" has its own TreeSet---this allows different ports to have events with exactly the same timing.
+  * (TreeSet's with black-red trees cannot support keys with equivalent sorting values)
+  * @author ktakagaki
  */
-class XEvents(val events: TreeMap[Long, XEvent]) extends  X with XConcatenatable {
+class XEvents extends X with XConcatenatable {
 
-  lazy val length: Int = events.size
-  lazy val maxDuration: Long = events.map( _._2.duration).max
-  lazy val uniqueEventCodes = events.map(_._2.eventCode).toList.distinct.toVector
-  lazy val sortedEvents = new Array[TreeMap[Long,XEvent]]( uniqueEventCodes.length )
+  private var _database: TreeMap[Int, TreeSet[XEvent]] = new TreeMap[Int, TreeSet[XEvent]]()
 
-  def getEventsByCode( eventCode: Int ): TreeMap[Long, XEvent] = {
-    val codeIndex = uniqueEventCodes.indexOf( eventCode )
-    if( sortedEvents(codeIndex) == null ){
-      sortedEvents(codeIndex) = events.filter( _._2.eventCode == eventCode )
+  def lengths: Array[Int] = _database.values.map( _.size ).toArray
+  def ports: Array[Int] = _database.keys.toArray
+  def portCount: Int = _database.size
+
+  def addEvent( portEvent: (Int, XEvent) ): Unit = addEvent(portEvent._1, portEvent._2)
+  def addEvent( port: Int, xEvent: XEvent ): Unit = {
+    loggerRequire(port >= 0, "port specification {} must be >= zero!", port.toString)
+    if( !_database.contains(port) ){
+      _database = _database.+(port -> new TreeSet[XEvent]())
     }
-    sortedEvents(codeIndex)
+    _database(port).+=(xEvent)
   }
 
-  def apply(timeStamp: Long) = events.apply(timeStamp)
+  // <editor-fold defaultstate="collapsed" desc=" filterByPort/filterByPortCode ">
+
+  def filterByPort(port: Int): TreeSet[XEvent] = {
+    if( _database.contains(port) ) _database(port)
+    else new TreeSet[XEvent]()
+  }
+  def filterByPortA(port: Int) = filterByPort(port).toArray
+
+  def filterByPortCode(port: Int, code: Int): TreeSet[XEvent] = {
+    filterByPort(port).filter( p => p.code == code )
+  }
+  def filterByPortCodeA(port: Int, code: Int) = filterByPortCode(port, code).toArray
+
+  // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc=" toArray ">
+
+  def toArray(): Array[(Int, XEvent)] = {
+    val tempret: ArrayBuffer[(Int, XEvent)] = new ArrayBuffer[(Int, XEvent)]()
+    _database.keys.foreach( key => _database(key).foreach( event => tempret.+=( (key, event) ) ) )
+    tempret.toArray
+  }
+
+  // </editor-fold>
+
+
+//  lazy val maxDuration: Long = events.map( _._2.duration).max
+//  lazy val uniqueEventCodes = events.map(_._2.code).toList.distinct.toVector
+//  lazy val sortedEvents = new Array[TreeMap[Long,XEvent]]( uniqueEventCodes.length )
+
   //def nextEvent(timeStamp: Long): XEvent
   //def nextEvent(timeStamp: Long, eventCode: Int): XEvent
   //def previousEvent(timeStamp: Long): XEvent
@@ -33,17 +69,17 @@ class XEvents(val events: TreeMap[Long, XEvent]) extends  X with XConcatenatable
 
   // <editor-fold desc="XConcatenatable">
 
-  override def :::(that: X): XEvents = {
-    that match {
-      case x: XEvents => {
-        new XEvents( this.events ++ x.events )
-      }
-      case _ => {
-        require(false, "cannot concatenate different types!")
-        this
-      }
-    }
-  }
+  override def :::(that: X): XEvents = ???
+//    that match {
+//      case x: XEvents => {
+//        new XEvents( this._database ++ x._database)
+//      }
+//      case _ => {
+//        require(false, "cannot concatenate different types!")
+//        this
+//      }
+//    }
+//  }
 
   override def isCompatible(that: X): Boolean =
     that match {
@@ -57,11 +93,7 @@ class XEvents(val events: TreeMap[Long, XEvent]) extends  X with XConcatenatable
   // </editor-fold>
 
   override def toString() = {
-    "XEvents( " + length + " events total" + " )"
+    "XEvents( "// + length + " events total" + " )"
   }
 
-}
-
-object XEventsNull extends XEvents(TreeMap[Long, XEvent]()){
-  override def toString() = "XEventsNull"
 }
