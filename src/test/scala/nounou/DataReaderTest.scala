@@ -29,20 +29,20 @@ class DataReaderTest extends FunSuite {
 //
 //  }
 
-    val bigTestFilesHead = "V:/docs/k.VSDdata/project.SPP/Nlx/SPP010/2013-12-02_17-07-31/"
-    val bigTestFiles = Array[String](
-      bigTestFilesHead + "Tet4a.ncs",
-      bigTestFilesHead + "Tet4b.ncs",
-      bigTestFilesHead + "Tet4c.ncs",
-      bigTestFilesHead + "Tet4d.ncs"
-    )
-
-   test("Optimize masking") {
-     val reader = new DataReader
-     reader.load(bigTestFiles)
-     println(reader.toStringChain())
-     reader.maskMovementArtifacts(500d, 800d, 10d, 400d, 100, 150000)
-   }
-
+//    val bigTestFilesHead = "V:/docs/k.VSDdata/project.SPP/Nlx/SPP010/2013-12-02_17-07-31/"
+//    val bigTestFiles = Array[String](
+//      bigTestFilesHead + "Tet4a.ncs",
+//      bigTestFilesHead + "Tet4b.ncs",
+//      bigTestFilesHead + "Tet4c.ncs",
+//      bigTestFilesHead + "Tet4d.ncs"
+//    )
+//
+//   test("Optimize masking") {
+//     val reader = new DataReader
+//     reader.load(bigTestFiles)
+//     println(reader.toStringChain())
+//     reader.maskMovementArtifacts(500d, 800d, 10d, 400d, 100, 150000)
+//   }
+//
 
 }

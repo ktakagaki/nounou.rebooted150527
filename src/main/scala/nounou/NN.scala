@@ -1,9 +1,9 @@
 package nounou
 
-import breeze.numerics.round
 import nounou.data.{XSpike, XData, Frame, XTrodeN, ranges}
 
-/**
+/**A static class which encapsulates convenience functions from nounou for
+  * use in Mathematica/MatLab/Java
  * @author ktakagaki
  * @date 2/17/14.
  */
@@ -16,6 +16,7 @@ object NN {
   def OptSegmentNone() = nounou.OptSegmentNone
 
   // </editor-fold>
+
 
   // <editor-fold defaultstate="collapsed" desc=" RangeFrAll ">
 

@@ -3,14 +3,14 @@ package nounou.data
 import nounou._
 import scala.Vector
 import java.io.DataInput
-import nounou.data.traits.{XConcatenatable, XFramesImmutable, XAbsoluteImmutable}
+import nounou.data.traits.{XFramesImmutable, XConcatenatable, XFrames, XAbsolute}
 import breeze.linalg.{DenseVector => DV}
 import nounou.data.ranges.{RangeFrAll, RangeFr}
 
 /**
  * Created by Kenta on 12/14/13.
  */
-abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmutable with XConcatenatable {
+abstract class XDataChannel extends X with XFrames with XAbsolute with XConcatenatable {
 
   /**MUST OVERRIDE: name of the given channel.*/
   val channelName: String
@@ -71,7 +71,7 @@ abstract class XDataChannel extends X with XFramesImmutable with XAbsoluteImmuta
   override def isCompatible(that: X): Boolean = {
     that match {
       case x: XDataChannel => {
-        (super[XFramesImmutable].isCompatible(x) && super[XAbsoluteImmutable].isCompatible(x))
+        (super[XFrames].isCompatible(x) && super[XAbsolute].isCompatible(x))
       }
       case _ => false
     }
@@ -125,6 +125,14 @@ class XDataChannelNull extends XDataChannel {
   override val segmentLength: Vector[Int] = Vector[Int]()
   override val segmentStartTs: Vector[Long] = Vector(0L)
   override val sampleRate: Double = 1d
+
+  /** Number of segments in data.
+    */
+  override val segmentCount: Int = 0
+
+  /** OVERRIDE: End timestamp for each segment. Implement by overriding _endTimestamp
+    */
+  override val segmentEndTs: Vector[Long] = Vector[Long]()
 }
 
 class XDataChannelPreloaded(val data: Array[DV[Int]],
@@ -137,7 +145,7 @@ class XDataChannelPreloaded(val data: Array[DV[Int]],
                             override val channelName: String,
                             override val segmentStartTs: Vector[Long],
                             override val sampleRate: Double
- )  extends XDataChannel {
+ )  extends XDataChannel with XFramesImmutable{
 
   override lazy val segmentLength = data.map( _.length ).toVector
   def readPointImpl(frame: Int, segment: Int): Int = data(segment)(frame)

@@ -14,21 +14,21 @@ import nounou.DataReader
  */
 class FileLoaderNEXTest extends FunSuite {
 
-  val testFileEvents = new File( getClass.getResource("/_testFiles/NEX/130507/SE-CSC-Ch1.nex").getPath() )
-  //val fileString = "V:/data/disp/2013-11-05_15-15-06/SE-CSC-Ch1.nex"
-  val d = new DataReader
-  d.reload( testFileEvents )
-
-  println(d.header)
-  println(d.header("nexFileVersion"))
-val temp = d.header("nexFileVersion")
-  test("NEX file: header version"){ assert( d.header("nexFileVersion").value == 104 ) }
-  test("NEX file: header comment"){ assert( d.header("nexFileComment").value == "                                                                                                                                                                                                                                                              11" ) }
-  test("NEX file: header freq"){ assert( d.header("nexFileFreq").value == 30000D ) }
-  test("NEX file: header tbeg"){ assert( d.header("nexFileTBeg").value == 0 ) }
-  test("NEX file: header tend"){ assert( d.header("nexFileTEnd").value == 3.333333333333333E-04 ) }
-  test("NEX file: header nvar"){ assert( d.header("nexFileNVar").value == 1 ) }
-
+//  val testFileEvents = new File( getClass.getResource("/_testFiles/NEX/130507/SE-CSC-Ch1.nex").getPath() )
+//  //val fileString = "V:/data/disp/2013-11-05_15-15-06/SE-CSC-Ch1.nex"
+//  val d = new DataReader
+//  d.reload( testFileEvents )
+//
+//  println(d.header)
+//  println(d.header("nexFileVersion"))
+//val temp = d.header("nexFileVersion")
+//  test("NEX file: header version"){ assert( d.header("nexFileVersion").value == 104 ) }
+//  test("NEX file: header comment"){ assert( d.header("nexFileComment").value == "                                                                                                                                                                                                                                                              11" ) }
+//  test("NEX file: header freq"){ assert( d.header("nexFileFreq").value == 30000D ) }
+//  test("NEX file: header tbeg"){ assert( d.header("nexFileTBeg").value == 0 ) }
+//  test("NEX file: header tend"){ assert( d.header("nexFileTEnd").value == 3.333333333333333E-04 ) }
+//  test("NEX file: header nvar"){ assert( d.header("nexFileNVar").value == 1 ) }
+//
   }
 
 //  test("file 1: start time") {
