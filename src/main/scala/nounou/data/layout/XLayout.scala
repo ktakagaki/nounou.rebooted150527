@@ -1,7 +1,7 @@
 package nounou.data
 
 import javafx.scene.shape.Rectangle
-import nounou.data.traits.{XChannels, XConcatenatable, XChannelsImmutable}
+import nounou.data.traits.{XChannels, XConcatenatable}
 
 /**Mutable layout object, works for filtering/binning... //ToDo 3: make immutable layout object
  *

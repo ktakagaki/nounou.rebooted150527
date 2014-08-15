@@ -34,43 +34,43 @@ trait FileAdapter extends LoggingExt {
   /** The minimal requirement which a file loader must satisfy. Default is to throw error (i.e. cannot load files;
     * used for writer objects.)
     */
-  def loadImpl(file: File): List[X]
+  def loadImpl(file: File): Array[X]
   def loadCannotImpl(file: File) = {
     loggerError("Loading of file {} is not specified in this particular reader!", file)
     throw new IllegalArgumentException
   }
-  final def loadImpl(fileName: String): List[X] = loadImpl( new File(fileName) )
+  final def loadImpl(fileName: String): Array[X] = loadImpl( new File(fileName) )
 
 
 
   // <editor-fold defaultstate="collapsed" desc=" loading ">
 
   trait CanLoad[FileSpec]{
-    def apply(file: FileSpec): List[X]
+    def apply(file: FileSpec): Array[X]
   }
 
 
   /** Load a certain file/filename/files/filenames. Will throw error if not readable with this particular adaptor
     *
     */
-  def load[Input](list: Input)(implicit canLoad: CanLoad[Input]): List[X] = canLoad(list)
+  def load[Input](list: Input)(implicit canLoad: CanLoad[Input]): Array[X] = canLoad(list)
 
 
   implicit val canLoadFile: CanLoad[File] = new CanLoad[File] {
-    def apply(file: File): List[X] = loadImpl(file)
+    def apply(file: File): Array[X] = loadImpl(file)
   }
   implicit val canLoadString: CanLoad[String] = new CanLoad[String] {
-    def apply(string: String): List[X] = loadImpl( new File(string) )
+    def apply(string: String): Array[X] = loadImpl( new File(string) )
   }
 
   implicit val canLoadFiles: CanLoad[List[File]] = new CanLoad[List[File]] {
-    def apply(list: List[File]): List[X] = {
-      list.flatMap( loadImpl(_) )
+    def apply(list: List[File]): Array[X] = {
+      list.flatMap( loadImpl(_) ).toArray
     }
   }
 
   implicit val canLoadStrings: CanLoad[List[String]] = new CanLoad[List[String]] {
-    def apply(list: List[String]): List[X] = {
+    def apply(list: List[String]): Array[X] = {
       load( list.map(new File(_)) )
     }
   }

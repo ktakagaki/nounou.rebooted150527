@@ -20,7 +20,7 @@ object FileAdapterNEX extends FileAdapter {
   override val canLoadExt: List[String] = List[String]( "ncs" )
 
 
-  override def loadImpl(file: File): List[X] = {
+  override def loadImpl(file: File): Array[X] = {
 
     val fHand = new RandomAccessFile(file, "r")(ByteConverterLittleEndian)
     var tempRet: ArrayBuffer[X] = ArrayBuffer[X]()
@@ -128,7 +128,7 @@ object FileAdapterNEX extends FileAdapter {
        } /*recType match*/
 //    } /*for(i <- 1 to nexFileNVar)*/
 
-    tempRet.toList
+    tempRet.toArray
   }//loadImpl
 
 

@@ -16,7 +16,7 @@ val tempMap2 = mutable.HashMap[Int, String]()
 tempMap2 += (1 -> "one")
 tempMap2 += (5 -> "five")
 tempMap2 += (2 -> "two")
-tempMap2
+tempMap2 += (5 -> "fiveB")
 
 TreeMap(tempMap2.toArray:_*)
 

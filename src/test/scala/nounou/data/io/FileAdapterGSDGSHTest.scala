@@ -26,13 +26,13 @@ class FileAdapterGSDGSHTest extends FunSuite {
 
   test("memory leak"){
 
-    val dataList = FileAdapterGSDGSH.load("E:/data/Micam/dc-stimulation/140224/mag140224006A.gsd")
-    //dataReader.load()
-    val dataReader = new DataReader()
-    dataReader.load("E:/data/Micam/dc-stimulation/140224/mag140224006A.gsd")
-
-    println(dataReader.header.toString)
-    println(dataReader.data.toStringChain)
+//    val dataList = FileAdapterGSDGSH.load("E:/data/Micam/dc-stimulation/140224/mag140224006A.gsd")
+//    //dataReader.load()
+//    val dataReader = new DataReader()
+//    dataReader.load("E:/data/Micam/dc-stimulation/140224/mag140224006A.gsd")
+//
+//    println(dataReader.header.toString)
+//    println(dataReader.data.toStringChain)
 
 //    println(dataList(0).toString)
 //    println(dataList(1).toString)

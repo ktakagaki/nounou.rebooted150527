@@ -79,15 +79,15 @@ trait XAbsolute extends X {
   }
 }
 
-trait XAbsoluteImmutable extends XAbsolute {
-
-  override val xBits = 1024
-  /**(xBits:Int).toDouble buffered, since it will be used often.
-    */
-  override lazy val xBitsD = xBits.toDouble
-
-  override val absGain: Double
-  override val absOffset: Double
-  override val absUnit: String
-
-}
+//trait XAbsoluteImmutable extends XAbsolute {
+//
+//  override val xBits = 1024
+//  /**(xBits:Int).toDouble buffered, since it will be used often.
+//    */
+//  override lazy val xBitsD = xBits.toDouble
+//
+//  override val absGain: Double
+//  override val absOffset: Double
+//  override val absUnit: String
+//
+//}

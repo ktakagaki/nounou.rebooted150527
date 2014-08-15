@@ -20,17 +20,17 @@ class FileAdapterKlustaDATTest extends FunSuite {
     bigTestFilesHead + "Tet4d.ncs"
   )
 
-  test("Speed Optimization") {
-    val reader = new DataReader
-    reader.load(bigTestFiles)
-    println(reader.toStringChain())
-
-    val writeData =  new XDataFilterMask( reader.dataORI, reader.mask)
-    //val writeData =  new XDataFilterMask( new XDataFilterBuffer( reader.dataORI ), reader.mask)
-
-    FileAdapterKlustaDAT.write( bigTestFilesHead+"test", writeData)
-
-  }
+//  test("Speed Optimization") {
+//    val reader = new DataReader
+//    reader.load(bigTestFiles)
+//    println(reader.toStringChain())
+//
+//    val writeData =  new XDataFilterMask( reader.dataORI, reader.mask)
+//    //val writeData =  new XDataFilterMask( new XDataFilterBuffer( reader.dataORI ), reader.mask)
+//
+//    FileAdapterKlustaDAT.write( bigTestFilesHead+"test", writeData)
+//
+//  }
 
 
 

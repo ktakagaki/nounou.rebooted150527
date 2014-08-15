@@ -1,12 +1,14 @@
 package nounou.data
 
 import nounou._
-import nounou.data.traits.XConcatenatable
+import nounou.data.traits.{XFramesImmutable, XConcatenatable}
 
 /**
  * Created by Kenta on 12/15/13.
  */
- class XDataChannelArray(val array: Vector[XDataChannel], override val layout: XLayout = XLayoutNull) extends XDataImmutable with XConcatenatable{
+ class XDataChannelArray(val array: Vector[XDataChannel], override val layout: XLayout = XLayoutNull)
+  extends XData with XConcatenatable with XFramesImmutable {
+  //ToDo 2: Clarify what is exactly immutable, and enforce
 
   def this( dataChannel: XDataChannel ) = this( Vector[XDataChannel]( dataChannel ) )
 
