@@ -15,17 +15,17 @@ object RangeTsEvent {
 }
 
 
-class RangeTsEvent(val eventTS: Long, val preFrames: Int, val postFrames: Int, val optSegment: OptSegment) extends RangeFrSpecifier {
+class RangeTsEvent(val eventTS: Long, val preFrames: Int, val postFrames: Int/*, val optSegment: OptSegment*/) extends RangeFrSpecifier {
 
-  def segment() = optSegment.segment
+//  def segment() = optSegment.segment
 
-  def this(eventTS: Long, preFrames: Int, postFrames: Int) = this(eventTS, preFrames, postFrames, OptSegmentNone)
+//  def this(eventTS: Long, preFrames: Int, postFrames: Int) = this(eventTS, preFrames, postFrames, OptSegmentNone)
 
   val step = 1
 
   def getRangeFr(x: XFrames): RangeFr = {
-    val eventFrame = x.tsToFrsg(eventTS)
-    RangeFr(eventFrame._1 - preFrames*step, eventFrame._1 + postFrames*step, step, OptSegment(eventFrame._2))
+    val eventFrame = x.tsToFr(eventTS)//x.tsToFrsg(eventTS)
+    RangeFr(eventFrame - preFrames*step, eventFrame + postFrames*step, step/*, OptSegment(eventFrame._2)*/)
   }
 
 }

@@ -1,7 +1,7 @@
 package nounou.data
 
 import breeze.linalg.{DenseVector, DenseMatrix}
-import nounou.OptSegment
+//import nounou.OptSegment
 import nounou.data.ranges.RangeFr
 
 object XSpike {
@@ -9,17 +9,17 @@ object XSpike {
   def toArray(xSpike : XSpike): Array[Array[Int]] = xSpike.toArray
   def toArray(xSpikes: Array[XSpike]): Array[Array[Array[Int]]] = xSpikes.map( _.toArray )
 
-  def readSpikes(xData: XData, channels: Array[Int], xFrames: Array[Frame], length: Int, trigger: Int) = {
+  def readSpikes(xData: XData, channels: Array[Int], xFrames: Array[Int], length: Int, trigger: Int) = {
     xFrames.map( readSpike(xData, channels, _, length, trigger))
   }
-  def readSpike(xData: XData, channels: Array[Int], xFrame: Frame, length: Int, trigger: Int) = {
+  def readSpike(xData: XData, channels: Array[Int], frame: Int, length: Int, trigger: Int) = {
     val tempWF = new DenseVector( new Array[Int]( channels.length * length ) )
     for(ch <- 0 until channels.length){
       tempWF(ch*length until (ch+1)*length) :=
-        xData.readTrace(ch, RangeFr(xFrame.frame-trigger, xFrame.frame-trigger + length - 1, step = 1, OptSegment(xFrame.segment)))
+        xData.readTrace(ch, RangeFr(frame-trigger, frame-trigger + length - 1, step = 1))//, OptSegment(xFrame.segment)))
     }
     new XSpike( new DenseMatrix( rows = length, cols = channels.length, data = tempWF.toArray ),
-                xFrame, trigger, unitNo = 0)
+                frame, trigger, unitNo = 0)
   }
 
 }
@@ -29,7 +29,7 @@ object XSpike {
  * @date 07/14/2014.
  */
 class XSpike(val waveform: DenseMatrix[Int],
-             val xFrame: Frame,
+             val frame: Int,
              val trigger: Int = -1,
              val unitNo: Int = 0) extends X {
 
@@ -44,10 +44,10 @@ class XSpike(val waveform: DenseMatrix[Int],
 
 
   def toArray() = Array.tabulate(channels)(p => waveform( :: , p ).toArray )
-  def frame() = xFrame.frame
-  def segment() = xFrame.segment
+//  def frame() = xFrame.frame
+//  def segment() = xFrame.segment
 
-  def sort(unitNo: Int) = new XSpike(waveform, xFrame, unitNo, trigger)
+  def sort(unitNo: Int) = new XSpike(waveform, frame, unitNo, trigger)
 
   override def isCompatible(that: X) = false
 }

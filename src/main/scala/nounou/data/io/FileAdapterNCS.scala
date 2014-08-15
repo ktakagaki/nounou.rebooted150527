@@ -205,8 +205,7 @@ class XDataChannelNCS
                        override val scaleMin: Int,
                        override val segmentLength: Vector[Int],
                        override val segmentStartTs: Vector[Long],
-                       override val channelName: String
-                       ) extends XDataChannelFilestream with XFramesImmutable {
+                       override val channelName: String     ) extends XDataChannelFilestream with XFramesImmutable {
 
   val t = FileAdapterNCS
   override val absOffset: Double = t.absOffset
@@ -221,22 +220,23 @@ class XDataChannelNCS
 
   def recordStartByte(recNo: Int) = t.recordStartByte(recNo)
 
-  def frameSegmentToRecordIndex(frame: Int, segment: Int) = {
-    val cumFrame = segmentStartFrames(segment) + frame
-    ( cumFrame / t.recordSampleCount, cumFrame % t.recordSampleCount)
+  def frameToRecordIndex(frame: Int/*, segment: Int*/) = {
+    ( frame / t.recordSampleCount, frame % t.recordSampleCount)
+    //val cumFrame = segmentStartFrames(segment) + frame
+    //( cumFrame / t.recordSampleCount, cumFrame % t.recordSampleCount)
   }
 
 
 
-  def readPointImpl(frame: Int, segment: Int): Int = {
-    val (record, index) = frameSegmentToRecordIndex(frame, segment)
+  override def readPointImpl(frame: Int/*, segment: Int*/): Int = {
+    val (record, index) = frameToRecordIndex(frame)//frameSegmentToRecordIndex(frame, segment)
     fileHandle.seek( dataByteLocationRI( record, index ) )
     fileHandle.readInt16 * xBits
   }
 
-  override def readTraceImpl(range: Range.Inclusive, segment: Int): DV[Int] = {
-    var (currentRecord: Int, currentIndex: Int) = frameSegmentToRecordIndex( range.start, segment )
-    val (endReadRecord: Int, endReadIndex: Int) = frameSegmentToRecordIndex( range.end, segment ) //range is inclusive of lastValid
+  override def readTraceImpl(range: Range.Inclusive/*, segment: Int*/): DV[Int] = {
+    var (currentRecord: Int, currentIndex: Int) = frameToRecordIndex(range.start)//frameSegmentToRecordIndex( range.start, segment )
+    val (endReadRecord: Int, endReadIndex: Int) = frameToRecordIndex(range.end)//frameSegmentToRecordIndex( range.end, segment ) //range is inclusive of lastValid
 
     //ToDo1 program step
     val step = range.step

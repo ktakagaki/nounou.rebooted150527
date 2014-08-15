@@ -33,18 +33,18 @@ class XDataFilterInvert(override val upstream: XData ) extends XDataFilter( upst
     else "XDataFilterInvert: off (inverted=false)"
   }
 
-  override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
+  override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int =
     if(inverted){
-      - upstream.readPointImpl(channel, frame, segment)
+      - upstream.readPointImpl(channel, frame)//, segment)
     } else {
-      upstream.readPointImpl(channel, frame, segment)
+      upstream.readPointImpl(channel, frame)//, segment)
     }
 
-  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DenseVector[Int] =
+  override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/): DenseVector[Int] =
     if(inverted){
-      - upstream.readTraceImpl(channel, range, segment)
+      - upstream.readTraceImpl(channel, range)//, segment)
     } else {
-      upstream.readTraceImpl(channel, range, segment)
+      upstream.readTraceImpl(channel, range)//, segment)
     }
 
 }

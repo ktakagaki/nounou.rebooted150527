@@ -1,6 +1,6 @@
 package nounou.data.traits
 
-import nounou.data.{Frame, X}
+import nounou.data.X
 import breeze.numerics.round
 import nounou.data.ranges.RangeFr
 
@@ -32,10 +32,19 @@ trait XFrames extends X {
   final def segmentLengthA = segmentLength.toArray
   /**Length in frames of data. Use [[segmentLength]] instead, for data which has more than one segment.
     */
-  final def length: Long = {
-    errorIfMultipleSegments("length", "segmentLength(segment: Int)")
-    segmentLength(0)
-  }
+  final def length: Int = segmentLength.foldLeft(0)( _ + _ )
+//    {
+//      errorIfMultipleSegments("length", "segmentLength(segment: Int)")
+//      segmentLength(0)
+//    }
+
+  /** OVERRIDE: List of starting frames for each segment.
+    */
+  def segmentStartFr: Vector[Int] = segmentLength.scanLeft(0){ _ + _ }.init
+
+  /**Return [[segmentStartFr]] as Array, for easy access from Java/Mathematica/MatLab.
+    */
+  final def segmentStartFrA = segmentStartFr.toArray
 
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc="segment timestamps: segmentStartTs/startTs/segmentEndTs/lastTs ">
@@ -69,13 +78,15 @@ trait XFrames extends X {
 
   /** Is this frame valid?
     */
-  final def isValidFr(frame: Int, segment: Int): Boolean = (0 <= frame && frame < segmentLength(segment))
-  /** Is this frame valid in the current segment?
-    */
-  final def isValidFr(frame: Int): Boolean = isValidFr(frame, 0)//currentSegment)
+  final def isValidFr(frame: Int/*, segment: Int*/): Boolean = (0 <= frame && frame < length)//segmentLength(segment))
+//  /** Is this frame valid in the current segment?
+//    */
+//  final def isValidFr(frame: Int): Boolean = isValidFr(frame, 0)//currentSegment)
 
-  final def isRealisticFr(frame: Int, segment: Int): Boolean = (-100000 <= frame && frame < segmentLength(segment) + 100000)
-  final def isRealisticFr(range: Range.Inclusive, segment: Int): Boolean = (-100000 <= range.start && range.end < segmentLength(segment) + 100000)
+  final def isRealisticFr(frame: Int/*, segment: Int*/): Boolean =
+    (-100000 <= frame && frame < length /*segmentLength(segment)*/ + 100000)
+  final def isRealisticFr(range: Range.Inclusive/*, segment: Int*/): Boolean =
+    (-100000 <= range.start && range.end < length /*segmentLength(segment)*/ + 100000)
 
   // </editor-fold>
 
@@ -98,20 +109,31 @@ trait XFrames extends X {
 
   // <editor-fold defaultstate="collapsed" desc="Time specification: conversion between frame/segment and TS">
 
-  final def frToTs(xFrame: Frame): Long = frToTsImpl(xFrame.frame, xFrame.segment)
-  final def frToTs(frameSegment:(Int, Int)): Long = frToTsImpl(frameSegment._1, frameSegment._2)
+//  final def frToTs(xFrame: Frame): Long = frToTsImpl(xFrame.frame, xFrame.segment)
+//  final def frToTs(frameSegment:(Int, Int)): Long = frToTsImpl(frameSegment._1, frameSegment._2)
   final def frToTs(frame:Int): Long = {
-    errorIfMultipleSegments("length", "segmentLength(segment: Int)")
-    frToTsImpl(frame, 0)
+    if(segmentCount==0) segmentStartTs(0) + (frame.toDouble * tsPerFr).toLong
+    else {
+      var seg = 1
+      var continue = true
+      while (continue && seg < segmentCount) {
+        if (frame >= segmentStartFr(seg)) seg += 1
+        else continue = false
+      }
+      segmentStartTs(seg-1) + (frame.toDouble * tsPerFr).toLong
+    }
+//    errorIfMultipleSegments("length", "segmentLength(segment: Int)")
+//    frToTsImpl(frame, 0)
   }
-  private def frToTsImpl(frame:Int, segment: Int): Long = {
-    require( isValidFr(frame, segment) )
-    segmentStartTs(segment) + (frame.toDouble * tsPerFr).toLong
-  }
-  /** Absolute timestamp of the given data frame index (in microseconds).
-    */
-  @deprecated
-  final def frsgToTs(frame:Int, segment: Int): Long = frToTsImpl(frame, segment)
+
+//  private def frToTsImpl(frame:Int, segment: Int): Long = {
+//    loggerRequire( isValidFr(frame/*, segment*/) )
+//    segmentStartTs(segment) + (frame.toDouble * tsPerFr).toLong
+//  }
+//  /** Absolute timestamp of the given data frame index (in microseconds).
+//    */
+//  @deprecated
+//  final def frsgToTs(frame:Int, segment: Int): Long = frToTsImpl(frame, segment)
 
   /** Closest frame/segment index to the given absolute timestamp. Will give frames which are out of range (i.e. negative, etc)
     * if necessary.
@@ -203,8 +225,8 @@ trait XFrames extends X {
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc="Time specification: conversion between ts and ms">
 
-  final def tsToMs(timestamp: Long): Double = frToMs( tsToFrsg(timestamp)._1 )
-  final def mssgToTs(ms: Double, segment: Int): Long = frToTs( msToFr(ms), segment )
+  final def tsToMs(timestamp: Long): Double = frToMs( tsToFr(timestamp)) //._1 )
+//  final def mssgToTs(ms: Double, segment: Int): Long = frToTs( msToFr(ms), segment )
   final def msToTs(ms: Double): Long = frToTs( msToFr(ms) )
 
   // </editor-fold>

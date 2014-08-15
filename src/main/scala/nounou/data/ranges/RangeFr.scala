@@ -1,8 +1,8 @@
 package nounou.data.ranges
 
-import nounou._
+//import nounou._
 import nounou.util.LoggingExt
-import nounou.data.{Frame}
+//import nounou.data.{Frame}
 import nounou.data.traits.XFrames
 
 // <editor-fold defaultstate="collapsed" desc=" RangeFrAll ">
@@ -18,32 +18,32 @@ import nounou.data.traits.XFrames
  */
 object RangeFr {
 
-  final def apply(start: Int, last: Int, step: Int, optSegment: OptSegment) = new RangeFr(start, last, step, optSegment)
+//  final def apply(start: Int, last: Int, step: Int, optSegment: OptSegment) = new RangeFr(start, last, step, optSegment)
   final def apply(start: Int, last: Int, step: Int) = new RangeFr(start, last, step)
-  final def apply(start: Int, last: Int, optSegment: OptSegment) = new RangeFr(start, last, optSegment)
+//  final def apply(start: Int, last: Int, optSegment: OptSegment) = new RangeFr(start, last, optSegment)
   final def apply(start: Int, last: Int) = new RangeFr(start, last)
-
-  @deprecated
-  def apply(startFr: Frame, lastFr: Frame, step: Int) = {
-    loggerRequire( startFr.segment == lastFr.segment,
-      "RangeFr cannot span segments. startFr segment={}, endFr segment={}", startFr.segment.toString, lastFr.segment.toString)
-    new RangeFr(startFr.frame, lastFr.frame, step, OptSegment(startFr.segment))
-  }
+//
+//  @deprecated
+//  def apply(startFr: Frame, lastFr: Frame, step: Int) = {
+//    loggerRequire( startFr.segment == lastFr.segment,
+//      "RangeFr cannot span segments. startFr segment={}, endFr segment={}", startFr.segment.toString, lastFr.segment.toString)
+//    new RangeFr(startFr.frame, lastFr.frame, step, OptSegment(startFr.segment))
+//  }
 
 }
 
-class RangeFr(val start: Int, val last: Int, val step: Int, optSegment: OptSegment)
+class RangeFr(val start: Int, val last: Int, val step: Int)//, optSegment: OptSegment)
   extends RangeFrSpecifier with LoggingExt {
 
-  def this(start: Int, last: Int, step: Int) = this(start, last, step, OptSegmentNone)
-  def this(start: Int, last: Int, optSegment: OptSegment) = this(start, last, 1, optSegment)
-  def this(start: Int, last: Int) = this(start, last, 1, OptSegmentNone)
+//  def this(start: Int, last: Int, step: Int) = this(start, last, step, OptSegmentNone)
+//  def this(start: Int, last: Int, optSegment: OptSegment) = this(start, last, 1, optSegment)
+  def this(start: Int, last: Int) = this(start, last, 1)//, OptSegmentNone)
 
   loggerRequire( start <= last, "RangeFr requires start <= last. start={}, last={}", start.toString, last.toString)
 
-  val segment = optSegment.segment
+//  val segment = optSegment.segment
 
-  override def toString() = "RangeFr(" + start + ", " + last + ", " + step + ", " + optSegment.toString + ")"
+  override def toString() = "RangeFr(" + start + ", " + last + ", " + step + ")"// + optSegment.toString + ")"
 
   // <editor-fold defaultstate="collapsed" desc=" protected utility functions: intervalContains/intervalMod ">
 
@@ -70,7 +70,7 @@ class RangeFr(val start: Int, val last: Int, val step: Int, optSegment: OptSegme
 
   /** Inclusive first valid frame, taking into account step and overhang
     */
-  def firstValid(data: XFrames): Int = firstValid(data.segmentLength(segment))
+  def firstValid(data: XFrames): Int = firstValid(data.length)//segmentLength(segment))
   private var fvBuffTL = -1
   private var fvBuff = - 156111
   /** Inclusive first valid frame, taking into account step and overhang
@@ -95,7 +95,7 @@ class RangeFr(val start: Int, val last: Int, val step: Int, optSegment: OptSegme
   }
   /** Inclusive last valid frame, taking into account step and overhang
     */
-  def lastValid(data: XFrames): Int = lastValid(data.segmentLength(segment))
+  def lastValid(data: XFrames): Int = lastValid(data.length)//segmentLength(segment))
   /** Valid lastValid frame, taking into account step and overhang
     */
   private var lvBuffTL = -1
@@ -147,7 +147,7 @@ class RangeFr(val start: Int, val last: Int, val step: Int, optSegment: OptSegme
 
   /**range length, can include zero padding if start<0 or totalLength<=end
     */
-  def length(data: XFrames): Int = length( data.segmentLength(start) )
+  def length(data: XFrames): Int = length( data.length )//data.segmentLength(start) )
 
   // </editor-fold>
 
@@ -181,7 +181,7 @@ class RangeFr(val start: Int, val last: Int, val step: Int, optSegment: OptSegme
   /** Whether the frame range is completely contained within available data.
     * @param xFrames data object to which to apply the frames
     */
-  def isFullyValid(xFrames: XFrames): Boolean = isFullyValid( xFrames.segmentLength(segment) )
+  def isFullyValid(xFrames: XFrames): Boolean = isFullyValid( xFrames.length )//segmentLength(segment) )
 
   /** Whether the frame range is completely contained within available data.
     * @param totalLength full length of this segment in frames, used to realize with RangeFr.all()
@@ -200,7 +200,7 @@ class RangeFr(val start: Int, val last: Int, val step: Int, optSegment: OptSegme
   def getValidRange(totalLength: Int): Range.Inclusive = {
     new Range.Inclusive( firstValid(totalLength), lastValid(totalLength), step)
   }
-  override def getValidRange(xFrames: XFrames): Range.Inclusive = getValidRange(xFrames.segmentLength( segment ))
+  override def getValidRange(xFrames: XFrames): Range.Inclusive = getValidRange(xFrames.length)//segmentLength( segment ))
 
   // </editor-fold>
 

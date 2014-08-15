@@ -11,12 +11,12 @@ object RangeTs {
 
   //class All(step: Double) extends RangeMs(0, 0, step, true)
 
-  /** Gives a [[nounou.data.ranges.RangeFrSpecifier]] object which specifies
-    * start, end, and step based on timestamps (absolute microseconds).
-    * @param step must be -1 (default; one data frame step) or a real frame step that amounts to > 0
-    *             when converted with the appropriate frame rate
-    */
-  def apply(startTs: Long, lastTs: Long, step: Long, optSegment: OptSegment) = new RangeTs(startTs, lastTs, step, optSegment)
+//  /** Gives a [[nounou.data.ranges.RangeFrSpecifier]] object which specifies
+//    * start, end, and step based on timestamps (absolute microseconds).
+//    * @param step must be -1 (default; one data frame step) or a real frame step that amounts to > 0
+//    *             when converted with the appropriate frame rate
+//    */
+//  def apply(startTs: Long, lastTs: Long, step: Long, optSegment: OptSegment) = new RangeTs(startTs, lastTs, step, optSegment)
 
   /** Gives a [[nounou.data.ranges.RangeFrSpecifier]] object which specifies
     * start, end, and step based on timestamps (absolute microseconds).
@@ -25,11 +25,11 @@ object RangeTs {
     */
   def apply(startTs: Long, lastTs: Long, step: Long) = new RangeTs(startTs, lastTs, step)
 
-  /** Gives a [[nounou.data.ranges.RangeFrSpecifier]] object which specifies
-    * start, end, and step based on timestamps (absolute microseconds).
-    * Step size will be a default value of 1 data frame.
-    */
-  def apply(startTs: Long, lastTs: Long, optSegment: OptSegment) = new RangeTs(startTs, lastTs, optSegment)
+//  /** Gives a [[nounou.data.ranges.RangeFrSpecifier]] object which specifies
+//    * start, end, and step based on timestamps (absolute microseconds).
+//    * Step size will be a default value of 1 data frame.
+//    */
+//  def apply(startTs: Long, lastTs: Long, optSegment: OptSegment) = new RangeTs(startTs, lastTs, optSegment)
 
   /** Gives a [[nounou.data.ranges.RangeFrSpecifier]] object which specifies
     * start, end, and step based on timestamps (absolute microseconds).
@@ -39,13 +39,13 @@ object RangeTs {
 
 }
 
-class RangeTs(val startTs: Long, val lastTs: Long, val stepTs: Long, val optSegment: OptSegment) extends RangeFrSpecifier {
+class RangeTs(val startTs: Long, val lastTs: Long, val stepTs: Long/*, val optSegment: OptSegment*/) extends RangeFrSpecifier {
 
-  def segment() = optSegment.segment
+//  def segment() = optSegment.segment
 
-  def this(startTs: Long, endTs: Long, stepTs: Long) = this(startTs, endTs, stepTs, OptSegmentNone)
-  def this(startTs: Long, endTs: Long, optSegment: OptSegment) = this(startTs, endTs, -1L, optSegment)
-  def this(startTs: Long, endTs: Long) = this(startTs, endTs, -1L, OptSegmentNone)
+//  def this(startTs: Long, endTs: Long, stepTs: Long) = this(startTs, endTs, stepTs, OptSegmentNone)
+//  def this(startTs: Long, endTs: Long, optSegment: OptSegment) = this(startTs, endTs, -1L, optSegment)
+  def this(startTs: Long, endTs: Long) = this(startTs, endTs, -1L)//, OptSegmentNone)
 
   def getRangeFr(x: XFrames): RangeFr = {
 
@@ -55,11 +55,11 @@ class RangeTs(val startTs: Long, val lastTs: Long, val stepTs: Long, val optSegm
       ( x.sampleRate * stepTs / 1000000d ).toInt
     }
 
-    val startReal = x.tsToFrsg(startTs) //ToDo 2: expand to send segment info too in RangeFr
-    val endReal = x.tsToFrsg(lastTs)
-    loggerRequire(startReal._2 == endReal._2, "The two specified timestamps belong to different recording segments {}  and {}.", startReal._2.toString, endReal._2.toString)
+    val startReal = x.tsToFr(startTs)//sg(startTs) //ToDo 2: expand to send segment info too in RangeFr
+    val endReal = x.tsToFr(lastTs)//sg(lastTs)
+//    loggerRequire(startReal._2 == endReal._2, "The two specified timestamps belong to different recording segments {}  and {}.", startReal._2.toString, endReal._2.toString)
 
-    RangeFr(startReal._1, endReal._1, stepReal, OptSegment(segment))
+    RangeFr(startReal, endReal, stepReal)//, OptSegment(segment))
   }
 
 }

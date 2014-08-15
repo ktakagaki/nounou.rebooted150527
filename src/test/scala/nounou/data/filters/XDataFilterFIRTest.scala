@@ -1,6 +1,6 @@
 package nounou.data.filters
 
-import nounou.OptSegment
+//import nounou.OptSegment
 import org.scalatest.FunSuite
 import nounou.data.io.{XDataChannelNCS, FileAdapterNCS}
 import nounou.data.{XDataChannel, XDataChannelArray}
@@ -20,7 +20,7 @@ class XDataFilterFIRTest extends FunSuite {
     filterObject.setFilterHz(5d, 10d)
 //    for( count <- 0 until 2 ){
 //      filterObject.setFilterHz(10d, 20d)
-      filterObject.readTrace(0, RangeFr(0, 32000*100, OptSegment(0)))
+//      filterObject.readTrace(0, RangeFr(0, 32000*100, OptSegment(0)))
 //    }
   }
 }
