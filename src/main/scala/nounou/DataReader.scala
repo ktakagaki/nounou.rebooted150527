@@ -77,16 +77,16 @@ class DataReader extends LazyLogging {
     val dataDecimateBuf: XDataFilterBuffer = new XDataFilterBuffer( dataDecimate )
       val dataFIR: XDataFilterFIR = new XDataFilterFIR( dataDecimateBuf )
       val dataStats: XDataFilterStatistics = new XDataFilterStatistics( dataDecimateBuf )
-      val dataRMSFIR: XDataFilterFIR = new XDataFilterFIR( dataDecimateBuf )
-        val dataRMS: XDataFilterRMS = new XDataFilterRMS( dataRMSFIR ) //new XDataFilterDownsample( dataRMSFIR, 5 ) )
-      val dataMAX: XDataFilterMinMaxAbs = new XDataFilterMinMaxAbs( dataDecimateBuf )
+//      val dataRMSFIR: XDataFilterFIR = new XDataFilterFIR( dataDecimateBuf )
+//        val dataRMS: XDataFilterRMS = new XDataFilterRMS( dataRMSFIR ) //new XDataFilterDownsample( dataRMSFIR, 5 ) )
+//      val dataMAX: XDataFilterMinMaxAbs = new XDataFilterMinMaxAbs( dataDecimateBuf )
 
   def setData(x: XData): Unit = {
     dataORI.heldData = x
     if(dataORI.sampleRate > 2000 && dataORI.segmentLength.reduce(_+_) > 200000) dataDecimate.factor_=(math.min(16, (dataORI.sampleRate / 2000).toInt))
-    val halfWindow = (dataRMSFIR.sampleRate * 0.05).toInt //50 ms
-    dataRMS.setHalfWindow(halfWindow)
-    dataMAX.setHalfWindow(halfWindow)
+//    val halfWindow = (dataRMSFIR.sampleRate * 0.05).toInt //50 ms
+//    dataRMS.setHalfWindow(halfWindow)
+//    dataMAX.setHalfWindow(halfWindow)
   }
   def setDataAux(x: XData): Unit = {
     dataAuxORI.heldData = x
@@ -101,22 +101,22 @@ class DataReader extends LazyLogging {
 
 //    val stepSize = (dataRMSFIR.sampleRate * 0.05).toInt //100 ms
 //    val maskHalfWindow = 150L * 1000L // 150 ms
-    dataRMSFIR.setTaps(64)
-    dataRMSFIR.setFilterHz(f0, f1)
-
-    val rmsThreshold = dataRMS.absToInternal( rmsAbsThreshold )
-    val absThreshold = dataRMS.absToInternal( absAbsThreshold )
-
-    for(seg <- 0 until dataRMS.segmentCount)
-    for(frame <- 0 until dataRMS.segmentLength(seg) by stepSize ) {
-      if( mean( (for(ch <- (0 until dataMAX.channelCount) ) yield dataMAX.readPoint(ch, frame, seg)).toVector ) >= absThreshold ||
-            mean( (for(ch <- (0 until dataRMS.channelCount) ) yield dataRMS.readPoint(ch, frame, seg)).toVector ) >= rmsThreshold ){
-        val frameTs = dataRMS.frsgToTs(frame, seg)
-        mask.mask( frameTs - maskHalfWindow, frameTs + maskHalfWindow )
-      }
-    }
-
-    mask.eliminateOverlapping()
+//    dataRMSFIR.setTaps(64)
+//    dataRMSFIR.setFilterHz(f0, f1)
+//
+//    val rmsThreshold = dataRMS.absToInternal( rmsAbsThreshold )
+//    val absThreshold = dataRMS.absToInternal( absAbsThreshold )
+//
+//    for(seg <- 0 until dataRMS.segmentCount)
+//    for(frame <- 0 until dataRMS.segmentLength(seg) by stepSize ) {
+//      if( mean( (for(ch <- (0 until dataMAX.channelCount) ) yield dataMAX.readPoint(ch, frame, seg)).toVector ) >= absThreshold ||
+//            mean( (for(ch <- (0 until dataRMS.channelCount) ) yield dataRMS.readPoint(ch, frame, seg)).toVector ) >= rmsThreshold ){
+//        val frameTs = dataRMS.frToTs(frame)//frsgToTs(frame, seg)
+//        mask.mask( frameTs - maskHalfWindow, frameTs + maskHalfWindow )
+//      }
+//    }
+//
+//    mask.eliminateOverlapping()
 
   }
 

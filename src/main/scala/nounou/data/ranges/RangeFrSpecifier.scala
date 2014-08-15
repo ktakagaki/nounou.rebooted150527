@@ -12,9 +12,9 @@ import nounou.util.LoggingExt
   */
 trait RangeFrSpecifier extends LoggingExt {
 
-  /** Returns the segment number for the frame range.
-    */
-  def segment(): Int
+//  /** Returns the segment number for the frame range.
+//    */
+//  def segment(): Int
 
   /** Returns the equivalent RangeFr object, to which other operations can be delegated.
     * This is especially relevant for classes such as [[nounou.data.ranges.RangeMs]],

@@ -90,20 +90,20 @@ import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
       (elem._2 <= timeStampEnd && timeStampStart <= elem._2)    )
   }
 
-  def isMaskedFrame( frameStart: Int, frameEnd: Int, segment: Int, x: XData ): Boolean =
-        isMaskedTs(x.frsgToTs(frameStart, segment) , x.frsgToTs(frameEnd, segment) )
+  def isMaskedFrame( frameStart: Int, frameEnd: Int/*, segment: Int*/, x: XData ): Boolean =
+    isMaskedTs(x.frToTs(frameStart), x.frToTs(frameEnd) )//frsgToTs(frameStart, segment) , x.frsgToTs(frameEnd, segment) )
 
-  def isMaskedFrame( range: RangeFr, segment: Int, x: XData ): Boolean ={
+  def isMaskedFrame( range: RangeFr/*, segment: Int*/, x: XData ): Boolean ={
     val realRange = range.getValidRange(x)
-    isMaskedFrame( realRange, segment, x)
+    isMaskedFrame( realRange, /*segment,*/ x)
   }
 
-  def isMaskedFrame( range: Range.Inclusive, segment: Int, x: XData ): Boolean ={
-    isMaskedTs(x.frsgToTs(range.start, segment) , x.frsgToTs(range.end, segment) )
+  def isMaskedFrame( range: Range.Inclusive/*, segment: Int*/, x: XData ): Boolean ={
+    isMaskedTs(x.frToTs(range.start), x.frToTs(range.end) )//isMaskedTs(x.frsgToTs(range.start, segment) , x.frsgToTs(range.end, segment) )
   }
 
-  def isMaskedFrame( frame: Int, segment: Int, x: XData ): Boolean =
-    isMaskedTs(x.frsgToTs(frame, segment) )
+  def isMaskedFrame( frame: Int/*, segment: Int*/, x: XData ): Boolean =
+    isMaskedTs(x.frToTs(frame) )//sgToTs(frame, segment) )
 
   // </editor-fold>
 
@@ -119,7 +119,7 @@ import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
   // <editor-fold defaultstate="collapsed" desc=" getNextMask, getActiveMasks ">
 
   def getNextMask(frame: Int, segment: Int, x: XFrames) = {
-    _masks.find ( p => ( p._1 >= x.frsgToTs(frame, segment) )  )
+    _masks.find ( p => ( p._1 >= x.frToTs(frame) ) )//, segment) )  )
   }
 
   def getNextMaskA(frame: Int, segment: Int, x: XFrames): Array[Long] = {
@@ -140,7 +140,7 @@ import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
   }
 
   def getActiveMasksA( frameStart: Int, frameEnd: Int, segment: Int, x: XFrames ): Array[Array[Long]]  =
-        getActiveMasks(x.frsgToTs(frameStart, segment), x.frsgToTs(frameEnd, segment)).map( ele => Array(ele._1, ele._2)).toArray
+        getActiveMasks(x.frToTs(frameStart/*, segment*/), x.frToTs(frameEnd/*, segment*/)).map( ele => Array(ele._1, ele._2)).toArray
 
   def getActiveMasks( timeStampStart: Long, timeStampEnd: Long ): TreeMap[Long, Long]  = {
     _masks.filter( elem => (timeStampStart <= elem._1 && elem._1 <= timeStampEnd) ||

@@ -44,10 +44,10 @@ class XDataFilterImageBin(override val upstream: XData) extends XDataFilter( ups
 
 //  override def channelNames: scala.Vector[String] = upstream.channelNames
 
-  override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = upstream.readPointImpl(channel, frame, segment)
-  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] = upstream.readTraceImpl(channel, range, segment)
-  override def readFrameImpl(frame: Int, segment: Int): DV[Int] = upstream.readFrameImpl(frame, segment)
-  override def readFrameImpl(frame: Int, channels: Vector[Int], segment: Int): DV[Int] = upstream.readFrameImpl(frame, channels, segment)
+  override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int = upstream.readPointImpl(channel, frame)//, segment)
+  override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/): DV[Int] = upstream.readTraceImpl(channel, range)//, segment)
+  override def readFrameImpl(frame: Int/*, segment: Int*/): DV[Int] = upstream.readFrameImpl(frame)//, segment)
+  override def readFrameImpl(frame: Int, channels: Vector[Int]/*, segment: Int*/): DV[Int] = upstream.readFrameImpl(frame, channels)//, segment)
 
   protected var layoutBuff = upstream.layout()
 //  override def layout: XLayout = if( factor() == 1 ) upstream.layout()

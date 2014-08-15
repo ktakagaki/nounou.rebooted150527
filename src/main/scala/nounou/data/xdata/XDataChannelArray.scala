@@ -31,8 +31,8 @@ import nounou.data.traits.{XFramesImmutable, XConcatenatable}
   override lazy val scaleMin = array(0).scaleMin
 
 
-  override def readPointImpl(channel: Int, frame: Int, segment: Int) = array(channel).readPointImpl(frame, segment)
-  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int) = array(channel).readTraceImpl(range, segment)
+  override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/) = array(channel).readPointImpl(frame)//, segment)
+  override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/) = array(channel).readTraceImpl(range)//, segment)
 
   def loadDataChannel(dataChannel: XDataChannel): XDataChannelArray = {
     if(array(0).isCompatible(dataChannel)){

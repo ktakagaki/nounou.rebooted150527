@@ -75,19 +75,19 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     * Implement via readPointImpl. Prefer [[readTrace()]] and [[readFrame()]]
     * when possible, as these will avoid repeated function calling overhead.
     */
-  def readPoint(channel: Int, frame: Int, segment: Int): Int = {
-    require(isRealisticFr(frame, segment), "Unrealistic frame/segment: " + (frame, segment).toString)
+  def readPoint(channel: Int, frame: Int/*, segment: Int*/): Int = {
+    require(isRealisticFr(frame/*, segment*/), "Unrealistic frame/segment: " + frame.toString)
     require(isValidChannel(channel), "Invalid channel: " + channel.toString)
     //require(isValidFr(frame, segment), "Invalid frame/segment: " + (frame, segment).toString)
-    if( isValidFr(frame, segment) ) readPointImpl(channel, frame, segment)/*, currentSegment = segment)*/ else 0
+    if( isValidFr(frame/*, segment*/) ) readPointImpl(channel, frame/*, segment*/)/*, currentSegment = segment)*/ else 0
   }
 
-  /** [[readPoint()]] but with a default segment of zero.
-    */
-  final def readPoint(channel: Int, frame: Int): Int = readPoint(channel, frame, 0)//, currentSegment)
-  /** [[readPoint()]] but in physical units with a default segment of zero.
-    */
-  final def readPointAbs(channel: Int, frame: Int, segment: Int): Double = toAbs(readPoint(channel, frame, segment))
+//  /** [[readPoint()]] but with a default segment of zero.
+//    */
+//  final def readPoint(channel: Int, frame: Int): Int = readPoint(channel, frame, 0)//, currentSegment)
+//  /** [[readPoint()]] but in physical units with a default segment of zero.
+//    */
+//  final def readPointAbs(channel: Int, frame: Int, segment: Int): Double = toAbs(readPoint(channel, frame, segment))
   /** [[readPoint()]] but in physical units.
     */
   final def readPointAbs(channel: Int, frame: Int): Double = toAbs(readPoint(channel, frame))
@@ -96,7 +96,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   /** MUST OVERRIDE: Read a single point from the data, in internal integer scaling.
     */
-  protected[data] def readPointImpl(channel: Int, frame: Int, segment: Int): Int
+  protected[data] def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int
 
 
   //<editor-fold defaultstate="collapsed" desc="reading a trace">
@@ -107,15 +107,15 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
     val realRange = range.getValidRange(this)
 
-    require(isRealisticFr(realRange, range.segment), "Unrealistic frame/segment: " + (realRange, range.segment).toString)
-    require(isValidChannel(channel), "Invalid channel: " + channel.toString)
+    loggerRequire(isRealisticFr(realRange/*, range.segment*/), "Unrealistic frame/segment: " + (realRange/*, range.segment*/).toString)
+    loggerRequire(isValidChannel(channel), "Invalid channel: " + channel.toString)
 
-    val totalLength =  segmentLength( range.segment )
-    val preLength = range.preLength( totalLength )
-    val postLength = range.postLength( totalLength )
+    //val totalLength =  segmentLength( range.segment )
+    val preLength = range.preLength( length )//totalLength )
+    val postLength = range.postLength( length )//totalLength )
 
     val vr = range.getValidRange(this)
-    val tempData: DV[Int] = if( vr.length == 0 ) DV[Int]() else readTraceImpl(channel, vr, range.segment)//(currentSegment = range.segment))
+    val tempData: DV[Int] = if( vr.length == 0 ) DV[Int]() else readTraceImpl(channel, vr/*, range.segment*/)//(currentSegment = range.segment))
 
     DV.vertcat( DV.zeros[Int]( preLength ), tempData, DV.zeros[Int]( postLength ) )
 
@@ -154,7 +154,10 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   private def convertArrayToRangeFr(array: Array[Int]): RangeFrSpecifier = {
     loggerRequire(array != null, "Input array cannot be null!")
     array.length match {
-      case 0 => RangeFrAll
+      case 0 => RangeFrAll()
+      case 1 => RangeFrAll(array(0))
+      case 2 => RangeFr(array(0), array(1))
+      case 3 => RangeFr(array(0), array(1), array(2))
     }
   }
 
@@ -194,9 +197,9 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   /** CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
     * Should return a defensive clone. Assumes that channel and range are within the data range!
     */
-  def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] = {
+  def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/): DV[Int] = {
     val res = DV.zeros[Int]( range.length )
-    nounou.util.forJava(range.start, range.end + 1, range.step, (c: Int) => (res(c) = readPointImpl(channel, c, segment)))
+    nounou.util.forJava(range.start, range.end + 1, range.step, (c: Int) => (res(c) = readPointImpl(channel, c/*, segment*/)))
     res
   }
 
@@ -205,23 +208,23 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   /** Read a single frame from the data, in internal integer scaling, for just the specified channels.
     */
   final def readFrame(frame: Int, channels: Vector[Int], segment: Int): DV[Int] = {
-    loggerRequire(isRealisticFr(frame, segment), "Unrealistic frame/segment: " + (frame, segment).toString)
+    loggerRequire(isRealisticFr(frame/*, segment*/), "Unrealistic frame/segment: " + (frame, segment).toString)
     loggerRequire(channels.forall(isValidChannel), "Invalid channels: " + channels.toString)
 
-    if( isValidFr(frame, segment) ) readFrameImpl(frame, channels, segment/*(currentSegment = segment)*/ ) else DV.zeros[Int]( channels.length )
+    if( isValidFr(frame/*, segment*/) ) readFrameImpl(frame, channels/*, segment*//*(currentSegment = segment)*/ ) else DV.zeros[Int]( channels.length )
 
   }
 
   /** Read a single frame from the data, in internal integer scaling.
     */
-  final def readFrame(frame: Int, segment: Int): DV[Int] = {
-    loggerRequire(isRealisticFr(frame, segment), "Unrealistic frame/segment: " + (frame, segment).toString)
-    if( isValidFr(frame, segment) ) readFrameImpl(frame, segment /*(currentSegment = segment)*/ ) else DV.zeros[Int]( channelCount )
+  final def readFrame(frame: Int/*, segment: Int*/): DV[Int] = {
+    loggerRequire(isRealisticFr(frame/*, segment*/), "Unrealistic frame/segment: " + (frame/*, segment*/).toString)
+    if( isValidFr(frame/*, segment*/) ) readFrameImpl(frame /*, segment (*//*(currentSegment = segment)*/ ) else DV.zeros[Int]( channelCount )
   }
-  final def readFrame(frame: Int): DV[Int] = readFrame(frame, 0)
+//  final def readFrame(frame: Int): DV[Int] = readFrame(frame, 0)
 
   final def readFrameA(frame: Int): Array[Int] = readFrame(frame).toArray
-  final def readFrameA(frame: Int, segment: Int): Array[Int] = readFrame(frame, segment).toArray
+  final def readFrameA(frame: Int, segment: Int): Array[Int] = readFrame(frame/*, segment*/).toArray
   final def readFrameA(frame: Int, channels: Array[Int], segment: Int): Array[Int] = readFrame(frame, channels.toVector, segment).toArray
 
   //</editor-fold>
@@ -229,17 +232,17 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   /** CAN OVERRIDE: Read a single frame from the data, in internal integer scaling.
     * Should return a defensive clone. Assumes that frame is within the data range!
     */
-  def readFrameImpl(frame: Int, segment: Int): DV[Int] = {
+  def readFrameImpl(frame: Int/*, segment: Int*/): DV[Int] = {
     val res = DV.zeros[Int](channelCount)//new Array[Int](channelCount)
-    nounou.util.forJava(0, channelCount, 1, (channel: Int) => res(channel) = readPointImpl(channel, frame, segment))
+    nounou.util.forJava(0, channelCount, 1, (channel: Int) => res(channel) = readPointImpl(channel, frame))//, segment))
     res
   }
   /** CAN OVERRIDE: Read a single frame from the data, for just the specified channels, in internal integer scaling.
     * Should return a defensive clone. Assumes that frame and channels are within the data range!
     */
-  def readFrameImpl(frame: Int, channels: Vector[Int], segment: Int): DV[Int] = {
+  def readFrameImpl(frame: Int, channels: Vector[Int]/*, segment: Int*/): DV[Int] = {
     val res = DV.zeros[Int]( channels.length )
-    nounou.util.forJava(0, channels.length, 1, (channel: Int) => res(channel) = readPointImpl(channel, frame, segment))
+    nounou.util.forJava(0, channels.length, 1, (channel: Int) => res(channel) = readPointImpl(channel, frame))//, segment))
     res
   }
 
@@ -308,7 +311,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
 
 class XDataNull extends XData {
-  override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = 0
+  override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int = 0
   override val absGain: Double = 1D
   override val absOffset: Double = 0D
   override val absUnit: String = "Null unit"
