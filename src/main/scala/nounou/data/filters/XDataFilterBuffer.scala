@@ -12,7 +12,7 @@ import breeze.numerics.pow
 
 /** Buffer filter, which will save intermediate calculation results for an XData object.
   */
-class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstream) {
+class XDataFilterBuffer( private var _parent: XData ) extends XDataFilter(_parent) {
 
   var buffer: WeakHashMap[Long, DenseVector[Int]] = new ReadingHashMapBuffer()
   var garbageQue: ArrayBuffer[Long] = new ArrayBuffer[Long]()
@@ -132,7 +132,7 @@ class XDataFilterBuffer(override val upstream: XData ) extends XDataFilter(upstr
   // <editor-fold defaultstate="collapsed" desc=" ReadingHashMapBuffer ">
 
   //redirection function to deal with scope issues regarding super
-  private def tempTraceReader(ch: Int, range: Range.Inclusive/*, segment: Int*/) = upstream.readTraceImpl(ch, range)//, segment)
+  private def tempTraceReader(ch: Int, range: Range.Inclusive/*, segment: Int*/) = _parent.readTraceImpl(ch, range)//, segment)
 
   class ReadingHashMapBuffer extends WeakHashMap[Long, DenseVector[Int]] {
 

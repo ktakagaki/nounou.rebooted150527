@@ -12,9 +12,11 @@ import nounou.data.ranges.RangeFr
  * @author ktakagaki
  * @date 2/4/14.
  */
-class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstream ) {
+class XDataFilterFIR(private var _parent: XData ) extends XDataFilter( _parent ) {
 
   var kernel: FIRKernel1D[Long] = null
+  override def getActive(): Boolean = { super.getActive() && kernel != null }
+
   var kernelOmega0: Double = 0d
   var kernelOmega1: Double = 1d
   var multiplier = 256L
@@ -61,7 +63,7 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
     setFilter(f0/(sampleRate/2d), f1/(sampleRate/2d))
   }
 
-  def getFilterHz(): Vector[Double] = Vector[Double]( kernelOmega0*(sampleRate/2d), kernelOmega1*(sampleRate/2d) )
+  def getFilterHz(): Array[Double] = Array[Double]( kernelOmega0*(sampleRate/2d), kernelOmega1*(sampleRate/2d) )
 
   @BeanProperty
   var taps = 1024
@@ -70,49 +72,39 @@ class XDataFilterFIR( override val upstream: XData ) extends XDataFilter( upstre
 
   // <editor-fold defaultstate="collapsed" desc=" calculate data ">
 
-  override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int =
-    if(kernel == null){
-      upstream.readPointImpl(channel, frame)//, segment)
-    } else {
-      //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-      val tempData = upstream.readTrace( channel, RangeFr(frame - kernel.overhangPre, frame + kernel.overhangPost, 1))//, OptSegment(segment)))
-      val tempRet = convolve( DV( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None )
-      require( tempRet.length == 1, "something is wrong with the convolution!" )
-      tempRet(0).toInt
-    }
+  override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int = {
+    //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
+    val tempData = _parent.readTrace( channel, RangeFr(frame - kernel.overhangPre, frame + kernel.overhangPost, 1))//, OptSegment(segment)))
+    val tempRet = convolve( DV( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None )
+    require( tempRet.length == 1, "something is wrong with the convolution!" )
+    tempRet(0).toInt
+  }
 
-  override def readTraceImpl(channel: Int, ran: Range.Inclusive/*, segment: Int*/): DV[Int] =
-    if(kernel == null){
-        upstream.readTraceImpl(channel, ran)//, segment)
-    } else {
-        //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-        val tempData = upstream.readTrace( channel, RangeFr( ran.start - kernel.overhangPre, ran.last + kernel.overhangPost, 1))//, OptSegment(segment)))
-//      println( "1: " + tempData.length )
-//      println(OptRange.rangeToRangeOpt(ran))
-        val tempRes: DV[Long] = convolve(
-                                              convert( new DV( tempData.toArray ), Long), kernel.kernel,
-                                              range = OptRange.RangeOpt(new Range.Inclusive(0, ran.last - ran.start, ran.step)),
-                                              overhang = OptOverhang.None ) / multiplier
-//      println( "2: " +  tempRes.length )
-        //toInt( tempRes.toArray.toVector )
-        convert(tempRes, Int)
-    }
+  override def readTraceImpl(channel: Int, ran: Range.Inclusive): DV[Int] = {
+    //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
+    val tempData = _parent.readTrace( channel, RangeFr( ran.start - kernel.overhangPre, ran.last + kernel.overhangPost, 1))
+    val tempRes: DV[Long] = convolve(
+             convert( new DV( tempData.toArray ), Long), kernel.kernel,
+                      range = OptRange.RangeOpt(new Range.Inclusive(0, ran.last - ran.start, ran.step)),
+                      overhang = OptOverhang.None ) / multiplier
+    convert(tempRes, Int)
+  }
 
 //  override def readFrameImpl(frame: Int, segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame, segment)
 //  override def readFrameImpl(frame: Int, channels: Vector[Int], segment: Int): Vector[Int] = super[XDataFilter].readFrameImpl(frame, channels, segment)
 
   // </editor-fold>
 
-//  override def channelNames: scala.Vector[String] = upstream.channelNames
+//  override def channelNames: scala.Vector[String] = _parent.channelNames
 
-//  override def absUnit: String = upstream.absUnit
-//  override def absOffset: Double = upstream.absOffset
-//  override def absGain: Double = upstream.absGain
+//  override def absUnit: String = _parent.absUnit
+//  override def absOffset: Double = _parent.absOffset
+//  override def absGain: Double = _parent.absGain
 
-//  override def sampleRate: Double = upstream.sampleRate
-//  override def segmentEndTSs: scala.Vector[Long] = upstream.segmentEndTSs
-//  override def segmentStartTSs: scala.Vector[Long] = upstream.segmentStartTSs
-//  override def segmentLengths: scala.Vector[Int] = upstream.segmentLengths
-//  override def segmentCount: Int = upstream.segmentCount
+//  override def sampleRate: Double = _parent.sampleRate
+//  override def segmentEndTSs: scala.Vector[Long] = _parent.segmentEndTSs
+//  override def segmentStartTSs: scala.Vector[Long] = _parent.segmentStartTSs
+//  override def segmentLengths: scala.Vector[Int] = _parent.segmentLengths
+//  override def segmentCount: Int = _parent.segmentCount
 
 }

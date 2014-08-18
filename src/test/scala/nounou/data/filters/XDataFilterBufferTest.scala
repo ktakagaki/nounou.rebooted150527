@@ -3,7 +3,7 @@ package nounou.data.filters
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FunSuite
-import nounou.DataReader
+import nounou.NNDataReader
 import java.io.File
 
 /**
@@ -23,7 +23,7 @@ class XDataFilterBufferTest  extends FunSuite {
 //  val testFileTet4a = new File( getClass.getResource("/_testFiles/Neuralynx/t130911/Tet4a.ncs").getPath() )
 
 //  test("Spike Dectector Peak Width Profiling") {
-//    val reader = new DataReader
+//    val reader = new NNDataReader
 //    reader.load(bigTestFiles)
 //    val buffer = new XDataFilterBuffer(reader.dataORI)
 //

@@ -9,10 +9,10 @@ import breeze.linalg.{DenseVector => DV}
  * @author ktakagaki
  * @date 2/16/14.
  */
-class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter( upstream ) {
+class XDataFilterDownsample( private var _parent: XData ) extends XDataFilter( _parent ) {
 
-  def this(upstream: XData, factor: Int) = {
-    this(upstream)
+  def this(_parent: XData, factor: Int) = {
+    this(_parent)
     factor_=(factor)
   }
 
@@ -43,48 +43,48 @@ class XDataFilterDownsample( override val upstream: XData ) extends XDataFilter(
 
   override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int =
     if(factor == 1){
-      upstream.readPointImpl(channel, frame)//, segment)
+      _parent.readPointImpl(channel, frame)//, segment)
     } else {
-      upstream.readPointImpl(channel, frame*factor)//, segment)
+      _parent.readPointImpl(channel, frame*factor)//, segment)
     }
 
   override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/): DV[Int] =
     if(factor == 1){
-        upstream.readTraceImpl(channel, range)//, segment)
+        _parent.readTraceImpl(channel, range)//, segment)
     } else {
-        upstream.readTraceImpl(channel, new Range.Inclusive(range.start * factor, range.end * factor, factor))//, segment)
+        _parent.readTraceImpl(channel, new Range.Inclusive(range.start * factor, range.end * factor, factor))//, segment)
     }
 
   override def readFrameImpl(frame: Int/*, segment: Int*/): DV[Int] = super[XDataFilter].readFrameImpl(frame * factor)//, segment)
   override def readFrameImpl(frame: Int, channels: Vector[Int]/*, segment: Int*/): DV[Int] = super[XDataFilter].readFrameImpl(frame * factor, channels/*, segment*/)
 
-  //  override def channelNames: scala.Vector[String] = upstream.channelNames
+  //  override def channelNames: scala.Vector[String] = _parent.channelNames
 
-  //  override def absUnit: String = upstream.absUnit
-  //  override def absOffset: Double = upstream.absOffset
-  //  override def absGain: Double = upstream.absGain
+  //  override def absUnit: String = _parent.absUnit
+  //  override def absOffset: Double = _parent.absOffset
+  //  override def absGain: Double = _parent.absGain
 
-  override def sampleRate: Double = upstream.sampleRate / factor
+  override def sampleRate: Double = _parent.sampleRate / factor
 
-  // override def segmentStartTSs: Vector[Long] = upstream.segmentStartTSs
+  // override def segmentStartTSs: Vector[Long] = _parent.segmentStartTSs
   override def segmentEndTs: Vector[Long] = if( factor == currentSegEndTSFactor ) currentSegEndTSBuffer
   else {
-    currentSegEndTSBuffer = ( for(seg <- 0 until segmentCount) yield upstream.segmentStartTs(seg) + ((this.segmentLength(seg)-1)*tsPerFr).toLong ).toVector
+    currentSegEndTSBuffer = ( for(seg <- 0 until segmentCount) yield _parent.segmentStartTs(seg) + ((this.segmentLength(seg)-1)*tsPerFr).toLong ).toVector
     currentSegEndTSFactor = factor
     currentSegEndTSBuffer
   }
   private var currentSegEndTSFactor = 0
-  private var currentSegEndTSBuffer = upstream.segmentEndTs
+  private var currentSegEndTSBuffer = _parent.segmentEndTs
 
   override def segmentLength: Vector[Int] = if( factor == currentSegLenFactor ) currentSegLenBuffer
   else {
-    currentSegLenBuffer = ( for(seg <- 0 until segmentCount) yield ( upstream.segmentLength(seg) - 1 )/factor + 1 ).toVector
+    currentSegLenBuffer = ( for(seg <- 0 until segmentCount) yield ( _parent.segmentLength(seg) - 1 )/factor + 1 ).toVector
     currentSegLenFactor = factor
     currentSegLenBuffer
   }
   private var currentSegLenFactor = 0
-  private var currentSegLenBuffer = upstream.segmentLength
+  private var currentSegLenBuffer = _parent.segmentLength
 
-  //  override def segmentCount: Int = upstream.segmentCount
+  //  override def segmentCount: Int = _parent.segmentCount
 
 }

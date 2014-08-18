@@ -3,7 +3,7 @@ package nounou.data.io
 import nounou.data.{XData}
 import org.scalatest.FunSuite
 import java.io.File
-import nounou.DataReader
+import nounou.NNDataReader
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,7 +16,7 @@ class FileLoaderNEXTest extends FunSuite {
 
 //  val testFileEvents = new File( getClass.getResource("/_testFiles/NEX/130507/SE-CSC-Ch1.nex").getPath() )
 //  //val fileString = "V:/data/disp/2013-11-05_15-15-06/SE-CSC-Ch1.nex"
-//  val d = new DataReader
+//  val d = new NNDataReader
 //  d.reload( testFileEvents )
 //
 //  println(d.header)

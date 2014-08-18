@@ -3,7 +3,7 @@ package nounou.data.io
 import nounou.data.XEvents
 import org.scalatest.FunSuite
 import java.io.File
-import nounou.DataReader
+import nounou.NNDataReader
 import breeze.numerics.pow
 
 /**
@@ -22,7 +22,7 @@ class FileLoaderNEVTest extends FunSuite {
 
   test("read events"){
 
-    val loaded = DataReader.load( testFileEvents ) // FileAdapterNEV.load( testFileEvents )
+    val loaded = NNDataReader.load( testFileEvents ) // FileAdapterNEV.load( testFileEvents )
     assert(loaded(0).isInstanceOf[XEvents])
     val events = loaded(0).asInstanceOf[XEvents]
     //println(events.portCount)

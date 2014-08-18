@@ -21,7 +21,7 @@
 // * @author ktakagaki
 // * @date 2/18/14.
 // */
-//class XDataFilterMinMaxAbs( override val upstream: XData ) extends XDataFilterRMS( upstream ) {
+//class XDataFilterMinMaxAbs( override val _parent: XData ) extends XDataFilterRMS( _parent ) {
 //
 //    override def toString() = {
 //      if(halfWindow == 0) "XDataFilterMinMaxAbs: off (halfWindow=0)"
@@ -30,7 +30,7 @@
 //    override def changedTiming(): Unit = {
 //      super.changedTiming()
 //      //ToDo 2: how to deal with data changes?
-//      //(upstream.sampleRate * 0.05).toInt //50 ms
+//      //(_parent.sampleRate * 0.05).toInt //50 ms
 //    }
 //
 //    protected var _mode: Int = ABS
@@ -45,9 +45,9 @@
 //
 //    override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
 //      if(halfWindow == 0){
-//        upstream.readPointImpl(channel, frame)//, segment)
+//        _parent.readPointImpl(channel, frame)//, segment)
 //      } else {
-//        val tempdata = upstream.readTrace(channel, RangeFr(frame - halfWindow, frame + halfWindow))//, OptSegment(segment)))
+//        val tempdata = _parent.readTrace(channel, RangeFr(frame - halfWindow, frame + halfWindow))//, OptSegment(segment)))
 //        mode match {
 //          case ABS => absMinMax(tempdata) //scala.math.max( abs(max(tempdata)), abs(min(tempdata)) )
 //          case MIN => min(tempdata)
@@ -58,9 +58,9 @@
 //
 //    override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] =
 //      if(halfWindow == 1){
-//        upstream.readTraceImpl(channel, range, segment)
+//        _parent.readTraceImpl(channel, range, segment)
 //      } else {
-//        val trace = upstream.readTrace(channel, RangeFr(range.start - halfWindow, range.end + halfWindow, 1))//, OptSegment(segment)))
+//        val trace = _parent.readTrace(channel, RangeFr(range.start - halfWindow, range.end + halfWindow, 1))//, OptSegment(segment)))
 //        var tempret = DV[Int]() //= new VectorBuilder[Int]()
 //            //tempret.sizeHint(range.length)
 //        val window = 2*halfWindow
@@ -139,9 +139,9 @@
 //
 //
 //
-//    //  override def channelNames: scala.Vector[String] = upstream.channelNames
+//    //  override def channelNames: scala.Vector[String] = _parent.channelNames
 //
-//    override def absUnit: String = upstream.absUnit +
+//    override def absUnit: String = _parent.absUnit +
 //      (mode match {
 //        case ABS => " (abs max)"
 //        case MIN => " (min)"
@@ -149,16 +149,16 @@
 //      })
 //
 //    //ToDo 3: offset and gain aren't quite well established here! OK as long as offset is zero, but...
-//    //  override def absOffset: Double = upstream.absOffset
-//    //  override def absGain: Double = upstream.absGain
+//    //  override def absOffset: Double = _parent.absOffset
+//    //  override def absGain: Double = _parent.absGain
 //
-//    //override def sampleRate: Double = upstream.sampleRate
+//    //override def sampleRate: Double = _parent.sampleRate
 //
-//    // override def segmentStartTSs: Vector[Long] = upstream.segmentStartTSs
+//    // override def segmentStartTSs: Vector[Long] = _parent.segmentStartTSs
 //    //override def segmentEndTSs: Vector[Long]
 //
 //    //override def segmentLengths: Vector[Int]
 //
-//    //  override def segmentCount: Int = upstream.segmentCount
+//    //  override def segmentCount: Int = _parent.segmentCount
 //
 //  }

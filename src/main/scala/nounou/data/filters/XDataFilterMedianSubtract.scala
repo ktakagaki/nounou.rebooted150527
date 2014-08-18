@@ -14,10 +14,10 @@ import nounou.data.ranges.RangeFr
  * @author ktakagaki
  * @date 3/17/14.
  */
-class XDataFilterMedianSubtract( override val upstream: XData ) extends XDataFilter( upstream ) {
+class XDataFilterMedianSubtract( private var _parent: XData ) extends XDataFilter( _parent ) {
 
   private var _windowLength = 1
-  private val upstreamBuff: XData = new XDataFilterBuffer(upstream)
+  private val upstreamBuff: XData = new XDataFilterBuffer(_parent)
 
   var windowLengthHalf = 0
   def setWindowLength( value: Int ): Unit = {
@@ -37,7 +37,7 @@ class XDataFilterMedianSubtract( override val upstream: XData ) extends XDataFil
     if(windowLength == 1){
       upstreamBuff.readPointImpl(channel, frame)//, segment)
     } else {
-      //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
+      //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
       val tempData = upstreamBuff.readTrace( channel, RangeFr(frame - windowLengthHalf, frame + windowLengthHalf, 1))//, OptSegment(segment)) )
       median(tempData).toInt
     }
@@ -46,7 +46,7 @@ class XDataFilterMedianSubtract( override val upstream: XData ) extends XDataFil
     if(windowLength == 1){
       upstreamBuff.readTraceImpl(channel, ran)//, segment)
     } else {
-      //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
+      //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
       val tempData = upstreamBuff.readTrace( channel, RangeFr( ran.start - windowLengthHalf, ran.last + windowLengthHalf, 1))//, OptSegment(segment)) )
       tempData(windowLengthHalf to -windowLengthHalf-1) - filterMedian(tempData, windowLength, OptOverhang.None)
     }
