@@ -8,7 +8,7 @@ import breeze.linalg.DenseVector
  * @author ktakagaki
  * @date 04/16/2014.
  */
-class XDataFilterInvert(override val upstream: XData ) extends XDataFilter( upstream ) {
+class XDataFilterInvert(private var _parent: XData ) extends XDataFilter( _parent ) {
 
   def this(upstream: XData, inverted: Boolean) = {
     this(upstream)
@@ -35,16 +35,16 @@ class XDataFilterInvert(override val upstream: XData ) extends XDataFilter( upst
 
   override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int =
     if(inverted){
-      - upstream.readPointImpl(channel, frame)//, segment)
+      - _parent.readPointImpl(channel, frame)//, segment)
     } else {
-      upstream.readPointImpl(channel, frame)//, segment)
+      _parent.readPointImpl(channel, frame)//, segment)
     }
 
   override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/): DenseVector[Int] =
     if(inverted){
-      - upstream.readTraceImpl(channel, range)//, segment)
+      - _parent.readTraceImpl(channel, range)//, segment)
     } else {
-      upstream.readTraceImpl(channel, range)//, segment)
+      _parent.readTraceImpl(channel, range)//, segment)
     }
 
 }

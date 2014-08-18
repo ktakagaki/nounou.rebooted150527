@@ -2,7 +2,7 @@ package nounou.data.io
 
 import org.scalatest.FunSuite
 import java.io.File
-import nounou.DataReader
+import nounou.NNDataReader
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
 
 /**
@@ -28,7 +28,7 @@ class FileAdapterGSDGSHTest extends FunSuite {
 
 //    val dataList = FileAdapterGSDGSH.load("E:/data/Micam/dc-stimulation/140224/mag140224006A.gsd")
 //    //dataReader.load()
-//    val dataReader = new DataReader()
+//    val dataReader = new NNDataReader()
 //    dataReader.load("E:/data/Micam/dc-stimulation/140224/mag140224006A.gsd")
 //
 //    println(dataReader.header.toString)

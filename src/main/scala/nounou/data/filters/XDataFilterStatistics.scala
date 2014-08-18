@@ -10,7 +10,7 @@ import nounou.data.ranges.RangeFr
  * @author ktakagaki
  * @date 2/16/14.
  */
-class XDataFilterStatistics( override val upstream: XData ) extends XDataFilter( upstream ) {
+class XDataFilterStatistics( private var _parent: XData ) extends XDataFilter( _parent ) {
 
   override def toString() =  "XDataFilterStatistics: "
 

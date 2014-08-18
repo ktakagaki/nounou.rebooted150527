@@ -1,6 +1,6 @@
 package nounou
 
-import nounou.data.{XSpike, XData,XTrodeN, ranges}
+import nounou.data.{XSpike, XTrodeN, ranges}
 
 /**A static class which encapsulates convenience functions from nounou for
   * use in Mathematica/MatLab/Java
@@ -8,6 +8,8 @@ import nounou.data.{XSpike, XData,XTrodeN, ranges}
  * @date 2/17/14.
  */
 object NN {
+
+  final def hello(): String = "Welcome to nounou, a Scala/Java adapter for neurophysiological data."
 
   // <editor-fold defaultstate="collapsed" desc=" options ">
 
@@ -118,10 +120,7 @@ object NN {
   //final def XSpikes(waveformLength: Int, xTrodes: XTrodes ) = new XSpikes(waveformLength, xTrodes)
 
 
-  @deprecated("Don't use this anymore, initialize nounous.DataReader()", "v 1")
-  final def newReader: DataReader = {
-    return new DataReader
-  }
+  final def newNNData: NNData = new NNData
 
 
 

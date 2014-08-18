@@ -12,7 +12,7 @@
    * @author ktakagaki
    * @date 2/1314.
    */
-  class XDataFilterDecimate(override val upstream: XData ) extends XDataFilterDownsample( upstream ) {
+  class XDataFilterDecimate( private var _parent: XData ) extends XDataFilterDownsample( _parent ) {
 
     override def toString() = {
       if(factor == 1) "XDataFilterDecimate: off (factor=1)"
@@ -53,10 +53,10 @@
 
     override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int =
       if(kernel == null){
-        upstream.readPointImpl(channel, frame)//, segment)
+        _parent.readPointImpl(channel, frame)//, segment)
       } else {
-        //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-        val tempData = upstream.readTrace( channel, RangeFr(frame * factor - kernel.overhangPre, frame * factor + kernel.overhangPost, 1))//, OptSegment(segment) ))
+        //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
+        val tempData = _parent.readTrace( channel, RangeFr(frame * factor - kernel.overhangPre, frame * factor + kernel.overhangPost, 1))//, OptSegment(segment) ))
         val tempRet = convolve( DV( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None )
         require( tempRet.length == 1, "something is wrong with the convolution!" )
         tempRet(0).toInt
@@ -64,10 +64,10 @@
 
     override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/): DV[Int] =
       if(kernel == null){
-          upstream.readTraceImpl(channel, range)//, segment)
+          _parent.readTraceImpl(channel, range)//, segment)
       } else {
-          //by calling upstream.readTrace instead of upstream.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-          val tempData = upstream.readTrace( channel, RangeFr(range.start * factor - kernel.overhangPre, range.last * factor + kernel.overhangPost, 1))//, OptSegment(segment)))
+          //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
+          val tempData = _parent.readTrace( channel, RangeFr(range.start * factor - kernel.overhangPre, range.last * factor + kernel.overhangPost, 1))//, OptSegment(segment)))
 //        println("tempData: " + tempData.length)
 //        println("kernel: " + kernel.kernel.length)
 //        println("start: " + range.start + " end: " + range.end+ " stepMs: " + range.stepMs+ " inclusive: " + range.isInclusive)

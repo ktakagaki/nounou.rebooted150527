@@ -7,9 +7,24 @@ import breeze.linalg.{DenseVector => DV}
 
 /** A passthrough object, which is overriden and inherited with various XDataFilterTr traits to create a filter block.
   */
-class XDataFilter( val upstream: XData ) extends XData {
+class XDataFilter( private var _parent: XData ) extends XData {
 
-  upstream.setChild(this)
+  setParent(_parent)
+
+  // <editor-fold defaultstate="collapsed" desc=" set/getParent ">
+
+  def setParent(parent: XData): Unit = {
+    _parent.clearChild(this)
+    _parent = parent
+    _parent.setChild(this)
+    changedData()
+    changedTiming()
+    changedLayout()
+  }
+
+  def getParent(): XData = _parent
+
+  // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc=" setActive/getActive ">
 
@@ -18,7 +33,7 @@ class XDataFilter( val upstream: XData ) extends XData {
     _active = active
     changedData()
   }
-  final def getActive = _active
+  def getActive() = _active
 
   // </editor-fold>
 
@@ -27,45 +42,42 @@ class XDataFilter( val upstream: XData ) extends XData {
   override final def readPoint(channel: Int, frame: Int/*, segment: Int*/): Int = if(_active){
     super.readPoint(channel, frame)//, segment)
   }else{
-    upstream.readPoint(channel, frame)//, segment)
+    _parent.readPoint(channel, frame)//, segment)
   }
 
   override final def readTrace(channel: Int, range: RangeFr): DV[Int] = if(_active){
     super.readTrace(channel, range)
   }else{
-    upstream.readTrace(channel, range)
+    _parent.readTrace(channel, range)
   }
     // </editor-fold>
 
 
-//  override def channelNames: scala.Vector[String] = upstream.channelNames
-  override def channelCount = upstream.channelCount
+//  override def channelNames: scala.Vector[String] = _parent.channelNames
+  override def channelCount = _parent.channelCount
 
-  override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int = upstream.readPointImpl(channel, frame)//, segment)
-  override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/): DV[Int] = upstream.readTraceImpl(channel, range)//, segment)
-  override def readFrameImpl(frame: Int/*, segment: Int*/): DV[Int] = upstream.readFrameImpl(frame)//, segment)
-  override def readFrameImpl(frame: Int, channels: Vector[Int]/*, segment: Int*/): DV[Int] = upstream.readFrameImpl(frame, channels/*, segment*/)
+  override def readPointImpl(channel: Int, frame: Int): Int = _parent.readPointImpl(channel, frame)
+  override def readTraceImpl(channel: Int, range: Range.Inclusive): DV[Int] = _parent.readTraceImpl(channel, range)
+  override def readFrameImpl(frame: Int): DV[Int] = _parent.readFrameImpl(frame)
+  override def readFrameImpl(frame: Int, channels: Vector[Int]): DV[Int] = _parent.readFrameImpl(frame, channels)
 
-  override def absUnit: String = upstream.absUnit
-  override def absOffset: Double = upstream.absOffset
-  override def absGain: Double = upstream.absGain
-  override def scaleMax = upstream.scaleMax
-  override def scaleMin = upstream.scaleMin
+  override def absUnit: String = _parent.absUnit
+  override def absOffset: Double = _parent.absOffset
+  override def absGain: Double = _parent.absGain
+  override def scaleMax = _parent.scaleMax
+  override def scaleMin = _parent.scaleMin
 
-  override def sampleRate: Double = upstream.sampleRate
-  override def segmentEndTs: scala.Vector[Long] = upstream.segmentEndTs
-  override def segmentStartTs: scala.Vector[Long] = upstream.segmentStartTs
-  override def segmentLength: scala.Vector[Int] = upstream.segmentLength
-  override def segmentCount: Int = upstream.segmentCount
+  override def sampleRate: Double = _parent.sampleRate
+  override def segmentEndTs: scala.Vector[Long] = _parent.segmentEndTs
+  override def segmentStartTs: scala.Vector[Long] = _parent.segmentStartTs
+  override def segmentLength: scala.Vector[Int] = _parent.segmentLength
+  override def segmentCount: Int = _parent.segmentCount
 
-  override def layout: XLayout = upstream.layout()
+  override def layout: XLayout = _parent.layout()
 
   override def isCompatible(target: X) = false
   override def :::(target: X): XData = {
-    throw new IllegalArgumentException("cannot append an XDataFilter or child!")
+    throw loggerError("cannot append a XDataFilter object!")
   }
 
 }
-
-
-object XDataFilterNull extends XDataFilter( XDataNull )

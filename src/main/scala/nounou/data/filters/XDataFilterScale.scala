@@ -6,7 +6,7 @@
 //
 ///** A passthrough object, which is overriden and inherited with various XDataFilterTr traits to create a filter block.
 //  */
-//class XDataFilterScale( override val upstream: XData ) extends XDataFilter(upstream) {
+//class XDataFilterScale( override val _parent: XData ) extends XDataFilter(_parent) {
 //
 //  private var _fixedScale = false
 //  def fixScale(range: RangeFr) = fixScale(range, 0)
@@ -38,7 +38,7 @@
 //
 //  override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = {
 ////    logger.warn("XDataFilterScale should not be used via reading single points... only use via trace methods!")
-////    upstream.readPointImpl(channel, frame, segment)
+////    _parent.readPointImpl(channel, frame, segment)
 //  }
 //  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] = {
 //    if(_fixedScale){
@@ -50,8 +50,8 @@
 //  }
 //
 //  override def absUnit: String = "scaled"
-//  override def absOffset: Double = upstream.absOffset
-//  override def absGain: Double = upstream.absGain
+//  override def absOffset: Double = _parent.absOffset
+//  override def absGain: Double = _parent.absGain
 //
 //  private def minMax(v: DV[Int]): (Int, Int) = {
 //    var min = Int.MaxValue

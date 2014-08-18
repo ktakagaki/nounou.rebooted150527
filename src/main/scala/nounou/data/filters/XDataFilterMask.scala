@@ -8,7 +8,7 @@ import breeze.linalg.{DenseVector => DV}
  * @author ktakagaki
  * @date 2/19/14.
  */
-class XDataFilterMask(override val upstream: XData, private var initialMask: XMask = new XMask()) extends XDataFilter(upstream) {
+class XDataFilterMask(private var _parent: XData, private var initialMask: XMask = new XMask()) extends XDataFilter(_parent) {
 
   override def toString() = "XDataFilterMask: " + mask.toString()
   private var _mask: XMask = initialMask
@@ -25,18 +25,18 @@ class XDataFilterMask(override val upstream: XData, private var initialMask: XMa
 
 
   override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int = {
-    if( mask.isMaskedFrame(frame, /*segment,*/ upstream) ){
+    if( mask.isMaskedFrame(frame, /*segment,*/ _parent) ){
       0
     }else{
-      upstream.readPointImpl(channel, frame)//, segment)
+      _parent.readPointImpl(channel, frame)//, segment)
     }
   }
 
   override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/): DV[Int] = {
-    if( mask.isMaskedFrame(range, /*segment, */ upstream) ){
+    if( mask.isMaskedFrame(range, /*segment, */ _parent) ){
       super.readTraceImpl(channel, range)//, segment)
     } else {
-      upstream.readTraceImpl(channel, range)//, segment)
+      _parent.readTraceImpl(channel, range)//, segment)
     }
   }
 

@@ -3,6 +3,7 @@ package nounou
 import java.io.File
 
 import nounou.data._
+import nounou.data.filters._
 import nounou.data.headers.XHeader
 
 /** A static class which encapsulates nounou data objects,
@@ -11,7 +12,7 @@ import nounou.data.headers.XHeader
   * @author ktakagaki
   * @date 08/14/2014.
   */
-object NNData {
+class NNData {
 
   // <editor-fold defaultstate="collapsed" desc=" variable definitions: header/raw/lfp/highpass/auxRaw/aux/spikes/mask/events ">
 
@@ -22,12 +23,12 @@ object NNData {
     _header
   }
 
-  def raw: XData = ???
-  def lfp: XData = ???
-  def highpass: XData = ???
+  val dataRaw: XDataFilterHolder = new XDataFilterHolder()
+  val dataLfp: XDataFilterLFP = new XDataFilterLFP( dataRaw )
+  def dataHp: XData = ???
 
   def auxRaw: XData = ???
-  def aux: XData = ???
+  def auxFilt: XData = ???
 
   private var _spikes: XSpikes = null
   def spikes: XSpikes = if(_spikes == null ){
@@ -61,19 +62,22 @@ object NNData {
       _header = null
       loadToHeader(xHeader)
     }
-
-    val xDatas  = xs.filter( _.isInstanceOf[XData] ).map( _.asInstanceOf[XData] )
-      if(xDatas.length != 0) raw
-    val xAux    = xs.filter( _.isInstanceOf[XDataAux])
-    val xSpikes = xs.filter( _.isInstanceOf[XSpikes] )
-    val xMask   = xs.filter( _.isInstanceOf[XMask] )
-    val xEvents = xs.filter( _.isInstanceOf[XEvents] )
+    val xData   = xs.filter( _.isInstanceOf[XData] ).filter( !_.isInstanceOf[XDataAux]).map( _.asInstanceOf[XData] )
+    if(xData.length != 0) {
+      dataRaw.setHeldData(XDataNull)
+      loadToData(xData)
+    }
+    val xDataChannel   = xs.filter( _.isInstanceOf[XDataChannel] ).map( _.asInstanceOf[XDataChannel] )
+    val xAux    = xs.filter( _.isInstanceOf[XDataAux]).map( _.asInstanceOf[XDataAux] )
+    val xSpikes = xs.filter( _.isInstanceOf[XSpikes] ).map( _.asInstanceOf[XSpikes] )
+    val xMask   = xs.filter( _.isInstanceOf[XMask]   ).map( _.asInstanceOf[XMask] )
+    val xEvents = xs.filter( _.isInstanceOf[XEvents] ).map( _.asInstanceOf[XEvents] )
 
   }
 
   def reloadTo(file: File): Unit = reloadTo( Array(file) )
   def reloadTo(files: Array[File]): Unit = {
-    files.flatMap( DataReader.load(_) )
+    files.flatMap( NNDataReader.load(_) )
   }
   def reloadTo(string: String): Unit =  reloadTo( new File(string) )
   def reloadTo(strings: Array[String]): Unit =  reloadTo( strings.map(new File(_)) )
@@ -84,13 +88,22 @@ object NNData {
 
   def loadToHeader(xHeaders: Array[XHeader]): Unit = {
     if( _header == null ){
-      if( xHeaders.length > 1 ) _header = xHeaders.tail.foldLeft(xHeaders(0))( (a, b) => a.:::(b) )
+      if( xHeaders.length > 1 ) _header = xHeaders.reduceLeft( (a, b) => a.:::(b) )
       else if( xHeaders.length == 1 ) _header = xHeaders(0)
     } else if(xHeaders.length > 0) {
       _header = xHeaders.foldLeft( _header )( (a, b) => a.:::(b) )
     }
   }
 
+  def loadToData(xData: Array[XData]): Unit = {
+    loggerRequire( xData != null && xData.length > 0, "loadToData must be called with non-null, non-empty array.")
+    dataRaw.setHeldData( xData.foldLeft( dataRaw.getHeldData )( (a, b) => a.:::(b) ) )
+  }
+
+  def loadToData(xDataChannel: Array[XDataChannel]): Unit = {
+    loggerRequire( xDataChannel != null && xDataChannel.length > 0, "loadToData must be called with non-null, non-empty array.")
+    dataRaw.setHeldData( xDataChannel.foldLeft( dataRaw.getHeldData )( (a, b) => a.:::(b) ) )
+  }
 
   // </editor-fold>
 
