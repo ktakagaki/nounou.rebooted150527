@@ -3,16 +3,20 @@ package nounou.data
 import nounou._
 import nounou.data.traits.{XFramesImmutable, XConcatenatable}
 
-/**
+/**Immutable data object to encapsulate arrays of [[XDataChannel]] objects
+  *
  * Created by Kenta on 12/15/13.
  */
  class XDataChannelArray(val array: Vector[XDataChannel], override val layout: XLayout = XLayoutNull)
   extends XData with XConcatenatable with XFramesImmutable {
   //ToDo 2: Clarify what is exactly immutable, and enforce
 
-  def this( dataChannel: XDataChannel ) = this( Vector[XDataChannel]( dataChannel ) )
+  //enforce channel compatibility
+  loggerRequire( array != null && array.length > 0, "input Vector must be non-negative, non-empty" )
+  loggerRequire( array.length == 1 || array.tail.forall(array(0).isCompatible(_)), "input Vector must have compatible components")
 
-  //require channel compatibility on initialization?
+  def this( dataChannel: XDataChannel, layout: XLayout ) = this( Vector[XDataChannel]( dataChannel ), layout )
+  def this( dataChannel: XDataChannel ) = this( Vector[XDataChannel]( dataChannel ) )
 
   def apply(channel: Int) = array(channel)
 
@@ -31,8 +35,8 @@ import nounou.data.traits.{XFramesImmutable, XConcatenatable}
   override lazy val scaleMin = array(0).scaleMin
 
 
-  override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/) = array(channel).readPointImpl(frame)//, segment)
-  override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/) = array(channel).readTraceImpl(range)//, segment)
+  override def readPointImpl(channel: Int, frame: Int) = array(channel).readPointImpl(frame)//, segment)
+  override def readTraceImpl(channel: Int, range: Range.Inclusive) = array(channel).readTraceImpl(range)//, segment)
 
   def loadDataChannel(dataChannel: XDataChannel): XDataChannelArray = {
     if(array(0).isCompatible(dataChannel)){

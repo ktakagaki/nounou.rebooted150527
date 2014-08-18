@@ -3,7 +3,7 @@
 //import org.scalatest.FunSuite
 //import org.junit.runner.RunWith
 //import org.scalatest.junit.JUnitRunner
-//import nounou.DataReader
+//import nounou.NNDataReader
 //import nounou.data.filters.{XDataFilterFIR, XDataFilterBuffer, XDataFilterMedianSubtract}
 //import nounou.data.XTrodesPreloaded
 //import breeze.linalg.max
@@ -27,7 +27,7 @@
 //
 //  test("Spike Dectector Peak Width Profiling") {
 //
-//    val reader = new DataReader
+//    val reader = new NNDataReader
 //    reader.load(bigTestFiles)
 ////    val buffer = new XDataFilterBuffer(reader.dataORI)
 //    //println(reader.toStringChain())
@@ -56,7 +56,7 @@
 ////
 ////  test("Spike Dectector Quiroga Profiling") {
 ////
-////    val reader = new DataReader
+////    val reader = new NNDataReader
 ////    reader.load(bigTestFiles)
 ////    //println(reader.toStringChain())
 ////
@@ -85,7 +85,7 @@
 ////
 ////  test("Spike Dectector Peak Profiling") {
 ////
-////    val reader = new DataReader
+////    val reader = new NNDataReader
 ////    reader.load(bigTestFiles)
 ////    //println(reader.toStringChain())
 ////

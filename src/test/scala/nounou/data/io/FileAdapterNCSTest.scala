@@ -17,7 +17,7 @@ class FileAdapterNCSTest extends FunSuite {
 
 //  test("readTrace"){
 //
-//    val d = new DataReader
+//    val d = new NNDataReader
 //    d.reload( testFileTet4a )
 //
 //    println(d.dataORI.segmentLength)

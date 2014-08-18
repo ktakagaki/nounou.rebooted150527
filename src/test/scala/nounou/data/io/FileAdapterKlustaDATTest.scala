@@ -1,7 +1,7 @@
 package nounou.data.io
 
 import org.scalatest.FunSuite
-import nounou.DataReader
+import nounou.NNDataReader
 import nounou.data.filters.{XDataFilterBuffer, XDataFilterMask}
 import nounou.data.io._
 import nounou.data.XData
@@ -21,7 +21,7 @@ class FileAdapterKlustaDATTest extends FunSuite {
   )
 
 //  test("Speed Optimization") {
-//    val reader = new DataReader
+//    val reader = new NNDataReader
 //    reader.load(bigTestFiles)
 //    println(reader.toStringChain())
 //
