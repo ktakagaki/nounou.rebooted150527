@@ -67,6 +67,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="org.scala-lang:scala-compiler:2.11.2" level="application" />
   </component>
 </module>
 
