@@ -27,9 +27,7 @@
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jfxrt.jar" level="project" />
     <orderEntry type="library" name="com.github.fommil.netlib:core:1.1.2" level="project" />
-    <orderEntry type="library" name="junit-4.10" level="project" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -50,6 +48,7 @@
     <orderEntry type="library" name="com.typesafe.scala-logging:scala-logging-api_2.11:2.1.2" level="project" />
     <orderEntry type="library" name="ch.qos.logback:logback-classic:1.0.11" level="project" />
     <orderEntry type="library" name="org.scala-lang:scala-compiler:2.11.2" level="application" />
+    <orderEntry type="library" name="junit:junit:4.11" level="project" />
   </component>
 </module>
 
