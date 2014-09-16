@@ -199,7 +199,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   /** Read a single frame from the data, in internal integer scaling, for just the specified channels.
     */
-  final def readFrame(frame: Int, channels: Vector[Int], segment: Int): DV[Int] = {
+  final def readFrame(frame: Int, channels: Array[Int], segment: Int): DV[Int] = {
     loggerRequire(isRealisticFr(frame/*, segment*/), "Unrealistic frame/segment: " + (frame, segment).toString)
     loggerRequire(channels.forall(isValidChannel), "Invalid channels: " + channels.toString)
 
@@ -217,7 +217,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
   final def readFrameA(frame: Int): Array[Int] = readFrame(frame).toArray
   final def readFrameA(frame: Int, segment: Int): Array[Int] = readFrame(frame/*, segment*/).toArray
-  final def readFrameA(frame: Int, channels: Array[Int], segment: Int): Array[Int] = readFrame(frame, channels.toVector, segment).toArray
+  final def readFrameA(frame: Int, channels: Array[Int], segment: Int): Array[Int] = readFrame(frame, channels, segment).toArray
 
   //</editor-fold>
 
@@ -232,7 +232,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   /** CAN OVERRIDE: Read a single frame from the data, for just the specified channels, in internal integer scaling.
     * Should return a defensive clone. Assumes that frame and channels are within the data range!
     */
-  def readFrameImpl(frame: Int, channels: Vector[Int]): DV[Int] = {
+  def readFrameImpl(frame: Int, channels: Array[Int]): DV[Int] = {
     val res = DV.zeros[Int]( channels.length )
     nounou.util.forJava(0, channels.length, 1, (channel: Int) => res(channel) = readPointImpl(channel, frame))
     res
@@ -309,8 +309,8 @@ class XDataNull extends XData {
   override val absUnit: String = "Null unit"
   override val scaleMax: Int = 0
   override val scaleMin: Int = 0
-  override val segmentLength: Vector[Int] = Vector[Int]()
-  override val segmentStartTs: Vector[Long] = Vector[Long]()
+  override val segmentLength: Array[Int] = Array[Int]()
+  override val segmentStartTs: Array[Long] = Array[Long]()
   override val sampleRate: Double = 1d
   override val layout: XLayout = XLayoutNull
 
@@ -328,7 +328,7 @@ class XDataNull extends XData {
 
   /** OVERRIDE: End timestamp for each segment. Implement by overriding _endTimestamp
     */
-  override val segmentEndTs: scala.Vector[Long] = Vector[Long]()
+  override val segmentEndTs: Array[Long] = Array[Long]()
 }
 
 object XDataNull extends XDataNull

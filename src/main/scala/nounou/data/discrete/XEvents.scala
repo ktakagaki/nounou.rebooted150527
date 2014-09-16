@@ -44,7 +44,28 @@ class XEvents extends X with XConcatenatable {
 
   // </editor-fold>
 
-  // <editor-fold defaultstate="collapsed" desc=" toArray ">
+  // <editor-fold defaultstate="collapsed" desc=" expandZeroEvents ">
+
+  def expandZeroEvents(): Unit = {
+    _database = _database.map( ( ev:(Int, TreeSet[XEvent]) ) => ( ev._1, {
+      var tempTreeSet = TreeSet[XEvent]()
+      ev._2.foreach(
+        (x: XEvent) => {
+          if (x.duration != 0) {
+            tempTreeSet = tempTreeSet + new XEvent(x.timestamp, 0L, x.code, x.comment)
+            tempTreeSet = tempTreeSet + new XEvent(x.timestamp + x.duration, 0L, 0, "nounou: expanded reset")
+          }
+          else tempTreeSet = tempTreeSet + x
+        }
+      )
+      tempTreeSet}   )
+    )
+  }
+
+  // </editor-fold>
+
+
+  // <editor-fold defaultstate="collapsed" desc=" toArray/toArrayArray ">
 
   def toArray(): Array[(Int, XEvent)] = {
     val tempret: ArrayBuffer[(Int, XEvent)] = new ArrayBuffer[(Int, XEvent)]()

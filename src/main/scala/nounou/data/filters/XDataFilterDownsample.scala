@@ -56,7 +56,7 @@ class XDataFilterDownsample( private var _parent: XData ) extends XDataFilter( _
     }
 
   override def readFrameImpl(frame: Int/*, segment: Int*/): DV[Int] = super[XDataFilter].readFrameImpl(frame * factor)//, segment)
-  override def readFrameImpl(frame: Int, channels: Vector[Int]/*, segment: Int*/): DV[Int] = super[XDataFilter].readFrameImpl(frame * factor, channels/*, segment*/)
+  override def readFrameImpl(frame: Int, channels: Array[Int]/*, segment: Int*/): DV[Int] = super[XDataFilter].readFrameImpl(frame * factor, channels/*, segment*/)
 
   //  override def channelNames: scala.Vector[String] = _parent.channelNames
 
@@ -67,18 +67,18 @@ class XDataFilterDownsample( private var _parent: XData ) extends XDataFilter( _
   override def sampleRate: Double = _parent.sampleRate / factor
 
   // override def segmentStartTSs: Vector[Long] = _parent.segmentStartTSs
-  override def segmentEndTs: Vector[Long] = if( factor == currentSegEndTSFactor ) currentSegEndTSBuffer
+  override def segmentEndTs: Array[Long] = if( factor == currentSegEndTSFactor ) currentSegEndTSBuffer
   else {
-    currentSegEndTSBuffer = ( for(seg <- 0 until segmentCount) yield _parent.segmentStartTs(seg) + ((this.segmentLength(seg)-1)*tsPerFr).toLong ).toVector
+    currentSegEndTSBuffer = ( for(seg <- 0 until segmentCount) yield _parent.segmentStartTs(seg) + ((this.segmentLength(seg)-1)*tsPerFr).toLong ).toArray
     currentSegEndTSFactor = factor
     currentSegEndTSBuffer
   }
   private var currentSegEndTSFactor = 0
   private var currentSegEndTSBuffer = _parent.segmentEndTs
 
-  override def segmentLength: Vector[Int] = if( factor == currentSegLenFactor ) currentSegLenBuffer
+  override def segmentLength: Array[Int] = if( factor == currentSegLenFactor ) currentSegLenBuffer
   else {
-    currentSegLenBuffer = ( for(seg <- 0 until segmentCount) yield ( _parent.segmentLength(seg) - 1 )/factor + 1 ).toVector
+    currentSegLenBuffer = ( for(seg <- 0 until segmentCount) yield ( _parent.segmentLength(seg) - 1 )/factor + 1 ).toArray
     currentSegLenFactor = factor
     currentSegLenBuffer
   }

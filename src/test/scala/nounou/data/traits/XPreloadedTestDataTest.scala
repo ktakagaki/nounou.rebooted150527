@@ -18,8 +18,8 @@ class XPreloadedTestDataTest extends FunSuite {
     xBits = 12, absGain = 7d, absOffset = 0.1, absUnit = "mV",
     scaleMax = 500, scaleMin = 0,
     //channelNames = Vector[String]("testChan", "testChan"),
-    segmentStartTs = Vector(10000000L, 30000000L),
-  segmentLength = Vector(0, 10),
+    segmentStartTs = Array(10000000L, 30000000L),
+  segmentLength = Array(0, 10),
     sampleRate = 1.0)
 
 }

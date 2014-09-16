@@ -20,22 +20,32 @@ object NNDataReader{
     fileChooser.showOpenDialog(window)
 
     val filesChosen: List[File] = fileChooser.showOpenMultipleDialog(null).toList
-    filesChosen.flatMap( load(_) ).toArray
+    loadPostProcess(filesChosen.flatMap( load(_) ).toArray)
   }
 
-  def load(files: Array[String]): Array[X] = files.flatMap( (file: String) => load( new File( file ) ) )
+  def load(files: Array[String]): Array[X] = loadPostProcess(files.flatMap( (file: String) => load( new File( file ) ) ))
 
   def load(file: File): Array[X] = {
+    loadPostProcess(
     (file.getName.toLowerCase match {
       case n: String if n.endsWith(".nex") => FileAdapterNEX.load( file )
       case n: String if n.endsWith(".ncs") => FileAdapterNCS.load( file )
       case n: String if n.endsWith(".nev") => FileAdapterNEV.load( file )
       case n: String if (n.endsWith(".gsd") || n.endsWith(".gsh")) => FileAdapterGSDGSH.load( file )
       case n => throw new IllegalArgumentException("File format for " + n + " is not supported yet.")
-    }).toArray
+    }).toArray)
   }
 
   def load(string: String): Array[X] = load( new File(string) )
+
+  private def loadPostProcess(x: Array[X]): Array[X] = {
+    val tempretXDC = x.filter(_.isInstanceOf[XDataChannel]).map(_.asInstanceOf[XDataChannel])
+    if(tempretXDC.length > 1 && tempretXDC.head.isCompatible(tempretXDC.tail)){
+      Array( new XDataChannelArray(tempretXDC) ) ++ x.filter(!_.isInstanceOf[XDataChannel])
+    } else {
+      x
+    }
+  }
 
 }
 

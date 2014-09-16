@@ -17,9 +17,9 @@ class XDataFilterDownsampleTest extends FunSuite {
     val obj = new XDataFilterDownsample( ori, 16 )
 
     assert(obj.sampleRate == 2000.0)
-    assert(obj.segmentLength == Vector(208704, 7712, 422176))
-    assert(obj.segmentStartTs == Vector(-9223372034262519500L, -9223372032258605500L, -9223372032227369500L))
-    assert(obj.segmentEndTs == Vector(-9223372034158168000L, -9223372032254750000L, -9223372032016282000L))
+    assert(obj.segmentLength == Array(208704, 7712, 422176))
+    assert(obj.segmentStartTs == Array(-9223372034262519500L, -9223372032258605500L, -9223372032227369500L))
+    assert(obj.segmentEndTs == Array(-9223372034158168000L, -9223372032254750000L, -9223372032016282000L))
 //    assert(obj.frsgToTs(208704-1, 0) == -9223372034158168000L)
 //    intercept[IllegalArgumentException](obj.frsgToTs(208704, 0) == -9223372034158168000L)
 //    assert(obj.frsgToTs(7712-1, 1) == -9223372032254750000L)
