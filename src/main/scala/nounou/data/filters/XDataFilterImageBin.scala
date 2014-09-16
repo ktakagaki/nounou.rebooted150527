@@ -47,7 +47,7 @@ class XDataFilterImageBin(private var _parent: XData) extends XDataFilter( _pare
   override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int = _parent.readPointImpl(channel, frame)//, segment)
   override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/): DV[Int] = _parent.readTraceImpl(channel, range)//, segment)
   override def readFrameImpl(frame: Int/*, segment: Int*/): DV[Int] = _parent.readFrameImpl(frame)//, segment)
-  override def readFrameImpl(frame: Int, channels: Vector[Int]/*, segment: Int*/): DV[Int] = _parent.readFrameImpl(frame, channels)//, segment)
+  override def readFrameImpl(frame: Int, channels: Array[Int]/*, segment: Int*/): DV[Int] = _parent.readFrameImpl(frame, channels)//, segment)
 
   protected var layoutBuff = _parent.layout()
 //  override def layout: XLayout = if( factor() == 1 ) _parent.layout()

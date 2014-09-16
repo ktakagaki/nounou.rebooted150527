@@ -7,7 +7,7 @@ import nounou.data.traits.{XFramesImmutable, XConcatenatable}
   *
  * Created by Kenta on 12/15/13.
  */
- class XDataChannelArray(val array: Vector[XDataChannel], override val layout: XLayout = XLayoutNull)
+ class XDataChannelArray(val array: Seq[XDataChannel], override val layout: XLayout = XLayoutNull)
   extends XData with XConcatenatable with XFramesImmutable {
   //ToDo 2: Clarify what is exactly immutable, and enforce
 
@@ -25,7 +25,7 @@ import nounou.data.traits.{XFramesImmutable, XConcatenatable}
   override lazy val sampleRate = array(0).sampleRate
 
   // (from XChannelsImmutable)
-  override lazy val channelNames = array.map(_.channelName)
+  override lazy val channelNames = array.map(_.channelName).toVector
 
   // (from XAbsoluteImmutable)
   override lazy val absGain = array(0).absGain

@@ -59,7 +59,7 @@ class XDataFilter( private var _parent: XData ) extends XData {
   override def readPointImpl(channel: Int, frame: Int): Int = _parent.readPointImpl(channel, frame)
   override def readTraceImpl(channel: Int, range: Range.Inclusive): DV[Int] = _parent.readTraceImpl(channel, range)
   override def readFrameImpl(frame: Int): DV[Int] = _parent.readFrameImpl(frame)
-  override def readFrameImpl(frame: Int, channels: Vector[Int]): DV[Int] = _parent.readFrameImpl(frame, channels)
+  override def readFrameImpl(frame: Int, channels: Array[Int]): DV[Int] = _parent.readFrameImpl(frame, channels)
 
   override def absUnit: String = _parent.absUnit
   override def absOffset: Double = _parent.absOffset
@@ -68,9 +68,9 @@ class XDataFilter( private var _parent: XData ) extends XData {
   override def scaleMin = _parent.scaleMin
 
   override def sampleRate: Double = _parent.sampleRate
-  override def segmentEndTs: scala.Vector[Long] = _parent.segmentEndTs
-  override def segmentStartTs: scala.Vector[Long] = _parent.segmentStartTs
-  override def segmentLength: scala.Vector[Int] = _parent.segmentLength
+  override def segmentEndTs: Array[Long] = _parent.segmentEndTs
+  override def segmentStartTs: Array[Long] = _parent.segmentStartTs
+  override def segmentLength: Array[Int] = _parent.segmentLength
   override def segmentCount: Int = _parent.segmentCount
 
   override def layout: XLayout = _parent.layout()
