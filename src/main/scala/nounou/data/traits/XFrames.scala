@@ -26,7 +26,7 @@ trait XFrames extends X {
 
   /**Total number of frames in each segment.
     */
-  def segmentLength: Vector[Int]
+  def segmentLength: Array[Int]
   /**Return [[segmentLength]] as Array, for easy access from Java/Mathematica/MatLab.
     */
   final def segmentLengthA = segmentLength.toArray
@@ -40,7 +40,7 @@ trait XFrames extends X {
 
   /** OVERRIDE: List of starting frames for each segment.
     */
-  def segmentStartFr: Vector[Int] = segmentLength.scanLeft(0){ _ + _ }.init
+  def segmentStartFr: Array[Int] = segmentLength.scanLeft(0){ _ + _ }.init
 
   /**Return [[segmentStartFr]] as Array, for easy access from Java/Mathematica/MatLab.
     */
@@ -51,7 +51,7 @@ trait XFrames extends X {
 
   /** OVERRIDE: List of starting timestamps for each segment.
     */
-  def segmentStartTs: Vector[Long]
+  def segmentStartTs: Array[Long]
   final def startTs: Long = {
     errorIfMultipleSegments("startTs", "segmentStartTS(segment: Int)")
     segmentStartTs(0)
@@ -61,7 +61,7 @@ trait XFrames extends X {
   final def segmentStartTsA = segmentStartTs.toArray
   /** OVERRIDE: End timestamp for each segment. Implement by overriding _endTimestamp
     */
-  def segmentEndTs: Vector[Long]
+  def segmentEndTs: Array[Long]
   /**Return [[segmentEndTs]] as Array, for easy access from Java/Mathematica/MatLab.
     */
   final def segmentEndTsA = segmentEndTs.toArray
@@ -263,8 +263,11 @@ trait XFrames extends X {
   override def isCompatible(that: X): Boolean = {
     that match {
       case x: XFrames => {
-        (this.segmentCount == x.segmentCount) &&(this.segmentLength == x.segmentLength) &&
-          (this.segmentStartTs == x.segmentStartTs) &&
+        (this.segmentCount == x.segmentCount) &&
+          (this.segmentLength.corresponds(x.segmentLength)(_ == _ )) &&
+          (this.segmentStartTs.corresponds(x.segmentStartTs)(_ == _ )) &&
+//          (this.segmentLength.sameElements(x.segmentLength)) &&
+//          (this.segmentStartTs.sameElements(x.segmentStartTs)) &&
           (this.sampleRate == x.sampleRate)
       }
       case _ => false
@@ -289,19 +292,19 @@ trait XFrames extends X {
 trait XFramesImmutable extends XFrames {
 
   final override lazy val segmentCount: Int = segmentLength.length
-  override val segmentLength: Vector[Int]
+  override val segmentLength: Array[Int]
 
   /**Cumulative frame numbers for segment starts.
     */
-  final lazy val segmentStartFrames: Vector[Int] = {
+  final lazy val segmentStartFrames: Array[Int] = {
     var sum = 0
-    ( for(seg <- 0 until segmentLength.length) yield {sum += segmentLength(seg); sum} ).toVector.+:(0).dropRight(1)
+    ( for(seg <- 0 until segmentLength.length) yield {sum += segmentLength(seg); sum} ).toArray.+:(0).dropRight(1)
   }
   //=  DenseVector( accumulate(DenseVector(length.toArray)).toArray.map( _ + 1 ).+:(0).take(length.length) ).toArray.toVector
 
-  override val segmentStartTs: Vector[Long]
-  override final lazy val segmentEndTs: Vector[Long] = {
-    ( for(seg <- 0 until segmentCount) yield segmentStartTs(seg) + ((segmentLength(seg)-1)*tsPerFr).toLong ).toVector
+  override val segmentStartTs: Array[Long]
+  override final lazy val segmentEndTs: Array[Long] = {
+    ( for(seg <- 0 until segmentCount) yield segmentStartTs(seg) + ((segmentLength(seg)-1)*tsPerFr).toLong ).toArray
   }
 
   //sampling rate information

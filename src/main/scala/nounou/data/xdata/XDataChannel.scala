@@ -71,6 +71,7 @@ abstract class XDataChannel extends X with XFrames with XAbsolute with XConcaten
   override def isCompatible(that: X): Boolean = {
     that match {
       case x: XDataChannel => {
+        println(super[XFrames].isCompatible(x))
         (super[XFrames].isCompatible(x) && super[XAbsolute].isCompatible(x))
       }
       case _ => false
@@ -122,8 +123,8 @@ class XDataChannelNull extends XDataChannel {
   override val absUnit: String = "XDataChannelNull"
   override val scaleMax: Int = 0
   override val scaleMin: Int = 0
-  override val segmentLength: Vector[Int] = Vector[Int]()
-  override val segmentStartTs: Vector[Long] = Vector(0L)
+  override val segmentLength: Array[Int] = Array[Int]()
+  override val segmentStartTs: Array[Long] = Array(0L)
   override val sampleRate: Double = 1d
 
   /** Number of segments in data.
@@ -132,7 +133,7 @@ class XDataChannelNull extends XDataChannel {
 
   /** OVERRIDE: End timestamp for each segment. Implement by overriding _endTimestamp
     */
-  override val segmentEndTs: Vector[Long] = Vector[Long]()
+  override val segmentEndTs: Array[Long] = Array[Long]()
 }
 
 class XDataChannelPreloaded(val data: DV[Int],
@@ -143,11 +144,11 @@ class XDataChannelPreloaded(val data: DV[Int],
                             override val scaleMax: Int,
                             override val scaleMin: Int,
                             override val channelName: String,
-                            override val segmentStartTs: Vector[Long],
+                            override val segmentStartTs: Array[Long],
                             override val sampleRate: Double
  )  extends XDataChannel with XFramesImmutable{
 
-  override lazy val segmentLength = Vector( data.length )
+  override lazy val segmentLength = Array( data.length )
   override def readPointImpl(frame: Int/*, segment: Int*/): Int = data(frame)
 
 }
@@ -164,4 +165,4 @@ class XDataChannelPreloadedSingleSegment
                     segmentStartTS: Long,
                     sampleRate: Double
                     )
-  extends XDataChannelPreloaded(data, xBits, absGain, absUnit, absOffset, scaleMax, scaleMin, channelName, Vector(segmentStartTS), sampleRate)
+  extends XDataChannelPreloaded(data, xBits, absGain, absUnit, absOffset, scaleMax, scaleMin, channelName, Array(segmentStartTS), sampleRate)

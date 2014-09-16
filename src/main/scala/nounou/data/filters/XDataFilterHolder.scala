@@ -58,7 +58,7 @@ class XDataFilterHolder extends XData with XDataAux {
     heldData.readTraceImpl(channel, range)
   override def readFrameImpl(frame: Int): DV[Int] =
     heldData.readFrameImpl(frame)
-  override def readFrameImpl(frame: Int, channels: Vector[Int]): DV[Int] =
+  override def readFrameImpl(frame: Int, channels: Array[Int]): DV[Int] =
     heldData.readFrameImpl(frame, channels)
 
   override def absUnit: String =   heldData.absUnit
@@ -68,9 +68,9 @@ class XDataFilterHolder extends XData with XDataAux {
   override def scaleMin: Int =     heldData.scaleMin
 
   override def sampleRate: Double =                 heldData.sampleRate
-  override def segmentEndTs: scala.Vector[Long] =   heldData.segmentEndTs
-  override def segmentStartTs: scala.Vector[Long] = heldData.segmentStartTs
-  override def segmentLength: scala.Vector[Int] =   heldData.segmentLength
+  override def segmentEndTs: Array[Long] =   heldData.segmentEndTs
+  override def segmentStartTs: Array[Long] = heldData.segmentStartTs
+  override def segmentLength: Array[Int] =   heldData.segmentLength
   override def segmentCount: Int =                  heldData.segmentCount
 
   override def layout: XLayout = heldData.layout()
