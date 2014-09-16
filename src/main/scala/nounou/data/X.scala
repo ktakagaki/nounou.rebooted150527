@@ -19,6 +19,8 @@ abstract class X extends LoggingExt {
 
   def isCompatible(that: X): Boolean
   def isCompatible(that: Iterable[X]): Boolean = that.forall( this.isCompatible(_) )
+  //for Java compatibility
+  def isCompatible(that: Array[X]): Boolean = that.forall( this.isCompatible(_) )
 
 //  protected def vectZeros(length: Int) = Vector.tabulate(length)( (i: Int) => 0 )
 
