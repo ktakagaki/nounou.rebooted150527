@@ -263,8 +263,10 @@ trait XFrames extends X {
   override def isCompatible(that: X): Boolean = {
     that match {
       case x: XFrames => {
+        //print("sc " + this.segmentCount == x.segmentCount + " startTs "+ this.segmentStartTs.corresponds(x.segmentStartTs)(_ == _ ))
         (this.segmentCount == x.segmentCount) &&
-          (this.segmentLength.corresponds(x.segmentLength)(_ == _ )) &&
+          //ToDo 2: removed for corrupt page drop at end, like E04LC. Add better error code and tests
+          //(this.segmentLength.corresponds(x.segmentLength)(_ == _ )) &&
           (this.segmentStartTs.corresponds(x.segmentStartTs)(_ == _ )) &&
 //          (this.segmentLength.sameElements(x.segmentLength)) &&
 //          (this.segmentStartTs.sameElements(x.segmentStartTs)) &&

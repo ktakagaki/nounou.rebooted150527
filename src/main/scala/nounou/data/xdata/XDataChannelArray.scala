@@ -1,5 +1,6 @@
 package nounou.data
 
+import breeze.linalg.{DenseVector, min}
 import nounou._
 import nounou.data.traits.{XFramesImmutable, XConcatenatable}
 
@@ -17,10 +18,17 @@ import nounou.data.traits.{XFramesImmutable, XConcatenatable}
 
   def this( dataChannel: XDataChannel, layout: XLayout ) = this( Vector[XDataChannel]( dataChannel ), layout )
   def this( dataChannel: XDataChannel ) = this( Vector[XDataChannel]( dataChannel ) )
+  //java compatiblity
+  def this( array: Array[XDataChannel], layout: XLayout ) = this( array.toVector, layout )
+  def this( array: Array[XDataChannel] ) = this( array.toVector )
 
   def apply(channel: Int) = array(channel)
 
-  override lazy val segmentLength = array(0).segmentLength
+  override lazy val segmentLength = {
+    val tempsl = Array( array(0).segmentCount )
+    for(s <- 1 until tempsl.length) tempsl(s) = min( DenseVector(array.map(_.segmentLength(s)).toArray) )
+    tempsl
+  }
   override lazy val segmentStartTs = array(0).segmentStartTs
   override lazy val sampleRate = array(0).sampleRate
 

@@ -46,7 +46,6 @@
     <orderEntry type="library" name="org.scalafx:scalafx_2.11.0-RC4:8.0.0-R4" level="project" />
     <orderEntry type="library" name="org.slf4j:slf4j-api:1.7.7" level="project" />
     <orderEntry type="library" name="com.typesafe.scala-logging:scala-logging-api_2.11:2.1.2" level="project" />
-    <orderEntry type="library" name="ch.qos.logback:logback-classic:1.0.11" level="project" />
     <orderEntry type="library" name="org.scala-lang:scala-compiler:2.11.2" level="application" />
     <orderEntry type="library" name="junit:junit:4.11" level="project" />
   </component>

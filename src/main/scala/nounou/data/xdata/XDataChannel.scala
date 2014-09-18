@@ -72,7 +72,8 @@ abstract class XDataChannel extends X with XFrames with XAbsolute with XConcaten
     that match {
       case x: XDataChannel => {
         println(super[XFrames].isCompatible(x))
-        (super[XFrames].isCompatible(x) && super[XAbsolute].isCompatible(x))
+        super[XFrames].isCompatible(x) &&
+          super[XAbsolute].isCompatible(x)
       }
       case _ => false
     }
