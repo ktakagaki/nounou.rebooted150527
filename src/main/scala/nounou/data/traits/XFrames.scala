@@ -31,7 +31,7 @@ trait XFrames extends X {
     */
   final def segmentLengthA = segmentLength.toArray
 
-  /**Total ength in frames of data. Use [[segmentLength]] instead, for data which has more than one segment.
+  /**Total length in frames of data. Use [[segmentLength]] instead, for data which has more than one segment.
     */
   final def length: Int = {//segmentLength.foldLeft(0)( _ + _ )
       errorIfMultipleSegments("length", "segmentLength(segment: Int)")
@@ -86,7 +86,7 @@ trait XFrames extends X {
 //    (-100000 <= range.start && range.end < segmentLength(segment) + 100000)
   final def isRealisticRange(range: RangeFrSpecifier): Boolean = {
     val seg = range.getRealSegment(this)
-    val ran = range.getRangeFr(this)
+    val ran = range.getRealRange(this)
     isRealisticFrsg(ran.start, seg) && isRealisticFrsg(ran.last, seg)
   }
 
@@ -97,22 +97,24 @@ trait XFrames extends X {
   /**OVERRIDE: Sampling rate of frame data in Hz
     */
   def sampleRate: Double
-  /**Buffered inverse of sampling, in seconds: Double
+  /**Buffered inverse of sampling, in seconds: Double.
+    *DO NOT OVERRIDE: not final due to override with lazy val in immutable frames.
     */
   def sampleInterval = 1.0/sampleRate
   /**Buffered timestamps (microseconds) between frames.
+    *DO NOT OVERRIDE: not final due to override with lazy val in immutable frames.
     */
-  def tsPerFr = sampleInterval * 1000000D
+  def factorTSperFR = sampleInterval * 1000000D
   /**Buffered frames between timestamps (microseconds).
+    *DO NOT OVERRIDE: not final due to override with lazy val in immutable frames.
     */
-  def frPerTs = 1D/tsPerFr
+  def factorFRperTS = 1D/factorTSperFR
 
   // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc="Time specification: conversion between frame/segment and TS">
 
-//  final def frToTs(xFrame: Frame): Long = frToTsImpl(xFrame.frame, xFrame.segment)
-  final def frToTs(frame:Int): Long = {
+  final def convertFRtoTS(frame:Int): Long = {
 //    if(segmentCount==0) segmentStartTs(0) + (frame.toDouble * tsPerFr).toLong
 //    else {
 //      var seg = 1
@@ -123,15 +125,15 @@ trait XFrames extends X {
 //      }
 //      segmentStartTs(seg-1) + (frame.toDouble * tsPerFr).toLong
 //    }
-    errorIfMultipleSegments("frToTs(frame: Int)", "frsgToTs(frame: Int, segment: Int)")
-    frsgToTs(frame, 0)
+    errorIfMultipleSegments("convertFrToTs(frame: Int)", "convertFsToTs(frame: Int, segment: Int)")
+    convertFStoTS(frame, 0)
   }
 
   /** Absolute timestamp of the given data frame index (in microseconds).
     */
-  final def frsgToTs(frame:Int, segment: Int): Long = {
+  final def convertFStoTS(frame:Int, segment: Int): Long = {
     loggerRequire( isValidFrsg(frame, segment), "Not valid frame/segment specification!" )
-    segmentStartTs(segment) + ((frame-1).toDouble * tsPerFr).toLong
+    segmentStartTs(segment) + ((frame-1).toDouble * factorTSperFR).toLong
   }
 
   /** Closest frame/segment index to the given absolute timestamp. Will give frames which are out of range (i.e. negative, etc)
@@ -141,31 +143,31 @@ trait XFrames extends X {
 //    * @param negativeIfOOB If true, will give a frame stamp as negative or larger than data length. Useful for overhangs. If False, will throw error.
     * @return
     */
-  final def convertTS2FS(timestamp: Long): (Int, Int) = {
+  final def convertTStoFS(timestamp: Long): (Int, Int) = {
 
     var tempret: (Int, Int) = (0 , 0)
     var changed = false
 
     //timestamp is before the start of the first segment
     if( timestamp <= segmentStartTs(0) ){
-      tempret = ( ((timestamp-segmentStartTs(0)) * frPerTs).toInt, 0)
+      tempret = ( ((timestamp-segmentStartTs(0)) * factorFRperTS).toInt, 0)
     } else {
       //loop through segments to find appropriate segment which (contains) given timestamp
       var seg = 0
       while(seg < segmentCount - 1 && !changed ){
         if( timestamp <= segmentEndTs(seg) ){
           // if the timestamp is smaller than the end of the current segment, it fits in the current segment
-          tempret = ( ((timestamp-segmentStartTs(seg)) * frPerTs).toInt, seg)
+          tempret = ( ((timestamp-segmentStartTs(seg)) * factorFRperTS).toInt, seg)
           changed = true
         } else if( timestamp < segmentStartTs(seg+1) ) {
           //The timestamp is between the end of the current segment and the beginning of the next segment...
           if( timestamp - segmentEndTs(seg) < segmentStartTs(seg+1) - timestamp){
             //  ...timestamp is closer to end of current segment than beginning of next segment
-            tempret = (((timestamp-segmentEndTs(seg)) * frPerTs).toInt, seg)
+            tempret = (((timestamp-segmentEndTs(seg)) * factorFRperTS).toInt, seg)
             changed = true
           } else {
             //  ...timestamp is closer to beginning of next segment than end of current segment
-            tempret = (((timestamp-segmentStartTs(seg + 1)) * frPerTs).toInt, seg + 1)
+            tempret = (((timestamp-segmentStartTs(seg + 1)) * factorFRperTS).toInt, seg + 1)
             changed = true
           }
         } else {
@@ -178,10 +180,10 @@ trait XFrames extends X {
       if( !changed ){
         if(timestamp <= segmentEndTs(segmentCount -1)){
           // if the timestamp is smaller than the end of the current segment, it fits in the current segment
-          tempret = ( ((timestamp - segmentStartTs(segmentCount-1)) * frPerTs).toInt, segmentCount - 1 )
+          tempret = ( ((timestamp - segmentStartTs(segmentCount-1)) * factorFRperTS).toInt, segmentCount - 1 )
         } else {
           // if the timestamp is larger than the end of the lastValid segment
-          tempret = ( ((timestamp - segmentEndTs(segmentCount-1)) * frPerTs).toInt, segmentCount - 1 )
+          tempret = ( ((timestamp - segmentEndTs(segmentCount-1)) * factorFRperTS).toInt, segmentCount - 1 )
         }
       }
 
@@ -190,13 +192,13 @@ trait XFrames extends X {
     tempret
 
   }
-  final def tsToFrsgA(timestamp: Long): Array[Int] = {
-    val tempret = convertTS2FS(timestamp)//, false)
+  final def convertTStoFSA(timestamp: Long): Array[Int] = {
+    val tempret = convertTStoFS(timestamp)//, false)
     Array[Int]( tempret._1, tempret._2 )
   }
-  final def tsToFr(timestamp: Long): Int = {
+  final def convertTStoFR(timestamp: Long): Int = {
     errorIfMultipleSegments("length", "segmentLength(segment: Int)")
-    convertTS2FS(timestamp)._1
+    convertTStoFS(timestamp)._1
   }
 
   // </editor-fold>
@@ -204,16 +206,16 @@ trait XFrames extends X {
 
   /** Time of the given data frame and segment (in milliseconds, with t=0 being the time for frame 0 within the segment).
     */
-  final def frToMs(frame: Int): Double = {
+  final def convertFRtoMS(frame: Int): Double = {
     frame.toDouble * sampleInterval * 1000d
     //(frameSegmentToTS(frame, segment)-frameSegmentToTS(0, segment)).toDouble / 1000d
   }
-  final def frToMs(frame: Double): Double = frToMs(round(frame).toInt)
+  final def convertFRtoMS(frame: Double): Double = convertFRtoMS(round(frame).toInt)
 
   /** Closest frame/segment index to the given timestamp in ms (frame 0 within segment being time 0). Will give beginning or lastValid frames, if timestamp is
     * out of range.
     */
-  final def msToFr(ms: Double): Int = {
+  final def convertMStoFR(ms: Double): Int = {
     //val tempret =
       (ms*sampleRate*0.001).toInt
     //require(tempret>=0, "frame index must be >0, not checking upper range. Input ms=" + ms + ", calculated output=" + tempret)
@@ -224,15 +226,15 @@ trait XFrames extends X {
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc="Time specification: conversion between ts and ms">
 
-  final def tsToMs(timestamp: Long): Double = frToMs( tsToFr(timestamp) )
-  final def msToTs(ms: Double): Long = frToTs( msToFr(ms) )
+  final def convertTStoMS(timestamp: Long): Double = convertFRtoMS( convertTStoFR(timestamp) )
+  final def convertMStoTS(ms: Double): Long = convertFRtoTS( convertMStoFR(ms) )
 
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc="Time specification: tsToClosestSg">
 
   /** Closest segment index to the given timestamp.
     */
-  final def tsToClosestSg(timestamp: Long): Int = {
+  final def convertTStoClosestSegment(timestamp: Long): Int = {
     if(timestamp <= segmentStartTs(0) ){
       0
     } else {
@@ -307,13 +309,13 @@ trait XFramesImmutable extends XFrames {
 
   override val segmentStartTs: Array[Long]
   override final lazy val segmentEndTs: Array[Long] = {
-    ( for(seg <- 0 until segmentCount) yield segmentStartTs(seg) + ((segmentLength(seg)-1)*tsPerFr).toLong ).toArray
+    ( for(seg <- 0 until segmentCount) yield segmentStartTs(seg) + ((segmentLength(seg)-1)*factorTSperFR).toLong ).toArray
   }
 
   //sampling rate information
   override val sampleRate: Double
   override final lazy val sampleInterval = 1.0/sampleRate
-  override final lazy val tsPerFr = sampleInterval * 1000000D
-  override final lazy val frPerTs = 1D/tsPerFr
+  override final lazy val factorTSperFR = sampleInterval * 1000000D
+  override final lazy val factorFRperTS = 1D/factorTSperFR
 
 }

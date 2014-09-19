@@ -41,8 +41,29 @@ object RangeTs {
 
 class RangeTs(val startTs: Long, val lastTs: Long, val stepTs: Long) extends RangeFrSpecifier {
 
-  override def getSegment(): Int = -1
-  override def getOptSegment(): OptSegment = OptSegment(-1)
+  override def getRealSegment(xFrames: XFrames): Int = {
+    realSegmentBufferRefresh(xFrames)
+    realSegmentBuffer
+  }
+  override def getRealStepFrames(xFrames: XFrames): Int = {
+    val stepReal = if(stepTs == -1L) 1 else (stepTs.toDouble * xFrames.sampleRate / 1000000d).toInt
+    loggerRequire(stepReal > 0, "This amounts to a negative time step! (stepTs=" + stepTs + " micro s => " + stepReal + " frames)")
+    stepReal
+  }
+  override final def getRealRange(xFrames: XFrames): Range.Inclusive = {
+    Range.inclusive( 0, xFrames.segmentLength(getRealSegment(xFrames)), getRealStepFrames(xFrames))
+  }
+//  private def getRangeFr(xFrames: XFrames): RangeFr = {
+//    realSegmentBufferRefresh(xFrames)
+//    RangeFr(realStartFrameBuffer, realLastFrameBuffer, getRealStepFrames(xFrames), OptSegment(realSegmentBuffer))
+//  }
+  override final def getValidRange(xFrames: XFrames): Range.Inclusive = {
+    realSegmentBufferRefresh(xFrames)
+    val realSegment = RangeFr(0, xFrames.segmentLength(realSegmentBuffer), getRealStepFrames(xFrames), OptSegment(realSegmentBuffer))
+    realSegment.getValidRange(xFrames)
+  }
+//  override def getSegment(): Int = -1
+//  override def getOptSegment(): OptSegment = OptSegment(-1)
 
   def this(startTs: Long, endTs: Long) = this(startTs, endTs, -1L)
 
@@ -53,8 +74,8 @@ class RangeTs(val startTs: Long, val lastTs: Long, val stepTs: Long) extends Ran
 
   private def realSegmentBufferRefresh(xFrames: XFrames): Unit = {
     if( realSegmentXFrameBuffer != xFrames) {
-      val fs1 = xFrames.convertTS2FS(startTs)
-      val fs2 = xFrames.convertTS2FS(lastTs)
+      val fs1 = xFrames.convertTStoFS(startTs)
+      val fs2 = xFrames.convertTStoFS(lastTs)
       loggerRequire(fs1._2 == fs2._2, "The two specified timestamps belong to different recording segments " +
         fs1._2.toString + " and " + fs2._2.toString)
       realSegmentXFrameBuffer = xFrames
@@ -65,19 +86,7 @@ class RangeTs(val startTs: Long, val lastTs: Long, val stepTs: Long) extends Ran
     }
   }
 
-  override def getRealSegment(xFrames: XFrames): Int = {
-    realSegmentBufferRefresh(xFrames)
-    realSegmentBuffer
-  }
-  override def getRealStepFrames(totalLength: Int): Int = {
-    val stepReal = if(stepTs == -1L) 1 else (stepTs.toDouble * totalLength.toDouble / 1000000d).toInt
-    loggerRequire(stepReal > 0, "This amounts to a negative time step! (stepTs=" + stepTs + " micro s => " + stepReal + " frames)")
-    stepReal
-  }
 
-  def getRangeFr(xFrames: XFrames): RangeFr = {
-    realSegmentBufferRefresh(xFrames: XFrames)
-    RangeFr(realStartFrameBuffer, realLastFrameBuffer, getRealStepFrames(xFrames), OptSegment(realSegmentBuffer))
-  }
+
 
 }

@@ -23,7 +23,8 @@ class XDataFilterFIR(private var _parent: XData ) extends XDataFilter( _parent )
 
   override def toString() = {
     if(kernel == null) "XDataFilterFIR: kernel null (off)"
-    else "XDataFilterFIR: kernel " + kernel.toString() + ", multiplier: " + multiplier.toString
+    else "XDataFilterFIR:\n" +
+         "   kernel " + kernel.toString()
   }
 
   // <editor-fold defaultstate="collapsed" desc=" get/set filter settings ">
@@ -73,6 +74,7 @@ class XDataFilterFIR(private var _parent: XData ) extends XDataFilter( _parent )
   // <editor-fold defaultstate="collapsed" desc=" calculate data ">
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = {
+    throw new IllegalArgumentException("stack test")
     //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
     val tempData = _parent.readTrace( channel, RangeFr(frame - kernel.overhangPre, frame + kernel.overhangPost, 1, OptSegment(segment)))
     val tempRet = convolve( DV( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None )
@@ -83,10 +85,12 @@ class XDataFilterFIR(private var _parent: XData ) extends XDataFilter( _parent )
   override def readTraceImpl(channel: Int, ran: Range.Inclusive, segment: Int): DV[Int] = {
     //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
     val tempData = _parent.readTrace( channel, RangeFr( ran.start - kernel.overhangPre, ran.last + kernel.overhangPost, 1, OptSegment(segment)))
+    println("XDataFilterFIR " + ran.toString())
     val tempRes: DV[Long] = convolve(
-             convert( new DV( tempData.toArray ), Long), kernel.kernel,
-                      range = OptRange.RangeOpt(new Range.Inclusive(0, ran.last - ran.start, ran.step)),
-                      overhang = OptOverhang.None ) / multiplier
+         convert( new DV( tempData.toArray ), Long),
+         kernel.kernel,
+         range = OptRange.RangeOpt(new Range.Inclusive(0, ran.last - ran.start, ran.step)),
+        overhang = OptOverhang.None ) / multiplier
     convert(tempRes, Int)
   }
 
@@ -95,16 +99,5 @@ class XDataFilterFIR(private var _parent: XData ) extends XDataFilter( _parent )
 
   // </editor-fold>
 
-//  override def channelNames: scala.Vector[String] = _parent.channelNames
-
-//  override def absUnit: String = _parent.absUnit
-//  override def absOffset: Double = _parent.absOffset
-//  override def absGain: Double = _parent.absGain
-
-//  override def sampleRate: Double = _parent.sampleRate
-//  override def segmentEndTSs: scala.Vector[Long] = _parent.segmentEndTSs
-//  override def segmentStartTSs: scala.Vector[Long] = _parent.segmentStartTSs
-//  override def segmentLengths: scala.Vector[Int] = _parent.segmentLengths
-//  override def segmentCount: Int = _parent.segmentCount
 
 }

@@ -159,23 +159,23 @@ class RangeFrTest extends FunSuite {
     assert( testFrRange52.postLength(totalLen2) == 1 )
     assert( testFrRange62.postLength(totalLen2) == 1 )
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc=" getValidRange ">
-
-    assert( testFrRange11.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )
-    //println( testFrRange21.getValidRange(totalLen) )
-    assert( testFrRange21.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )
-    assert( testFrRange31.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )
-    assert( testFrRange41.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )
-
-    assert( testFrRange12.getValidRange(totalLen) == new Range.Inclusive(0, 4, 2) )
-    assert( testFrRange22.getValidRange(totalLen) == new Range.Inclusive(0, 4, 2) )
-    assert( testFrRange32.getValidRange(totalLen) == new Range.Inclusive(0, 4, 2) )
-    assert( testFrRange42.getValidRange(totalLen) == new Range.Inclusive(1, 3, 2) )
-
-    assert( testFrRange52.getValidRange(totalLen) == new Range.Inclusive(3, 3, 2) )
-    assert( testFrRange62.getValidRange(totalLen) == new Range.Inclusive(0, -1, 1) )
-    assert( (new Range.Inclusive(4, 4, 2)).length == 1 )
-    // </editor-fold>
+//    // <editor-fold defaultstate="collapsed" desc=" getValidRange ">
+//
+//    assert( testFrRange11.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )
+//    //println( testFrRange21.getValidRange(totalLen) )
+//    assert( testFrRange21.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )
+//    assert( testFrRange31.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )
+//    assert( testFrRange41.getValidRange(totalLen) == new Range.Inclusive(0, 4, 1) )
+//
+//    assert( testFrRange12.getValidRange(totalLen) == new Range.Inclusive(0, 4, 2) )
+//    assert( testFrRange22.getValidRange(totalLen) == new Range.Inclusive(0, 4, 2) )
+//    assert( testFrRange32.getValidRange(totalLen) == new Range.Inclusive(0, 4, 2) )
+//    assert( testFrRange42.getValidRange(totalLen) == new Range.Inclusive(1, 3, 2) )
+//
+//    assert( testFrRange52.getValidRange(totalLen) == new Range.Inclusive(3, 3, 2) )
+//    assert( testFrRange62.getValidRange(totalLen) == new Range.Inclusive(0, -1, 1) )
+//    assert( (new Range.Inclusive(4, 4, 2)).length == 1 )
+//    // </editor-fold>
 
   }
 
@@ -256,23 +256,23 @@ class RangeFrTest extends FunSuite {
     assert( testFrRange62.postLength(totalLen) == 1 )
     assert( testFrRange72.postLength(totalLen) == 2 )
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc=" getValidRange ">
-
-    assert( testFrRange11.getValidRange(totalLen) == new Range.Inclusive(0, 3, 1) )
-    assert( testFrRange21.getValidRange(totalLen) == new Range.Inclusive(0, 3, 1) )
-    assert( testFrRange31.getValidRange(totalLen) == new Range.Inclusive(0, 5, 1) )
-    assert( testFrRange41.getValidRange(totalLen) == new Range.Inclusive(0, 5, 1) )
-
-    assert( testFrRange12.getValidRange(totalLen) == new Range.Inclusive(0, 2, 2) )
-    assert( testFrRange22.getValidRange(totalLen) == new Range.Inclusive(1, 3, 2) )
-    assert( testFrRange32.getValidRange(totalLen) == new Range.Inclusive(0, 4, 2) )
-    assert( testFrRange42.getValidRange(totalLen) == new Range.Inclusive(0, 4, 2) )
-
-    assert( testFrRange52.getValidRange(totalLen) == new Range.Inclusive(3, 5, 2) )
-    assert( testFrRange62.getValidRange(totalLen) == new Range.Inclusive(5, 5, 2) )
-    assert( testFrRange72.getValidRange(totalLen) == new Range.Inclusive(4, 4, 2) )
-    assert( (new Range.Inclusive(4, 4, 2)).length == 1 )
-    // </editor-fold>
+//    // <editor-fold defaultstate="collapsed" desc=" getValidRange ">
+//
+//    assert( testFrRange11.getValidRange(totalLen) == new Range.Inclusive(0, 3, 1) )
+//    assert( testFrRange21.getValidRange(totalLen) == new Range.Inclusive(0, 3, 1) )
+//    assert( testFrRange31.getValidRange(totalLen) == new Range.Inclusive(0, 5, 1) )
+//    assert( testFrRange41.getValidRange(totalLen) == new Range.Inclusive(0, 5, 1) )
+//
+//    assert( testFrRange12.getValidRange(totalLen) == new Range.Inclusive(0, 2, 2) )
+//    assert( testFrRange22.getValidRange(totalLen) == new Range.Inclusive(1, 3, 2) )
+//    assert( testFrRange32.getValidRange(totalLen) == new Range.Inclusive(0, 4, 2) )
+//    assert( testFrRange42.getValidRange(totalLen) == new Range.Inclusive(0, 4, 2) )
+//
+//    assert( testFrRange52.getValidRange(totalLen) == new Range.Inclusive(3, 5, 2) )
+//    assert( testFrRange62.getValidRange(totalLen) == new Range.Inclusive(5, 5, 2) )
+//    assert( testFrRange72.getValidRange(totalLen) == new Range.Inclusive(4, 4, 2) )
+//    assert( (new Range.Inclusive(4, 4, 2)).length == 1 )
+//    // </editor-fold>
 
   }
 
