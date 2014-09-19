@@ -13,6 +13,7 @@ import nounou.data.traits.XFrames
  */
 object RangeFr {
 
+  final def apply(start: Int, last: Int, step: Int, segment: Int) = new RangeFr(start, last, step, segment)
   final def apply(start: Int, last: Int, step: Int, optSegment: OptSegment) = new RangeFr(start, last, step, optSegment)
   final def apply(start: Int, last: Int, step: Int) = new RangeFr(start, last, step)
   final def apply(start: Int, last: Int, optSegment: OptSegment) = new RangeFr(start, last, optSegment)
@@ -23,6 +24,7 @@ object RangeFr {
 class RangeFr(val start: Int, val last: Int, val step: Int, val optSegment: OptSegment)
   extends RangeFrSpecifier with LoggingExt {
 
+  def this(start: Int, last: Int, step: Int, segment: Int) = this(start, last, step, OptSegment(segment))
   def this(start: Int, last: Int, step: Int) = this(start, last, step, OptSegmentAutomatic)
   def this(start: Int, last: Int, optSegment: OptSegment) = this(start, last, 1, optSegment)
   def this(start: Int, last: Int) = this(start, last, 1, OptSegmentAutomatic)

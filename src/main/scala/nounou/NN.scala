@@ -31,14 +31,6 @@ object NN {
   final def RangeFrAll(optSegment: OptSegment): ranges.RangeFrAll = ranges.RangeFrAll( optSegment )
   final def RangeFrAll(): ranges.RangeFrAll = ranges.RangeFrAll()
 
-
-//  @deprecated
-//  final def RangeFrAll(step: Int): ranges.RangeFrAll = new ranges.RangeFrAll( 0, OptStep(step) )
-//  @deprecated
-//  final def RangeFrAll(step: Double): ranges.RangeFrAll = RangeFrAll( round(step).toInt )
-//  @deprecated
-//  final def RangeFrAll(step: Int, segment: Int): ranges.RangeFrAll = new ranges.RangeFrAll(segment, OptStep(step))
-
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" RangeFr ">
 

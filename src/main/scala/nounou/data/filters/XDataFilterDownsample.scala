@@ -3,7 +3,7 @@ package nounou.data.filters
 import nounou.data.XData
 import breeze.signal.support.FIRKernel1D
 import breeze.signal._
-import breeze.linalg.{DenseVector => DV}
+import breeze.linalg.{DenseVector => DV, min}
 
 /**
  * @author ktakagaki
@@ -48,17 +48,17 @@ class XDataFilterDownsample( private var _parent: XData ) extends XDataFilter( _
   // <editor-fold defaultstate="collapsed" desc=" readXXX ">
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
-    if(factor == 1){
-      _parent.readPointImpl(channel, frame, segment)
-    } else {
-      _parent.readPointImpl(channel, frame*factor, segment)
-    }
+      _parent.readPointImpl(channel, frame/factor, segment)
 
   override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] =
     if(factor == 1){
         _parent.readTraceImpl(channel, range, segment)
     } else {
-        _parent.readTraceImpl(channel, new Range.Inclusive(range.start * factor, range.end * factor, factor), segment)
+        _parent.readTraceImpl(channel,
+                new Range.Inclusive(range.start*factor,
+                                    min(range.end*factor, _parent.segmentLength(segment)-1),
+                                    range.step*factor),
+                segment)
     }
 
   // </editor-fold>
