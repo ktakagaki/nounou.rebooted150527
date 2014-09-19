@@ -155,7 +155,7 @@ class XDataFilterBuffer( private var _parent: XData ) extends XDataFilter(_paren
 
     override def default( key: Long  ): DenseVector[Int] = {
       val startFrame = bufferHashKeyToPage(key) * bufferPageLength
-      val endFramePlusOne: Int = scala.math.min( startFrame + bufferPageLength, length )//segmentLength( bufferHashKeyToSegment(key) ) )
+      val endFramePlusOne: Int = scala.math.min( startFrame + bufferPageLength, segmentLength( bufferHashKeyToSegment(key) ) )
       val returnValue = tempTraceReader( bufferHashKeyToChannel(key), new Range.Inclusive(startFrame, endFramePlusOne-1, 1), bufferHashKeyToSegment(key) )
       this.+=( key -> returnValue )
       returnValue

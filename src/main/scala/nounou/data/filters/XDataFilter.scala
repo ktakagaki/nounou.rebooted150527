@@ -1,7 +1,7 @@
 package nounou.data.filters
 
 import nounou._
-import nounou.data.ranges.RangeFr
+import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
 import nounou.data.{XDataNull, XLayout, X, XData}
 import breeze.linalg.{DenseVector => DV}
 
@@ -45,7 +45,7 @@ class XDataFilter( private var _parent: XData ) extends XData {
     _parent.readPoint(channel, frame, optSegment)
   }
 
-  override final def readTrace(channel: Int, range: RangeFr): DV[Int] = if(_active){
+  override final def readTrace(channel: Int, range: RangeFrSpecifier): DV[Int] = if(_active){
     super.readTrace(channel, range)
   }else{
     _parent.readTrace(channel, range)

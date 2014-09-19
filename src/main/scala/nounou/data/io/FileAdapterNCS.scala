@@ -216,14 +216,11 @@ class XDataChannelNCS
   override val xBits = t.xBits
 
   def recordIndexStartByte(record: Int, index: Int) = {
-    //ToDo 2: check this and move to FileAdapterNCS companion object like recordStartByte?
-    //val (record, index) = frameSegmentToRecordIndex(frame, segment)
-    recordStartByte(record) + 20L + (index * 2)
+    t.recordStartByte(record) + 20L + (index * 2)
   }
-  def recordStartByte(recNo: Int) = t.recordStartByte(recNo)
 
   def fsToRecordIndex(frame: Int, segment: Int) = {
-    ( frame / t.recordSampleCount, frame % t.recordSampleCount)
+//    ( frame / t.recordSampleCount, frame % t.recordSampleCount)
     val cumFrame = segmentStartFrames(segment) + frame
     ( cumFrame / t.recordSampleCount, cumFrame % t.recordSampleCount)
   }
@@ -232,12 +229,13 @@ class XDataChannelNCS
   // <editor-fold defaultstate="collapsed" desc=" data implementations ">
 
   override def readPointImpl(frame: Int, segment: Int): Int = {
-    val (record, index) = fsToRecordIndex(frame, segment)
+    val (record, index) = fsToRecordIndex( frame, segment )
     fileHandle.seek( recordIndexStartByte( record, index ) )
     fileHandle.readInt16 * xBits
   }
 
   override def readTraceImpl(range: Range.Inclusive, segment: Int): DV[Int] = {
+println("XDataChannelNCS " + range.toString())
     var (currentRecord: Int, currentIndex: Int) = fsToRecordIndex(range.start, segment)
     val (endReadRecord: Int, endReadIndex: Int) = fsToRecordIndex(range.end, segment) //range is inclusive of lastValid
 
@@ -250,8 +248,9 @@ class XDataChannelNCS
     fileHandle.seek( recordIndexStartByte(currentRecord, currentIndex) )
 
     if(currentRecord == endReadRecord){
-    //if the whole requested trace fits in one record
+      //if the whole requested trace fits in one record
       val writeEnd = currentTempRetPos + (endReadIndex - currentIndex) + 1
+      //ToDo 3: improve breeze dv requirement documentation
       tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(endReadIndex - currentIndex + 1)), Int)  * xBits
       currentTempRetPos = writeEnd
     } else {

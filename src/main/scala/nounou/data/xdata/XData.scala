@@ -71,8 +71,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   // </editor-fold>
 
 
-
-  // <editor-fold defaultstate="collapsed" desc=" READING ACTUAL DATA ">
+  // <editor-fold defaultstate="collapsed" desc=" readXXX ">
 
   //<editor-fold defaultstate="collapsed" desc="reading a point">
 
@@ -103,21 +102,23 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
     */
   protected[data] def readPointImpl(channel: Int, frame: Int, segment: Int): Int
 
-
   //<editor-fold defaultstate="collapsed" desc="reading a trace">
 
   /**  CAN OVERRIDE: Read a single trace from the data, in internal integer scaling.
     */
-  def readTrace(channel: Int, range: RangeFr): DV[Int] = {
+  def readTrace(channel: Int, range: RangeFrSpecifier): DV[Int] = {
 
     loggerRequire(isRealisticRange(range), "Unrealistic frame/segment: " + range.toString)
     loggerRequire(isValidChannel(channel), "Invalid channel: " + channel.toString)
 
-    val realRange = range.getValidRange(this)
+    //ToDo 3: organize the range handling a bit more
+    val seg = range.getRealSegment(this)
+    val realRange = range.getRealRange(this)
+    val rangeFr = RangeFr(realRange.start, realRange.last, realRange.step, OptSegment(seg) )
 
-    val totalLength =  segmentLength( range.getRealSegment(this) )
-    val preLength = range.preLength( totalLength )
-    val postLength = range.postLength( totalLength )
+    val totalLength =  segmentLength( seg )
+    val preLength = rangeFr.preLength( totalLength )
+    val postLength = rangeFr.postLength( totalLength )
 
     val vr = range.getValidRange(this)
     val tempData: DV[Int] = if( vr.length == 0 ) DV[Int]() else readTraceImpl(channel, vr, range.getRealSegment(this))
@@ -136,7 +137,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   /** Read a single trace in internal integer scaling.
     */
   final def readTrace(channel: Int): DV[Int] = readTrace(channel, RangeFrAll())
-  final def readTrace(channel: Int,            range: RangeFrSpecifier): DV[Int] = readTrace(channel, range.getRangeFr(this))
+//  final def readTrace(channel: Int,            range: RangeFrSpecifier): DV[Int] = readTrace(channel, range.getRangeFr(this))
   final def readTrace(channel: Int,            ranges: Array[RangeFrSpecifier]): Array[DV[Int]] = ranges.map( readTrace(channel, _) )
   final def readTrace(channel: Int,         range: Array[Int]): DV[Int] =                readTrace(channel, arrayToRange(range))
   final def readTrace(channels: Array[Int], range: Array[Int]): Array[DV[Int]] =         readTrace(channels, arrayToRange(range))
@@ -174,11 +175,12 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   final def readTraceAbsA(channel: Int,         ranges: Array[Array[Int]]): Array[Array[Double]] = readTraceAbsA(channel, arrayArrayToRanges(ranges))
 
 
+  //ToDo 3: deprecate or organize
   private def arrayToRange(array: Array[Int]): RangeFrSpecifier = {
     loggerRequire(array != null, "Input array cannot be null!")
     array.length match {
       case 0 => RangeFrAll()
-      case 1 => RangeFrAll(array(0))
+      //case 1 => RangeFrAll(array(0))
       case 2 => RangeFr(array(0), array(1))
       case 3 => RangeFr(array(0), array(1), array(2))
     }
@@ -241,6 +243,9 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 //  }
 //
 //  // </editor-fold>
+
+  // </editor-fold>
+
 
   // <editor-fold defaultstate="collapsed" desc="XConcatenatable">
 
