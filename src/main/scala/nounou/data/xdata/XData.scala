@@ -85,12 +85,14 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
 
     if( isValidFrsg(frame, optSegment.getRealSegment(this)) ) readPointImpl(channel, frame, optSegment.getRealSegment(this)) else 0
   }
+  final def readPoint(channel: Int, frame: Int, segment: Int): Int = readPoint(channel, frame, OptSegment(segment))
   final def readPoint(channel: Int, frame: Int): Int = readPoint(channel, frame, OptSegmentAutomatic)
 
   // <editor-fold defaultstate="collapsed" desc=" convenience readPoint variations ">
 
   /** [[readPoint()]] but in physical units.
     */
+  final def readPointAbs(channel: Int, frame: Int, segment: Int): Double = toAbs( readPoint(channel, frame, segment) )
   final def readPointAbs(channel: Int, frame: Int, optSegment: OptSegment): Double = toAbs( readPoint(channel, frame, optSegment) )
   final def readPointAbs(channel: Int, frame: Int): Double = readPointAbs(channel, frame, OptSegmentAutomatic)
 

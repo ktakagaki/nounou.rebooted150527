@@ -1,5 +1,7 @@
 package nounou.data.io
 
+import breeze.linalg.DenseVector
+import breeze.numerics.pow
 import nounou._
 import org.scalatest.FunSuite
 import java.io.{File}
@@ -16,11 +18,11 @@ class FileAdapterNCSTest extends FunSuite {
 
   //val testFileTet4a = new File( getClass.getResource("/_testFiles/Neuralynx/t130911/Tet4a.ncs").getPath() )
   val testFileE04LC_CSC1 = new File( "C:\\prog\\_gh\\_kt\\nounou.testfiles\\Neuralynx\\E04LC\\CSC1.ncs" )
+  val temp = NNDataReader.load(testFileE04LC_CSC1).apply(0)
+  assert( temp.isInstanceOf[XDataChannelNCS] )
+  val dataObj = temp.asInstanceOf[XDataChannelNCS]
 
   test("readInfo"){
-    val temp = NNDataReader.load(testFileE04LC_CSC1).apply(0)
-    assert( temp.isInstanceOf[XDataChannelNCS] )
-    val dataObj = temp.asInstanceOf[XDataChannelNCS]
 
     assert( dataObj.absGain == 1.4901660156250002E-5 )
     assert( dataObj.absOffset == 0d )
@@ -29,12 +31,38 @@ class FileAdapterNCSTest extends FunSuite {
     //trait XFrames
     assert( dataObj.segmentCount == 94 )
     assert( dataObj.segmentLength(0) == 2546176 && dataObj.segmentLength(8) == 3902976 )
+    assert( dataObj.segmentStartFr(1) == 2546176)
     intercept[IllegalArgumentException] {
       dataObj.length
     }
-    println( dataObj.segmentStartFr.toVector )
-    println( dataObj.segmentStartTs.toVector )
-    println( dataObj.segmentEndTs.toVector )
+
+    assert(dataObj.sampleRate == 32000D)
+    assert(dataObj.factorTSperFR == 1000000D/dataObj.sampleRate)
+
+    assert(dataObj.segmentStartTs(0) == (10237373715L - 9223372036854775807L-1/*2^63*/))
+    assert(dataObj.convertTStoFS(10245373715L - 9223372036854775807L-1/*2^63*/) == (500*512, 0))
+    assert(dataObj.segmentStartTs(1) == (10664246433L - 9223372036854775807L-1/*2^63*/))
+    assert(dataObj.convertTStoFS(10664246433L - 9223372036854775807L-1/*2^63*/) == (0, 1))
+    assert(dataObj.segmentEndTs(0)   == (dataObj.segmentStartTs(0) + (2546176L-1) *1000 /32 ) )
+
+  }
+
+  test("readPoint") {
+
+    assert(FileAdapterNCS.xBits==1024)
+    assert(dataObj.segmentLength(0)==2546176)
+    assert(dataObj.readPoint(0,0) == -1528*FileAdapterNCS.xBits)
+    assert(dataObj.readPoint(512,0) == -1908*FileAdapterNCS.xBits)
+
+
+  }
+
+  test("readTrace") {
+
+    assert( dataObj.readTrace(RangeFr(0, 0, 1, 0) )(0) == -1528*FileAdapterNCS.xBits)
+    assert( dataObj.readTrace(RangeFr(0, 4, 1, 0) ) == DenseVector(-1528,-1841, -1282, -670, -500)*FileAdapterNCS.xBits)
+    assert( dataObj.readTrace(RangeFr(0, 4, 2, 0) ) == DenseVector(-1528, -1282, -500)*FileAdapterNCS.xBits)
+    assert( dataObj.readTrace(RangeFr(-2, 4, 2, 0) ) == DenseVector(0, -1528, -1282, -500)*FileAdapterNCS.xBits)
 
   }
 //  test("readTrace"){

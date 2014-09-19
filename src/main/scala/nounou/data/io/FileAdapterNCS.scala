@@ -239,19 +239,23 @@ println("XDataChannelNCS " + range.toString())
     var (currentRecord: Int, currentIndex: Int) = fsToRecordIndex(range.start, segment)
     val (endReadRecord: Int, endReadIndex: Int) = fsToRecordIndex(range.end, segment) //range is inclusive of lastValid
 
+    println( "curr " + (currentRecord, currentIndex).toString )
+    println( "end " + (endReadRecord, endReadIndex).toString )
     //ToDo1 program step
-    val step = range.step
+    //val step = range.step
 
-    val tempRet = DV.zeros[Int](range.length)//DV[Int]()
+    val tempRet = DV.zeros[Int](range.last-range.start+1)//range.length)//DV[Int]()
     var currentTempRetPos = 0
 
     fileHandle.seek( recordIndexStartByte(currentRecord, currentIndex) )
 
     if(currentRecord == endReadRecord){
       //if the whole requested trace fits in one record
-      val writeEnd = currentTempRetPos + (endReadIndex - currentIndex) + 1
+      val writeLen = (endReadIndex - currentIndex) + 1
+      val writeEnd = currentTempRetPos + writeLen
+//      println( "writeLen " + writeLen.toString + " writeEnd " + writeEnd.toString )
       //ToDo 3: improve breeze dv requirement documentation
-      tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(endReadIndex - currentIndex + 1)), Int)  * xBits
+      tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(writeLen)), Int)  * xBits
       currentTempRetPos = writeEnd
     } else {
     //if the requested trace spans multiple records
@@ -278,7 +282,7 @@ println("XDataChannelNCS " + range.toString())
 
     }
 
-    tempRet
+    tempRet( 0 until tempRet.length by range.step )
 
     // </editor-fold>
 }

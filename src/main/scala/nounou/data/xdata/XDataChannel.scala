@@ -45,6 +45,8 @@ abstract class XDataChannel extends X with XFrames with XAbsolute with XConcaten
     val preLength = range.preLength( segLen )
     val postLength = range.postLength( segLen )
 
+
+
     DV.vertcat( DV.zeros[Int]( preLength ), readTraceImpl(range.getValidRange(this), seg), DV.zeros[Int]( postLength ) )
 
   }
