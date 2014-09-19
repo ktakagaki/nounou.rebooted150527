@@ -1,5 +1,6 @@
 package nounou.data.ranges
 
+import breeze.linalg.{max, min}
 import nounou._
 import nounou.util.LoggingExt
 import nounou.data.traits.XFrames
@@ -29,10 +30,26 @@ class RangeFr(val start: Int, val last: Int, val step: Int, val optSegment: OptS
   loggerRequire( start <= last, "RangeFr requires start <= last. start={}, last={}", start.toString, last.toString)
   loggerRequire( step > 0, "step must be specified as positive. Invalid value: " + step.toString)
 
-  override val getSegment = optSegment.segment
-  override val getOptSegment = optSegment
-  override def getRealSegment(xFrames: XFrames) = getOptSegment.getRealSegment(xFrames)
-  override def getRealStepFrames(totalLength: Int) = step
+    // <editor-fold defaultstate="collapsed" desc=" range info accessors ">
+
+  override final def getRealSegment(xFrames: XFrames): Int = optSegment.getRealSegment(xFrames)
+  override final def getRealStepFrames(xFrames: XFrames): Int = {
+    if ( step == -1 ) 1 else step
+  }
+  override final def getRealRange(xFrames: XFrames): Range.Inclusive = {
+    Range.inclusive( start, last, getRealStepFrames(xFrames))
+  }
+  override final def getValidRange(xFrames: XFrames): Range.Inclusive = {
+    Range.inclusive( firstValid(xFrames), lastValid(xFrames), getRealStepFrames(xFrames))
+  }
+//  override val getSegment = optSegment.segment
+//  override val getOptSegment = optSegment
+//  override def getRealSegment(xFrames: XFrames): Int = getOptSegment.getRealSegment(xFrames)
+//  override def getRealStepFrames(totalLength: Int): Int = step
+//  override def getRealRange(xFrames: XFrames): Range.Inclusive = ???
+//  override def getValidRange(xFrames: XFrames): Range.Inclusive = ???
+
+  // </editor-fold>
 
   override def toString() = "RangeFr(" + start + ", " + last + ", " + step + ", " + optSegment.toString + ")"
 
@@ -61,7 +78,7 @@ class RangeFr(val start: Int, val last: Int, val step: Int, val optSegment: OptS
 
   /** Inclusive first valid frame, taking into account step and overhang
     */
-  def firstValid(data: XFrames): Int = firstValid(data.length)//segmentLength(segment))
+  def firstValid(xFrames: XFrames): Int = firstValid(xFrames.segmentLength(getRealSegment(xFrames)))
   private var fvBuffTL = -1
   private var fvBuff = - 156111
   /** Inclusive first valid frame, taking into account step and overhang
@@ -86,7 +103,7 @@ class RangeFr(val start: Int, val last: Int, val step: Int, val optSegment: OptS
   }
   /** Inclusive last valid frame, taking into account step and overhang
     */
-  def lastValid(data: XFrames): Int = lastValid(data.length)//segmentLength(segment))
+  def lastValid(xFrames: XFrames): Int = lastValid(xFrames.segmentLength(getRealSegment(xFrames)))
   /** Valid lastValid frame, taking into account step and overhang
     */
   private var lvBuffTL = -1
@@ -136,9 +153,9 @@ class RangeFr(val start: Int, val last: Int, val step: Int, val optSegment: OptS
     */
   def length(totalLength: Int): Int = intervalContains(start, last, step)
 
-  /**range length, can include zero padding if start<0 or totalLength<=end
-    */
-  def length(data: XFrames): Int = length( data.length )//data.segmentLength(start) )
+//  /**range length, can include zero padding if start<0 or totalLength<=end
+//    */
+//  def length(data: XFrames): Int = length( data.length )//data.segmentLength(start) )
 
   // </editor-fold>
 
@@ -172,34 +189,51 @@ class RangeFr(val start: Int, val last: Int, val step: Int, val optSegment: OptS
   /** Whether the frame range is completely contained within available data.
     * @param xFrames data object to which to apply the frames
     */
-  def isFullyValid(xFrames: XFrames): Boolean = isFullyValid( xFrames.length )//segmentLength(segment) )
+  def isFullyValid(xFrames: XFrames): Boolean = isFullyValid( xFrames.segmentLength(getRealSegment(xFrames)) )
 
   /** Whether the frame range is completely contained within available data.
     * @param totalLength full length of this segment in frames, used to realize with RangeFr.all()
     */
   def isFullyValid(totalLength: Int): Boolean = {
-      start >= 0 && lastValid(totalLength) < totalLength
+      firstValid(totalLength) <= start && last <= lastValid(totalLength) //< totalLength
   }
 
   // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc=" getValidRange (conversion to Range.Inclusive) ">
 
-  /** Get a [[Range.Inclusive]] which fits inside the given data vector length, and takes into account length and stepMs,
-    * so that the start and lastValid are exactly present values.
-    */
-  def getValidRange(totalLength: Int): Range.Inclusive = {
-    new Range.Inclusive( firstValid(totalLength), lastValid(totalLength), getRealStepFrames(totalLength))
-  }
-  override def getValidRange(xFrames: XFrames): Range.Inclusive =
-          getValidRange(xFrames.segmentLength( getRealSegment(xFrames) ))
+//  /** Returns the real segment number for the frame range, taking into account -1 for automatic determination.
+//    */
+//  def getRealSegment(xFrames: XFrames): Int
+//  /** Returns the real frame steps for the frame range, taking into account -1 for automatic determination.
+//    */
+//  def getRealStepFrames(xFrames: XFrames): Int
+//  /** Returns the real frame range with steps for the frame range, taking into account -1 for automatic determination
+//    * and specifications such as RangeFrAll.
+//    */
+//  def getRealRange(xFrames: XFrames): Range.Inclusive
+//  /** Returns the valid, frame range with present data for the frame range, taking into account -1 for automatic determination
+//    * and specifications such as RangeFrAll.
+//    */
+//  def getValidRange(xFrames: XFrames): Range.Inclusive
+//
+//
+//  /** Get a [[Range.Inclusive]] which fits inside the given data vector length, and takes into account length and stepMs,
+//    * so that the start and lastValid are exactly present values.
+//    */
+//  def getValidRangeSegment(totalLength: Int): (Range.Inclusive, Int) = {
+//    (new Range.Inclusive( firstValid(totalLength), lastValid(totalLength), getRealStepFrames(totalLength)),
+//    this.getRealSegment(totalLength)
+//  }
+//  override def getValidRangeSegment(xFrames: XFrames): (Range.Inclusive, Int) =
+//          getValidRangeSegment( xFrames.segmentLength( getRealSegment(xFrames) ))
 
   // </editor-fold>
 
-  /**Will return self, this is in order to comply with [[RangeFrSpecifier]]
-   */
-  def getRangeFr(xFrames: XFrames): RangeFr = this
-  //def getRangeFr(totalLength: Int): RangeFr = this
+//  /**Will return self, this is in order to comply with [[RangeFrSpecifier]]
+//   */
+//  def getRangeFr(xFrames: XFrames): RangeFr = this
+//  //def getRangeFr(totalLength: Int): RangeFr = this
 
 
 }

@@ -14,17 +14,21 @@ object NN {
   // <editor-fold defaultstate="collapsed" desc=" options ">
 
   def OptNull() = nounou.OptNull
-//  def OptSegment(segment: Int) = nounou.OptSegment(segment)
-//  def OptSegmentNone() = nounou.OptSegmentNone
+  def OptSegment(segment: Int) = nounou.OptSegment(segment)
+  def OptSegment() = nounou.OptSegmentAutomatic
 
   // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc=" frame ranges ">
 
 
   // <editor-fold defaultstate="collapsed" desc=" RangeFrAll ">
 
-//  final def RangeFrAll(step: Int, optSegment: OptSegment): ranges.RangeFrAll = ranges.RangeFrAll( step, optSegment )
-  final def RangeFrAll(step: Int): ranges.RangeFrAll = ranges.RangeFrAll( step )
-//  final def RangeFrAll(optSegment: OptSegment): ranges.RangeFrAll = ranges.RangeFrAll( optSegment )
+  final def RangeFrAll(step: Int, segment: Int): ranges.RangeFrAll = ranges.RangeFrAll( step, OptSegment(segment) )
+  final def RangeFrAll(step: Int, optSegment: OptSegment): ranges.RangeFrAll = ranges.RangeFrAll( step, optSegment )
+  // deprecated due to potential confusion with this(segment: Int)
+  // final def RangeFrAll(step: Int): ranges.RangeFrAll = ranges.RangeFrAll( step )
+  final def RangeFrAll(optSegment: OptSegment): ranges.RangeFrAll = ranges.RangeFrAll( optSegment )
   final def RangeFrAll(): ranges.RangeFrAll = ranges.RangeFrAll()
 
 
@@ -38,10 +42,11 @@ object NN {
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" RangeFr ">
 
-//  final def RangeFr(start: Int, last: Int, step: Int, optSegment: OptSegment) = ranges.RangeFr(start, last, step, optSegment)
-  final def RangeFr(start: Int, last: Int, step: Int) = ranges.RangeFr(start, last, step)
-//  final def RangeFr(start: Int, last: Int, optSegment: OptSegment) = ranges.RangeFr(start, last, optSegment)
-  final def RangeFr(start: Int, last: Int) = ranges.RangeFr(start, last)
+  final def RangeFr(start: Int, last: Int, step: Int, segment: Int)           = ranges.RangeFr(start, last, step, OptSegment(segment))
+  final def RangeFr(start: Int, last: Int, step: Int, optSegment: OptSegment) = ranges.RangeFr(start, last, step, optSegment)
+  final def RangeFr(start: Int, last: Int, step: Int)                         = ranges.RangeFr(start, last, step)
+  final def RangeFr(start: Int, last: Int, optSegment: OptSegment)            = ranges.RangeFr(start, last, optSegment)
+  final def RangeFr(start: Int, last: Int)                                    = ranges.RangeFr(start, last)
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" RangeTs ">
 
@@ -97,7 +102,7 @@ object NN {
 
   // </editor-fold>
 
-
+  // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc=" toArray methods ">
 
@@ -120,7 +125,7 @@ object NN {
   //final def XSpikes(waveformLength: Int, xTrodes: XTrodes ) = new XSpikes(waveformLength, xTrodes)
 
 
-  final def newNNData: NNData = new NNData
+//  final def newNNData: NNData = new NNData
 
 
 

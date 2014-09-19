@@ -91,7 +91,7 @@ import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
   }
 
   def isMaskedFrame( frameStart: Int, frameEnd: Int, segment: Int, x: XData ): Boolean =
-    isMaskedTs(x.frsgToTs(frameStart, segment) , x.frsgToTs(frameEnd, segment) )
+    isMaskedTs(x.convertFStoTS(frameStart, segment) , x.convertFStoTS(frameEnd, segment) )
 
   def isMaskedFrame( range: RangeFr, segment: Int, x: XData ): Boolean ={
     val realRange = range.getValidRange(x)
@@ -99,11 +99,11 @@ import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
   }
 
   def isMaskedFrame( range: Range.Inclusive, segment: Int, x: XData ): Boolean ={
-    isMaskedTs(x.frsgToTs(range.start, segment) , x.frsgToTs(range.end, segment) )
+    isMaskedTs(x.convertFStoTS(range.start, segment) , x.convertFStoTS(range.end, segment) )
   }
 
   def isMaskedFrame( frame: Int, segment: Int, x: XData ): Boolean =
-    isMaskedTs(x.frsgToTs(frame, segment) )
+    isMaskedTs(x.convertFStoTS(frame, segment) )
 
   // </editor-fold>
 
@@ -119,7 +119,7 @@ import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
   // <editor-fold defaultstate="collapsed" desc=" getNextMask, getActiveMasks ">
 
   def getNextMask(frame: Int, segment: Int, x: XFrames) = {
-    _masks.find ( p => ( p._1 >= x.frToTs(frame) ) )//, segment) )  )
+    _masks.find ( p => ( p._1 >= x.convertFRtoTS(frame) ) )//, segment) )  )
   }
 
   def getNextMaskA(frame: Int, segment: Int, x: XFrames): Array[Long] = {
@@ -140,7 +140,7 @@ import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
   }
 
   def getActiveMasksA( frameStart: Int, frameEnd: Int, segment: Int, x: XFrames ): Array[Array[Long]]  =
-        getActiveMasks(x.frToTs(frameStart/*, segment*/), x.frToTs(frameEnd/*, segment*/)).map( ele => Array(ele._1, ele._2)).toArray
+        getActiveMasks(x.convertFRtoTS(frameStart/*, segment*/), x.convertFRtoTS(frameEnd/*, segment*/)).map( ele => Array(ele._1, ele._2)).toArray
 
   def getActiveMasks( timeStampStart: Long, timeStampEnd: Long ): TreeMap[Long, Long]  = {
     _masks.filter( elem => (timeStampStart <= elem._1 && elem._1 <= timeStampEnd) ||
