@@ -72,17 +72,17 @@ class XDataFilterFIR(private var _parent: XData ) extends XDataFilter( _parent )
 
   // <editor-fold defaultstate="collapsed" desc=" calculate data ">
 
-  override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int = {
+  override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = {
     //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-    val tempData = _parent.readTrace( channel, RangeFr(frame - kernel.overhangPre, frame + kernel.overhangPost, 1))//, OptSegment(segment)))
+    val tempData = _parent.readTrace( channel, RangeFr(frame - kernel.overhangPre, frame + kernel.overhangPost, 1, OptSegment(segment)))
     val tempRet = convolve( DV( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None )
     require( tempRet.length == 1, "something is wrong with the convolution!" )
     tempRet(0).toInt
   }
 
-  override def readTraceImpl(channel: Int, ran: Range.Inclusive): DV[Int] = {
+  override def readTraceImpl(channel: Int, ran: Range.Inclusive, segment: Int): DV[Int] = {
     //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-    val tempData = _parent.readTrace( channel, RangeFr( ran.start - kernel.overhangPre, ran.last + kernel.overhangPost, 1))
+    val tempData = _parent.readTrace( channel, RangeFr( ran.start - kernel.overhangPre, ran.last + kernel.overhangPost, 1, OptSegment(segment)))
     val tempRes: DV[Long] = convolve(
              convert( new DV( tempData.toArray ), Long), kernel.kernel,
                       range = OptRange.RangeOpt(new Range.Inclusive(0, ran.last - ran.start, ran.step)),

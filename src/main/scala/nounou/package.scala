@@ -1,4 +1,6 @@
 //import nounou.data.Frame
+
+import nounou.data.traits.XFrames
 import nounou.util.LoggingExt
 
 /**
@@ -10,13 +12,16 @@ package object nounou extends LoggingExt {
   // <editor-fold defaultstate="collapsed" desc=" rangeInclusiveToFrameRange ">
 
   import nounou.data.ranges._
-  implicit def rangeInclusiveToFrameRange(range: Range.Inclusive): RangeFr = {//rangeInclusiveToFrameRange(range, 0)
-  //implicit def rangeInclusiveToFrameRange(range: Range.Inclusive, segment: Int): RangeFr = {
-    loggerRequire( range.step > 0, "Only positive steps are allowed for indexing in nounou!" )
-    loggerRequire( range.start <= range.end, "In nounous, start <= lastValid is required for frame nounou.data.ranges. start=" + range.start + ", lastValid=" + range.end)
 
-    RangeFr(range.start, range.end, range.step)//, OptSegment(segment))
-  }
+//  //This implicit should not be triggered within the package (see next comment)... check by commenting and compiling
+//  //Use of this implicit implies OptSegmentAutomatic, i.e., a single-segment data set
+//  implicit def implRangeInclusiveToFR(range: Range.Inclusive): RangeFr = {//rangeInclusiveToFrameRange(range, 0)
+//    //implicit def rangeInclusiveToFrameRange(range: Range.Inclusive, segment: Int): RangeFr = {
+//    loggerRequire( range.step > 0, "Only positive steps are allowed for indexing in nounou!" )
+//    loggerRequire( range.start <= range.end,
+//      "In nounous, start <= lastValid is required for frame nounou.data.ranges. start=" + range.start + ", lastValid=" + range.end)
+//    RangeFr(range.start, range.end, range.step, OptSegmentAutomatic)
+//  }
 
   // </editor-fold>
 
@@ -28,10 +33,18 @@ package object nounou extends LoggingExt {
 //    require(step>0, "optStep must be one or larger!")
 //  }
 //  val OptStep1 = OptStep(1)
-//  case class OptSegment(segment: Int) extends Opt {
-//    require(segment > -1, "optSegment must be -1 (non-specified) or larger!")
-//  }
-//  val OptSegmentNone = OptSegment(-1)
+  case class OptSegment(segment: Int) extends Opt {
+    loggerRequire(segment >= -1, "optSegment must be -1 (not specified) or larger!")
+    def getRealSegment(xFrames: XFrames): Int = {
+      if(segment == -1){
+        loggerRequire( xFrames.segmentCount == 1, "You must always specify a segment when reading from data with multiple segments!")
+        1
+      } else {
+        segment
+      }
+    }
+  }
+  val OptSegmentAutomatic = OptSegment(-1)
 
   case object OptNull extends Opt
 

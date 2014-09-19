@@ -19,50 +19,46 @@ abstract class XDataChannel extends X with XFrames with XAbsolute with XConcaten
   /** Read a single point from the data, in internal integer scaling, after checking values.
     * Implement via readPointImpl.
     */
-  final def readPoint(frame: Int/*, segment: Int*/): Int = {
+  final def readPoint(frame: Int, segment: Int): Int = {
     //require(isValidFr(frame, segment), "Invalid frame/segment: " + (frame, segment).toString)
-    if( isValidFr(frame/*, segment*/) ) readPointImpl(frame/*, segment, currentSegment = segment*/) else 0
+    if( isValidFrsg(frame, segment) ) readPointImpl(frame, segment) else 0
   }
   //</editor-fold>
 
   /** MUST OVERRIDE: Read a single point from the data, in internal integer scaling.
     */
-  def readPointImpl(frame: Int/*, segment: Int*/): Int
+  def readPointImpl(frame: Int, segment: Int): Int
 
   //<editor-fold desc="reading a trace">
   /** Read a single trace from the data, in internal integer scaling.
     */
-  final def readTrace(/*segment: Int*/): DV[Int] = {
+  final def readTrace(segment: Int): DV[Int] = {
     val range = RangeFrAll().getValidRange( this )
-    readTraceImpl(range) //, segment /*currentSegment = segment*/)
+    readTraceImpl(range, segment)
   }
   /** Read a single trace (within the span) from the data, in internal integer scaling.
     */
-  final def readTrace(range: RangeFr, segment: Int): DV[Int] = {
+  final def readTrace(range: RangeFr): DV[Int] = {
 
-    val segLen =  segmentLength(segment)
+    val seg = range.getRealSegment(this)
+    val segLen =  segmentLength(seg)
     val preLength = range.preLength( segLen )
     val postLength = range.postLength( segLen )
 
-    DV.vertcat( DV.zeros[Int]( preLength ), readTraceImpl(range.getValidRange( this )/*, segment (currentSegment = segment)*/), DV.zeros[Int]( postLength ) )
+    DV.vertcat( DV.zeros[Int]( preLength ), readTraceImpl(range.getValidRange(this), seg), DV.zeros[Int]( postLength ) )
 
   }
   //</editor-fold>
 
-//  /** CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
-//    * Should return a defensive clone.
-//    */
-//  def readTraceImpl(segment: Int): Vector[Int] = readTraceImpl(Span.All, segment)
-//
   /** CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
     * Should return a defensive clone.
     */
-  def readTraceImpl(range: Range.Inclusive/*, segment: Int*/): DV[Int] = {
+  def readTraceImpl(range: Range.Inclusive, segment: Int): DV[Int] = {
     //Impls only get real nounou.data.ranges
     //val realRange = range.getRangeWithoutNegativeIndexes( segmentLengths(segment) )
     //val totalLengths = segmentLength( segment )
     val res = DV.zeros[Int](range.length) //new Array[Int]( range.length )
-    nounou.util.forJava(range.start, range.end + 1, range.step, (c: Int) => (res(c) = readPointImpl(c)))//, segment)))
+    nounou.util.forJava(range.start, range.end + 1, range.step, (c: Int) => (res(c) = readPointImpl(c, segment)))
     res
   }
 
@@ -117,7 +113,7 @@ abstract class XDataChannelFilestream extends XDataChannel {
 class XDataChannelNull extends XDataChannel {
   val channelName: String = "XDataChannelNull()"
 
-  override def readPointImpl(frame: Int/*, segment: Int*/): Int = 0
+  override def readPointImpl(frame: Int, segment: Int): Int = 0
 
   override val absGain: Double = 1d
   override val absOffset: Double = 0d
@@ -137,7 +133,7 @@ class XDataChannelNull extends XDataChannel {
   override val segmentEndTs: Array[Long] = Array[Long]()
 }
 
-class XDataChannelPreloaded(val data: DV[Int],
+class XDataChannelPreloaded(val data: Array[DV[Int]],
                             override val xBits: Int,
                             override val absGain: Double,
                             override val absUnit: String,
@@ -149,8 +145,12 @@ class XDataChannelPreloaded(val data: DV[Int],
                             override val sampleRate: Double
  )  extends XDataChannel with XFramesImmutable{
 
+  loggerRequire(data.length == segmentStartTs.length,
+    "Given data and segmentStartTs must have the same length. Actual lengths were {}, {}.",
+    data.length.toString, segmentStartTs.length.toString)
+
   override lazy val segmentLength = Array( data.length )
-  override def readPointImpl(frame: Int/*, segment: Int*/): Int = data(frame)
+  override def readPointImpl(frame: Int, segment: Int): Int = data(segment)(frame)
 
 }
 
@@ -166,4 +166,4 @@ class XDataChannelPreloadedSingleSegment
                     segmentStartTS: Long,
                     sampleRate: Double
                     )
-  extends XDataChannelPreloaded(data, xBits, absGain, absUnit, absOffset, scaleMax, scaleMin, channelName, Array(segmentStartTS), sampleRate)
+  extends XDataChannelPreloaded(Array(data), xBits, absGain, absUnit, absOffset, scaleMax, scaleMin, channelName, Array(segmentStartTS), sampleRate)
