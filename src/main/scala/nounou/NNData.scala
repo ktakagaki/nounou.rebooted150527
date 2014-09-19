@@ -24,7 +24,7 @@ class NNData {
   }
 
   val dataRaw: XDataFilterHolder = new XDataFilterHolder()
-  val dataLfp: XDataFilterLFP = new XDataFilterLFP( dataRaw )
+//  val dataLfp: XDataFilterLFP = new XDataFilterLFP( dataRaw )
   def dataHp: XData = ???
 
   def auxRaw: XData = ???

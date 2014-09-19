@@ -10,11 +10,12 @@ import breeze.linalg.{DenseVector => DV, DenseMatrix => DM}
  */
 class XPreloadedTestDataTest extends FunSuite {
 
-//  val testSeg1 = DV.tabulate[Int](10)( (i: Int) => i*12  )
-//  val testSeg2 = DV.tabulate[Int](20)( (i: Int) => i*12  )
-  val testChan = DV.tabulate[Int](30)( (i: Int) => i*12  )//DV.horzcat( testSeg1, testSeg2 )
+  val testSeg1 = DM.tabulate[Int](10, 5)( _*100 + _  )
+  val testSeg2 = DM.tabulate[Int](20, 5)( _*100 + _ )
+  //val testChan = DV.tabulate[Int](30)( (i: Int) => i*12  )
+  val testChan = Array( testSeg1, testSeg2 )
 
-  val testData = new XDataPreloaded(  DV.horzcat(testChan, testChan),
+  val testData = new XDataPreloaded(  testChan,
     xBits = 12, absGain = 7d, absOffset = 0.1, absUnit = "mV",
     scaleMax = 500, scaleMin = 0,
     //channelNames = Vector[String]("testChan", "testChan"),

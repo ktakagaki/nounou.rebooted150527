@@ -51,9 +51,9 @@
 
 
 
-    override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int =
+    override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
       if(kernel == null){
-        _parent.readPointImpl(channel, frame)//, segment)
+        _parent.readPointImpl(channel, frame, segment)
       } else {
         //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
         val tempData = _parent.readTrace( channel, RangeFr(frame * factor - kernel.overhangPre, frame * factor + kernel.overhangPost, 1))//, OptSegment(segment) ))
@@ -62,12 +62,13 @@
         tempRet(0).toInt
       }
 
-    override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/): DV[Int] =
+    override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] =
       if(kernel == null){
-          _parent.readTraceImpl(channel, range)//, segment)
+          _parent.readTraceImpl(channel, range, segment)
       } else {
           //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-          val tempData = _parent.readTrace( channel, RangeFr(range.start * factor - kernel.overhangPre, range.last * factor + kernel.overhangPost, 1))//, OptSegment(segment)))
+          val tempData = _parent.readTrace(
+            channel, RangeFr(range.start * factor - kernel.overhangPre, range.last * factor + kernel.overhangPost, 1, OptSegment(segment) ))
 //        println("tempData: " + tempData.length)
 //        println("kernel: " + kernel.kernel.length)
 //        println("start: " + range.start + " end: " + range.end+ " stepMs: " + range.stepMs+ " inclusive: " + range.isInclusive)

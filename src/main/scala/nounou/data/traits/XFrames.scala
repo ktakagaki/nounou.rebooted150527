@@ -2,7 +2,7 @@ package nounou.data.traits
 
 import nounou.data.X
 import breeze.numerics.round
-import nounou.data.ranges.RangeFr
+import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
 
 /**This trait of XData and XDataChannel objects encapsulates segment,
   * frame, and sampling information for electrophysiological and imaging recordings..
@@ -15,7 +15,7 @@ trait XFrames extends X {
     */
   @throws[IllegalArgumentException]
   private def errorIfMultipleSegments(func:String, altFunc:String): Unit = {
-    loggerRequire(segmentCount != 1, func + " should not be used if the file has more than one segment. Use " + altFunc + " instead")
+    loggerRequire(segmentCount == 1, func + " should not be used if the file has more than one segment. Use " + altFunc + " instead")
   }
 
   // <editor-fold defaultstate="collapsed" desc="segment related: segmentCount, segmentLength/length ">
@@ -30,13 +30,13 @@ trait XFrames extends X {
   /**Return [[segmentLength]] as Array, for easy access from Java/Mathematica/MatLab.
     */
   final def segmentLengthA = segmentLength.toArray
-  /**Length in frames of data. Use [[segmentLength]] instead, for data which has more than one segment.
+
+  /**Total ength in frames of data. Use [[segmentLength]] instead, for data which has more than one segment.
     */
-  final def length: Int = segmentLength.foldLeft(0)( _ + _ )
-//    {
-//      errorIfMultipleSegments("length", "segmentLength(segment: Int)")
-//      segmentLength(0)
-//    }
+  final def length: Int = {//segmentLength.foldLeft(0)( _ + _ )
+      errorIfMultipleSegments("length", "segmentLength(segment: Int)")
+      segmentLength(0)
+    }
 
   /** OVERRIDE: List of starting frames for each segment.
     */
@@ -78,15 +78,17 @@ trait XFrames extends X {
 
   /** Is this frame valid?
     */
-  final def isValidFr(frame: Int/*, segment: Int*/): Boolean = (0 <= frame && frame < length)//segmentLength(segment))
-//  /** Is this frame valid in the current segment?
-//    */
-//  final def isValidFr(frame: Int): Boolean = isValidFr(frame, 0)//currentSegment)
+  final def isValidFrsg(frame: Int, segment: Int): Boolean = (0 <= frame && frame < segmentLength(segment))
 
-  final def isRealisticFr(frame: Int/*, segment: Int*/): Boolean =
-    (-100000 <= frame && frame < length /*segmentLength(segment)*/ + 100000)
-  final def isRealisticFr(range: Range.Inclusive/*, segment: Int*/): Boolean =
-    (-100000 <= range.start && range.end < length /*segmentLength(segment)*/ + 100000)
+  final def isRealisticFrsg(frame: Int, segment: Int): Boolean =
+    (-100000 <= frame && frame < segmentLength(segment) + 100000)
+//  final def isRealisticFr(range: Range.Inclusive, segment: Int): Boolean =
+//    (-100000 <= range.start && range.end < segmentLength(segment) + 100000)
+  final def isRealisticRange(range: RangeFrSpecifier): Boolean = {
+    val seg = range.getRealSegment(this)
+    val ran = range.getRangeFr(this)
+    isRealisticFrsg(ran.start, seg) && isRealisticFrsg(ran.last, seg)
+  }
 
   // </editor-fold>
 
@@ -110,30 +112,27 @@ trait XFrames extends X {
   // <editor-fold defaultstate="collapsed" desc="Time specification: conversion between frame/segment and TS">
 
 //  final def frToTs(xFrame: Frame): Long = frToTsImpl(xFrame.frame, xFrame.segment)
-//  final def frToTs(frameSegment:(Int, Int)): Long = frToTsImpl(frameSegment._1, frameSegment._2)
   final def frToTs(frame:Int): Long = {
-    if(segmentCount==0) segmentStartTs(0) + (frame.toDouble * tsPerFr).toLong
-    else {
-      var seg = 1
-      var continue = true
-      while (continue && seg < segmentCount) {
-        if (frame >= segmentStartFr(seg)) seg += 1
-        else continue = false
-      }
-      segmentStartTs(seg-1) + (frame.toDouble * tsPerFr).toLong
-    }
-//    errorIfMultipleSegments("length", "segmentLength(segment: Int)")
-//    frToTsImpl(frame, 0)
+//    if(segmentCount==0) segmentStartTs(0) + (frame.toDouble * tsPerFr).toLong
+//    else {
+//      var seg = 1
+//      var continue = true
+//      while (continue && seg < segmentCount) {
+//        if (frame >= segmentStartFr(seg)) seg += 1
+//        else continue = false
+//      }
+//      segmentStartTs(seg-1) + (frame.toDouble * tsPerFr).toLong
+//    }
+    errorIfMultipleSegments("frToTs(frame: Int)", "frsgToTs(frame: Int, segment: Int)")
+    frsgToTs(frame, 0)
   }
 
-//  private def frToTsImpl(frame:Int, segment: Int): Long = {
-//    loggerRequire( isValidFr(frame/*, segment*/) )
-//    segmentStartTs(segment) + (frame.toDouble * tsPerFr).toLong
-//  }
-//  /** Absolute timestamp of the given data frame index (in microseconds).
-//    */
-//  @deprecated
-//  final def frsgToTs(frame:Int, segment: Int): Long = frToTsImpl(frame, segment)
+  /** Absolute timestamp of the given data frame index (in microseconds).
+    */
+  final def frsgToTs(frame:Int, segment: Int): Long = {
+    loggerRequire( isValidFrsg(frame, segment), "Not valid frame/segment specification!" )
+    segmentStartTs(segment) + ((frame-1).toDouble * tsPerFr).toLong
+  }
 
   /** Closest frame/segment index to the given absolute timestamp. Will give frames which are out of range (i.e. negative, etc)
     * if necessary.
@@ -142,7 +141,7 @@ trait XFrames extends X {
 //    * @param negativeIfOOB If true, will give a frame stamp as negative or larger than data length. Useful for overhangs. If False, will throw error.
     * @return
     */
-  final def tsToFrsg(timestamp: Long): (Int, Int) = {
+  final def convertTS2FS(timestamp: Long): (Int, Int) = {
 
     var tempret: (Int, Int) = (0 , 0)
     var changed = false
@@ -192,12 +191,12 @@ trait XFrames extends X {
 
   }
   final def tsToFrsgA(timestamp: Long): Array[Int] = {
-    val tempret = tsToFrsg(timestamp)//, false)
+    val tempret = convertTS2FS(timestamp)//, false)
     Array[Int]( tempret._1, tempret._2 )
   }
   final def tsToFr(timestamp: Long): Int = {
     errorIfMultipleSegments("length", "segmentLength(segment: Int)")
-    tsToFrsg(timestamp)._1
+    convertTS2FS(timestamp)._1
   }
 
   // </editor-fold>
@@ -225,8 +224,7 @@ trait XFrames extends X {
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc="Time specification: conversion between ts and ms">
 
-  final def tsToMs(timestamp: Long): Double = frToMs( tsToFr(timestamp)) //._1 )
-//  final def mssgToTs(ms: Double, segment: Int): Long = frToTs( msToFr(ms), segment )
+  final def tsToMs(timestamp: Long): Double = frToMs( tsToFr(timestamp) )
   final def msToTs(ms: Double): Long = frToTs( msToFr(ms) )
 
   // </editor-fold>
@@ -293,8 +291,11 @@ trait XFrames extends X {
 
 trait XFramesImmutable extends XFrames {
 
-  final override lazy val segmentCount: Int = segmentLength.length
   override val segmentLength: Array[Int]
+  final override lazy val segmentCount: Int = segmentLength.length
+
+//  println("XFramesImmutable segmentLength " + segmentLength.toVector.toString)
+//  println("XFramesImmutable segmentCount " + segmentCount)
 
   /**Cumulative frame numbers for segment starts.
     */

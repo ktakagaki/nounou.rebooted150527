@@ -25,8 +25,10 @@ import nounou.data.traits.{XFramesImmutable, XConcatenatable}
   def apply(channel: Int) = array(channel)
 
   override lazy val segmentLength = {
-    val tempsl = Array( array(0).segmentCount )
-    for(s <- 1 until tempsl.length) tempsl(s) = min( DenseVector(array.map(_.segmentLength(s)).toArray) )
+    val tempsl = new Array[Int]( array(0).segmentCount )
+    //println( "XDCA tempsl " + tempsl.toVector.toString )
+    for(s <- 0 until tempsl.length) tempsl(s) = min( DenseVector(array.map(_.segmentLength(s)).toArray) )
+    //println( "XDCA tempsl post " + tempsl.toVector.toString )
     tempsl
   }
   override lazy val segmentStartTs = array(0).segmentStartTs
@@ -43,8 +45,8 @@ import nounou.data.traits.{XFramesImmutable, XConcatenatable}
   override lazy val scaleMin = array(0).scaleMin
 
 
-  override def readPointImpl(channel: Int, frame: Int) = array(channel).readPointImpl(frame)//, segment)
-  override def readTraceImpl(channel: Int, range: Range.Inclusive) = array(channel).readTraceImpl(range)//, segment)
+  override def readPointImpl(channel: Int, frame: Int, segment: Int) = array(channel).readPointImpl(frame, segment)
+  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int) = array(channel).readTraceImpl(range, segment)
 
   def loadDataChannel(dataChannel: XDataChannel): XDataChannelArray = {
     if(array(0).isCompatible(dataChannel)){

@@ -14,21 +14,21 @@ class FramesTest extends XPreloadedTestDataTest {
 
   test("tsToFrameSegment"){
 
-    assert(testData.tsToFrsg(8000000) == (-2, 0), "testData.tsToFrameSegment(8000000)")
+    assert(testData.convertTS2FS(8000000) == (-2, 0), "testData.tsToFrameSegment(8000000)")
 //      intercept[IllegalArgumentException]{ testData.tsToFrameSegment(8000000) }
-  assert(testData.tsToFrsg(10000000) == (0, 0), "testData.tsToFrameSegment(10000000)")
+  assert(testData.convertTS2FS(10000000) == (0, 0), "testData.tsToFrameSegment(10000000)")
 //      intercept[IllegalArgumentException]{testData.tsToFrameSegment(10000000) == (0, 0)}
-    assert(testData.tsToFrsg(19000000) == (9, 0), "testData.tsToFrameSegment(19000000)")
+    assert(testData.convertTS2FS(19000000) == (9, 0), "testData.tsToFrameSegment(19000000)")
 //    assert(testData.tsToFrameSegment(19000000) == (9, 0), "testData.tsToFrameSegment(19000000, false)")
-    assert(testData.tsToFrsg(20000000) == (10, 0), "testData.tsToFrameSegment(20000000)")
+    assert(testData.convertTS2FS(20000000) == (10, 0), "testData.tsToFrameSegment(20000000)")
 //      intercept[IllegalArgumentException]{testData.tsToFrameSegment(20000000) == (9, 0)}
-    assert(testData.tsToFrsg(23000000) == (13, 0), "testData.tsToFrameSegment(23000000)")
+    assert(testData.convertTS2FS(23000000) == (13, 0), "testData.tsToFrameSegment(23000000)")
 //      intercept[IllegalArgumentException]{testData.tsToFrameSegment(23000000) == (9, 0)}
-    assert(testData.tsToFrsg(27000000) == (-3, 1), "testData.tsToFrameSegment(27000000)")
+    assert(testData.convertTS2FS(27000000) == (-3, 1), "testData.tsToFrameSegment(27000000)")
 //      intercept[IllegalArgumentException]{testData.tsToFrameSegment(27000000) == (0, 1)}
-    assert(testData.tsToFrsg(35000000) == (5, 1), "testData.tsToFrameSegment(20000000)")
+    assert(testData.convertTS2FS(35000000) == (5, 1), "testData.tsToFrameSegment(20000000)")
 //    assert(testData.tsToFrameSegment(35000000) == (5, 1), "testData.tsToFrameSegment(20000000, false)")
-    assert(testData.tsToFrsg(55000000) == (25, 1), "testData.tsToFrameSegment(55000000)")
+    assert(testData.convertTS2FS(55000000) == (25, 1), "testData.tsToFrameSegment(55000000)")
 //        intercept[IllegalArgumentException]{testData.tsToFrameSegment(55000000) == (19, 1)}
   }
 

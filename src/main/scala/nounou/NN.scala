@@ -55,25 +55,25 @@ object NN {
     ranges.RangeTs(startTs, endTs)
 
   // </editor-fold>
-  // <editor-fold defaultstate="collapsed" desc=" RangeTsEvent ">
-
-  def RangeTsEvent(eventTs: Long, preFrames: Int, postFrames: Int) =
-    ranges.RangeTsEvent(eventTs, preFrames, postFrames)
-
-  def RangeTsEvent(eventTs: Array[Long], preFrames: Int, postFrames: Int) =
-    ranges.RangeTsEvent(eventTs, preFrames, postFrames)
-
-  // </editor-fold>
+//  // <editor-fold defaultstate="collapsed" desc=" RangeTsEvent ">
+//
+//  def RangeTsEvent(eventTs: Long, preFrames: Int, postFrames: Int) =
+//    ranges.RangeTsEvent(eventTs, preFrames, postFrames)
+//
+//  def RangeTsEvent(eventTs: Array[Long], preFrames: Int, postFrames: Int) =
+//    ranges.RangeTsEvent(eventTs, preFrames, postFrames)
+//
+//  // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" RangeMs ">
 
-//  final def RangeMs(startMs: Double, lastMs: Double, stepMs: Double, optSegment: OptSegment) =
-//    ranges.RangeMs(startMs, lastMs, stepMs, optSegment)
-  final def RangeMs(startMs: Double, lastMs: Double, stepMs: Double) =
-    ranges.RangeMs(startMs, lastMs, stepMs)
-//  final def RangeMs(startMs: Double, lastMs: Double, optSegment: OptSegment) =
-//    ranges.RangeMs(startMs, lastMs, optSegment)
-  final def RangeMs(startMs: Double, lastMs: Double)=
-    ranges.RangeMs(startMs, lastMs)
+////  final def RangeMs(startMs: Double, lastMs: Double, stepMs: Double, optSegment: OptSegment) =
+////    ranges.RangeMs(startMs, lastMs, stepMs, optSegment)
+//  final def RangeMs(startMs: Double, lastMs: Double, stepMs: Double) =
+//    ranges.RangeMs(startMs, lastMs, stepMs)
+////  final def RangeMs(startMs: Double, lastMs: Double, optSegment: OptSegment) =
+////    ranges.RangeMs(startMs, lastMs, optSegment)
+//  final def RangeMs(startMs: Double, lastMs: Double)=
+//    ranges.RangeMs(startMs, lastMs)
 
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" RangeMsEvent ">
@@ -82,18 +82,18 @@ object NN {
 //    ranges.RangeMsEvent(eventMs, preMs, postMs, stepMs, optSegment)
 //  final def RangeMsEvent(eventMs: Double, preMs: Double, postMs: Double, optSegment: OptSegment) =
 //    ranges.RangeMsEvent(eventMs, preMs, postMs, optSegment)
-  final def RangeMsEvent(eventMs: Double, preMs: Double, postMs: Double, stepMs: Double) =
-    ranges.RangeMsEvent(eventMs, preMs, postMs, stepMs)
-  final def RangeMsEvent(eventMs: Double, preMs: Double, postMs: Double) =
-    ranges.RangeMsEvent(eventMs, preMs, postMs)
-//  final def RangeMsEvent(eventMs: Array[Double], preMs: Double, postMs: Double, optSegment: OptSegment) =
-//    ranges.RangeMsEvent(eventMs, preMs, postMs, optSegment)
-  final def RangeMsEvent(eventMs: Array[Double], preMs: Double, postMs: Double) =
-    ranges.RangeMsEvent(eventMs, preMs, postMs)
-//  final def RangeMsEvent(eventMs: Array[Double], preMs: Double, postMs: Double, stepMs: Double, optSegment: OptSegment) =
-//    ranges.RangeMsEvent(eventMs, preMs, postMs, stepMs, optSegment)
-  final def RangeMsEvent(eventMs: Array[Double], preMs: Double, postMs: Double, stepMs: Double) =
-    ranges.RangeMsEvent(eventMs, preMs, postMs, stepMs)
+//  final def RangeMsEvent(eventMs: Double, preMs: Double, postMs: Double, stepMs: Double) =
+//    ranges.RangeMsEvent(eventMs, preMs, postMs, stepMs)
+//  final def RangeMsEvent(eventMs: Double, preMs: Double, postMs: Double) =
+//    ranges.RangeMsEvent(eventMs, preMs, postMs)
+////  final def RangeMsEvent(eventMs: Array[Double], preMs: Double, postMs: Double, optSegment: OptSegment) =
+////    ranges.RangeMsEvent(eventMs, preMs, postMs, optSegment)
+//  final def RangeMsEvent(eventMs: Array[Double], preMs: Double, postMs: Double) =
+//    ranges.RangeMsEvent(eventMs, preMs, postMs)
+////  final def RangeMsEvent(eventMs: Array[Double], preMs: Double, postMs: Double, stepMs: Double, optSegment: OptSegment) =
+////    ranges.RangeMsEvent(eventMs, preMs, postMs, stepMs, optSegment)
+//  final def RangeMsEvent(eventMs: Array[Double], preMs: Double, postMs: Double, stepMs: Double) =
+//    ranges.RangeMsEvent(eventMs, preMs, postMs, stepMs)
 
   // </editor-fold>
 
