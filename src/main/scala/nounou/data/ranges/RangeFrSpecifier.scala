@@ -1,5 +1,6 @@
 package nounou.data.ranges
 
+import nounou.OptSegment
 import nounou.data.traits.XFrames
 import nounou.util.LoggingExt
 
@@ -12,15 +13,30 @@ import nounou.util.LoggingExt
   */
 trait RangeFrSpecifier extends LoggingExt {
 
-  /** Returns the segment number for the frame range.
+  /** Returns the segment number for the frame range, or -1 for automatic determination based on the data.
     */
-  def segment(): Int
+  def getSegment(): Int
+  def getOptSegment(): OptSegment
+  def getRealSegment(xFrames: XFrames) = getOptSegment.getRealSegment(xFrames)
+  def getRealStepFrames(totalLength: Int): Int
+  final def getRealStepFrames(xFrames: XFrames): Int = getRealStepFrames(xFrames.segmentLength(getRealSegment(xFrames)))
 
   /** Returns the equivalent RangeFr object, to which other operations can be delegated.
     * This is especially relevant for classes such as [[nounou.data.ranges.RangeMs]],
     * where frame ranges must be realized based on the [[nounou.data.traits.XFrames]] sampling rate.
    */
   def getRangeFr(x: XFrames): RangeFr
+
+//  def getRangeSegment(xFrames: XFrames): OptSegment = {
+//    segment match {
+//      case -1 => {
+//        loggerRequire(xFrames.segmentCount==1, "RangeFrAll was specified without a segment. Only single-segment data can be specified in this way.")
+//        OptSegment(0)
+//      }
+//      case _ =>
+//        optSegment
+//    }
+//  }
 
   /** Returns a [[scala.Range.Inclusive]] which exclusively includes frame indexes which
     * are both within the specified data range and

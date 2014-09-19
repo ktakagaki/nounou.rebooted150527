@@ -28,7 +28,7 @@ trait LoggingExt extends LazyLogging {
   def loggerRequire(boolean: Boolean, message: String, params: AnyRef*): Unit = {
     if(!boolean){
       logger.error(message, params )
-      throw new IllegalArgumentException( "require:" +message)
+      throw new IllegalArgumentException( "loggerRequire:" +message)
     }
   }
 

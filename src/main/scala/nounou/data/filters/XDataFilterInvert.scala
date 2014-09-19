@@ -33,18 +33,18 @@ class XDataFilterInvert(private var _parent: XData ) extends XDataFilter( _paren
     else "XDataFilterInvert: off (inverted=false)"
   }
 
-  override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int =
+  override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
     if(inverted){
-      - _parent.readPointImpl(channel, frame)//, segment)
+      - _parent.readPointImpl(channel, frame, segment)
     } else {
-      _parent.readPointImpl(channel, frame)//, segment)
+      _parent.readPointImpl(channel, frame, segment)
     }
 
-  override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/): DenseVector[Int] =
+  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DenseVector[Int] =
     if(inverted){
-      - _parent.readTraceImpl(channel, range)//, segment)
+      - _parent.readTraceImpl(channel, range, segment)
     } else {
-      _parent.readTraceImpl(channel, range)//, segment)
+      _parent.readTraceImpl(channel, range, segment)
     }
 
 }

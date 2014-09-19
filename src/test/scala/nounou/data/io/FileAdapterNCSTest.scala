@@ -13,8 +13,30 @@ import nounou.data.filters.XDataFilterHolder
  */
 class FileAdapterNCSTest extends FunSuite {
 
-  val testFileTet4a = new File( getClass.getResource("/_testFiles/Neuralynx/t130911/Tet4a.ncs").getPath() )
 
+  //val testFileTet4a = new File( getClass.getResource("/_testFiles/Neuralynx/t130911/Tet4a.ncs").getPath() )
+  val testFileE04LC_CSC1 = new File( "C:\\prog\\_gh\\_kt\\nounou.testfiles\\Neuralynx\\E04LC\\CSC1.ncs" )
+
+  test("readInfo"){
+    val temp = NNDataReader.load(testFileE04LC_CSC1).apply(0)
+    assert( temp.isInstanceOf[XDataChannelNCS] )
+    val dataObj = temp.asInstanceOf[XDataChannelNCS]
+
+    assert( dataObj.absGain == 1.4901660156250002E-5 )
+    assert( dataObj.absOffset == 0d )
+    assert( dataObj.absUnit.contentEquals("microV") )
+
+    //trait XFrames
+    assert( dataObj.segmentCount == 94 )
+    assert( dataObj.segmentLength(0) == 2546176 && dataObj.segmentLength(8) == 3902976 )
+    intercept[IllegalArgumentException] {
+      dataObj.length
+    }
+    println( dataObj.segmentStartFr.toVector )
+    println( dataObj.segmentStartTs.toVector )
+    println( dataObj.segmentEndTs.toVector )
+
+  }
 //  test("readTrace"){
 //
 //    val d = new NNDataReader

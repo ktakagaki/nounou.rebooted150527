@@ -11,7 +11,7 @@ import breeze.linalg.{DenseMatrix => DM, DenseVector => DV}
  * Time: 18:50
  * To change this template use File | Settings | File Templates.
  */
-class XDataPreloaded(  val data: DM[Int],//Array[DM[Int]],
+class XDataPreloaded(  val data: Array[DM[Int]],
                        override val xBits: Int,
                        override val absGain: Double,
                        override val absOffset: Double,
@@ -29,15 +29,17 @@ class XDataPreloaded(  val data: DM[Int],//Array[DM[Int]],
 //    override final lazy val segmentLength = data.map( (p: DM[Int]) => p.rows ).toVector
 
 
-    require(channelCount == data.cols,//data(0).cols,
-      "number of channels " + channelCount + " does not match the data columns" + data.cols + "!")
+    loggerRequire(channelCount == data(0).cols,
+      "number of channels " + channelCount + " does not match the data columns" + data(0).cols + "!")
+    loggerRequire(data.length == segmentStartTs.length && data.length == segmentLength.length,
+      "Given data, segmentStartTs, and segmentLength must all have the same length. Actual lengths were {}, {}, {}.",
+       data.length.toString, segmentStartTs.length.toString, segmentLength.length.toString)
 
     //reading
-    override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/) = data(channel, frame)//(segment)(channel, frame)
+    override def readPointImpl(channel: Int, frame: Int, segment: Int) = data(segment)(channel, frame)
 
-    override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/) = {
-      data( range, channel ).toDenseVector
-      //data(segment)( range, channel ).toDenseVector
+    override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int) = {
+      data(segment)( range, channel ).toDenseVector
     }
 
   // <editor-fold desc="XConcatenatable">
@@ -48,7 +50,7 @@ class XDataPreloaded(  val data: DM[Int],//Array[DM[Int]],
           if(this.isCompatible(that)){
 
             val oriThis = this
-            new XDataPreloaded( data = DM.horzcat(oriThis.data, t.data),
+            new XDataPreloaded( data = oriThis.data.zip(t.data).map( (tup: (DM[Int], DM[Int])) => DM.horzcat(tup._1, tup._2) ).toArray,
                                 xBits = oriThis.xBits,
                                 absGain = oriThis.absGain,
                                 absOffset = oriThis.absOffset,
@@ -86,7 +88,7 @@ class XDataPreloadedSingleSegment(
                     sampleRate: Double,
                     layout: XLayout = XLayoutNull
                     )
-  extends XDataPreloaded( data/*Array(data)*/,
+  extends XDataPreloaded( Array(data),
                           xBits,
                           absGain, absOffset, absUnit,
                           scaleMax, scaleMin, /*channelNames,*/ Array[Long](segmentStartTs),

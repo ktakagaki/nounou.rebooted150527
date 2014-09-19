@@ -18,7 +18,7 @@ trait XDataFilterParallel extends XDataFilter {
   def chunkSize: Int
   def lastChunk: Int
 
-  override def readTraceImpl(channel: Int, range: Range.Inclusive): DenseVector[Int] = ???
+  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DenseVector[Int] = ???
 
 }
 
@@ -29,6 +29,6 @@ trait XDataFilterParallel extends XDataFilter {
  */
 trait XDataFilterParallelAnticipate extends XDataFilterParallel {
 
-  override def readTraceImpl(channel: Int, range: Range.Inclusive): DenseVector[Int] = ???
+  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DenseVector[Int] = ???
 
 }

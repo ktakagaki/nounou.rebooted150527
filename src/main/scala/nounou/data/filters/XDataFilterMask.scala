@@ -24,19 +24,20 @@ class XDataFilterMask(private var _parent: XData, private var initialMask: XMask
   def getMask() = mask
 
 
-  override def readPointImpl(channel: Int, frame: Int/*, segment: Int*/): Int = {
-    if( mask.isMaskedFrame(frame, /*segment,*/ _parent) ){
+  override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = {
+    if( mask.isMaskedFrame(frame, segment, _parent) ){
       0
     }else{
-      _parent.readPointImpl(channel, frame)//, segment)
+      _parent.readPointImpl(channel, frame, segment)
     }
   }
 
-  override def readTraceImpl(channel: Int, range: Range.Inclusive/*, segment: Int*/): DV[Int] = {
-    if( mask.isMaskedFrame(range, /*segment, */ _parent) ){
-      super.readTraceImpl(channel, range)//, segment)
+  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] = {
+    if( mask.isMaskedFrame(range, segment, _parent) ){
+      //ToDo 2: make zero array
+      super.readTraceImpl(channel, range, segment)
     } else {
-      _parent.readTraceImpl(channel, range)//, segment)
+      _parent.readTraceImpl(channel, range, segment)
     }
   }
 

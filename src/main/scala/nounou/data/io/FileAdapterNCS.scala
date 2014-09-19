@@ -180,14 +180,16 @@ object FileAdapterNCS extends FileAdapterNLX {
 
 // </editor-fold>
 
+    //println("FANCS segmentLength " + tempLengths.toString)
+
     val xDataChannelNCS = new XDataChannelNCS(fileHandle = fHand,
-      absGain = 1.0E6 * tempADBitVolts / xBitsD,
-      scaleMax = Short.MaxValue.toInt*xBits,
-      scaleMin = Short.MinValue.toInt*xBits,
-      segmentLength = tempLengths.toArray,
-      segmentStartTs = tempStartTimestamps.toArray,
-      channelName = tempAcqEntName
-    )
+                                              absGain = 1.0E6 * tempADBitVolts / xBitsD,
+                                              scaleMax = Short.MaxValue.toInt*xBits,
+                                              scaleMin = Short.MinValue.toInt*xBits,
+                                              segmentLength = tempLengths.toArray,
+                                              segmentStartTs = tempStartTimestamps.toArray,
+                                              channelName = tempAcqEntName
+                                              )
 
     logger.info( "loaded {}", xDataChannelNCS )
     Array[X]( xDataChannelNCS )
@@ -213,30 +215,31 @@ class XDataChannelNCS
   override val sampleRate: Double = t.sampleRate
   override val xBits = t.xBits
 
-  def dataByteLocationRI(record: Int, index: Int) = {
+  def recordIndexStartByte(record: Int, index: Int) = {
+    //ToDo 2: check this and move to FileAdapterNCS companion object like recordStartByte?
     //val (record, index) = frameSegmentToRecordIndex(frame, segment)
     recordStartByte(record) + 20L + (index * 2)
   }
-
   def recordStartByte(recNo: Int) = t.recordStartByte(recNo)
 
-  def frameToRecordIndex(frame: Int/*, segment: Int*/) = {
+  def fsToRecordIndex(frame: Int, segment: Int) = {
     ( frame / t.recordSampleCount, frame % t.recordSampleCount)
-    //val cumFrame = segmentStartFrames(segment) + frame
-    //( cumFrame / t.recordSampleCount, cumFrame % t.recordSampleCount)
+    val cumFrame = segmentStartFrames(segment) + frame
+    ( cumFrame / t.recordSampleCount, cumFrame % t.recordSampleCount)
   }
 
 
+  // <editor-fold defaultstate="collapsed" desc=" data implementations ">
 
-  override def readPointImpl(frame: Int/*, segment: Int*/): Int = {
-    val (record, index) = frameToRecordIndex(frame)//frameSegmentToRecordIndex(frame, segment)
-    fileHandle.seek( dataByteLocationRI( record, index ) )
+  override def readPointImpl(frame: Int, segment: Int): Int = {
+    val (record, index) = fsToRecordIndex(frame, segment)
+    fileHandle.seek( recordIndexStartByte( record, index ) )
     fileHandle.readInt16 * xBits
   }
 
-  override def readTraceImpl(range: Range.Inclusive/*, segment: Int*/): DV[Int] = {
-    var (currentRecord: Int, currentIndex: Int) = frameToRecordIndex(range.start)//frameSegmentToRecordIndex( range.start, segment )
-    val (endReadRecord: Int, endReadIndex: Int) = frameToRecordIndex(range.end)//frameSegmentToRecordIndex( range.end, segment ) //range is inclusive of lastValid
+  override def readTraceImpl(range: Range.Inclusive, segment: Int): DV[Int] = {
+    var (currentRecord: Int, currentIndex: Int) = fsToRecordIndex(range.start, segment)
+    val (endReadRecord: Int, endReadIndex: Int) = fsToRecordIndex(range.end, segment) //range is inclusive of lastValid
 
     //ToDo1 program step
     val step = range.step
@@ -244,7 +247,7 @@ class XDataChannelNCS
     val tempRet = DV.zeros[Int](range.length)//DV[Int]()
     var currentTempRetPos = 0
 
-    fileHandle.seek( dataByteLocationRI(currentRecord, currentIndex) )
+    fileHandle.seek( recordIndexStartByte(currentRecord, currentIndex) )
 
     if(currentRecord == endReadRecord){
     //if the whole requested trace fits in one record
@@ -278,6 +281,7 @@ class XDataChannelNCS
 
     tempRet
 
+    // </editor-fold>
 }
 
 }
