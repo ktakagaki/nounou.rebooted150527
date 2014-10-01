@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[    179918,       3076]
-NotebookOptionsPosition[    178554,       3024]
-NotebookOutlinePosition[    178897,       3039]
-CellTagsIndexPosition[    178854,       3036]
+NotebookDataLength[    181990,       3155]
+NotebookOptionsPosition[    180468,       3099]
+NotebookOutlinePosition[    180813,       3114]
+CellTagsIndexPosition[    180770,       3111]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -26,16 +26,56 @@ Cell["FileAdapterGSDGSH test", "Title",
   3.6012768326646986`*^9}, {3.6016367435135307`*^9, 3.6016367458816657`*^9}, {
   3.6024843248932467`*^9, 3.6024843318206425`*^9}}],
 
-Cell[CellGroupData[{
-
 Cell[BoxData[
- RowBox[{"<<", "NounouM2`"}]], "Input",
- CellChangeTimes->{{3.601276597725261*^9, 3.601276600971447*^9}}],
+ RowBox[{"<<", "NounouW`"}]], "Input",
+ CellChangeTimes->{{3.601276597725261*^9, 3.601276600971447*^9}, 
+   3.6211653325667505`*^9}],
 
-Cell[CellGroupData[{
+Cell[TextData[{
+ StyleBox["HokahokaW`",
+  StripOnInput->False,
+  FontWeight->"Bold",
+  FontVariations->{"Underline"->True}],
+ "\n",
+ StyleBox["(origin)[https://ktakagaki@github.com/ktakagaki/HokahokaW.git]",
+  StripOnInput->False,
+  FontFamily->"Courier",
+  FontSize->Small],
+ "\n",
+ StyleBox["current Git HEAD:  13ddb7cc898ce8f990bcd7062e894fd2ef4ee0a2\n\
+newest file:  Wed 1 Oct 2014 17:17:02 ",
+  StripOnInput->False,
+  FontFamily->"Courier",
+  FontSize->Small]
+}], "Text",
+ GeneratedCell->True,
+ CellAutoOverwrite->True,
+ CellChangeTimes->{3.6211658877955074`*^9},
+ Background->GrayLevel[0.85]],
 
-Cell[BoxData["\<\"Welcome to NounouM2, the Mathematica interface to nounou!\"\
-\>"], "Print",
+Cell[TextData[{
+ StyleBox["NounouW`",
+  StripOnInput->False,
+  FontWeight->"Bold",
+  FontVariations->{"Underline"->True}],
+ "\n",
+ StyleBox["(origin)[https://ktakagaki@github.com/ktakagaki/NounouW.git]",
+  StripOnInput->False,
+  FontFamily->"Courier",
+  FontSize->Small],
+ "\n",
+ StyleBox["current Git HEAD:  7efb7dbf0cba085c609829b3770a97b2b4a4e8c8\n\
+newest file:  Wed 1 Oct 2014 17:24:43 ",
+  StripOnInput->False,
+  FontFamily->"Courier",
+  FontSize->Small]
+}], "Text",
+ GeneratedCell->True,
+ CellAutoOverwrite->True,
+ CellChangeTimes->{3.6211658882275324`*^9},
+ Background->GrayLevel[0.85]],
+
+Cell[BoxData["\<\"<<Set JLink` java stack size to 6144Mb>>\"\>"], "Print",
  CellChangeTimes->{
   3.602487828056616*^9, 3.6024880352884693`*^9, 3.6024909301330442`*^9, 
    3.602491680815981*^9, 3.602493715914382*^9, 3.602493880198779*^9, {
@@ -47,37 +87,8 @@ Cell[BoxData["\<\"Welcome to NounouM2, the Mathematica interface to nounou!\"\
    3.6025228220291567`*^9, 3.6025230530373697`*^9, 3.602523359026871*^9, 
    3.602523512105627*^9, 3.60252372458778*^9, 3.6025238494819236`*^9, 
    3.602527327048829*^9, 3.6025291031874185`*^9, 3.6025694669110913`*^9, {
-   3.6025701698192954`*^9, 3.6025702016281147`*^9}}],
-
-Cell[BoxData["\<\"(last updated:  Fri 28 Feb 2014 10:56:28)\"\>"], "Print",
- CellChangeTimes->{
-  3.602487828056616*^9, 3.6024880352884693`*^9, 3.6024909301330442`*^9, 
-   3.602491680815981*^9, 3.602493715914382*^9, 3.602493880198779*^9, {
-   3.602496724988491*^9, 3.6024967495198946`*^9}, 3.6024986222380075`*^9, {
-   3.602498710273043*^9, 3.6024987363625355`*^9}, 3.6025019736426973`*^9, 
-   3.6025071393801603`*^9, 3.6025091005413322`*^9, 3.602509400073465*^9, 
-   3.6025096453344927`*^9, 3.602510245749835*^9, 3.6025103657066956`*^9, 
-   3.6025201740136986`*^9, 3.6025212236457343`*^9, 3.6025216093347945`*^9, 
-   3.6025228220291567`*^9, 3.6025230530373697`*^9, 3.602523359026871*^9, 
-   3.602523512105627*^9, 3.60252372458778*^9, 3.6025238494819236`*^9, 
-   3.602527327048829*^9, 3.6025291031874185`*^9, 3.6025694669110913`*^9, {
-   3.6025701698192954`*^9, 3.602570201629115*^9}}],
-
-Cell[BoxData["\<\"<<Set JLink` java stack size to 3072Mb>>\"\>"], "Print",
- CellChangeTimes->{
-  3.602487828056616*^9, 3.6024880352884693`*^9, 3.6024909301330442`*^9, 
-   3.602491680815981*^9, 3.602493715914382*^9, 3.602493880198779*^9, {
-   3.602496724988491*^9, 3.6024967495198946`*^9}, 3.6024986222380075`*^9, {
-   3.602498710273043*^9, 3.6024987363625355`*^9}, 3.6025019736426973`*^9, 
-   3.6025071393801603`*^9, 3.6025091005413322`*^9, 3.602509400073465*^9, 
-   3.6025096453344927`*^9, 3.602510245749835*^9, 3.6025103657066956`*^9, 
-   3.6025201740136986`*^9, 3.6025212236457343`*^9, 3.6025216093347945`*^9, 
-   3.6025228220291567`*^9, 3.6025230530373697`*^9, 3.602523359026871*^9, 
-   3.602523512105627*^9, 3.60252372458778*^9, 3.6025238494819236`*^9, 
-   3.602527327048829*^9, 3.6025291031874185`*^9, 3.6025694669110913`*^9, {
-   3.6025701698192954`*^9, 3.602570201702119*^9}}]
-}, Open  ]]
-}, Open  ]],
+   3.6025701698192954`*^9, 3.6025702016281147`*^9}, 3.621165337615039*^9, 
+   3.6211657842015824`*^9, 3.621165888256534*^9}],
 
 Cell[BoxData[
  RowBox[{
@@ -87,14 +98,79 @@ Cell[BoxData[
  RowBox[{
   RowBox[{
   "testDataFile", " ", "=", " ", 
-   "\"\<V:\\\\docs\\\\bb\\\\nounous\\\\src\\\\test\\\\resources\\\\_testFiles\
-\\\\Micam\\\\mag130712008A_3.gsd\>\""}], ";"}]], "Input",
- CellChangeTimes->{{3.6024843707548695`*^9, 3.6024843887268977`*^9}}],
+   "\"\<C:\\\\prog\\\\_gh\\\\_kt\\\\nounou\\\\src\\\\test\\\\resources\\\\_\
+testFiles\\\\Micam\\\\mag130712008A_3.gsd\>\""}], ";"}]], "Input",
+ CellChangeTimes->{{3.6024843707548695`*^9, 3.6024843887268977`*^9}, {
+  3.621165958209535*^9, 3.6211659640748706`*^9}}],
+
+Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"$NNReader", "@", 
+ RowBox[{"reader", "=", 
+  RowBox[{"JavaNew", "[", "\"\<nounou.NNDataReader\>\"", "]"}]}]], "Input",
+ CellChangeTimes->{{3.6211653765132637`*^9, 3.6211653822065897`*^9}, {
+   3.6211654520385838`*^9, 3.6211654631002164`*^9}, 3.621165551312262*^9, {
+   3.6211655863262644`*^9, 3.621165607477474*^9}, {3.621165828860137*^9, 
+   3.6211658323803377`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\[LeftGuillemet]", 
+   RowBox[{"JavaObject", "[", 
+    RowBox[{"nounou", ".", "NNDataReader"}], "]"}], "\[RightGuillemet]"}],
+  JLink`Objects`vm1`JavaObject34523022287175681]], "Output",
+ CellChangeTimes->{
+  3.62116546543535*^9, 3.6211655534913864`*^9, {3.6211655968778677`*^9, 
+   3.621165607890498*^9}, 3.621165795300217*^9, 3.6211658330593767`*^9, 
+   3.6211658914807186`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"reader", "@", 
   RowBox[{"load", "[", "testDataFile", "]"}]}]], "Input",
- CellChangeTimes->{{3.602484407973998*^9, 3.6024844107911596`*^9}}],
+ CellChangeTimes->{{3.6211656093225803`*^9, 3.6211656463276963`*^9}, {
+  3.621165806323848*^9, 3.6211658254279404`*^9}, {3.621165895330939*^9, 
+  3.6211658984991198`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   InterpretationBox[
+    RowBox[{"\[LeftGuillemet]", 
+     RowBox[{"JavaObject", "[", 
+      RowBox[{"nounou", ".", "data", ".", "io", ".", "XHeaderGSD"}], "]"}], 
+     "\[RightGuillemet]"}],
+    JLink`Objects`vm1`JavaObject21369016622776321], ",", 
+   InterpretationBox[
+    RowBox[{"\[LeftGuillemet]", 
+     RowBox[{"JavaObject", "[", 
+      RowBox[{"nounou", ".", "data", ".", "io", ".", "XDataGSD"}], "]"}], 
+     "\[RightGuillemet]"}],
+    JLink`Objects`vm1`JavaObject14013861204066305], ",", 
+   InterpretationBox[
+    RowBox[{"\[LeftGuillemet]", 
+     RowBox[{"JavaObject", "[", 
+      RowBox[{"nounou", ".", "data", ".", "io", ".", "XDataGSDAux"}], "]"}], 
+     "\[RightGuillemet]"}],
+    JLink`Objects`vm1`JavaObject10719253447573505], ",", 
+   InterpretationBox[
+    RowBox[{"\[LeftGuillemet]", 
+     RowBox[{"JavaObject", "[", 
+      RowBox[{"nounou", ".", "data", ".", "XLayoutSquare"}], "]"}], 
+     "\[RightGuillemet]"}],
+    JLink`Objects`vm1`JavaObject14507682434121729]}], "}"}]], "Output",
+ CellChangeTimes->{{3.621165610770663*^9, 3.6211656467587214`*^9}, {
+   3.6211657963082747`*^9, 3.6211658194836006`*^9}, 3.621165899637185*^9, 
+   3.6211659695481834`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.621165906599583*^9, 3.621165907297623*^9}}],
 
 Cell[CellGroupData[{
 
@@ -3002,10 +3078,9 @@ Cell[BoxData[
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"Java", "::", "argx0"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Method named \[NoBreak]\\!\\(\\\"heldDataU$eq\\\"\\)\
-\[NoBreak] defined in class \
+   RowBox[{"Java", "::", "argx0"}], "MessageName"], ":", 
+  " ", "\<\"Method named \[NoBreak]\\!\\(\\\"heldDataU$eq\\\"\\)\[NoBreak] \
+defined in class \
 \[NoBreak]\\!\\(\\\"nounou.data.filters.XDataFilterHolder\\\"\\)\[NoBreak] \
 does not take zero arguments.\"\>"}]], "Message", "MSG",
  CellChangeTimes->{3.6025811392347097`*^9}],
@@ -3024,7 +3099,7 @@ Cell[BoxData[
 },
 WindowSize->{952, 1089},
 WindowMargins->{{Automatic, 0}, {0, Automatic}},
-FrontEndVersion->"9.0 for Microsoft Windows (64-bit) (January 25, 2013)",
+FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (September 9, 2014)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -3040,43 +3115,47 @@ CellTagsIndex->{}
 Notebook[{
 Cell[CellGroupData[{
 Cell[579, 22, 314, 4, 90, "Title"],
+Cell[896, 28, 146, 3, 31, "Input"],
+Cell[1045, 33, 598, 20, 91, "Text"],
+Cell[1646, 55, 594, 20, 91, "Text"],
+Cell[2243, 77, 958, 13, 23, "Print"],
+Cell[3204, 92, 81, 2, 31, "Input"],
+Cell[3288, 96, 333, 7, 52, "Input"],
 Cell[CellGroupData[{
-Cell[918, 30, 119, 2, 31, "Input"],
-Cell[CellGroupData[{
-Cell[1062, 36, 905, 13, 23, "Print"],
-Cell[1970, 51, 885, 12, 23, "Print"],
-Cell[2858, 65, 884, 12, 23, "Print"]
-}, Open  ]]
-}, Open  ]],
-Cell[3769, 81, 81, 2, 31, "Input"],
-Cell[3853, 85, 275, 6, 31, "Input"],
-Cell[4131, 93, 167, 3, 31, "Input"],
-Cell[CellGroupData[{
-Cell[4323, 100, 211, 4, 31, "Input"],
-Cell[4537, 106, 1533, 22, 352, "Output"]
+Cell[3646, 107, 364, 6, 31, "Input"],
+Cell[4013, 115, 425, 9, 31, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[6107, 133, 274, 7, 31, "Input"],
-Cell[6384, 142, 215, 3, 31, "Output"]
+Cell[4475, 129, 268, 5, 31, "Input"],
+Cell[4746, 136, 1220, 29, 52, "Output"]
+}, Open  ]],
+Cell[5981, 168, 244, 4, 152, "Input"],
+Cell[CellGroupData[{
+Cell[6250, 176, 211, 4, 31, "Input"],
+Cell[6464, 182, 1533, 22, 352, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[6636, 150, 279, 7, 31, "Input"],
-Cell[6918, 159, 179, 2, 31, "Output"]
+Cell[8034, 209, 274, 7, 31, "Input"],
+Cell[8311, 218, 215, 3, 31, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[7134, 166, 488, 10, 31, "Input"],
-Cell[7625, 178, 4528, 79, 221, "Output"]
+Cell[8563, 226, 279, 7, 31, "Input"],
+Cell[8845, 235, 179, 2, 31, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[12190, 262, 638, 14, 31, "Input"],
-Cell[12831, 278, 164694, 2710, 377, "Output"]
+Cell[9061, 242, 488, 10, 31, "Input"],
+Cell[9552, 254, 4528, 79, 218, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[177562, 2993, 264, 6, 31, "Input"],
-Cell[177829, 3001, 380, 9, 21, "Message"],
-Cell[178212, 3012, 75, 1, 63, "Output"]
+Cell[14117, 338, 638, 14, 31, "Input"],
+Cell[14758, 354, 164694, 2710, 376, "Output"]
 }, Open  ]],
-Cell[178302, 3016, 236, 5, 31, "Input"]
+Cell[CellGroupData[{
+Cell[179489, 3069, 264, 6, 31, "Input"],
+Cell[179756, 3077, 367, 8, 22, "Message"],
+Cell[180126, 3087, 75, 1, 31, "Output"]
+}, Open  ]],
+Cell[180216, 3091, 236, 5, 31, "Input"]
 }, Open  ]]
 }
 ]
