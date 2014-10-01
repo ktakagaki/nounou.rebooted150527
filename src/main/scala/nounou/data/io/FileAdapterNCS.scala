@@ -235,7 +235,7 @@ class XDataChannelNCS
   }
 
   override def readTraceImpl(range: Range.Inclusive, segment: Int): DV[Int] = {
-println("XDataChannelNCS " + range.toString())
+//println("XDataChannelNCS " + range.toString())
     var (currentRecord: Int, currentIndex: Int) = fsToRecordIndex(range.start, segment)
     val (endReadRecord: Int, endReadIndex: Int) = fsToRecordIndex(range.end, segment) //range is inclusive of lastValid
 
