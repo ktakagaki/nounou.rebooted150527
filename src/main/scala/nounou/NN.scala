@@ -1,5 +1,6 @@
 package nounou
 
+import breeze.linalg.DenseVector
 import nounou.data.{XSpike, XTrodeN, ranges}
 
 /**A static class which encapsulates convenience functions from nounou for
@@ -9,7 +10,7 @@ import nounou.data.{XSpike, XTrodeN, ranges}
  */
 object NN {
 
-  final def hello(): String = "Welcome to nounou, a Scala/Java adapter for neurophysiological data."
+  override final def toString(): String = "Welcome to nounou, a Scala/Java adapter for neurophysiological data."
 
   // <editor-fold defaultstate="collapsed" desc=" options ">
 
@@ -100,6 +101,7 @@ object NN {
 
 //  def toArray(xFrame: Frame) = xFrame.toArray()
 //  def toArray(xFrames: Array[Frame]) = xFrames.map( _.toArray() )
+  def toArray(denseVector: DenseVector[Long]) = breeze.util.JavaArrayOps.dvToArray(denseVector)
   def toArray(xSpike: XSpike) = XSpike.toArray( xSpike )
   def toArray(xSpikes: Array[XSpike]) = XSpike.toArray( xSpikes )
 

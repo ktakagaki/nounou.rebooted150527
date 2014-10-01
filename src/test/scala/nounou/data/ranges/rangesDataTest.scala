@@ -25,7 +25,8 @@ class rangesDataTest extends FunSuite {
 
     assert(dataObj.segmentLength(0)==2546176)
     assert(dataObj.readTrace( RangeFr(0, 9, 1, OptSegment(0))) ==
-      DenseVector(-1528, -1841) )
+      DenseVector(-1564672, -1885184, -1312768, -686080, -512000, -267264, 312320, 630784, 272384, -385024)
+    )
 //    println(dataObj.readTrace( RangeFr(0, 9, 2, OptSegment(0))))
 
   }
