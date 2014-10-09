@@ -44,7 +44,7 @@ It allows specification of ranges such as &quot;all frames&quot;
 (<span class="extype" name="nounou.data.ranges.RangeFrAll">nounou.data.ranges.RangeFrAll</span>) and millisecond- or timestamp(Long)-
 dependent frame ranges. These specifications can only be resolved to real data frame
 ranges using sampling information given in the actual data
-(<span class="extype" name="nounou.data.traits.XFrames">nounou.data.traits.XFrames</span>).
+(<span class="extype" name="nounou.data.traits.XDataTiming">nounou.data.traits.XDataTiming</span>).
 </p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="nounou.util.LoggingExt">LoggingExt</span>, <span class="extype" name="com.typesafe.scalalogging.slf4j.LazyLogging">LazyLogging</span>, <span class="extype" name="com.typesafe.scalalogging.Logging">Logging</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
@@ -98,12 +98,12 @@ ranges using sampling information given in the actual data
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getRangeFr</span><span class="params">(<span name="x">x: <span class="extype" name="nounou.data.traits.XFrames">XFrames</span></span>)</span><span class="result">: <span class="extype" name="nounou.data.ranges.RangeFr">RangeFr</span></span>
+        <span class="name">getRangeFr</span><span class="params">(<span name="x">x: <span class="extype" name="nounou.data.traits.XDataTiming">XFrames</span></span>)</span><span class="result">: <span class="extype" name="nounou.data.ranges.RangeFr">RangeFr</span></span>
       </span>
       </h4>
       <p class="shortcomment cmt">Returns the equivalent RangeFr object, to which other operations can be delegated.</p><div class="fullcomment"><div class="comment cmt"><p>Returns the equivalent RangeFr object, to which other operations can be delegated.
 This is especially relevant for classes such as <span class="extype" name="nounou.data.ranges.RangeMs">nounou.data.ranges.RangeMs</span>,
-where frame ranges must be realized based on the <span class="extype" name="nounou.data.traits.XFrames">nounou.data.traits.XFrames</span> sampling rate.
+where frame ranges must be realized based on the <span class="extype" name="nounou.data.traits.XDataTiming">nounou.data.traits.XDataTiming</span> sampling rate.
 </p></div></div>
     </li><li name="nounou.data.ranges.RangeFrSpecifier#segment" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="segment():Int"></a>
@@ -287,12 +287,12 @@ where frame ranges must be realized based on the <span class="extype" name="noun
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getValidRange</span><span class="params">(<span name="x">x: <span class="extype" name="nounou.data.traits.XFrames">XFrames</span></span>)</span><span class="result">: <span class="extype" name="scala.collection.immutable.Range.Inclusive">Inclusive</span></span>
+        <span class="name">getValidRange</span><span class="params">(<span name="x">x: <span class="extype" name="nounou.data.traits.XDataTiming">XFrames</span></span>)</span><span class="result">: <span class="extype" name="scala.collection.immutable.Range.Inclusive">Inclusive</span></span>
       </span>
       </h4>
       <p class="shortcomment cmt">Returns a <span class="extype" name="scala.Range.Inclusive">scala.Range.Inclusive</span> which exclusively includes frame indexes which
 are both within the specified data range and
-the range provided by the <span class="extype" name="nounou.data.traits.XFrames">nounou.data.traits.XFrames</span> object.</p>
+the range provided by the <span class="extype" name="nounou.data.traits.XDataTiming">nounou.data.traits.XDataTiming</span> object.</p>
     </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="hashCode():Int"></a>
       <a id="hashCode():Int"></a>

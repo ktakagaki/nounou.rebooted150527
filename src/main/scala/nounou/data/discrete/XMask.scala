@@ -2,7 +2,7 @@ package nounou.data
 
 import scala.collection.immutable.{TreeMap}
 import scala.reflect.ClassTag
-import nounou.data.traits.XFrames
+import nounou.data.traits.XDataTiming
 import scala.collection.mutable.ArrayBuffer
 import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
 
@@ -118,11 +118,11 @@ import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" getNextMask, getActiveMasks ">
 
-  def getNextMask(frame: Int, segment: Int, x: XFrames) = {
+  def getNextMask(frame: Int, segment: Int, x: XDataTiming) = {
     _masks.find ( p => ( p._1 >= x.convertFRtoTS(frame) ) )//, segment) )  )
   }
 
-  def getNextMaskA(frame: Int, segment: Int, x: XFrames): Array[Long] = {
+  def getNextMaskA(frame: Int, segment: Int, x: XDataTiming): Array[Long] = {
     getNextMask(frame, segment, x) match {
       case Some(p) => Array[Long](p._1, p._2)
       case None => Array[Long](-1, -1)
@@ -130,16 +130,16 @@ import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
   }
 
 
-  def getActiveMasks( rangeFr: RangeFrSpecifier, xFrames: XFrames ): TreeMap[Long, Long]  = {
+  def getActiveMasks( rangeFr: RangeFrSpecifier, xFrames: XDataTiming ): TreeMap[Long, Long]  = {
     val realRange = rangeFr.getValidRange(xFrames)
     getActiveMasks(realRange.start, realRange.last)
   }
 
-  def getActiveMasksA( rangeFr: RangeFrSpecifier, xFrames: XFrames ): Array[Array[Long]]  = {
+  def getActiveMasksA( rangeFr: RangeFrSpecifier, xFrames: XDataTiming ): Array[Array[Long]]  = {
     getActiveMasks( rangeFr, xFrames ).map( ele => Array(ele._1, ele._2)).toArray
   }
 
-  def getActiveMasksA( frameStart: Int, frameEnd: Int, segment: Int, x: XFrames ): Array[Array[Long]]  =
+  def getActiveMasksA( frameStart: Int, frameEnd: Int, segment: Int, x: XDataTiming ): Array[Array[Long]]  =
         getActiveMasks(x.convertFRtoTS(frameStart/*, segment*/), x.convertFRtoTS(frameEnd/*, segment*/)).map( ele => Array(ele._1, ele._2)).toArray
 
   def getActiveMasks( timeStampStart: Long, timeStampEnd: Long ): TreeMap[Long, Long]  = {

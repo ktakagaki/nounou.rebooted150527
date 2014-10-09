@@ -3,7 +3,7 @@ package nounou.data.ranges
 //import nounou.data.Frame
 
 import nounou._
-import nounou.data.traits.XFrames
+import nounou.data.traits.XDataTiming
 import nounou.util.LoggingExt
 
 object RangeFrAll extends LoggingExt {
@@ -18,14 +18,14 @@ object RangeFrAll extends LoggingExt {
 
 class RangeFrAll(val step: Int, val optSegment: OptSegment) extends RangeFrSpecifier {
 
-  override final def getRealSegment(xFrames: XFrames): Int = optSegment.getRealSegment(xFrames)
-  override final def getRealStepFrames(xFrames: XFrames): Int = {
+  override final def getRealSegment(xFrames: XDataTiming): Int = optSegment.getRealSegment(xFrames)
+  override final def getRealStepFrames(xFrames: XDataTiming): Int = {
     if ( step == -1 ) 1 else step
   }
-  override final def getRealRange(xFrames: XFrames): Range.Inclusive = {
+  override final def getRealRange(xFrames: XDataTiming): Range.Inclusive = {
     Range.inclusive( 0, xFrames.segmentLength(getRealSegment(xFrames)), getRealStepFrames(xFrames))
   }
-  override final def getValidRange(xFrames: XFrames): Range.Inclusive = {
+  override final def getValidRange(xFrames: XDataTiming): Range.Inclusive = {
     val realSegment = RangeFr(0, xFrames.segmentLength(getRealSegment(xFrames)), step)
     realSegment.getValidRange(xFrames)
   }

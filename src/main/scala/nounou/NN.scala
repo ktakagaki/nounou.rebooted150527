@@ -22,7 +22,6 @@ object NN {
 
   // <editor-fold defaultstate="collapsed" desc=" frame ranges ">
 
-
   // <editor-fold defaultstate="collapsed" desc=" RangeFrAll ">
 
   final def RangeFrAll(step: Int, segment: Int): ranges.RangeFrAll = ranges.RangeFrAll( step, OptSegment(segment) )
@@ -45,14 +44,43 @@ object NN {
 
   final def RangeTs(startTs: Long, endTs: Long, stepTs: Long): ranges.RangeTs =
     ranges.RangeTs(startTs, endTs, stepTs)
-//  final def RangeTs(startTs: Long, endTs: Long, stepTs: Long, optSegment: OptSegment): ranges.RangeTs =
-//    ranges.RangeTs(startTs, endTs, stepTs, optSegment)
-//  final def RangeTs(startTs: Long, endTs: Long, optSegment: OptSegment): ranges.RangeTs =
-//    ranges.RangeTs(startTs, endTs, optSegment)
-  final def RangeTs(startTs: Long, endTs: Long): ranges.RangeTs =
-    ranges.RangeTs(startTs, endTs)
+
+  final def RangeTs(startTS: Long, endTs: Long): ranges.RangeTs =
+    ranges.RangeTs(startTS, endTs)
+
+//  final def RangeTs(stamps: Array[Long], preTS: Long, postTS: Long): Array[ranges.RangeTs] =
+//    stamps.map( (s: Long) => ranges.RangeTs(s-preTS, s+postTS) )
 
   // </editor-fold>
+
+  // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc=" toArray methods ">
+
+  def toArray(denseVector: DenseVector[Long]) = breeze.util.JavaArrayOps.dvToArray(denseVector)
+  def toArray(xSpike: XSpike) = XSpike.toArray( xSpike )
+  def toArray(xSpikes: Array[XSpike]) = XSpike.toArray( xSpikes )
+
+  // </editor-fold>
+
+//  def readSpikes(xData: XData, channels: Array[Int], xFrames: Array[Frame], length: Int, trigger: Int) =
+//    data.XSpike.readSpikes(xData, channels, xFrames, length, trigger)
+//  def readSpike(xData: XData, channels: Array[Int], xFrame: Frame, length: Int, trigger: Int) =
+//    data.XSpike.readSpike(xData, channels, xFrame, length, trigger)
+
+
+  //final def XTrodes( trodeGroup: Array[Array[Int]] ): XTrodes = data.XTrodes( trodeGroup )
+  final def XTrodeN( trodeGroup: Array[Int] ): XTrodeN = new data.XTrodeN( trodeGroup.toVector )
+
+
+}
+
+
+
+//final def XSpikes(waveformLength: Int, xTrodes: XTrodes ) = new XSpikes(waveformLength, xTrodes)
+//  final def newNNData: NNData = new NNData
+
+
 //  // <editor-fold defaultstate="collapsed" desc=" RangeTsEvent ">
 //
 //  def RangeTsEvent(eventTs: Long, preFrames: Int, postFrames: Int) =
@@ -62,7 +90,7 @@ object NN {
 //    ranges.RangeTsEvent(eventTs, preFrames, postFrames)
 //
 //  // </editor-fold>
-  // <editor-fold defaultstate="collapsed" desc=" RangeMs ">
+// <editor-fold defaultstate="collapsed" desc=" RangeMs ">
 
 ////  final def RangeMs(startMs: Double, lastMs: Double, stepMs: Double, optSegment: OptSegment) =
 ////    ranges.RangeMs(startMs, lastMs, stepMs, optSegment)
@@ -73,8 +101,8 @@ object NN {
 //  final def RangeMs(startMs: Double, lastMs: Double)=
 //    ranges.RangeMs(startMs, lastMs)
 
-  // </editor-fold>
-  // <editor-fold defaultstate="collapsed" desc=" RangeMsEvent ">
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc=" RangeMsEvent ">
 
 //  final def RangeMsEvent(eventMs: Double, preMs: Double, postMs: Double, stepMs: Double, optSegment: OptSegment) =
 //    ranges.RangeMsEvent(eventMs, preMs, postMs, stepMs, optSegment)
@@ -93,36 +121,4 @@ object NN {
 //  final def RangeMsEvent(eventMs: Array[Double], preMs: Double, postMs: Double, stepMs: Double) =
 //    ranges.RangeMsEvent(eventMs, preMs, postMs, stepMs)
 
-  // </editor-fold>
-
-  // </editor-fold>
-
-  // <editor-fold defaultstate="collapsed" desc=" toArray methods ">
-
-//  def toArray(xFrame: Frame) = xFrame.toArray()
-//  def toArray(xFrames: Array[Frame]) = xFrames.map( _.toArray() )
-  def toArray(denseVector: DenseVector[Long]) = breeze.util.JavaArrayOps.dvToArray(denseVector)
-  def toArray(xSpike: XSpike) = XSpike.toArray( xSpike )
-  def toArray(xSpikes: Array[XSpike]) = XSpike.toArray( xSpikes )
-
-  // </editor-fold>
-
-//  def readSpikes(xData: XData, channels: Array[Int], xFrames: Array[Frame], length: Int, trigger: Int) =
-//    data.XSpike.readSpikes(xData, channels, xFrames, length, trigger)
-//  def readSpike(xData: XData, channels: Array[Int], xFrame: Frame, length: Int, trigger: Int) =
-//    data.XSpike.readSpike(xData, channels, xFrame, length, trigger)
-
-
-  //final def XTrodes( trodeGroup: Array[Array[Int]] ): XTrodes = data.XTrodes( trodeGroup )
-  final def XTrodeN( trodeGroup: Array[Int] ): XTrodeN = new data.XTrodeN( trodeGroup.toVector )
-
-  //final def XSpikes(waveformLength: Int, xTrodes: XTrodes ) = new XSpikes(waveformLength, xTrodes)
-
-
-//  final def newNNData: NNData = new NNData
-
-
-
-}
-
-
+// </editor-fold>

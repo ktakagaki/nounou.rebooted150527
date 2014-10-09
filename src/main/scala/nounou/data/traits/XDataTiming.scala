@@ -7,7 +7,7 @@ import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
 /**This trait of XData and XDataChannel objects encapsulates segment,
   * frame, and sampling information for electrophysiological and imaging recordings..
   */
-trait XFrames extends X {
+trait XDataTiming extends X {
 
   /** Throws IllegalArgumentException if segmentCount != 1... use as check for functions which assume segment = 0.
     * @param func name of current function/signature called (which assumes segment = 0 )
@@ -262,7 +262,7 @@ trait XFrames extends X {
 
   override def isCompatible(that: X): Boolean = {
     that match {
-      case x: XFrames => {
+      case x: XDataTiming => {
         //print("sc " + this.segmentCount == x.segmentCount + " startTs "+ this.segmentStartTs.corresponds(x.segmentStartTs)(_ == _ ))
         (this.segmentCount == x.segmentCount) &&
           //ToDo 2: removed for corrupt page drop at end, like E04LC. Add better error code and tests
@@ -291,7 +291,7 @@ trait XFrames extends X {
 
 }
 
-trait XFramesImmutable extends XFrames {
+trait XDataTimingImmutable extends XDataTiming {
 
   override val segmentLength: Array[Int]
   final override lazy val segmentCount: Int = segmentLength.length

@@ -2,7 +2,7 @@ package nounou.data.filters
 
 import nounou._
 import nounou.data.{XData, X}
-import breeze.linalg.{DenseVector => DV, convert}
+import breeze.linalg.{DenseVector => DV, max, convert}
 import breeze.signal.support.FIRKernel1D
 import breeze.signal._
 import scala.beans.BeanProperty
@@ -40,11 +40,14 @@ class XDataFilterFIR(private var _parent: XData ) extends XDataFilter( _parent )
   }
 
   def setFilter( omega0: Double, omega1: Double): Unit = {
-    require(omega0>= 0 && omega1 > omega0 && omega1 <= 1,
-      logger.error(
-        "Frequencies must be 0 <= omega0 < omega1 <= 1. omega0={}, omega1={}. Use setFilterHz if setting in Hz.",
-        omega0.toString, omega1.toString)
-    )
+    loggerRequire(omega0>= 0 && omega1 > omega0 && omega1 <= 1,
+      "Frequencies must be 0 <= omega0 < omega1 <= 1. omega0={}, omega1={}. Use setFilterHz if setting in Hz.",
+      omega0.toString, omega1.toString)
+
+    //ToDo 3: improve this error message, make warning?
+    loggerRequire(omega1*taps > 1d,
+      "The number of taps {} is probably insufficient for the omega1 value {}",
+      taps.toString, omega1.toString)
 
     if(omega0 == 0d && omega1 == 1d)
       setFilterOff()
@@ -67,7 +70,7 @@ class XDataFilterFIR(private var _parent: XData ) extends XDataFilter( _parent )
   def getFilterHz(): Array[Double] = Array[Double]( kernelOmega0*(sampleRate/2d), kernelOmega1*(sampleRate/2d) )
 
   @BeanProperty
-  var taps = 1024
+  var taps = 4096
   // </editor-fold>
 
 
