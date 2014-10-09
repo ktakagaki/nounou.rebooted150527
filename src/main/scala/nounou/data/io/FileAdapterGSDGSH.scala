@@ -4,7 +4,7 @@ import nounou._
 import nounou.data._
 import java.io.File
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
-import nounou.data.traits.XFramesImmutable
+import nounou.data.traits.XDataTimingImmutable
 import scala.collection.immutable.{TreeMap}
 import breeze.linalg.{DenseMatrix => DM, DenseVector => DV}
 import nounou.data.headers.{HeaderValue, XHeader}
@@ -198,7 +198,7 @@ class XDataGSD(
                 layout: XLayout,
                 val backgroundFrame: DV[Int]
                 ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, /*channelNames,*/ segmentStartTs, sampleRate, layout)
-                  with XFramesImmutable
+                  with XDataTimingImmutable
 
 class XDataGSDAux(
                 data: DM[Int],
@@ -213,4 +213,4 @@ class XDataGSDAux(
                 sampleRate: Double,
                 layout: XLayout
                    ) extends XDataPreloadedSingleSegment( data, xBits, absGain, absOffset, absUnit, scaleMax, scaleMin, /*channelNames,*/ segmentStartTs, sampleRate, layout)
-                     with XDataAux with XFramesImmutable
+                     with XDataAux with XDataTimingImmutable

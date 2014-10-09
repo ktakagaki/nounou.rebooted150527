@@ -2,7 +2,7 @@ package nounou.data.io
 
 import java.io.File
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
-import nounou.data.traits.XFramesImmutable
+import nounou.data.traits.XDataTimingImmutable
 import nounou.data.{X, XDataChannelFilestream}
 import scala.collection.mutable.ListBuffer
 import breeze.linalg.{DenseVector => DV, convert}
@@ -207,7 +207,7 @@ class XDataChannelNCS
                        override val scaleMin: Int,
                        override val segmentLength: Array[Int],
                        override val segmentStartTs: Array[Long],
-                       override val channelName: String     ) extends XDataChannelFilestream with XFramesImmutable {
+                       override val channelName: String     ) extends XDataChannelFilestream with XDataTimingImmutable {
 
   val t = FileAdapterNCS
   override val absOffset: Double = t.absOffset

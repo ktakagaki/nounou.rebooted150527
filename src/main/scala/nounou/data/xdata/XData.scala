@@ -12,7 +12,7 @@ import nounou.data.ranges.{RangeFrAll, RangeFrSpecifier, RangeFr}
   * Each trace of data must share the following variables:
   * sampling, start, length, xBits, absGain, absOffset, absUnit
   */
-abstract class XData extends X with XConcatenatable with XFrames with XChannels with XAbsolute {
+abstract class XData extends X with XConcatenatable with XDataTiming with XChannels with XDataScale {
 
   override def toString(): String = "XData: " + channelCount + " ch, "+ segmentCount + " seg, length=" + segmentLength + ", fs=" + sampleRate + ")"
 
@@ -254,7 +254,7 @@ abstract class XData extends X with XConcatenatable with XFrames with XChannels 
   override def isCompatible(that: X): Boolean = {
     that match {
       case x: XData => {
-        (super[XFrames].isCompatible(x)) && (super[XAbsolute].isCompatible(x)) && this.layout.isCompatible(x.layout)
+        (super[XDataTiming].isCompatible(x)) && (super[XDataScale].isCompatible(x)) && this.layout.isCompatible(x.layout)
         //not channel info
       }
       case _ => false

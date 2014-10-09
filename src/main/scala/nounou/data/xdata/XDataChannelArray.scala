@@ -2,14 +2,14 @@ package nounou.data
 
 import breeze.linalg.{DenseVector, min}
 import nounou._
-import nounou.data.traits.{XFramesImmutable, XConcatenatable}
+import nounou.data.traits.{XDataTimingImmutable, XConcatenatable}
 
 /**Immutable data object to encapsulate arrays of [[XDataChannel]] objects
   *
  * Created by Kenta on 12/15/13.
  */
  class XDataChannelArray(val array: Seq[XDataChannel], override val layout: XLayout = XLayoutNull)
-  extends XData with XConcatenatable with XFramesImmutable {
+  extends XData with XConcatenatable with XDataTimingImmutable {
   //ToDo 2: Clarify what is exactly immutable, and enforce
 
   //enforce channel compatibility
