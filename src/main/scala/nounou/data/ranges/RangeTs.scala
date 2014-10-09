@@ -7,26 +7,28 @@ import nounou.data.traits.XDataTiming
  * @author ktakagaki
  * @date 3/19/14.
  */
-object RangeTs {
+object RangeTS {
 
   /** Gives a [[nounou.data.ranges.RangeFrSpecifier]] object which specifies
     * start, end, and step based on timestamps (absolute microseconds).
     * @param step must be -1 (default; one data frame step) or a real frame step that amounts to > 0
     *             when converted with the appropriate frame rate
     */
-  def apply(startTs: Long, lastTs: Long, step: Long) = new RangeTs(startTs, lastTs, step)
+  def apply(startTS: Long, lastTS: Long, step: Long) = new RangeTS(startTS, lastTS, step)
 
   /** Gives a [[nounou.data.ranges.RangeFrSpecifier]] object which specifies
     * start, end, and step based on timestamps (absolute microseconds).
     * Step size will be a default value of 1 data frame.
     */
-  def apply(startTs: Long, lastTs: Long) = new RangeTs(startTs, lastTs)
+  def apply(startTS: Long, lastTS: Long) = new RangeTS(startTS, lastTS)
 
 }
 
-class RangeTs(val startTs: Long, val lastTs: Long, val stepTs: Long) extends RangeFrSpecifier {
+class RangeTS(val startTS: Long, val lastTS: Long, val stepTS: Long) extends RangeFrSpecifier {
 
-  def this(startTs: Long, endTs: Long) = this(startTs, endTs, -1L)
+  override def toString() = s"RangeTs($startTS, $lastTS, $stepTS)"
+
+  def this(startTS: Long, endTS: Long) = this(startTS, endTS, -1L)
 
   // <editor-fold defaultstate="collapsed" desc=" RangeFrSpecifier methods ">
     
@@ -39,10 +41,10 @@ class RangeTs(val startTs: Long, val lastTs: Long, val stepTs: Long) extends Ran
   override def getRealStepFrames(xDataTiming: XDataTiming): Int = {
     if(realStepFramesBuffer == -1) {
       realStepFramesBuffer =
-        if (stepTs == -1L) 1
+        if (stepTS == -1L) 1
         else {
-          val stepReal = (stepTs.toDouble * xDataTiming.sampleRate / 1000000d).toInt
-          loggerRequire(stepReal > 0, "This amounts to a negative time step! (stepTs=" + stepTs + " micro s => " + stepReal + " frames)")
+          val stepReal = (stepTS.toDouble * xDataTiming.sampleRate / 1000000d).toInt
+          loggerRequire(stepReal > 0, "This amounts to a negative time step! (stepTs=" + stepTS + " micro s => " + stepReal + " frames)")
           stepReal
         }
     }
@@ -70,8 +72,8 @@ class RangeTs(val startTs: Long, val lastTs: Long, val stepTs: Long) extends Ran
 
   private def realSegmentBufferRefresh(xDataTiming: XDataTiming): Unit = {
     if( realSegmentXFrameBuffer != xDataTiming) {
-      val fs1 = xDataTiming.convertTStoFS(startTs)
-      val fs2 = xDataTiming.convertTStoFS(lastTs)
+      val fs1 = xDataTiming.convertTStoFS(startTS)
+      val fs2 = xDataTiming.convertTStoFS(lastTS)
       loggerRequire(fs1._2 == fs2._2, "The two specified timestamps belong to different recording segments " +
         fs1._2.toString + " and " + fs2._2.toString)
       realSegmentXFrameBuffer = xDataTiming

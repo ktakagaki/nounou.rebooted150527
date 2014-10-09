@@ -18,6 +18,8 @@ object RangeFrAll extends LoggingExt {
 
 class RangeFrAll(val step: Int, val optSegment: OptSegment) extends RangeFrSpecifier {
 
+  override def toString() = s"RangeFrAll($step, $optSegment)"
+
   override final def getRealSegment(xFrames: XDataTiming): Int = optSegment.getRealSegment(xFrames)
   override final def getRealStepFrames(xFrames: XDataTiming): Int = {
     if ( step == -1 ) 1 else step
