@@ -43,6 +43,7 @@ package object nounou extends LoggingExt {
         segment
       }
     }
+    override def toString() = s"OptSegment($segment)"
   }
   val OptSegmentAutomatic = OptSegment(-1)
 

@@ -24,6 +24,9 @@ object RangeFr {
 class RangeFr(val start: Int, val last: Int, val step: Int, val optSegment: OptSegment)
   extends RangeFrSpecifier with LoggingExt {
 
+  override def toString() = s"RangeFr($start, $last, $step, $optSegment)"
+
+
   def this(start: Int, last: Int, step: Int, segment: Int) = this(start, last, step, OptSegment(segment))
   def this(start: Int, last: Int, step: Int) = this(start, last, step, OptSegmentAutomatic)
   def this(start: Int, last: Int, optSegment: OptSegment) = this(start, last, 1, optSegment)
@@ -46,8 +49,6 @@ class RangeFr(val start: Int, val last: Int, val step: Int, val optSegment: OptS
   }
 
   // </editor-fold>
-
-  override def toString() = "RangeFr(" + start + ", " + last + ", " + step + ", " + optSegment.toString + ")"
 
   // <editor-fold defaultstate="collapsed" desc=" protected utility functions: intervalContains/intervalMod ">
 
