@@ -1,7 +1,7 @@
 package nounou.data.ranges
 
 import nounou.OptSegment
-import nounou.data.traits.XFrames
+import nounou.data.traits.XDataTiming
 import nounou.util.LoggingExt
 
 /** This trait specifies a range of data frames to extract, for instance, when reading traces.</br>
@@ -9,30 +9,38 @@ import nounou.util.LoggingExt
   * ([[nounou.data.ranges.RangeFrAll]]) and millisecond- or timestamp(Long)-
   * dependent frame ranges. These specifications can only be resolved to real data frame
   * ranges using sampling information given in the actual data
-  * ([[nounou.data.traits.XFrames]]).
+  * ([[nounou.data.traits.XDataTiming]]).
   */
 trait RangeFrSpecifier extends LoggingExt {
 
-  // <editor-fold defaultstate="collapsed" desc=" range accessors ">
-
-//  def getSegment(): Int
-//  def getOptSegment(): OptSegment
-//  def getRealSegment(xFrames: XFrames) = getOptSegment.getRealSegment(xFrames)
-//  final def getRealStepFrames(xFrames: XFrames): Int = getRealStepFrames(xFrames.segmentLength(getRealSegment(xFrames)))
   /** Returns the real segment number for the frame range, taking into account -1 for automatic determination.
     */
-  def getRealSegment(xFrames: XFrames): Int
+  def getRealSegment(xDataTiming: XDataTiming): Int
   /** Returns the real frame steps for the frame range, taking into account -1 for automatic determination.
     */
-  def getRealStepFrames(xFrames: XFrames): Int
+  def getRealStepFrames(xDataTiming: XDataTiming): Int
   /** Returns the real frame range with steps for the frame range, taking into account -1 for automatic determination
     * and specifications such as RangeFrAll.
     */
-  def getRealRange(xFrames: XFrames): Range.Inclusive
-  /** Returns the valid, frame range with present data for the frame range, taking into account -1 for automatic determination
+  def getRealRange(xDataTiming: XDataTiming): Range.Inclusive
+  /** Returns the valid frame range with present data for the frame range, taking into account -1 for automatic determination
     * and specifications such as RangeFrAll.
     */
-  def getValidRange(xFrames: XFrames): Range.Inclusive
+  def getValidRange(xFrames: XDataTiming): Range.Inclusive
+
+  // </editor-fold>
+
+}
+
+
+
+
+
+
+
+
+
+
 
 //  /** Returns the equivalent RangeFr object, to which other operations can be delegated.
 //    * This is especially relevant for classes such as [[nounou.data.ranges.RangeMs]],
@@ -57,6 +65,9 @@ trait RangeFrSpecifier extends LoggingExt {
 //   */
 //  def getValidRange(x: XFrames): Range.Inclusive = getRangeFr(x).getValidRange(x)
 
-  // </editor-fold>
 
-}
+
+//  def getSegment(): Int
+//  def getOptSegment(): OptSegment
+//  def getRealSegment(xFrames: XFrames) = getOptSegment.getRealSegment(xFrames)
+//  final def getRealStepFrames(xFrames: XFrames): Int = getRealStepFrames(xFrames.segmentLength(getRealSegment(xFrames)))

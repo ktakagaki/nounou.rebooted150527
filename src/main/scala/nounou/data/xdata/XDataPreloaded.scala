@@ -1,7 +1,7 @@
 package nounou.data
 
 import nounou._
-import nounou.data.traits.{XFramesImmutable, XConcatenatable}
+import nounou.data.traits.{XDataTimingImmutable, XConcatenatable}
 import breeze.linalg.{DenseMatrix => DM, DenseVector => DV}
 
 /**xdata class with internal representation as data array
@@ -24,7 +24,7 @@ class XDataPreloaded(  val data: Array[DM[Int]],
                        override val sampleRate: Double,
                        override val layout: XLayout = XLayoutNull
                       )
-  extends XData with XConcatenatable with XFramesImmutable {
+  extends XData with XConcatenatable with XDataTimingImmutable {
 
 //    override final lazy val segmentLength = data.map( (p: DM[Int]) => p.rows ).toVector
 

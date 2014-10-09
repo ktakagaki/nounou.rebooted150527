@@ -8,7 +8,7 @@ import breeze.linalg.DenseVector
   *
  * Created by Kenta on 12/15/13.
  */
-trait XAbsolute extends X {
+trait XDataScale extends X {
 
   /**The number (eg 1024) multiplied to original raw data from the recording instrument
     *(usu 14-16 bit) to obtain internal Int representation.
@@ -70,7 +70,7 @@ trait XAbsolute extends X {
 
   override def isCompatible(that: X): Boolean = {
     that match {
-      case x: XAbsolute => {
+      case x: XDataScale => {
         (this.xBits == x.xBits) && (this.absGain == x.absGain) && (this.absOffset == x.absOffset) && (this.absUnit == x.absUnit) &&
           (this.scaleMax == x.scaleMax) && (this.scaleMin == x.scaleMin)
       }

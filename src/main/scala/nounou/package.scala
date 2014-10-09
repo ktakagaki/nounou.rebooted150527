@@ -1,6 +1,6 @@
 //import nounou.data.Frame
 
-import nounou.data.traits.XFrames
+import nounou.data.traits.XDataTiming
 import nounou.util.LoggingExt
 
 /**
@@ -35,7 +35,7 @@ package object nounou extends LoggingExt {
 //  val OptStep1 = OptStep(1)
   case class OptSegment(segment: Int) extends Opt {
     loggerRequire(segment >= -1, "optSegment must be -1 (not specified) or larger!")
-    def getRealSegment(xFrames: XFrames): Int = {
+    def getRealSegment(xFrames: XDataTiming): Int = {
       if(segment == -1){
         loggerRequire( xFrames.segmentCount == 1, "You must always specify a segment when reading from data with multiple segments!")
         1

@@ -3,14 +3,14 @@ package nounou.data
 import nounou._
 import scala.Vector
 import java.io.DataInput
-import nounou.data.traits.{XFramesImmutable, XConcatenatable, XFrames, XAbsolute}
+import nounou.data.traits.{XDataTimingImmutable, XConcatenatable, XDataTiming, XDataScale}
 import breeze.linalg.{DenseVector => DV}
 import nounou.data.ranges.{RangeFrAll, RangeFr}
 
 /**
  * Created by Kenta on 12/14/13.
  */
-abstract class XDataChannel extends X with XFrames with XAbsolute with XConcatenatable {
+abstract class XDataChannel extends X with XDataTiming with XDataScale with XConcatenatable {
 
   /**MUST OVERRIDE: name of the given channel.*/
   val channelName: String
@@ -69,9 +69,9 @@ abstract class XDataChannel extends X with XFrames with XAbsolute with XConcaten
   override def isCompatible(that: X): Boolean = {
     that match {
       case x: XDataChannel => {
-        println(super[XFrames].isCompatible(x))
-        super[XFrames].isCompatible(x) &&
-          super[XAbsolute].isCompatible(x)
+        println(super[XDataTiming].isCompatible(x))
+        super[XDataTiming].isCompatible(x) &&
+          super[XDataScale].isCompatible(x)
       }
       case _ => false
     }
@@ -145,7 +145,7 @@ class XDataChannelPreloaded(val data: Array[DV[Int]],
                             override val channelName: String,
                             override val segmentStartTs: Array[Long],
                             override val sampleRate: Double
- )  extends XDataChannel with XFramesImmutable{
+ )  extends XDataChannel with XDataTimingImmutable{
 
   loggerRequire(data.length == segmentStartTs.length,
     "Given data and segmentStartTs must have the same length. Actual lengths were {}, {}.",
