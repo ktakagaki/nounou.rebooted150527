@@ -133,7 +133,7 @@ trait XDataTiming extends X {
     */
   final def convertFStoTS(frame:Int, segment: Int): Long = {
     loggerRequire( isValidFrsg(frame, segment), "Not valid frame/segment specification!" )
-    segmentStartTs(segment) + ((frame-1).toDouble * factorTSperFR).toLong
+    segmentStartTs(segment) + ((frame/*-1*/).toDouble * factorTSperFR).round
   }
 
   /** Closest frame/segment index to the given absolute timestamp. Will give frames which are out of range (i.e. negative, etc)
@@ -147,27 +147,28 @@ trait XDataTiming extends X {
 
     var tempret: (Int, Int) = (0 , 0)
     var changed = false
+    def convertImpl(startTs: Long) = ((timestamp-startTs).toDouble * factorFRperTS- 0.00001).round.toInt
 
     //timestamp is before the start of the first segment
     if( timestamp <= segmentStartTs(0) ){
-      tempret = ( ((timestamp-segmentStartTs(0)) * factorFRperTS).toInt, 0)
+      tempret = ( convertImpl(segmentStartTs(0)), 0)
     } else {
       //loop through segments to find appropriate segment which (contains) given timestamp
       var seg = 0
       while(seg < segmentCount - 1 && !changed ){
         if( timestamp <= segmentEndTs(seg) ){
           // if the timestamp is smaller than the end of the current segment, it fits in the current segment
-          tempret = ( ((timestamp-segmentStartTs(seg)) * factorFRperTS).toInt, seg)
+          tempret = ( convertImpl(segmentStartTs(seg)), seg)
           changed = true
         } else if( timestamp < segmentStartTs(seg+1) ) {
           //The timestamp is between the end of the current segment and the beginning of the next segment...
           if( timestamp - segmentEndTs(seg) < segmentStartTs(seg+1) - timestamp){
             //  ...timestamp is closer to end of current segment than beginning of next segment
-            tempret = (((timestamp-segmentEndTs(seg)) * factorFRperTS).toInt, seg)
+            tempret = ( convertImpl(segmentEndTs(seg)), seg)
             changed = true
           } else {
             //  ...timestamp is closer to beginning of next segment than end of current segment
-            tempret = (((timestamp-segmentStartTs(seg + 1)) * factorFRperTS).toInt, seg + 1)
+            tempret = ( convertImpl(segmentStartTs(seg + 1)), seg + 1)
             changed = true
           }
         } else {
@@ -180,10 +181,10 @@ trait XDataTiming extends X {
       if( !changed ){
         if(timestamp <= segmentEndTs(segmentCount -1)){
           // if the timestamp is smaller than the end of the current segment, it fits in the current segment
-          tempret = ( ((timestamp - segmentStartTs(segmentCount-1)) * factorFRperTS).toInt, segmentCount - 1 )
+          tempret = ( convertImpl(segmentStartTs(segmentCount-1)), segmentCount - 1 )
         } else {
           // if the timestamp is larger than the end of the lastValid segment
-          tempret = ( ((timestamp - segmentEndTs(segmentCount-1)) * factorFRperTS).toInt, segmentCount - 1 )
+          tempret = ( convertImpl(segmentEndTs(segmentCount-1)), segmentCount - 1 )
         }
       }
 

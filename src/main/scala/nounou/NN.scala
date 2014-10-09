@@ -42,11 +42,11 @@ object NN {
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" RangeTs ">
 
-  final def RangeTs(startTs: Long, endTs: Long, stepTs: Long): ranges.RangeTs =
-    ranges.RangeTs(startTs, endTs, stepTs)
+  final def RangeTs(startTs: Long, endTS: Long, stepTS: Long): ranges.RangeTS =
+    ranges.RangeTS(startTs, endTS, stepTS)
 
-  final def RangeTs(startTS: Long, endTs: Long): ranges.RangeTs =
-    ranges.RangeTs(startTS, endTs)
+  final def RangeTs(startTS: Long, endTS: Long): ranges.RangeTS =
+    ranges.RangeTS(startTS, endTS)
 
 //  final def RangeTs(stamps: Array[Long], preTS: Long, postTS: Long): Array[ranges.RangeTs] =
 //    stamps.map( (s: Long) => ranges.RangeTs(s-preTS, s+postTS) )
