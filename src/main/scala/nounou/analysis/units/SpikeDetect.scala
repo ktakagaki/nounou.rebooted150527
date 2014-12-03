@@ -1,56 +1,28 @@
-//package nounou.analysis.units
-//
-//import breeze.linalg.{argmax, randomInt, DenseVector}
-//import breeze.stats.median
-//import breeze.numerics._
-//import nounou.{OptNull, Opt}
-//import nounou.util.LoggingExt
-//import nounou.data.{XTrodeN, XData}
-//import nounou.data.filters.{XDataFilterInvert, XDataFilterBuffer, XDataFilterMedianSubtract}
-//import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
-//
-//import scala.collection.mutable.ArrayBuffer
-//
-///**
-// * @author ktakagaki
-// * @date 07/13/2014.
-// */
-//object SpikeDetect extends SpikeDetect {
-//
-//  def it() = this
-//
-//}
-//
-//class SpikeDetect extends LoggingExt {
-//
-//  def traceSD(data: XData, channel: Int, frameRange: RangeFrSpecifier): Int =
-//    traceSD(data: XData, channel: Int, frameRange: RangeFrSpecifier, OptNull)
-//
-//  def traceSD(data: XData, channel: Int, frameRange: RangeFrSpecifier, opts: Opt* ): Int ={
-//
-//    var optTraceSDReadLengthFr = 6400
-//    // <editor-fold defaultstate="collapsed" desc=" Handle options ">
-//
-//    for( opt <- opts ) opt match {
-//      case OptTraceSDReadLengthFr( fr ) => optTraceSDReadLengthFr = fr
-//      case _ => {}
-//    }
-//
-//    if(optTraceSDReadLengthFr < 3200) throw loggerError("optTraceSDReadLength must be 3200 or larger!")
-//
-//    // </editor-fold>
-//
-//    if( frameRange.getValidRange(data).length < optTraceSDReadLengthFr*10 ){
-//      //if the data range is short enough, take the median estimate from the whole data range
-//      (median( abs(  data.readTrace(channel, frameRange)  ) ).toDouble / 0.6745).intValue
-//    } else {
-//      //if the data range is long, take random samples for cutoff SD estimate
-//      val samp = randomInt( 10, (0, data.segmentLength( frameRange.segment() )-1-optTraceSDReadLengthFr ) ).toArray.sorted.map(
-//        (p: Int) => median(abs(data.readTrace( channel, RangeFr(p, p + optTraceSDReadLengthFr - 1, 1, OptSegment(frameRange.segment))) ))
-//      )
-//      (median( DenseVector(samp) ).toDouble / 0.6745).intValue
-//    }
-//  }
+package nounou.analysis.units
+
+import breeze.linalg.{argmax, randomInt, DenseVector}
+
+import nounou.{OptNull, Opt}
+import nounou.util.LoggingExt
+import nounou.data.{XTrodeN, XData}
+import nounou.data.filters.{XDataFilterInvert, XDataFilterBuffer, XDataFilterMedianSubtract}
+import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
+
+import scala.collection.mutable.ArrayBuffer
+
+/**
+* @author ktakagaki
+* @date 07/13/2014.
+*/
+object SpikeDetect extends SpikeDetect {
+
+  def it() = this
+
+}
+
+
+class SpikeDetect extends LoggingExt {
+
 //
 //
 //  def thresholdPeakDetect(data: XData, trode: XTrodeN, frameRange: RangeFrSpecifier, thresholds: Array[Int]): Array[Frame] =
@@ -82,7 +54,7 @@
 //
 //    // </editor-fold>
 //
-//    val validRange = frameRange.getValidRange(data)
+//    val validRange = frameRange.getRangeFrValid(data)
 //    loggerRequire( validRange.step == 1, "step size for spike detection must be 1! {} is invalid!", validRange.step.toString )
 //    var start = validRange.start
 //
@@ -319,5 +291,5 @@
 //
 //    tempRet2.toArray
 //  }
-//
-//}
+
+}

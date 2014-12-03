@@ -24,17 +24,15 @@ object NN {
 
   // <editor-fold defaultstate="collapsed" desc=" RangeFrAll ">
 
-  final def RangeFrAll(step: Int, segment: Int): ranges.RangeFrAll = ranges.RangeFrAll( step, OptSegment(segment) )
   final def RangeFrAll(step: Int, optSegment: OptSegment): ranges.RangeFrAll = ranges.RangeFrAll( step, optSegment )
-  // deprecated due to potential confusion with this(segment: Int)
-  // final def RangeFrAll(step: Int): ranges.RangeFrAll = ranges.RangeFrAll( step )
-  final def RangeFrAll(optSegment: OptSegment): ranges.RangeFrAll = ranges.RangeFrAll( optSegment )
+// deprecated due to potential confusion with this(segment: Int)
+//  final def RangeFrAll(step: Int): ranges.RangeFrAll = ranges.RangeFrAll( step, -1 )
+  final def RangeFrAll(optSegment: OptSegment): ranges.RangeFrAll = ranges.RangeFrAll(1, optSegment)
   final def RangeFrAll(): ranges.RangeFrAll = ranges.RangeFrAll()
 
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" RangeFr ">
 
-  final def RangeFr(start: Int, last: Int, step: Int, segment: Int)           = ranges.RangeFr(start, last, step, OptSegment(segment))
   final def RangeFr(start: Int, last: Int, step: Int, optSegment: OptSegment) = ranges.RangeFr(start, last, step, optSegment)
   final def RangeFr(start: Int, last: Int, step: Int)                         = ranges.RangeFr(start, last, step)
   final def RangeFr(start: Int, last: Int, optSegment: OptSegment)            = ranges.RangeFr(start, last, optSegment)

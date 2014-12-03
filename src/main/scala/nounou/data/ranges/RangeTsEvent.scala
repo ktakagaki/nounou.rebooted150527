@@ -40,19 +40,19 @@ class RangeTSEvent(val eventTS: Long, val preFrames: Int, val postFrames: Int, v
     realEventSegmentBuffer
   }
 
-  override def getRealStepFrames(xDataTiming: XDataTiming): Int = step
+  override def getRealStep(xDataTiming: XDataTiming): Int = step
 
-  override final def getRealRange(xDataTiming: XDataTiming): Range.Inclusive = {
+  override final def getRangeFrReal(xDataTiming: XDataTiming): Range.Inclusive = {
     realSegmentBufferRefresh(xDataTiming)
-    Range.inclusive( realEventFrameBuffer-preFrames, realEventFrameBuffer+postFrames, getRealStepFrames(xDataTiming))
-    //Range.inclusive( 0, xDataTiming.segmentLength(getRealSegment(xDataTiming)), getRealStepFrames(xDataTiming))
+    Range.inclusive( realEventFrameBuffer-preFrames, realEventFrameBuffer+postFrames, getRealStep(xDataTiming))
+    //Range.inclusive( 0, xDataTiming.segmentLength(getRealSegment(xDataTiming)), getRealStep(xDataTiming))
   }
 
-  override final def getValidRange(xDataTiming: XDataTiming): Range.Inclusive = {
+  override final def getRangeFrValid(xDataTiming: XDataTiming): Range.Inclusive = {
     realSegmentBufferRefresh(xDataTiming)
-    val realSegment = RangeFr(realEventFrameBuffer-preFrames, realEventFrameBuffer+postFrames, getRealStepFrames(xDataTiming), OptSegment(realEventSegmentBuffer))
-    //val realSegment = RangeFr(0, xFrames.segmentLength(realSegmentBuffer), getRealStepFrames(xFrames), OptSegment(realSegmentBuffer))
-    realSegment.getValidRange(xDataTiming)
+    val realSegment = RangeFr(realEventFrameBuffer-preFrames, realEventFrameBuffer+postFrames, getRealStep(xDataTiming), OptSegment(realEventSegmentBuffer))
+    //val realSegment = RangeFr(0, xFrames.segmentLength(realSegmentBuffer), getRealStep(xFrames), OptSegment(realSegmentBuffer))
+    realSegment.getRangeFrValid(xDataTiming)
   }
 
   // </editor-fold>

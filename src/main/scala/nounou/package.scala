@@ -28,25 +28,20 @@ package object nounou extends LoggingExt {
   //General options for nounou
 
   abstract class Opt extends breeze.util.Opt
+  case object OptNull extends Opt
 
 //  case class OptStep(step: Int) extends Opt {
 //    require(step>0, "optStep must be one or larger!")
 //  }
 //  val OptStep1 = OptStep(1)
+
   case class OptSegment(segment: Int) extends Opt {
-    loggerRequire(segment >= -1, "optSegment must be -1 (not specified) or larger!")
-    def getRealSegment(xFrames: XDataTiming): Int = {
-      if(segment == -1){
-        loggerRequire( xFrames.segmentCount == 1, "You must always specify a segment when reading from data with multiple segments!")
-        1
-      } else {
-        segment
-      }
-    }
+    loggerRequire(segment >= -1, "OptSegment value must be -1 (not specified) or larger!")
+
     override def toString() = s"OptSegment($segment)"
+
   }
   val OptSegmentAutomatic = OptSegment(-1)
 
-  case object OptNull extends Opt
 
 }
