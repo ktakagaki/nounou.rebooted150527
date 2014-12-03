@@ -108,7 +108,7 @@
 //
 //    //buffer data for calculations
 //    val bufferedData = new XDataFilterBuffer( medianData )
-//    val fr = frameRange.getRangeFr(bufferedData).getValidRange(bufferedData)
+//    val fr = frameRange.getRangeFr(bufferedData).getRangeFrValid(bufferedData)
 //    val readLength = 6400
 //    if( fr.length < readLength*10 ){
 //      //if the data range is short enough, take the median estimate from the whole data range
@@ -147,7 +147,7 @@
 //    //buffer data for calculations
 //    val bufferedData = new XDataFilterBuffer( invertedData )
 //
-//    val fr = frameRange.getRangeFr(bufferedData).getValidRange(bufferedData)
+//    val fr = frameRange.getRangeFr(bufferedData).getRangeFrValid(bufferedData)
 //
 //    //calculate thresholds
 //    val thresholds: Array[Int] = channels.map( traceSD(_, frameRange) )

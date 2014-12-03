@@ -33,7 +33,7 @@ abstract class XDataChannel extends X with XDataTiming with XDataScale with XCon
   /** Read a single trace from the data, in internal integer scaling.
     */
   final def readTrace(segment: Int): DV[Int] = {
-    val range = RangeFrAll().getValidRange( this )
+    val range = RangeFrAll().getRangeFrValid( this )
     readTraceImpl(range, segment)
   }
   /** Read a single trace (within the span) from the data, in internal integer scaling.
@@ -47,7 +47,7 @@ abstract class XDataChannel extends X with XDataTiming with XDataScale with XCon
 
 
 
-    DV.vertcat( DV.zeros[Int]( preLength ), readTraceImpl(range.getValidRange(this), seg), DV.zeros[Int]( postLength ) )
+    DV.vertcat( DV.zeros[Int]( preLength ), readTraceImpl(range.getRangeFrValid(this), seg), DV.zeros[Int]( postLength ) )
 
   }
   //</editor-fold>

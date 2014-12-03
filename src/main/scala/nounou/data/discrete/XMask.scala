@@ -4,7 +4,7 @@ import scala.collection.immutable.{TreeMap}
 import scala.reflect.ClassTag
 import nounou.data.traits.XDataTiming
 import scala.collection.mutable.ArrayBuffer
-import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
+import nounou.data.ranges.{RangeFrValid, RangeFrSpecifier, RangeFr}
 
 //ToDo 1: Mask serialization
 
@@ -94,12 +94,11 @@ import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
     isMaskedTs(x.convertFStoTS(frameStart, segment) , x.convertFStoTS(frameEnd, segment) )
 
   def isMaskedFrame( range: RangeFr, segment: Int, x: XData ): Boolean ={
-    val realRange = range.getValidRange(x)
-    isMaskedFrame( realRange, segment, x)
+    isMaskedFrame( range.getRangeFrValid(x), segment, x)
   }
 
-  def isMaskedFrame( range: Range.Inclusive, segment: Int, x: XData ): Boolean ={
-    isMaskedTs(x.convertFStoTS(range.start, segment) , x.convertFStoTS(range.end, segment) )
+  def isMaskedFrame( rangeFrValid: RangeFrValid/*Range.Inclusive*/, segment: Int, x: XData ): Boolean ={
+    isMaskedTs(x.convertFStoTS(rangeFrValid.start, segment) , x.convertFStoTS(rangeFrValid.last, segment) )
   }
 
   def isMaskedFrame( frame: Int, segment: Int, x: XData ): Boolean =
@@ -131,8 +130,8 @@ import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
 
 
   def getActiveMasks( rangeFr: RangeFrSpecifier, xFrames: XDataTiming ): TreeMap[Long, Long]  = {
-    val realRange = rangeFr.getValidRange(xFrames)
-    getActiveMasks(realRange.start, realRange.last)
+    val rangeFrValid = rangeFr.getRangeFrValid(xFrames)
+    getActiveMasks(rangeFrValid.start, rangeFrValid.last)
   }
 
   def getActiveMasksA( rangeFr: RangeFrSpecifier, xFrames: XDataTiming ): Array[Array[Long]]  = {

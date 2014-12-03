@@ -5,7 +5,7 @@
   import breeze.linalg.{DenseVector => DV, convert}
   import breeze.signal._
   import scala.beans.BeanProperty
-  import nounou.data.ranges.RangeFr
+  import nounou.data.ranges.{RangeFrReal, RangeFrValid, RangeFr}
   import breeze.signal.support.FIRKernel1D
 
   /**
@@ -62,18 +62,19 @@
         tempRet(0).toInt
       }
 
-    override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] =
+    override def readTraceImpl(channel: Int, rangeFrValid: RangeFrValid/*Range.Inclusive, segment: Int*/): DV[Int] =
       if(kernel == null){
-          _parent.readTraceImpl(channel, range, segment)
+          _parent.readTraceImpl(channel, rangeFrValid/*, segment*/)
       } else {
           //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-          val tempData = _parent.readTrace(
-            channel, RangeFr(range.start * factor - kernel.overhangPre, range.last * factor + kernel.overhangPost, 1, OptSegment(segment) ))
+          val realRange = new RangeFrReal(rangeFrValid.start * factor - kernel.overhangPre, rangeFrValid.last * factor + kernel.overhangPost, 1, rangeFrValid.segment )
+          val tempData = _parent.readTrace(channel, realRange)
+            //RangeFr(range.start * factor - kernel.overhangPre, range.last * factor + kernel.overhangPost, 1, OptSegment(segment) ))
 //        println("tempData: " + tempData.length)
 //        println("kernel: " + kernel.kernel.length)
 //        println("start: " + range.start + " end: " + range.end+ " stepMs: " + range.stepMs+ " inclusive: " + range.isInclusive)
           val tempRes: DV[Long] =
-            convolve( convert( DV( tempData.toArray ), Long), kernel.kernel,
+            convolve( convert( tempData, Long ), kernel.kernel,
               range = OptRange.RangeOpt( new Range.Inclusive(0, (range.end - range.start)*factor, range.step*factor) ),
               overhang = OptOverhang.None )
 //        println("tempRes: " + tempRes.length)

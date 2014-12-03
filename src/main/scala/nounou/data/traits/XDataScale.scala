@@ -42,31 +42,22 @@ trait XDataScale extends X {
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
     * absUnit (e.g. "mV")
     */
-  final def toAbs(data: Int) = data.toDouble * absGain + absOffset
+  final def convertINTtoABS(data: Int) = data.toDouble * absGain + absOffset
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
     * absUnit (e.g. "mV")
     */
-  final def toAbs(data: DenseVector[Int]): DenseVector[Double] = data.map( toAbs _ )
-  final def toAbsA(data: Array[Int]): Array[Double] = toAbs(DenseVector(data)).toArray
-  //ToDo 3: toAbs erasure
+  final def convertINTtoABS(data: DenseVector[Int]): DenseVector[Double] = data.map( convertINTtoABS _ )
+  final def convertINTtoABSA(data: Array[Int]): Array[Double] = convertINTtoABS(DenseVector(data)).toArray
+  //ToDo 3: convertINTtoABS erasure
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
     * absUnit (e.g. "mV")
     */
-  final def absToInternal(dataAbs: Double) = ((dataAbs - absOffset) / absGain).toInt //ToDo 4: change to multiply?
+  final def convertABStoINT(dataAbs: Double) = ((dataAbs - absOffset) / absGain).toInt //ToDo 4: change to multiply?
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
     * absUnit (e.g. "mV")
     */
-  final def absToInternal(dataAbs: DenseVector[Double]): DenseVector[Int] = dataAbs.map( absToInternal _ )
-  final def absToInternalA(dataAbs: Array[Double]): Array[Int] = dataAbs.map( absToInternal _ )
-
-  //  /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
-  //   * absUnit (e.g. "mV")
-  //   */
-  //  final def toAbs(data: Vector[Vector[Int]]): Vector[Vector[Double]] = data.map( toAbs _ )
-  //  /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
-  //    * absUnit (e.g. "mV")
-  //    */
-  //  final def toAbs(data: Vector[Vector[Vector[Int]]]): Vector[Vector[Vector[Double]]] = data.map( toAbs _ )
+  final def convertABStoINT(dataAbs: DenseVector[Double]): DenseVector[Int] = dataAbs.map( convertABStoINT _ )
+  final def convertABStoINTA(dataAbs: Array[Double]): Array[Int] = dataAbs.map( convertABStoINT _ )
 
   override def isCompatible(that: X): Boolean = {
     that match {

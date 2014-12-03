@@ -1,5 +1,6 @@
 package nounou.data.traits
 
+import nounou._
 import nounou.data.X
 import breeze.numerics.round
 import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
@@ -26,10 +27,22 @@ trait XDataTiming extends X {
 
   /**Total number of frames in each segment.
     */
-  def segmentLength: Array[Int]
-  /**Return [[segmentLength]] as Array, for easy access from Java/Mathematica/MatLab.
-    */
-  final def segmentLengthA = segmentLength.toArray
+  def segmentLength(): Array[Int]
+  def segmentLength( segment: Int ): Int = segmentLength()( getRealSegment(segment) )
+  def segmentLength( optSegment: OptSegment ): Int = segmentLength()( getRealSegment(optSegment) )
+  def getRealSegment( segment: Int ): Int =
+    if(segment == -1){
+      loggerRequire( segmentCount == 1, "You must always specify a segment when reading from data with multiple segments!")
+      1
+    } else {
+      loggerRequire( segment < segmentCount, s"Segment specified does not exist in data object ${this.toString()}!")
+      segment
+    }
+  def getRealSegment( optSegment: OptSegment ): Int = getRealSegment( optSegment.segment )
+
+//  /**Return [[segmentLength]] as Array, for easy access from Java/Mathematica/MatLab.
+//    */
+//  final def segmentLengthA = segmentLength.toArray
 
   /**Total length in frames of data. Use [[segmentLength]] instead, for data which has more than one segment.
     */
@@ -40,7 +53,7 @@ trait XDataTiming extends X {
 
   /** OVERRIDE: List of starting frames for each segment.
     */
-  def segmentStartFr: Array[Int] = segmentLength.scanLeft(0){ _ + _ }.init
+  def segmentStartFr: Array[Int] = segmentLength.scanLeft(0){ _ + _ }.init.toArray
 
   /**Return [[segmentStartFr]] as Array, for easy access from Java/Mathematica/MatLab.
     */
@@ -86,7 +99,7 @@ trait XDataTiming extends X {
 //    (-100000 <= range.start && range.end < segmentLength(segment) + 100000)
   final def isRealisticRange(range: RangeFrSpecifier): Boolean = {
     val seg = range.getRealSegment(this)
-    val ran = range.getRealRange(this)
+    val ran = range.getRangeFrReal(this)
     isRealisticFrsg(ran.start, seg) && isRealisticFrsg(ran.last, seg)
   }
 
@@ -280,11 +293,11 @@ trait XDataTiming extends X {
   // </editor-fold>
 
 
-  def timingSummary(): String = {
-    var tempout = "Timing Summary: fs=" + sampleRate + ", segmentCount=" + segmentCount + ""
+  def toString(): String = {
+    var tempout = "XDataTiming: fs=" + sampleRate.toString() + ", segmentCount=" + segmentCount.toString() + ""
     for( seg <- 0 until segmentCount) {
-      tempout += "\n               Seg " + seg + ": length=" + segmentLength(seg)+", ms=[0, " +
-        (segmentLength(seg).toDouble/sampleRate*1000).toString + "], segmentStartTs=" + segmentStartTs(seg)
+      tempout += "\n               Seg " + seg.toString() + ": length=" + segmentLength(seg).toString()+", ms=[0, " +
+        (segmentLength(seg).toDouble/sampleRate*1000).toString + "], segmentStartTs=" + segmentStartTs(seg).toString()
     }
     tempout
   }
