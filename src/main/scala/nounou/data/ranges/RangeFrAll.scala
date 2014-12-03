@@ -8,8 +8,9 @@ import nounou.util.LoggingExt
 
 object RangeFrAll extends LoggingExt {
 
+//  final def apply(step: Int, segment: Int) = new RangeFrAll(step, segment)
   final def apply(step: Int, optSegment: OptSegment) = new RangeFrAll(step, optSegment)
-  final def apply(optSegment: OptSegment) = new RangeFrAll(optSegment)
+//  final def apply(optSegment: OptSegment) = new RangeFrAll(optSegment)
 // deprecated due to potential confusion with this(segment: Int)
 //  final def apply(step: Int) = new RangeFrAll(step)
   final def apply(): RangeFrAll = new RangeFrAll()
@@ -18,23 +19,23 @@ object RangeFrAll extends LoggingExt {
 
 class RangeFrAll(val step: Int, val optSegment: OptSegment) extends RangeFrSpecifier {
 
-  override def toString() = s"RangeFrAll($step, $optSegment)"
+  override def toString() = s"RangeFrAll(step=$step, segment=$optSegment)"
+  override final def getRealSegment(xDataTiming: XDataTiming) = optSegment.getRealSegment(xDataTiming)
 
-  override final def getRealSegment(xFrames: XDataTiming): Int = optSegment.getRealSegment(xFrames)
-  override final def getRealStepFrames(xFrames: XDataTiming): Int = {
+  override final def getRealStep(xFrames: XDataTiming): Int = {
     if ( step == -1 ) 1 else step
   }
-  override final def getRealRange(xFrames: XDataTiming): Range.Inclusive = {
-    Range.inclusive( 0, xFrames.segmentLength(getRealSegment(xFrames)), getRealStepFrames(xFrames))
+  override final def getRangeFrReal(xFrames: XDataTiming): Range.Inclusive = {
+    Range.inclusive( 0, xFrames.segmentLength(getRealSegment(xFrames)), getRealStep(xFrames))
   }
-  override final def getValidRange(xFrames: XDataTiming): Range.Inclusive = {
+  override final def getRangeFrValid(xFrames: XDataTiming): Range.Inclusive = {
     val realSegment = RangeFr(0, xFrames.segmentLength(getRealSegment(xFrames)), step)
-    realSegment.getValidRange(xFrames)
+    realSegment.getRangeFrValid(xFrames)
   }
 //  override val getSegment = optSegment.segment
 //  override val getOptSegment = optSegment
 //  override def getRealSegment(xFrames: XFrames) = getOptSegment.getRealSegment(xFrames)
-//  override def getRealStepFrames(totalLength: Int) = step
+//  override def getRealStep(totalLength: Int) = step
 
 // deprecated due to potential confusion with this(segment: Int)
 //  def this(step: Int) = this(step, OptSegmentAutomatic)

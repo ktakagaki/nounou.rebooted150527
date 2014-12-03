@@ -11,7 +11,7 @@
 //  private var _fixedScale = false
 //  def fixScale(range: RangeFr) = fixScale(range, 0)
 //  def fixScale(range: RangeFr, seg: Int): Unit = {
-//    fixRange = range.getValidRange(this.segmentLengths(seg))
+//    fixRange = range.getRangeFrValid(this.segmentLengths(seg))
 //    fixSegment = seg
 //
 //  }

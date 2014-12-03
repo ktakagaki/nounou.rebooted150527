@@ -15,6 +15,6 @@ package object units {
   case class OptPeakHalfWidthMaxFr(frames: Int) extends OptAnalysisUnits
   case class OptPeakHalfWidthMinFr(frames: Int) extends OptAnalysisUnits
   case class OptThresholdPeakDetectWindow(frames: Int) extends OptAnalysisUnits
-  case class OptTraceSDReadLengthFr(frames: Int) extends OptAnalysisUnits
+//  case class OptTraceSDReadLengthFr(frames: Int) extends OptAnalysisUnits
 
 }

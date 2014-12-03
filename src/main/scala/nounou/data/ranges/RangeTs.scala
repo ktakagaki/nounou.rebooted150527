@@ -38,7 +38,7 @@ class RangeTS(val startTS: Long, val lastTS: Long, val stepTS: Long) extends Ran
   }
 
   private var realStepFramesBuffer = -1
-  override def getRealStepFrames(xDataTiming: XDataTiming): Int = {
+  override def getRealStep(xDataTiming: XDataTiming): Int = {
     if(realStepFramesBuffer == -1) {
       realStepFramesBuffer =
         if (stepTS == -1L) 1
@@ -50,17 +50,17 @@ class RangeTS(val startTS: Long, val lastTS: Long, val stepTS: Long) extends Ran
     }
     realStepFramesBuffer
   }
-  override final def getRealRange(xDataTiming: XDataTiming): Range.Inclusive = {
+  override final def getRangeFrReal(xDataTiming: XDataTiming): Range.Inclusive = {
     realSegmentBufferRefresh(xDataTiming)
-    Range.inclusive( realStartFrameBuffer, realLastFrameBuffer, getRealStepFrames(xDataTiming))
-    //Range.inclusive( 0, xDataTiming.segmentLength(getRealSegment(xDataTiming)), getRealStepFrames(xDataTiming))
+    Range.inclusive( realStartFrameBuffer, realLastFrameBuffer, getRealStep(xDataTiming))
+    //Range.inclusive( 0, xDataTiming.segmentLength(getRealSegment(xDataTiming)), getRealStep(xDataTiming))
   }
 
-  override final def getValidRange(xDataTiming: XDataTiming): Range.Inclusive = {
+  override final def getRangeFrValid(xDataTiming: XDataTiming): Range.Inclusive = {
     realSegmentBufferRefresh(xDataTiming)
-    val realSegment = RangeFr(realStartFrameBuffer, realLastFrameBuffer, getRealStepFrames(xDataTiming), OptSegment(realSegmentBuffer))
-    //val realSegment = RangeFr(0, xFrames.segmentLength(realSegmentBuffer), getRealStepFrames(xFrames), OptSegment(realSegmentBuffer))
-    realSegment.getValidRange(xDataTiming)
+    val realSegment = RangeFr(realStartFrameBuffer, realLastFrameBuffer, getRealStep(xDataTiming), OptSegment(realSegmentBuffer))
+    //val realSegment = RangeFr(0, xFrames.segmentLength(realSegmentBuffer), getRealStep(xFrames), OptSegment(realSegmentBuffer))
+    realSegment.getRangeFrValid(xDataTiming)
   }
   
   // </editor-fold>
@@ -118,7 +118,7 @@ class RangeTS(val startTS: Long, val lastTS: Long, val stepTS: Long) extends Ran
 
 //  private def getRangeFr(xFrames: XFrames): RangeFr = {
 //    realSegmentBufferRefresh(xFrames)
-//    RangeFr(realStartFrameBuffer, realLastFrameBuffer, getRealStepFrames(xFrames), OptSegment(realSegmentBuffer))
+//    RangeFr(realStartFrameBuffer, realLastFrameBuffer, getRealStep(xFrames), OptSegment(realSegmentBuffer))
 //  }
 
 //  override def getSegment(): Int = -1

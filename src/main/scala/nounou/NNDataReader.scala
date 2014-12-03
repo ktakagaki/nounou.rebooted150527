@@ -115,8 +115,8 @@ class NNDataReader extends LazyLogging {
 ////    dataRMSFIR.setTaps(64)
 ////    dataRMSFIR.setFilterHz(f0, f1)
 ////
-////    val rmsThreshold = dataRMS.absToInternal( rmsAbsThreshold )
-////    val absThreshold = dataRMS.absToInternal( absAbsThreshold )
+////    val rmsThreshold = dataRMS.convertABStoINT( rmsAbsThreshold )
+////    val absThreshold = dataRMS.convertABStoINT( absAbsThreshold )
 ////
 ////    for(seg <- 0 until dataRMS.segmentCount)
 ////    for(frame <- 0 until dataRMS.segmentLength(seg) by stepSize ) {

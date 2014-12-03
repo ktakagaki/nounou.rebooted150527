@@ -1,5 +1,7 @@
 package nounou.data.filters
 
+import nounou.data.ranges.RangeFrValid
+
 import scala.collection.mutable.{ArrayBuffer, WeakHashMap}
 import nounou.data.XData
 import breeze.linalg.DenseVector
@@ -132,7 +134,7 @@ class XDataFilterBuffer( private var _parent: XData ) extends XDataFilter(_paren
   // <editor-fold defaultstate="collapsed" desc=" ReadingHashMapBuffer ">
 
   //redirection function to deal with scope issues regarding super
-  private def tempTraceReader(ch: Int, range: Range.Inclusive, segment: Int) = _parent.readTraceImpl(ch, range, segment)
+  private def tempTraceReader(ch: Int, rangeFrValid: RangeFrValid) = _parent.readTraceImpl(ch, rangeFrValid)
 
   class ReadingHashMapBuffer extends WeakHashMap[Long, DenseVector[Int]] {
 
@@ -156,7 +158,7 @@ class XDataFilterBuffer( private var _parent: XData ) extends XDataFilter(_paren
     override def default( key: Long  ): DenseVector[Int] = {
       val startFrame = bufferHashKeyToPage(key) * bufferPageLength
       val endFramePlusOne: Int = scala.math.min( startFrame + bufferPageLength, segmentLength( bufferHashKeyToSegment(key) ) )
-      val returnValue = tempTraceReader( bufferHashKeyToChannel(key), new Range.Inclusive(startFrame, endFramePlusOne-1, 1), bufferHashKeyToSegment(key) )
+      val returnValue = tempTraceReader( bufferHashKeyToChannel(key), new RangeFrValid(startFrame, endFramePlusOne-1, 1, bufferHashKeyToSegment(key))  )
       this.+=( key -> returnValue )
       returnValue
     }

@@ -16,17 +16,23 @@ trait RangeFrSpecifier extends LoggingExt {
   /** Returns the real segment number for the frame range, taking into account -1 for automatic determination.
     */
   def getRealSegment(xDataTiming: XDataTiming): Int
+
   /** Returns the real frame steps for the frame range, taking into account -1 for automatic determination.
     */
-  def getRealStepFrames(xDataTiming: XDataTiming): Int
-  /** Returns the real frame range with steps for the frame range, taking into account -1 for automatic determination
-    * and specifications such as RangeFrAll.
+  def getRealStep(xDataTiming: XDataTiming): Int
+  
+  /** Returns the concrete real frame range with start (can be negative), end (can be beyond end of assumed data),
+    * steps (must be positive int), and segment (present within assumed data).
     */
-  def getRealRange(xDataTiming: XDataTiming): Range.Inclusive
-  /** Returns the valid frame range with present data for the frame range, taking into account -1 for automatic determination
-    * and specifications such as RangeFrAll.
+  def getRangeFrReal(xDataTiming: XDataTiming): RangeFrReal //Range.Inclusive
+  /** Returns the concrete valid frame range with start/end (within assumed data),
+    * steps (must be positive int), and segment (present within assumed data).
     */
-  def getValidRange(xFrames: XDataTiming): Range.Inclusive
+  def getRangeFrValid(xDataTiming: XDataTiming): RangeFrValid //Range.Inclusive
+  /** Returns [[getRangeFrValid]], along with pre- and post- padding frame counts
+    * for when the range exceeds available data.
+    */
+  def getRangeFrValidPrePost(xDataTiming: XDataTiming): (Int, RangeFrValid, Int)
 
   // </editor-fold>
 
@@ -63,11 +69,11 @@ trait RangeFrSpecifier extends LoggingExt {
 //    * are both within the specified data range and
 //    * the range provided by the [[nounou.data.traits.XFrames]] object.
 //   */
-//  def getValidRange(x: XFrames): Range.Inclusive = getRangeFr(x).getValidRange(x)
+//  def getRangeFrValid(x: XFrames): Range.Inclusive = getRangeFr(x).getRangeFrValid(x)
 
 
 
 //  def getSegment(): Int
 //  def getOptSegment(): OptSegment
 //  def getRealSegment(xFrames: XFrames) = getOptSegment.getRealSegment(xFrames)
-//  final def getRealStepFrames(xFrames: XFrames): Int = getRealStepFrames(xFrames.segmentLength(getRealSegment(xFrames)))
+//  final def getRealStep(xFrames: XFrames): Int = getRealStep(xFrames.segmentLength(getRealSegment(xFrames)))
