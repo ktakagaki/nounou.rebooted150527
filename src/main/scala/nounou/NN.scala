@@ -1,6 +1,6 @@
 package nounou
 
-import breeze.linalg.DenseVector
+//import breeze.linalg.DenseVector
 import nounou.data.{XSpike, XTrodeN, ranges}
 
 /**A static class which encapsulates convenience functions from nounou for
