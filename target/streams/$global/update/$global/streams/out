@@ -1,0 +1,1492 @@
+[info] Updating {file:/C:/Users/Kenta/Documents/prog/nounou/}nounou...
+[debug] :: resolving dependencies :: nounous#nounous_2.11;0.1-SNAPSHOT
+[debug] 	confs: [compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool]
+[debug] 	validate = true
+[debug] 	refresh = false
+[debug] resolving dependencies for configuration 'compile'
+[debug] == resolving dependencies for nounous#nounous_2.11;0.1-SNAPSHOT [compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scala-lang#scala-library;2.11.2 [compile->default(compile)]
+[info] Resolving org.scala-lang#scala-library;2.11.2 ...
+[debug] sbt-chain: Checking cache for: sbt.ivyint.MergedDescriptors@3f1cd489
+[debug] 		tried C:\Users\Kenta\.ivy2\local\org.scala-lang\scala-library\2.11.2\ivys\ivy.xml
+[debug] 	local: no ivy file found for org.scala-lang#scala-library;2.11.2
+[debug] 		tried http://repo1.maven.org/maven2/org/scala-lang/scala-library/2.11.2/scala-library-2.11.2.pom
+[debug] 	public: found md file for org.scala-lang#scala-library;2.11.2
+[debug] 		=> http://repo1.maven.org/maven2/org/scala-lang/scala-library/2.11.2/scala-library-2.11.2.pom (2.11.2)
+[debug] downloading http://repo1.maven.org/maven2/org/scala-lang/scala-library/2.11.2/scala-library-2.11.2.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/org/scala-lang/scala-library/2.11.2/scala-library-2.11.2.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/org/scala-lang/scala-library/2.11.2/scala-library-2.11.2.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/org/scala-lang/scala-library/2.11.2/scala-library-2.11.2.pom
+[debug] 	[SUCCESSFUL ] org.scala-lang#scala-library;2.11.2!scala-library.pom(pom.original) (754ms)
+[debug] 		tried C:\Users\Kenta\.ivy2\local\org.scala-lang\scala-library\2.11.2\jars\scala-library.jar
+[debug] 		tried http://repo1.maven.org/maven2/org/scala-lang/scala-library/2.11.2/scala-library-2.11.2.jar
+[debug] 	found org.scala-lang#scala-library;2.11.2 in public
+[debug] 	[2.11.2] org.scala-lang#scala-library;2.11.2
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scala-lang#scala-library;2.11.2 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scala-lang#scala-library;2.11.2 [compile->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scala-lang#scala-library;2.11.2 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->default(compile)]
+[info] Resolving com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 ...
+[debug] sbt-chain: Checking cache for: dependency: com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 {compile=[default(compile)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.typesafe.scala-logging\scala-logging-slf4j_2.11\2.1.2\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2
+[debug] 		tried http://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-slf4j_2.11/2.1.2/scala-logging-slf4j_2.11-2.1.2.pom
+[debug] 	public: found md file for com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2
+[debug] 		=> http://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-slf4j_2.11/2.1.2/scala-logging-slf4j_2.11-2.1.2.pom (2.1.2)
+[debug] downloading http://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-slf4j_2.11/2.1.2/scala-logging-slf4j_2.11-2.1.2.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-slf4j_2.11/2.1.2/scala-logging-slf4j_2.11-2.1.2.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-slf4j_2.11/2.1.2/scala-logging-slf4j_2.11-2.1.2.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-slf4j_2.11/2.1.2/scala-logging-slf4j_2.11-2.1.2.pom
+[debug] 	[SUCCESSFUL ] com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2!scala-logging-slf4j_2.11.pom(pom.original) (728ms)
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.typesafe.scala-logging\scala-logging-slf4j_2.11\2.1.2\jars\scala-logging-slf4j_2.11.jar
+[debug] 		tried http://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-slf4j_2.11/2.1.2/scala-logging-slf4j_2.11-2.1.2.jar
+[debug] 	found com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 in public
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->master(*)]
+[info] Resolving com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 ...
+[debug] sbt-chain: Checking cache for: dependency: com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.typesafe.scala-logging\scala-logging-api_2.11\2.1.2\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2
+[debug] 		tried http://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-api_2.11/2.1.2/scala-logging-api_2.11-2.1.2.pom
+[debug] 	public: found md file for com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2
+[debug] 		=> http://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-api_2.11/2.1.2/scala-logging-api_2.11-2.1.2.pom (2.1.2)
+[debug] downloading http://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-api_2.11/2.1.2/scala-logging-api_2.11-2.1.2.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-api_2.11/2.1.2/scala-logging-api_2.11-2.1.2.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-api_2.11/2.1.2/scala-logging-api_2.11-2.1.2.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-api_2.11/2.1.2/scala-logging-api_2.11-2.1.2.pom
+[debug] 	[SUCCESSFUL ] com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2!scala-logging-api_2.11.pom(pom.original) (673ms)
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.typesafe.scala-logging\scala-logging-api_2.11\2.1.2\jars\scala-logging-api_2.11.jar
+[debug] 		tried http://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-api_2.11/2.1.2/scala-logging-api_2.11-2.1.2.jar
+[debug] 	found com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 in public
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->default(compile)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->runtime]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->master]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-reflect;2.11.0 [compile->master(*)]
+[info] Resolving org.scala-lang#scala-reflect;2.11.0 ...
+[debug] sbt-chain: Checking cache for: dependency: org.scala-lang#scala-reflect;2.11.0 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\org.scala-lang\scala-reflect\2.11.0\ivys\ivy.xml
+[debug] 	local: no ivy file found for org.scala-lang#scala-reflect;2.11.0
+[debug] 		tried http://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.11.0/scala-reflect-2.11.0.pom
+[debug] 	public: found md file for org.scala-lang#scala-reflect;2.11.0
+[debug] 		=> http://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.11.0/scala-reflect-2.11.0.pom (2.11.0)
+[debug] downloading http://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.11.0/scala-reflect-2.11.0.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.11.0/scala-reflect-2.11.0.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.11.0/scala-reflect-2.11.0.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.11.0/scala-reflect-2.11.0.pom
+[debug] 	[SUCCESSFUL ] org.scala-lang#scala-reflect;2.11.0!scala-reflect.pom(pom.original) (696ms)
+[debug] 		tried C:\Users\Kenta\.ivy2\local\org.scala-lang\scala-reflect\2.11.0\jars\scala-reflect.jar
+[debug] 		tried http://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.11.0/scala-reflect-2.11.0.jar
+[debug] 	found org.scala-lang#scala-reflect;2.11.0 in public
+[debug] 	[2.11.0] org.scala-lang#scala-reflect;2.11.0
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-reflect;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-reflect;2.11.0 [compile->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-reflect;2.11.0 [compile->compile]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.slf4j#slf4j-api;1.7.7 [compile->master(*)]
+[info] Resolving org.slf4j#slf4j-api;1.7.7 ...
+[debug] sbt-chain: Checking cache for: dependency: org.slf4j#slf4j-api;1.7.7 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\org.slf4j\slf4j-api\1.7.7\ivys\ivy.xml
+[debug] 	local: no ivy file found for org.slf4j#slf4j-api;1.7.7
+[debug] 		tried http://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.pom
+[debug] 	public: found md file for org.slf4j#slf4j-api;1.7.7
+[debug] 		=> http://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.pom (1.7.7)
+[debug] downloading http://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.pom
+[debug] 	[SUCCESSFUL ] org.slf4j#slf4j-api;1.7.7!slf4j-api.pom(pom.original) (671ms)
+[info] Resolving org.slf4j#slf4j-parent;1.7.7 ...
+[debug] sbt-chain: Checking cache for: dependency: org.slf4j#slf4j-parent;1.7.7 {}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\org.slf4j\slf4j-parent\1.7.7\ivys\ivy.xml
+[debug] 	local: no ivy file found for org.slf4j#slf4j-parent;1.7.7
+[debug] 		tried http://repo1.maven.org/maven2/org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.pom
+[debug] 	public: found md file for org.slf4j#slf4j-parent;1.7.7
+[debug] 		=> http://repo1.maven.org/maven2/org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.pom (1.7.7)
+[debug] downloading http://repo1.maven.org/maven2/org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.pom
+[debug] 	[SUCCESSFUL ] org.slf4j#slf4j-parent;1.7.7!slf4j-parent.pom(pom.original) (667ms)
+[debug] 		tried C:\Users\Kenta\.ivy2\local\org.slf4j\slf4j-parent\1.7.7\jars\slf4j-parent.jar
+[debug] 		tried http://repo1.maven.org/maven2/org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.jar
+[debug] CLIENT ERROR: Not Found url=http://repo1.maven.org/maven2/org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.jar
+[debug] 		tried file:/C:/Users/Kenta/.m2/repository/org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.jar
+[debug] 		tried https://oss.sonatype.org/content/repositories/snapshots/org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.jar
+[debug] CLIENT ERROR: Not Found url=https://oss.sonatype.org/content/repositories/snapshots/org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.jar
+[debug] 		tried https://oss.sonatype.org/content/repositories/releases/org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.jar
+[debug] CLIENT ERROR: Not Found url=https://oss.sonatype.org/content/repositories/releases/org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.jar
+[debug] 		tried http://repo.typesafe.com/typesafe/releases/org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.jar
+[debug] CLIENT ERROR: Not Found url=http://repo.typesafe.com/typesafe/releases/org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.jar
+[debug] 		tried C:\Users\Kenta\.ivy2\local\org.slf4j\slf4j-api\1.7.7\jars\slf4j-api.jar
+[debug] 		tried http://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.jar
+[debug] 	found org.slf4j#slf4j-api;1.7.7 in public
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.slf4j#slf4j-api;1.7.7 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.slf4j#slf4j-api;1.7.7 [compile->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.slf4j#slf4j-api;1.7.7 [compile->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [runtime->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-reflect;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-reflect;2.11.0 [runtime->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.slf4j#slf4j-api;1.7.7 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.slf4j#slf4j-api;1.7.7 [runtime->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.github.fommil.netlib#core;1.1.2 [compile->default(compile)]
+[info] Resolving com.github.fommil.netlib#core;1.1.2 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#core;1.1.2 {compile=[default(compile)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\core\1.1.2\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#core;1.1.2
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/core/1.1.2/core-1.1.2.pom
+[debug] 	public: found md file for com.github.fommil.netlib#core;1.1.2
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/core/1.1.2/core-1.1.2.pom (1.1.2)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/core/1.1.2/core-1.1.2.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/core/1.1.2/core-1.1.2.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/core/1.1.2/core-1.1.2.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/core/1.1.2/core-1.1.2.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#core;1.1.2!core.pom(pom.original) (688ms)
+[info] Resolving com.github.fommil.netlib#parent;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#parent;1.1 {}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#parent;1.1
+[debug] 	local: revision in cache: com.github.fommil.netlib#parent;1.1
+[debug] 	found com.github.fommil.netlib#core;1.1.2 in public
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.github.fommil.netlib#core;1.1.2 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.github.fommil.netlib#core;1.1.2 [compile->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.github.fommil.netlib#core;1.1.2 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalafx#scalafx_2.11;8.0.0-R4 [compile->default(compile)]
+[info] Resolving org.scalafx#scalafx_2.11;8.0.0-R4 ...
+[debug] sbt-chain: Checking cache for: dependency: org.scalafx#scalafx_2.11;8.0.0-R4 {compile=[default(compile)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\org.scalafx\scalafx_2.11\8.0.0-R4\ivys\ivy.xml
+[debug] 	local: no ivy file found for org.scalafx#scalafx_2.11;8.0.0-R4
+[debug] 		tried http://repo1.maven.org/maven2/org/scalafx/scalafx_2.11/8.0.0-R4/scalafx_2.11-8.0.0-R4.pom
+[debug] 	public: found md file for org.scalafx#scalafx_2.11;8.0.0-R4
+[debug] 		=> http://repo1.maven.org/maven2/org/scalafx/scalafx_2.11/8.0.0-R4/scalafx_2.11-8.0.0-R4.pom (8.0.0-R4)
+[debug] downloading http://repo1.maven.org/maven2/org/scalafx/scalafx_2.11/8.0.0-R4/scalafx_2.11-8.0.0-R4.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/org/scalafx/scalafx_2.11/8.0.0-R4/scalafx_2.11-8.0.0-R4.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/org/scalafx/scalafx_2.11/8.0.0-R4/scalafx_2.11-8.0.0-R4.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/org/scalafx/scalafx_2.11/8.0.0-R4/scalafx_2.11-8.0.0-R4.pom
+[debug] 	[SUCCESSFUL ] org.scalafx#scalafx_2.11;8.0.0-R4!scalafx_2.11.pom(pom.original) (690ms)
+[debug] 		tried C:\Users\Kenta\.ivy2\local\org.scalafx\scalafx_2.11\8.0.0-R4\jars\scalafx_2.11.jar
+[debug] 		tried http://repo1.maven.org/maven2/org/scalafx/scalafx_2.11/8.0.0-R4/scalafx_2.11-8.0.0-R4.jar
+[debug] 	found org.scalafx#scalafx_2.11;8.0.0-R4 in public
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalafx#scalafx_2.11;8.0.0-R4 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalafx#scalafx_2.11;8.0.0-R4 [compile->compile]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalafx#scalafx_2.11;8.0.0-R4 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze_2.11;0.8.1 [compile->default(compile)]
+[info] Resolving org.scalanlp#breeze_2.11;0.8.1 ...
+[debug] sbt-chain: Checking cache for: dependency: org.scalanlp#breeze_2.11;0.8.1 {compile=[default(compile)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\org.scalanlp\breeze_2.11\0.8.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for org.scalanlp#breeze_2.11;0.8.1
+[debug] 		tried http://repo1.maven.org/maven2/org/scalanlp/breeze_2.11/0.8.1/breeze_2.11-0.8.1.pom
+[debug] 	public: found md file for org.scalanlp#breeze_2.11;0.8.1
+[debug] 		=> http://repo1.maven.org/maven2/org/scalanlp/breeze_2.11/0.8.1/breeze_2.11-0.8.1.pom (0.8.1)
+[debug] downloading http://repo1.maven.org/maven2/org/scalanlp/breeze_2.11/0.8.1/breeze_2.11-0.8.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/org/scalanlp/breeze_2.11/0.8.1/breeze_2.11-0.8.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/org/scalanlp/breeze_2.11/0.8.1/breeze_2.11-0.8.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/org/scalanlp/breeze_2.11/0.8.1/breeze_2.11-0.8.1.pom
+[debug] 	[SUCCESSFUL ] org.scalanlp#breeze_2.11;0.8.1!breeze_2.11.pom(pom.original) (682ms)
+[debug] 		tried C:\Users\Kenta\.ivy2\local\org.scalanlp\breeze_2.11\0.8.1\jars\breeze_2.11.jar
+[debug] 		tried http://repo1.maven.org/maven2/org/scalanlp/breeze_2.11/0.8.1/breeze_2.11-0.8.1.jar
+[debug] 	found org.scalanlp#breeze_2.11;0.8.1 in public
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze_2.11;0.8.1 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze_2.11;0.8.1 [compile->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->master(*)]
+[info] Resolving org.scalanlp#breeze-macros_2.11;0.3.1 ...
+[debug] sbt-chain: Checking cache for: dependency: org.scalanlp#breeze-macros_2.11;0.3.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] sbt-chain: module revision found in cache: org.scalanlp#breeze-macros_2.11;0.3.1
+[debug] 	local: revision in cache: org.scalanlp#breeze-macros_2.11;0.3.1
+[debug] 	found org.scalanlp#breeze-macros_2.11;0.3.1 in sbt-chain
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-reflect;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-reflect;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-reflect;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-reflect;2.11.0 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->default(compile)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->runtime]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->master]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.fommil.netlib#core;1.1.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.fommil.netlib#core;1.1.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.fommil.netlib#core;1.1.2 [compile->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.fommil.netlib#core;1.1.2 [compile->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sourceforge.f2j#arpack_combined_all;0.1 [compile->master(*)]
+[info] Resolving net.sourceforge.f2j#arpack_combined_all;0.1 ...
+[debug] sbt-chain: Checking cache for: dependency: net.sourceforge.f2j#arpack_combined_all;0.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] sbt-chain: module revision found in cache: net.sourceforge.f2j#arpack_combined_all;0.1
+[debug] 	local: revision in cache: net.sourceforge.f2j#arpack_combined_all;0.1
+[debug] 	found net.sourceforge.f2j#arpack_combined_all;0.1 in sbt-chain
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sourceforge.f2j#arpack_combined_all;0.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sourceforge.f2j#arpack_combined_all;0.1 [compile->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sourceforge.f2j#arpack_combined_all;0.1 [compile->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sf.opencsv#opencsv;2.3 [compile->master(*)]
+[info] Resolving net.sf.opencsv#opencsv;2.3 ...
+[debug] sbt-chain: Checking cache for: dependency: net.sf.opencsv#opencsv;2.3 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] sbt-chain: module revision found in cache: net.sf.opencsv#opencsv;2.3
+[debug] 	local: revision in cache: net.sf.opencsv#opencsv;2.3
+[debug] 	found net.sf.opencsv#opencsv;2.3 in sbt-chain
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sf.opencsv#opencsv;2.3 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sf.opencsv#opencsv;2.3 [compile->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sf.opencsv#opencsv;2.3 [compile->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.rwl#jtransforms;2.4.0 [compile->master(*)]
+[info] Resolving com.github.rwl#jtransforms;2.4.0 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.rwl#jtransforms;2.4.0 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] sbt-chain: module revision found in cache: com.github.rwl#jtransforms;2.4.0
+[debug] 	local: revision in cache: com.github.rwl#jtransforms;2.4.0
+[debug] 	found com.github.rwl#jtransforms;2.4.0 in sbt-chain
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.rwl#jtransforms;2.4.0 [compile->compile(*)]
+[debug] == resolving dependencies com.github.rwl#jtransforms;2.4.0->junit#junit;4.8.2 [compile->master(*)]
+[info] Resolving junit#junit;4.8.2 ...
+[debug] sbt-chain: Checking cache for: dependency: junit#junit;4.8.2 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] sbt-chain: module revision found in cache: junit#junit;4.8.2
+[debug] 	local: revision in cache: junit#junit;4.8.2
+[debug] 	found junit#junit;4.8.2 in sbt-chain
+[debug] == resolving dependencies com.github.rwl#jtransforms;2.4.0->junit#junit;4.8.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.rwl#jtransforms;2.4.0 [compile->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.rwl#jtransforms;2.4.0 [compile->compile]
+[debug] == resolving dependencies com.github.rwl#jtransforms;2.4.0->junit#junit;4.8.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.rwl#jtransforms;2.4.0->junit#junit;4.8.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.apache.commons#commons-math3;3.2 [compile->master(*)]
+[info] Resolving org.apache.commons#commons-math3;3.2 ...
+[debug] sbt-chain: Checking cache for: dependency: org.apache.commons#commons-math3;3.2 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] sbt-chain: module revision found in cache: org.apache.commons#commons-math3;3.2
+[debug] 	local: revision in cache: org.apache.commons#commons-math3;3.2
+[debug] 	found org.apache.commons#commons-math3;3.2 in sbt-chain
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.apache.commons#commons-math3;3.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.apache.commons#commons-math3;3.2 [compile->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.apache.commons#commons-math3;3.2 [compile->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.spire-math#spire_2.11;0.7.4 [compile->master(*)]
+[info] Resolving org.spire-math#spire_2.11;0.7.4 ...
+[debug] sbt-chain: Checking cache for: dependency: org.spire-math#spire_2.11;0.7.4 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] sbt-chain: module revision found in cache: org.spire-math#spire_2.11;0.7.4
+[debug] 	local: revision in cache: org.spire-math#spire_2.11;0.7.4
+[debug] 	found org.spire-math#spire_2.11;0.7.4 in sbt-chain
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.spire-math#spire_2.11;0.7.4 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.spire-math#spire-macros_2.11;0.7.4 [compile->master(*)]
+[info] Resolving org.spire-math#spire-macros_2.11;0.7.4 ...
+[debug] sbt-chain: Checking cache for: dependency: org.spire-math#spire-macros_2.11;0.7.4 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] sbt-chain: module revision found in cache: org.spire-math#spire-macros_2.11;0.7.4
+[debug] 	local: revision in cache: org.spire-math#spire-macros_2.11;0.7.4
+[debug] 	found org.spire-math#spire-macros_2.11;0.7.4 in sbt-chain
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.spire-math#spire-macros_2.11;0.7.4 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.spire-math#spire_2.11;0.7.4 [compile->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.spire-math#spire_2.11;0.7.4 [compile->compile]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.spire-math#spire-macros_2.11;0.7.4 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.spire-math#spire-macros_2.11;0.7.4 [runtime->compile]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [runtime->compile]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.fommil.netlib#core;1.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.fommil.netlib#core;1.1.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sourceforge.f2j#arpack_combined_all;0.1 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sourceforge.f2j#arpack_combined_all;0.1 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sf.opencsv#opencsv;2.3 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sf.opencsv#opencsv;2.3 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.rwl#jtransforms;2.4.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.rwl#jtransforms;2.4.0 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.apache.commons#commons-math3;3.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.apache.commons#commons-math3;3.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.spire-math#spire_2.11;0.7.4 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.spire-math#spire_2.11;0.7.4 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [runtime->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze_2.11;0.8.1 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-natives_2.11;0.8.1 [compile->default(compile)]
+[info] Resolving org.scalanlp#breeze-natives_2.11;0.8.1 ...
+[debug] sbt-chain: Checking cache for: dependency: org.scalanlp#breeze-natives_2.11;0.8.1 {compile=[default(compile)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\org.scalanlp\breeze-natives_2.11\0.8.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for org.scalanlp#breeze-natives_2.11;0.8.1
+[debug] 		tried http://repo1.maven.org/maven2/org/scalanlp/breeze-natives_2.11/0.8.1/breeze-natives_2.11-0.8.1.pom
+[debug] 	public: found md file for org.scalanlp#breeze-natives_2.11;0.8.1
+[debug] 		=> http://repo1.maven.org/maven2/org/scalanlp/breeze-natives_2.11/0.8.1/breeze-natives_2.11-0.8.1.pom (0.8.1)
+[debug] downloading http://repo1.maven.org/maven2/org/scalanlp/breeze-natives_2.11/0.8.1/breeze-natives_2.11-0.8.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/org/scalanlp/breeze-natives_2.11/0.8.1/breeze-natives_2.11-0.8.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/org/scalanlp/breeze-natives_2.11/0.8.1/breeze-natives_2.11-0.8.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/org/scalanlp/breeze-natives_2.11/0.8.1/breeze-natives_2.11-0.8.1.pom
+[debug] 	[SUCCESSFUL ] org.scalanlp#breeze-natives_2.11;0.8.1!breeze-natives_2.11.pom(pom.original) (669ms)
+[debug] 		tried C:\Users\Kenta\.ivy2\local\org.scalanlp\breeze-natives_2.11\0.8.1\jars\breeze-natives_2.11.jar
+[debug] 		tried http://repo1.maven.org/maven2/org/scalanlp/breeze-natives_2.11/0.8.1/breeze-natives_2.11-0.8.1.jar
+[debug] 	found org.scalanlp#breeze-natives_2.11;0.8.1 in public
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-natives_2.11;0.8.1 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-natives_2.11;0.8.1 [compile->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scalanlp#breeze_2.11;0.8.1 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scalanlp#breeze_2.11;0.8.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scalanlp#breeze_2.11;0.8.1 [compile->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scalanlp#breeze_2.11;0.8.1 [compile->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->com.github.fommil.netlib#all;1.1.2 [compile->master(*)]
+[info] Resolving com.github.fommil.netlib#all;1.1.2 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#all;1.1.2 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#all;1.1.2
+[debug] 	local: revision in cache: com.github.fommil.netlib#all;1.1.2
+[debug] 	found com.github.fommil.netlib#all;1.1.2 in sbt-chain
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->com.github.fommil.netlib#all;1.1.2 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#core;1.1.2 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#core;1.1.2 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1 [compile->master(*)]
+[info] Resolving com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_ref-osx-x86_64\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-osx-x86_64/1.1/netlib-native_ref-osx-x86_64-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-osx-x86_64/1.1/netlib-native_ref-osx-x86_64-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-osx-x86_64/1.1/netlib-native_ref-osx-x86_64-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-osx-x86_64/1.1/netlib-native_ref-osx-x86_64-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-osx-x86_64/1.1/netlib-native_ref-osx-x86_64-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-osx-x86_64/1.1/netlib-native_ref-osx-x86_64-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1!netlib-native_ref-osx-x86_64.pom(pom.original) (695ms)
+[info] Resolving com.github.fommil.netlib#native_ref;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_ref;1.1 {}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\native_ref\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#native_ref;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref/1.1/native_ref-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#native_ref;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref/1.1/native_ref-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref/1.1/native_ref-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref/1.1/native_ref-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref/1.1/native_ref-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref/1.1/native_ref-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#native_ref;1.1!native_ref.pom(pom.original) (715ms)
+[info] Resolving com.github.fommil.netlib#parent;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#parent;1.1 {}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#parent;1.1
+[debug] 	local: revision in cache: com.github.fommil.netlib#parent;1.1
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\native_ref\1.1\jars\native_ref.jar
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref/1.1/native_ref-1.1.jar
+[debug] CLIENT ERROR: Not Found url=http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref/1.1/native_ref-1.1.jar
+[debug] 		tried file:/C:/Users/Kenta/.m2/repository/com/github/fommil/netlib/native_ref/1.1/native_ref-1.1.jar
+[debug] 		tried https://oss.sonatype.org/content/repositories/snapshots/com/github/fommil/netlib/native_ref/1.1/native_ref-1.1.jar
+[debug] CLIENT ERROR: Not Found url=https://oss.sonatype.org/content/repositories/snapshots/com/github/fommil/netlib/native_ref/1.1/native_ref-1.1.jar
+[debug] 		tried https://oss.sonatype.org/content/repositories/releases/com/github/fommil/netlib/native_ref/1.1/native_ref-1.1.jar
+[debug] CLIENT ERROR: Not Found url=https://oss.sonatype.org/content/repositories/releases/com/github/fommil/netlib/native_ref/1.1/native_ref-1.1.jar
+[debug] 		tried http://repo.typesafe.com/typesafe/releases/com/github/fommil/netlib/native_ref/1.1/native_ref-1.1.jar
+[debug] CLIENT ERROR: Not Found url=http://repo.typesafe.com/typesafe/releases/com/github/fommil/netlib/native_ref/1.1/native_ref-1.1.jar
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_ref-osx-x86_64\1.1\jnilibs\netlib-native_ref-osx-x86_64.jnilib
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-osx-x86_64/1.1/netlib-native_ref-osx-x86_64-1.1.jnilib
+[debug] 	found com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1 in public
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[info] Resolving com.github.fommil.netlib#native_ref-java;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_ref-java;1.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\native_ref-java\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#native_ref-java;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-java/1.1/native_ref-java-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#native_ref-java;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-java/1.1/native_ref-java-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-java/1.1/native_ref-java-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-java/1.1/native_ref-java-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-java/1.1/native_ref-java-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-java/1.1/native_ref-java-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#native_ref-java;1.1!native_ref-java.pom(pom.original) (698ms)
+[info] Resolving com.github.fommil.netlib#native_ref;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_ref;1.1 {}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#native_ref;1.1
+[debug] 	local: revision in cache: com.github.fommil.netlib#native_ref;1.1
+[debug] 	found com.github.fommil.netlib#native_ref-java;1.1 in public
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil#jniloader;1.1 [compile->master(*)]
+[info] Resolving com.github.fommil#jniloader;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil#jniloader;1.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] sbt-chain: module revision found in cache: com.github.fommil#jniloader;1.1
+[debug] 	local: revision in cache: com.github.fommil#jniloader;1.1
+[debug] 	found com.github.fommil#jniloader;1.1 in sbt-chain
+[debug] dependency descriptor has been mediated: dependency: org.projectlombok#lombok;0.12.0 {provided=[compile(*), provided(*), runtime(*), master(*)]} => dependency: org.projectlombok#lombok;1.12.2 {provided=[compile(*), provided(*), runtime(*), master(*)]}
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil#jniloader;1.1 [compile->compile(*)]
+[debug] dependency descriptor has been mediated: dependency: org.projectlombok#lombok;0.12.0 {provided=[compile(*), provided(*), runtime(*), master(*)]} => dependency: org.projectlombok#lombok;1.12.2 {provided=[compile(*), provided(*), runtime(*), master(*)]}
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1.2 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1.2 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1 [compile->master(*)]
+[info] Resolving com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_ref-linux-x86_64\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-x86_64/1.1/netlib-native_ref-linux-x86_64-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-x86_64/1.1/netlib-native_ref-linux-x86_64-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-x86_64/1.1/netlib-native_ref-linux-x86_64-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-x86_64/1.1/netlib-native_ref-linux-x86_64-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-x86_64/1.1/netlib-native_ref-linux-x86_64-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-x86_64/1.1/netlib-native_ref-linux-x86_64-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1!netlib-native_ref-linux-x86_64.pom(pom.original) (688ms)
+[info] Resolving com.github.fommil.netlib#native_ref-xbuilds;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_ref-xbuilds;1.1 {}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\native_ref-xbuilds\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#native_ref-xbuilds;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-xbuilds/1.1/native_ref-xbuilds-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#native_ref-xbuilds;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-xbuilds/1.1/native_ref-xbuilds-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-xbuilds/1.1/native_ref-xbuilds-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-xbuilds/1.1/native_ref-xbuilds-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-xbuilds/1.1/native_ref-xbuilds-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-xbuilds/1.1/native_ref-xbuilds-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#native_ref-xbuilds;1.1!native_ref-xbuilds.pom(pom.original) (691ms)
+[info] Resolving com.github.fommil.netlib#native_ref;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_ref;1.1 {}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#native_ref;1.1
+[debug] 	local: revision in cache: com.github.fommil.netlib#native_ref;1.1
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\native_ref-xbuilds\1.1\jars\native_ref-xbuilds.jar
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-xbuilds/1.1/native_ref-xbuilds-1.1.jar
+[debug] CLIENT ERROR: Not Found url=http://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-xbuilds/1.1/native_ref-xbuilds-1.1.jar
+[debug] 		tried file:/C:/Users/Kenta/.m2/repository/com/github/fommil/netlib/native_ref-xbuilds/1.1/native_ref-xbuilds-1.1.jar
+[debug] 		tried https://oss.sonatype.org/content/repositories/snapshots/com/github/fommil/netlib/native_ref-xbuilds/1.1/native_ref-xbuilds-1.1.jar
+[debug] CLIENT ERROR: Not Found url=https://oss.sonatype.org/content/repositories/snapshots/com/github/fommil/netlib/native_ref-xbuilds/1.1/native_ref-xbuilds-1.1.jar
+[debug] 		tried https://oss.sonatype.org/content/repositories/releases/com/github/fommil/netlib/native_ref-xbuilds/1.1/native_ref-xbuilds-1.1.jar
+[debug] CLIENT ERROR: Not Found url=https://oss.sonatype.org/content/repositories/releases/com/github/fommil/netlib/native_ref-xbuilds/1.1/native_ref-xbuilds-1.1.jar
+[debug] 		tried http://repo.typesafe.com/typesafe/releases/com/github/fommil/netlib/native_ref-xbuilds/1.1/native_ref-xbuilds-1.1.jar
+[debug] CLIENT ERROR: Not Found url=http://repo.typesafe.com/typesafe/releases/com/github/fommil/netlib/native_ref-xbuilds/1.1/native_ref-xbuilds-1.1.jar
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_ref-linux-x86_64\1.1\sos\netlib-native_ref-linux-x86_64.so
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-x86_64/1.1/netlib-native_ref-linux-x86_64-1.1.so
+[debug] 	found com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1 in public
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1 [compile->master(*)]
+[info] Resolving com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_ref-linux-i686\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-i686/1.1/netlib-native_ref-linux-i686-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-i686/1.1/netlib-native_ref-linux-i686-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-i686/1.1/netlib-native_ref-linux-i686-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-i686/1.1/netlib-native_ref-linux-i686-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-i686/1.1/netlib-native_ref-linux-i686-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-i686/1.1/netlib-native_ref-linux-i686-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1!netlib-native_ref-linux-i686.pom(pom.original) (697ms)
+[info] Resolving com.github.fommil.netlib#native_ref-xbuilds;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_ref-xbuilds;1.1 {}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#native_ref-xbuilds;1.1
+[debug] 	local: revision in cache: com.github.fommil.netlib#native_ref-xbuilds;1.1
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_ref-linux-i686\1.1\sos\netlib-native_ref-linux-i686.so
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-i686/1.1/netlib-native_ref-linux-i686-1.1.so
+[debug] 	found com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1 in public
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1 [compile->master(*)]
+[info] Resolving com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_ref-win-x86_64\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-x86_64/1.1/netlib-native_ref-win-x86_64-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-x86_64/1.1/netlib-native_ref-win-x86_64-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-x86_64/1.1/netlib-native_ref-win-x86_64-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-x86_64/1.1/netlib-native_ref-win-x86_64-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-x86_64/1.1/netlib-native_ref-win-x86_64-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-x86_64/1.1/netlib-native_ref-win-x86_64-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1!netlib-native_ref-win-x86_64.pom(pom.original) (690ms)
+[info] Resolving com.github.fommil.netlib#native_ref;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_ref;1.1 {}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#native_ref;1.1
+[debug] 	local: revision in cache: com.github.fommil.netlib#native_ref;1.1
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_ref-win-x86_64\1.1\dlls\netlib-native_ref-win-x86_64.dll
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-x86_64/1.1/netlib-native_ref-win-x86_64-1.1.dll
+[debug] 	found com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1 in public
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-i686;1.1 [compile->master(*)]
+[info] Resolving com.github.fommil.netlib#netlib-native_ref-win-i686;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#netlib-native_ref-win-i686;1.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_ref-win-i686\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#netlib-native_ref-win-i686;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-i686/1.1/netlib-native_ref-win-i686-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#netlib-native_ref-win-i686;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-i686/1.1/netlib-native_ref-win-i686-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-i686/1.1/netlib-native_ref-win-i686-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-i686/1.1/netlib-native_ref-win-i686-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-i686/1.1/netlib-native_ref-win-i686-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-i686/1.1/netlib-native_ref-win-i686-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#netlib-native_ref-win-i686;1.1!netlib-native_ref-win-i686.pom(pom.original) (777ms)
+[info] Resolving com.github.fommil.netlib#native_ref;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_ref;1.1 {}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#native_ref;1.1
+[debug] 	local: revision in cache: com.github.fommil.netlib#native_ref;1.1
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_ref-win-i686\1.1\dlls\netlib-native_ref-win-i686.dll
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-i686/1.1/netlib-native_ref-win-i686-1.1.dll
+[debug] 	found com.github.fommil.netlib#netlib-native_ref-win-i686;1.1 in public
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-i686;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1 [compile->master(*)]
+[info] Resolving com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_ref-linux-armhf\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-armhf/1.1/netlib-native_ref-linux-armhf-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-armhf/1.1/netlib-native_ref-linux-armhf-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-armhf/1.1/netlib-native_ref-linux-armhf-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-armhf/1.1/netlib-native_ref-linux-armhf-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-armhf/1.1/netlib-native_ref-linux-armhf-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-armhf/1.1/netlib-native_ref-linux-armhf-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1!netlib-native_ref-linux-armhf.pom(pom.original) (701ms)
+[info] Resolving com.github.fommil.netlib#native_ref-xbuilds;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_ref-xbuilds;1.1 {}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#native_ref-xbuilds;1.1
+[debug] 	local: revision in cache: com.github.fommil.netlib#native_ref-xbuilds;1.1
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_ref-linux-armhf\1.1\sos\netlib-native_ref-linux-armhf.so
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-armhf/1.1/netlib-native_ref-linux-armhf-1.1.so
+[debug] 	found com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1 in public
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1 [compile->master(*)]
+[info] Resolving com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_system-osx-x86_64\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-osx-x86_64/1.1/netlib-native_system-osx-x86_64-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-osx-x86_64/1.1/netlib-native_system-osx-x86_64-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-osx-x86_64/1.1/netlib-native_system-osx-x86_64-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-osx-x86_64/1.1/netlib-native_system-osx-x86_64-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-osx-x86_64/1.1/netlib-native_system-osx-x86_64-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-osx-x86_64/1.1/netlib-native_system-osx-x86_64-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1!netlib-native_system-osx-x86_64.pom(pom.original) (752ms)
+[info] Resolving com.github.fommil.netlib#native_system;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_system;1.1 {}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\native_system\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#native_system;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system/1.1/native_system-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#native_system;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system/1.1/native_system-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system/1.1/native_system-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system/1.1/native_system-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system/1.1/native_system-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system/1.1/native_system-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#native_system;1.1!native_system.pom(pom.original) (949ms)
+[info] Resolving com.github.fommil.netlib#parent;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#parent;1.1 {}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#parent;1.1
+[debug] 	local: revision in cache: com.github.fommil.netlib#parent;1.1
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\native_system\1.1\jars\native_system.jar
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system/1.1/native_system-1.1.jar
+[debug] CLIENT ERROR: Not Found url=http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system/1.1/native_system-1.1.jar
+[debug] 		tried file:/C:/Users/Kenta/.m2/repository/com/github/fommil/netlib/native_system/1.1/native_system-1.1.jar
+[debug] 		tried https://oss.sonatype.org/content/repositories/snapshots/com/github/fommil/netlib/native_system/1.1/native_system-1.1.jar
+[debug] CLIENT ERROR: Not Found url=https://oss.sonatype.org/content/repositories/snapshots/com/github/fommil/netlib/native_system/1.1/native_system-1.1.jar
+[debug] 		tried https://oss.sonatype.org/content/repositories/releases/com/github/fommil/netlib/native_system/1.1/native_system-1.1.jar
+[debug] CLIENT ERROR: Not Found url=https://oss.sonatype.org/content/repositories/releases/com/github/fommil/netlib/native_system/1.1/native_system-1.1.jar
+[debug] 		tried http://repo.typesafe.com/typesafe/releases/com/github/fommil/netlib/native_system/1.1/native_system-1.1.jar
+[debug] CLIENT ERROR: Not Found url=http://repo.typesafe.com/typesafe/releases/com/github/fommil/netlib/native_system/1.1/native_system-1.1.jar
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_system-osx-x86_64\1.1\jnilibs\netlib-native_system-osx-x86_64.jnilib
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-osx-x86_64/1.1/netlib-native_system-osx-x86_64-1.1.jnilib
+[debug] 	found com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1 in public
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[info] Resolving com.github.fommil.netlib#native_system-java;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_system-java;1.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\native_system-java\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#native_system-java;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-java/1.1/native_system-java-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#native_system-java;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-java/1.1/native_system-java-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-java/1.1/native_system-java-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-java/1.1/native_system-java-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-java/1.1/native_system-java-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-java/1.1/native_system-java-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#native_system-java;1.1!native_system-java.pom(pom.original) (685ms)
+[info] Resolving com.github.fommil.netlib#native_system;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_system;1.1 {}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#native_system;1.1
+[debug] 	local: revision in cache: com.github.fommil.netlib#native_system;1.1
+[debug] 	found com.github.fommil.netlib#native_system-java;1.1 in public
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil#jniloader;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil#jniloader;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1.2 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1.2 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1 [compile->master(*)]
+[info] Resolving com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_system-linux-x86_64\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-x86_64/1.1/netlib-native_system-linux-x86_64-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-x86_64/1.1/netlib-native_system-linux-x86_64-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-x86_64/1.1/netlib-native_system-linux-x86_64-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-x86_64/1.1/netlib-native_system-linux-x86_64-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-x86_64/1.1/netlib-native_system-linux-x86_64-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-x86_64/1.1/netlib-native_system-linux-x86_64-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1!netlib-native_system-linux-x86_64.pom(pom.original) (704ms)
+[info] Resolving com.github.fommil.netlib#native_system-xbuilds;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_system-xbuilds;1.1 {}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\native_system-xbuilds\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#native_system-xbuilds;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-xbuilds/1.1/native_system-xbuilds-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#native_system-xbuilds;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-xbuilds/1.1/native_system-xbuilds-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-xbuilds/1.1/native_system-xbuilds-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-xbuilds/1.1/native_system-xbuilds-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-xbuilds/1.1/native_system-xbuilds-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-xbuilds/1.1/native_system-xbuilds-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#native_system-xbuilds;1.1!native_system-xbuilds.pom(pom.original) (987ms)
+[info] Resolving com.github.fommil.netlib#native_system;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_system;1.1 {}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#native_system;1.1
+[debug] 	local: revision in cache: com.github.fommil.netlib#native_system;1.1
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\native_system-xbuilds\1.1\jars\native_system-xbuilds.jar
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-xbuilds/1.1/native_system-xbuilds-1.1.jar
+[debug] CLIENT ERROR: Not Found url=http://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-xbuilds/1.1/native_system-xbuilds-1.1.jar
+[debug] 		tried file:/C:/Users/Kenta/.m2/repository/com/github/fommil/netlib/native_system-xbuilds/1.1/native_system-xbuilds-1.1.jar
+[debug] 		tried https://oss.sonatype.org/content/repositories/snapshots/com/github/fommil/netlib/native_system-xbuilds/1.1/native_system-xbuilds-1.1.jar
+[debug] CLIENT ERROR: Not Found url=https://oss.sonatype.org/content/repositories/snapshots/com/github/fommil/netlib/native_system-xbuilds/1.1/native_system-xbuilds-1.1.jar
+[debug] 		tried https://oss.sonatype.org/content/repositories/releases/com/github/fommil/netlib/native_system-xbuilds/1.1/native_system-xbuilds-1.1.jar
+[debug] CLIENT ERROR: Not Found url=https://oss.sonatype.org/content/repositories/releases/com/github/fommil/netlib/native_system-xbuilds/1.1/native_system-xbuilds-1.1.jar
+[debug] 		tried http://repo.typesafe.com/typesafe/releases/com/github/fommil/netlib/native_system-xbuilds/1.1/native_system-xbuilds-1.1.jar
+[debug] CLIENT ERROR: Not Found url=http://repo.typesafe.com/typesafe/releases/com/github/fommil/netlib/native_system-xbuilds/1.1/native_system-xbuilds-1.1.jar
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_system-linux-x86_64\1.1\sos\netlib-native_system-linux-x86_64.so
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-x86_64/1.1/netlib-native_system-linux-x86_64-1.1.so
+[debug] 	found com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1 in public
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-i686;1.1 [compile->master(*)]
+[info] Resolving com.github.fommil.netlib#netlib-native_system-linux-i686;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#netlib-native_system-linux-i686;1.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_system-linux-i686\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#netlib-native_system-linux-i686;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-i686/1.1/netlib-native_system-linux-i686-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#netlib-native_system-linux-i686;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-i686/1.1/netlib-native_system-linux-i686-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-i686/1.1/netlib-native_system-linux-i686-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-i686/1.1/netlib-native_system-linux-i686-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-i686/1.1/netlib-native_system-linux-i686-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-i686/1.1/netlib-native_system-linux-i686-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#netlib-native_system-linux-i686;1.1!netlib-native_system-linux-i686.pom(pom.original) (730ms)
+[info] Resolving com.github.fommil.netlib#native_system-xbuilds;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_system-xbuilds;1.1 {}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#native_system-xbuilds;1.1
+[debug] 	local: revision in cache: com.github.fommil.netlib#native_system-xbuilds;1.1
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_system-linux-i686\1.1\sos\netlib-native_system-linux-i686.so
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-i686/1.1/netlib-native_system-linux-i686-1.1.so
+[debug] 	found com.github.fommil.netlib#netlib-native_system-linux-i686;1.1 in public
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-i686;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1 [compile->master(*)]
+[info] Resolving com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_system-linux-armhf\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-armhf/1.1/netlib-native_system-linux-armhf-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-armhf/1.1/netlib-native_system-linux-armhf-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-armhf/1.1/netlib-native_system-linux-armhf-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-armhf/1.1/netlib-native_system-linux-armhf-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-armhf/1.1/netlib-native_system-linux-armhf-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-armhf/1.1/netlib-native_system-linux-armhf-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1!netlib-native_system-linux-armhf.pom(pom.original) (740ms)
+[info] Resolving com.github.fommil.netlib#native_system-xbuilds;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_system-xbuilds;1.1 {}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#native_system-xbuilds;1.1
+[debug] 	local: revision in cache: com.github.fommil.netlib#native_system-xbuilds;1.1
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_system-linux-armhf\1.1\sos\netlib-native_system-linux-armhf.so
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-armhf/1.1/netlib-native_system-linux-armhf-1.1.so
+[debug] 	found com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1 in public
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1 [compile->master(*)]
+[info] Resolving com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_system-win-x86_64\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-x86_64/1.1/netlib-native_system-win-x86_64-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-x86_64/1.1/netlib-native_system-win-x86_64-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-x86_64/1.1/netlib-native_system-win-x86_64-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-x86_64/1.1/netlib-native_system-win-x86_64-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-x86_64/1.1/netlib-native_system-win-x86_64-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-x86_64/1.1/netlib-native_system-win-x86_64-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1!netlib-native_system-win-x86_64.pom(pom.original) (723ms)
+[info] Resolving com.github.fommil.netlib#native_system;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_system;1.1 {}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#native_system;1.1
+[debug] 	local: revision in cache: com.github.fommil.netlib#native_system;1.1
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_system-win-x86_64\1.1\dlls\netlib-native_system-win-x86_64.dll
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-x86_64/1.1/netlib-native_system-win-x86_64-1.1.dll
+[debug] 	found com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1 in public
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-i686;1.1 [compile->master(*)]
+[info] Resolving com.github.fommil.netlib#netlib-native_system-win-i686;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#netlib-native_system-win-i686;1.1 {compile=[compile(*), master(*)], runtime=[runtime(*)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_system-win-i686\1.1\ivys\ivy.xml
+[debug] 	local: no ivy file found for com.github.fommil.netlib#netlib-native_system-win-i686;1.1
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-i686/1.1/netlib-native_system-win-i686-1.1.pom
+[debug] 	public: found md file for com.github.fommil.netlib#netlib-native_system-win-i686;1.1
+[debug] 		=> http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-i686/1.1/netlib-native_system-win-i686-1.1.pom (1.1)
+[debug] downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-i686/1.1/netlib-native_system-win-i686-1.1.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-i686/1.1/netlib-native_system-win-i686-1.1.pom
+[debug] 	public: downloading http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-i686/1.1/netlib-native_system-win-i686-1.1.pom.sha1
+[debug] sha1 OK for http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-i686/1.1/netlib-native_system-win-i686-1.1.pom
+[debug] 	[SUCCESSFUL ] com.github.fommil.netlib#netlib-native_system-win-i686;1.1!netlib-native_system-win-i686.pom(pom.original) (722ms)
+[info] Resolving com.github.fommil.netlib#native_system;1.1 ...
+[debug] sbt-chain: Checking cache for: dependency: com.github.fommil.netlib#native_system;1.1 {}
+[debug] sbt-chain: module revision found in cache: com.github.fommil.netlib#native_system;1.1
+[debug] 	local: revision in cache: com.github.fommil.netlib#native_system;1.1
+[debug] 		tried C:\Users\Kenta\.ivy2\local\com.github.fommil.netlib\netlib-native_system-win-i686\1.1\dlls\netlib-native_system-win-i686.dll
+[debug] 		tried http://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-i686/1.1/netlib-native_system-win-i686-1.1.dll
+[debug] 	found com.github.fommil.netlib#netlib-native_system-win-i686;1.1 in public
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-i686;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->com.github.fommil.netlib#all;1.1.2 [compile->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->com.github.fommil.netlib#all;1.1.2 [compile->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#core;1.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#core;1.1.2 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil#jniloader;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil#jniloader;1.1 [runtime->compile]
+[debug] dependency descriptor has been mediated: dependency: org.projectlombok#lombok;0.12.0 {provided=[compile(*), provided(*), runtime(*), master(*)]} => dependency: org.projectlombok#lombok;1.12.2 {provided=[compile(*), provided(*), runtime(*), master(*)]}
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1.2 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-i686;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-i686;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil#jniloader;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil#jniloader;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1.2 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-i686;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-i686;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-i686;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-i686;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scalanlp#breeze_2.11;0.8.1 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scalanlp#breeze_2.11;0.8.1 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->com.github.fommil.netlib#all;1.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->com.github.fommil.netlib#all;1.1.2 [runtime->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-natives_2.11;0.8.1 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->master]
+[debug] resolving dependencies for configuration 'runtime'
+[debug] == resolving dependencies for nounous#nounous_2.11;0.1-SNAPSHOT [runtime]
+[debug] == resolving dependencies for nounous#nounous_2.11;0.1-SNAPSHOT [compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scala-lang#scala-library;2.11.2 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scala-lang#scala-library;2.11.2 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scala-lang#scala-library;2.11.2 [compile->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scala-lang#scala-library;2.11.2 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-reflect;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-reflect;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.slf4j#slf4j-api;1.7.7 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.slf4j#slf4j-api;1.7.7 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [runtime->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-reflect;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-reflect;2.11.0 [runtime->compile]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.slf4j#slf4j-api;1.7.7 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.slf4j#slf4j-api;1.7.7 [runtime->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.github.fommil.netlib#core;1.1.2 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.github.fommil.netlib#core;1.1.2 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.github.fommil.netlib#core;1.1.2 [compile->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.github.fommil.netlib#core;1.1.2 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalafx#scalafx_2.11;8.0.0-R4 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalafx#scalafx_2.11;8.0.0-R4 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalafx#scalafx_2.11;8.0.0-R4 [compile->compile]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalafx#scalafx_2.11;8.0.0-R4 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze_2.11;0.8.1 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze_2.11;0.8.1 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze_2.11;0.8.1 [compile->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-reflect;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-reflect;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.fommil.netlib#core;1.1.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.fommil.netlib#core;1.1.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sourceforge.f2j#arpack_combined_all;0.1 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sourceforge.f2j#arpack_combined_all;0.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sf.opencsv#opencsv;2.3 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sf.opencsv#opencsv;2.3 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.rwl#jtransforms;2.4.0 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.rwl#jtransforms;2.4.0 [compile->compile(*)]
+[debug] == resolving dependencies com.github.rwl#jtransforms;2.4.0->junit#junit;4.8.2 [compile->master(*)]
+[debug] == resolving dependencies com.github.rwl#jtransforms;2.4.0->junit#junit;4.8.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.apache.commons#commons-math3;3.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.apache.commons#commons-math3;3.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.spire-math#spire_2.11;0.7.4 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.spire-math#spire_2.11;0.7.4 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.spire-math#spire-macros_2.11;0.7.4 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.spire-math#spire-macros_2.11;0.7.4 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-reflect;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-reflect;2.11.0 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.fommil.netlib#core;1.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.fommil.netlib#core;1.1.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sourceforge.f2j#arpack_combined_all;0.1 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sourceforge.f2j#arpack_combined_all;0.1 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sf.opencsv#opencsv;2.3 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sf.opencsv#opencsv;2.3 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.rwl#jtransforms;2.4.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.rwl#jtransforms;2.4.0 [runtime->compile]
+[debug] == resolving dependencies com.github.rwl#jtransforms;2.4.0->junit#junit;4.8.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.rwl#jtransforms;2.4.0->junit#junit;4.8.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.apache.commons#commons-math3;3.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.apache.commons#commons-math3;3.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.spire-math#spire_2.11;0.7.4 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.spire-math#spire_2.11;0.7.4 [runtime->compile]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.spire-math#spire-macros_2.11;0.7.4 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.spire-math#spire-macros_2.11;0.7.4 [runtime->compile]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [runtime->compile]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [runtime->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze_2.11;0.8.1 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-natives_2.11;0.8.1 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-natives_2.11;0.8.1 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-natives_2.11;0.8.1 [compile->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scalanlp#breeze_2.11;0.8.1 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scalanlp#breeze_2.11;0.8.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->com.github.fommil.netlib#all;1.1.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->com.github.fommil.netlib#all;1.1.2 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#core;1.1.2 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#core;1.1.2 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil#jniloader;1.1 [compile->master(*)]
+[debug] dependency descriptor has been mediated: dependency: org.projectlombok#lombok;0.12.0 {provided=[compile(*), provided(*), runtime(*), master(*)]} => dependency: org.projectlombok#lombok;1.12.2 {provided=[compile(*), provided(*), runtime(*), master(*)]}
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil#jniloader;1.1 [compile->compile(*)]
+[debug] dependency descriptor has been mediated: dependency: org.projectlombok#lombok;0.12.0 {provided=[compile(*), provided(*), runtime(*), master(*)]} => dependency: org.projectlombok#lombok;1.12.2 {provided=[compile(*), provided(*), runtime(*), master(*)]}
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1.2 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1.2 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-i686;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-i686;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil#jniloader;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil#jniloader;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1.2 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1.2 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-i686;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-i686;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-i686;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-i686;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scalanlp#breeze_2.11;0.8.1 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scalanlp#breeze_2.11;0.8.1 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->com.github.fommil.netlib#all;1.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->com.github.fommil.netlib#all;1.1.2 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#core;1.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#core;1.1.2 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil#jniloader;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil#jniloader;1.1 [runtime->compile]
+[debug] dependency descriptor has been mediated: dependency: org.projectlombok#lombok;0.12.0 {provided=[compile(*), provided(*), runtime(*), master(*)]} => dependency: org.projectlombok#lombok;1.12.2 {provided=[compile(*), provided(*), runtime(*), master(*)]}
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1.2 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-i686;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-i686;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil#jniloader;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil#jniloader;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1.2 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-i686;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-i686;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-i686;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-i686;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-natives_2.11;0.8.1 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->master]
+[debug] resolving dependencies for configuration 'test'
+[debug] == resolving dependencies for nounous#nounous_2.11;0.1-SNAPSHOT [test]
+[debug] == resolving dependencies for nounous#nounous_2.11;0.1-SNAPSHOT [runtime]
+[debug] == resolving dependencies for nounous#nounous_2.11;0.1-SNAPSHOT [compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scala-lang#scala-library;2.11.2 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scala-lang#scala-library;2.11.2 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scala-lang#scala-library;2.11.2 [compile->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scala-lang#scala-library;2.11.2 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-reflect;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-reflect;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.slf4j#slf4j-api;1.7.7 [compile->master(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.slf4j#slf4j-api;1.7.7 [compile->compile(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [runtime->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-reflect;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.scala-lang#scala-reflect;2.11.0 [runtime->compile]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scala-lang#scala-reflect;2.11.0->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.slf4j#slf4j-api;1.7.7 [runtime->runtime(*)]
+[debug] == resolving dependencies com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2->org.slf4j#slf4j-api;1.7.7 [runtime->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.typesafe.scala-logging#scala-logging-api_2.11;2.1.2 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.github.fommil.netlib#core;1.1.2 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.github.fommil.netlib#core;1.1.2 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.github.fommil.netlib#core;1.1.2 [compile->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->com.github.fommil.netlib#core;1.1.2 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalafx#scalafx_2.11;8.0.0-R4 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalafx#scalafx_2.11;8.0.0-R4 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalafx#scalafx_2.11;8.0.0-R4 [compile->compile]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalafx#scalafx_2.11;8.0.0-R4->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalafx#scalafx_2.11;8.0.0-R4 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze_2.11;0.8.1 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze_2.11;0.8.1 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze_2.11;0.8.1 [compile->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-reflect;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-reflect;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.fommil.netlib#core;1.1.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.fommil.netlib#core;1.1.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sourceforge.f2j#arpack_combined_all;0.1 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sourceforge.f2j#arpack_combined_all;0.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sf.opencsv#opencsv;2.3 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sf.opencsv#opencsv;2.3 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.rwl#jtransforms;2.4.0 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.rwl#jtransforms;2.4.0 [compile->compile(*)]
+[debug] == resolving dependencies com.github.rwl#jtransforms;2.4.0->junit#junit;4.8.2 [compile->master(*)]
+[debug] == resolving dependencies com.github.rwl#jtransforms;2.4.0->junit#junit;4.8.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.apache.commons#commons-math3;3.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.apache.commons#commons-math3;3.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.spire-math#spire_2.11;0.7.4 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.spire-math#spire_2.11;0.7.4 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.spire-math#spire-macros_2.11;0.7.4 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.spire-math#spire-macros_2.11;0.7.4 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [compile->master(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.scalanlp#breeze-macros_2.11;0.3.1 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-reflect;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-macros_2.11;0.3.1->org.scala-lang#scala-reflect;2.11.0 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.fommil.netlib#core;1.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.fommil.netlib#core;1.1.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sourceforge.f2j#arpack_combined_all;0.1 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sourceforge.f2j#arpack_combined_all;0.1 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sf.opencsv#opencsv;2.3 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->net.sf.opencsv#opencsv;2.3 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.rwl#jtransforms;2.4.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.github.rwl#jtransforms;2.4.0 [runtime->compile]
+[debug] == resolving dependencies com.github.rwl#jtransforms;2.4.0->junit#junit;4.8.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.rwl#jtransforms;2.4.0->junit#junit;4.8.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.apache.commons#commons-math3;3.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.apache.commons#commons-math3;3.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.spire-math#spire_2.11;0.7.4 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->org.spire-math#spire_2.11;0.7.4 [runtime->compile]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.spire-math#spire-macros_2.11;0.7.4 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.spire-math#spire-macros_2.11;0.7.4 [runtime->compile]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire-macros_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [runtime->compile]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [runtime->runtime(*)]
+[debug] == resolving dependencies org.spire-math#spire_2.11;0.7.4->org.scala-lang#scala-reflect;2.11.0 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze_2.11;0.8.1->com.typesafe.scala-logging#scala-logging-slf4j_2.11;2.1.2 [runtime->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze_2.11;0.8.1 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-natives_2.11;0.8.1 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-natives_2.11;0.8.1 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-natives_2.11;0.8.1 [compile->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scalanlp#breeze_2.11;0.8.1 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scalanlp#breeze_2.11;0.8.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->com.github.fommil.netlib#all;1.1.2 [compile->master(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->com.github.fommil.netlib#all;1.1.2 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#core;1.1.2 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#core;1.1.2 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil#jniloader;1.1 [compile->master(*)]
+[debug] dependency descriptor has been mediated: dependency: org.projectlombok#lombok;0.12.0 {provided=[compile(*), provided(*), runtime(*), master(*)]} => dependency: org.projectlombok#lombok;1.12.2 {provided=[compile(*), provided(*), runtime(*), master(*)]}
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil#jniloader;1.1 [compile->compile(*)]
+[debug] dependency descriptor has been mediated: dependency: org.projectlombok#lombok;0.12.0 {provided=[compile(*), provided(*), runtime(*), master(*)]} => dependency: org.projectlombok#lombok;1.12.2 {provided=[compile(*), provided(*), runtime(*), master(*)]}
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1.2 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1.2 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-i686;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-i686;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1->com.github.fommil.netlib#native_ref-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil#jniloader;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil#jniloader;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1.2 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1.2 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-i686;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-i686;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-i686;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-i686;1.1 [compile->compile(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->master(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [compile->compile(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.1 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scala-lang#scala-library;2.11.2 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scalanlp#breeze_2.11;0.8.1 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->org.scalanlp#breeze_2.11;0.8.1 [runtime->compile]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->com.github.fommil.netlib#all;1.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies org.scalanlp#breeze-natives_2.11;0.8.1->com.github.fommil.netlib#all;1.1.2 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#core;1.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#core;1.1.2 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-osx-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil#jniloader;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil#jniloader;1.1 [runtime->compile]
+[debug] dependency descriptor has been mediated: dependency: org.projectlombok#lombok;0.12.0 {provided=[compile(*), provided(*), runtime(*), master(*)]} => dependency: org.projectlombok#lombok;1.12.2 {provided=[compile(*), provided(*), runtime(*), master(*)]}
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_ref-java;1.1->com.github.fommil.netlib#core;1.1.2 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-x86_64;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-i686;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-win-i686;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-win-i686;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_ref-linux-armhf;1.1->com.github.fommil.netlib#native_ref-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-osx-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil#jniloader;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil#jniloader;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1.2 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#native_system-java;1.1->com.github.fommil.netlib#core;1.1.2 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-i686;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-i686;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-linux-armhf;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-x86_64;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-i686;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#all;1.1.2->com.github.fommil.netlib#netlib-native_system-win-i686;1.1 [runtime->compile]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->runtime(*)]
+[debug] == resolving dependencies com.github.fommil.netlib#netlib-native_system-win-i686;1.1->com.github.fommil.netlib#native_system-java;1.1 [runtime->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-natives_2.11;0.8.1 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->default(compile)]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->runtime]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->compile]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalanlp#breeze-macros_2.11;0.3.1 [compile->master]
+[debug] == resolving dependencies nounous#nounous_2.11;0.1-SNAPSHOT->org.scalatest#scalatest_2.11;2.1.7 [test->default(compile)]
+[info] Resolving org.scalatest#scalatest_2.11;2.1.7 ...
+[debug] sbt-chain: Checking cache for: dependency: org.scalatest#scalatest_2.11;2.1.7 {test=[default(compile)]}
+[debug] 		tried C:\Users\Kenta\.ivy2\local\org.scalatest\scalatest_2.11\2.1.7\ivys\ivy.xml
+[debug] 	local: no ivy file found for org.scalatest#scalatest_2.11;2.1.7
+[debug] 		tried http://repo1.maven.org/maven2/org/scalatest/scalatest_2.11/2.1.7/scalatest_2.11-2.1.7.pom
+[debug] 	public: found md file for org.scalatest#scalatest_2.11;2.1.7
+[debug] 		=> http://repo1.maven.org/maven2/org/scalatest/scalatest_2.11/2.1.7/scalatest_2.11-2.1.7.pom (2.1.7)
+[debug] downloading http://repo1.maven.org/maven2/org/scalatest/scalatest_2.11/2.1.7/scalatest_2.11-2.1.7.pom ...
+[debug] 	public: downloading http://repo1.maven.org/maven2/org/scalatest/scalatest_2.11/2.1.7/scalatest_2.11-2.1.7.pom
