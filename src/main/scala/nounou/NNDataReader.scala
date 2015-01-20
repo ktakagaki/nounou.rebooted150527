@@ -13,15 +13,15 @@ import nounou.data.headers.{XHeaderNull, XHeader}
 object NNDataReader extends LazyLogging {
 
   //ToDo 1: java.lang.IllegalStateException: Not on FX application thread
-  def load(): Array[X]  =  {
-    val fileChooser = new scalafx.stage.FileChooser
-    //val extFilter = new ExtensionFilter
-    val window = new scalafx.stage.Popup
-    fileChooser.showOpenDialog(window)
-
-    val filesChosen: List[File] = fileChooser.showOpenMultipleDialog(null).toList
-    loadPostProcess(filesChosen.flatMap( load(_) ).toArray)
-  }
+//  def load(): Array[X]  =  {
+//    val fileChooser = new scalafx.stage.FileChooser
+//    //val extFilter = new ExtensionFilter
+//    val window = new scalafx.stage.Popup
+//    fileChooser.showOpenDialog(window)
+//
+//    val filesChosen: List[File] = fileChooser.showOpenMultipleDialog(null).toList
+//    loadPostProcess(filesChosen.flatMap( load(_) ).toArray)
+//  }
 
   def load(files: Array[String]): Array[X] = loadPostProcess(files.flatMap( (file: String) => load( new File( file ) ) ))
 
@@ -33,7 +33,7 @@ object NNDataReader extends LazyLogging {
       case n: String if n.endsWith(".nev") => FileAdapterNEV.load( file )
       case n: String if (n.endsWith(".gsd") || n.endsWith(".gsh")) => FileAdapterGSDGSH.load( file )
       case n => throw new IllegalArgumentException("File format for " + n + " is not supported yet.")
-    }).toArray)
+    }).toArray )
   }
 
   def load(string: String): Array[X] = load( new File(string) )

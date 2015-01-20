@@ -1,7 +1,4 @@
-//import nounou.data.Frame
-
-import nounou.data.traits.XDataTiming
-import nounou.util.LoggingExt
+import _root_.nounou.util.LoggingExt
 
 /**
  * @author ktakagaki

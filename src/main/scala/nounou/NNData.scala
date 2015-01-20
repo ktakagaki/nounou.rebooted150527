@@ -7,7 +7,7 @@ import nounou.data.filters._
 import nounou.data.headers.XHeader
 
 /** A static class which encapsulates nounou data objects,
-  * for easy access from Mathematica/MatLab
+  * designed for easy access from Mathematica/MatLab/Java
   *
   * @author ktakagaki
   * @date 08/14/2014.
