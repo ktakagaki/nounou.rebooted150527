@@ -15,9 +15,9 @@ import nounou.data.headers.{HeaderValue, XHeader}
 */
 object FileAdapterNEX extends FileAdapter {
 
-  override val canWriteExt: List[String] = List[String]()
+  override val canWriteExt: Array[String] = List[String]()
   override def writeImpl(file: File, data: X, options: OptFileAdapter) = writeCannotImpl(file, data, options)
-  override val canLoadExt: List[String] = List[String]( "ncs" )
+  override val canLoadExt: Array[String] = List[String]( "ncs" )
 
 
   override def loadImpl(file: File): Array[X] = {

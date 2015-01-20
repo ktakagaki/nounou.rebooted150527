@@ -19,10 +19,10 @@ trait FileAdapter extends LoggingExt {
 
   /** Must be overridden, list of extensions (in lower case) which can be read.
     */
-  val canLoadExt: List[String]
+  val canLoadExt: Array[String]
   /** Must be overridden, list of extensions (in upper case) which can be read.
     */
-  val canWriteExt: List[String]
+  val canWriteExt: Array[String]
 
 //  //Adds loader to program loader library
 //  FileAdapter.loaders.++=( canLoadExt.map( str => (str, this)) )

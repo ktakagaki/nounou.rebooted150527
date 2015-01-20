@@ -1,0 +1,509 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     21662,        500]
+NotebookOptionsPosition[     20701,        462]
+NotebookOutlinePosition[     21049,        477]
+CellTagsIndexPosition[     21006,        474]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"<<", "JLink`"}]], "Input",
+ CellChangeTimes->{{3.58245635823308*^9, 3.5824563619982953`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"AddToClassPath", "[", 
+  "\"\<C:\\\\Users\\\\takagaki\\\\Documents\\\\k.prog\\\\Idea\\\\nounous\\\\\
+out\\\\artifacts\\\\NounouS_jar\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.5824563488755445`*^9, 3.582456352222736*^9}, {
+  3.5824563925110407`*^9, 3.5824564686133933`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Java\\\\\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Java\\\\ActivationWebClient.\
+jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Java\\\\WolframSSH.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Java\\\\WolframSSHKeyGen.jar\
+\"\>", ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Autoload\\\\PacletManager\\\\\
+Java\\\\\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Autoload\\\\PacletManager\\\\\
+Java\\\\antlr.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Autoload\\\\PacletManager\\\\\
+Java\\\\mexpr.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Autoload\\\\PacletManager\\\\\
+Java\\\\mexprparser.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Autoload\\\\PacletManager\\\\\
+Java\\\\PacletManager.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Autoload\\\\PacletManager\\\\\
+Java\\\\WRIjdbm.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+activation.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\bzip2.\
+jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+commons-codec-1.3.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+commons-collections-3.2.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+commons-httpclient-3.0.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+commons-lang-2.1.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+commons-logging-1.1.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+Convert.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+customizer.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\dom4j-\
+1.6.1.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\Exif.\
+jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+externalservice.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\gnu-\
+regexp-1.1.4.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\grib-8.\
+0.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+jackcess-1.1.18.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\jdbf.\
+jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\jdom.\
+jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\jmf.\
+jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+JPEG2000b.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\JSON.\
+jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\jxl.\
+jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\ldap.\
+jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\mail.\
+jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+mediaplayer.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+multiplayer.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\netcdf-\
+4.2.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\poi-3.\
+8-20120326.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\poi-\
+examples-3.8-20120326.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\poi-\
+excelant-3.8-20120326.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\poi-\
+ooxml-3.8-20120326.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\poi-\
+ooxml-schemas-3.8-20120326.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\poi-\
+scratchpad-3.8-20120326.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+prefsAll.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+resourcesOptional.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\stax-\
+api-1.0.1.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+tagsoup-1.0rc9.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\tar.\
+jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+xercesImpl.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\xml-\
+apis.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Converters\\\\Java\\\\\
+xmlbeans-2.3.0.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\AddOns\\\\Packages\\\\GUIKit\\\\Java\\\\\"\>\
+", ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\AddOns\\\\Packages\\\\GUIKit\\\\Java\\\\bsf-\
+Wolfram.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\AddOns\\\\Packages\\\\GUIKit\\\\Java\\\\bsf.\
+jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\AddOns\\\\Packages\\\\GUIKit\\\\Java\\\\\
+concurrent.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\AddOns\\\\Packages\\\\GUIKit\\\\Java\\\\\
+diva-canvas-core.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\AddOns\\\\Packages\\\\GUIKit\\\\Java\\\\\
+GUIKit.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\AddOns\\\\Packages\\\\GUIKit\\\\Java\\\\\
+OculusLayout.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\AddOns\\\\Packages\\\\GUIKit\\\\Java\\\\\
+xercesImpl.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\AddOns\\\\Packages\\\\GUIKit\\\\Java\\\\\
+xmlParserAPIs.jar\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\AppData\\\\Roaming\\\\Mathematica\\\\\
+Applications\\\\KazukazuM\\\\Java\\\\\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\AppData\\\\Roaming\\\\Mathematica\\\\\
+Applications\\\\KazukazuM\\\\Java\\\\KazukazuJ.jar\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\AppData\\\\Roaming\\\\Mathematica\\\\\
+Applications\\\\MATLABLink\\\\Java\\\\\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\AppData\\\\Roaming\\\\Mathematica\\\\\
+Applications\\\\MATLABLink\\\\Java\\\\matlabcontrol-4.0.0.jar\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\AppData\\\\Roaming\\\\Mathematica\\\\\
+Applications\\\\MATLABLink\\\\Java\\\\matlabcontrol-4.1.0.jar\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\AppData\\\\Roaming\\\\Mathematica\\\\\
+Applications\\\\NounouM\\\\Java\\\\\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\AppData\\\\Roaming\\\\Mathematica\\\\\
+Applications\\\\NounouM\\\\Java\\\\commons-math-2.0.jar\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\AppData\\\\Roaming\\\\Mathematica\\\\\
+Applications\\\\NounouM\\\\Java\\\\KazukazuJ.jar\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\AppData\\\\Roaming\\\\Mathematica\\\\\
+Applications\\\\NounouM\\\\Java\\\\Nounou.jar\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\AppData\\\\Roaming\\\\Mathematica\\\\\
+Applications\\\\NounouM\\\\Java\\\\NounouJ_0_5.jar\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\AppData\\\\Roaming\\\\Mathematica\\\\\
+Applications\\\\NounouM\\\\Java\\\\org-openide-util.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\DatabaseLink\\\\\
+Java\\\\\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\DatabaseLink\\\\\
+Java\\\\commons-collections-3.1.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\DatabaseLink\\\\\
+Java\\\\commons-dbcp-1.2.1.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\DatabaseLink\\\\\
+Java\\\\commons-pool-1.2.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\DatabaseLink\\\\\
+Java\\\\glazedlists.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\DatabaseLink\\\\\
+Java\\\\hsqldb-1.8.0.7.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\DatabaseLink\\\\\
+Java\\\\jtds-1.2.5.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\DatabaseLink\\\\\
+Java\\\\mysql-connector-java-commercial-5.1.13-bin.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\DatabaseLink\\\\\
+Java\\\\postgresql-8.4-701.jdbc3.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\RLink\\\\Java\\\\\"\
+\>", ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\RLink\\\\Java\\\\\
+jna.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\RLink\\\\Java\\\\\
+JRI.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\RLink\\\\Java\\\\\
+JRIEngine.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\RLink\\\\Java\\\\\
+log4j-1.2.16.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\RLink\\\\Java\\\\\
+REngine.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\RLink\\\\Java\\\\\
+RLink.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\WebServices\\\\Java\
+\\\\\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\WebServices\\\\Java\
+\\\\commons-httpclient-3.0.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\WebServices\\\\Java\
+\\\\commons-logging-1.0.4.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\WebServices\\\\Java\
+\\\\junit-3.8.1.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\XMLSchema\\\\Java\\\
+\\\"\>", ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Links\\\\XMLSchema\\\\Java\\\
+\\commons-codec-1.3.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\AddOns\\\\Applications\\\\\
+ClusterIntegration\\\\Java\\\\\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\AddOns\\\\Applications\\\\\
+ClusterIntegration\\\\Java\\\\Wolfram_SGE.jar\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\AddOns\\\\Applications\\\\\
+DocumentationSearch\\\\Java\\\\\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\AddOns\\\\Applications\\\\\
+LightweightGridClient\\\\Java\\\\\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\AddOns\\\\Applications\\\\\
+LightweightGridClient\\\\Java\\\\wolfram-remote-services-client.jar\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\Documents\\\\.\\\\\"\>", 
+   ",", "\<\"C:\\\\Program Files \
+(x86)\\\\Java\\\\jre7\\\\lib\\\\ext\\\\QTJava.zip\"\>", 
+   ",", "\<\"C:\\\\Program Files\\\\Wolfram \
+Research\\\\Mathematica\\\\9.0\\\\SystemFiles\\\\Java\\\\Windows-x86-64\\\\\
+lib\\\\tools.jar\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\Documents\\\\k.prog\\\\Idea\\\\\
+nounous\\\\out\\\\artifacts\\\\NounouS_jar\\\\\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\Documents\\\\k.prog\\\\Idea\\\\\
+nounous\\\\out\\\\artifacts\\\\NounouS_jar\\\\NounouS.zip\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\Documents\\\\k.prog\\\\Idea\\\\\
+nounous\\\\out\\\\artifacts\\\\NounouS_jar\\\\NounouS_jar - Kopie.zip\"\>", 
+   ",", "\<\"C:\\\\Users\\\\takagaki\\\\Documents\\\\k.prog\\\\Idea\\\\\
+nounous\\\\out\\\\artifacts\\\\NounouS_jar\\\\NounouS_jar.jar\"\>"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.5824564080829315`*^9, 3.5824564360145288`*^9}, {
+   3.5824564692444296`*^9, 3.5824564881955132`*^9}, 3.582456857340627*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"JavaClassPath", "[", "]"}]], "Input",
+ CellChangeTimes->{{3.582456686905879*^9, 3.5824566900770607`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"class", "=", 
+  RowBox[{
+  "LoadJavaClass", "[", "\"\<nounous.analysis.SpikeStats\>\"", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.5824565211854*^9, 3.5824565817088623`*^9}, {
+  3.582456629036569*^9, 3.5824566360359693`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"JavaClass", "[", 
+   RowBox[{"nounous", ".", "analysis", ".", "SpikeStats"}], ",", "<>", "]"}],
+  JLink`JavaClass["nounous.analysis.SpikeStats", 0, {
+    JLink`JVM["vm1"]}, 1, "nounous`analysis`SpikeStats`", False, 
+   True]]], "Output",
+ CellChangeTimes->{3.5824566370900297`*^9, 3.582456863140959*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Methods", "[", "class", "]"}]], "Input",
+ CellChangeTimes->{{3.5824565211854*^9, 3.5824565817088623`*^9}, {
+  3.582456629036569*^9, 3.5824566360359693`*^9}, {3.5824566782033815`*^9, 
+  3.5824566818195877`*^9}, {3.5824568666831617`*^9, 3.5824568700723553`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  TagBox[GridBox[{
+     {"\<\"boolean equals(Object)\"\>"},
+     {"\<\"Class getClass()\"\>"},
+     {"\<\"int hashCode()\"\>"},
+     {"\<\"static double hello()\"\>"},
+     {"\<\"void notify()\"\>"},
+     {"\<\"void notifyAll()\"\>"},
+     {"\<\"String toString()\"\>"},
+     {"\<\"void wait(long, int) throws InterruptedException\"\>"},
+     {"\<\"void wait(long) throws InterruptedException\"\>"},
+     {"\<\"void wait() throws InterruptedException\"\>"}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.5599999999999999]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}],
+   Column],
+  Function[BoxForm`e$, 
+   TableForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{3.5824566827376404`*^9, 3.582456870344371*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"class", "=", 
+  RowBox[{
+  "LoadJavaClass", "[", "\"\<nounous.analysis.SpikeStats$\>\"", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.5824565211854*^9, 3.5824565817088623`*^9}, {
+   3.582456629036569*^9, 3.5824566360359693`*^9}, 3.5824568928506584`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"JavaClass", "[", 
+   RowBox[{"nounous", ".", "analysis", ".", "SpikeStats$"}], ",", "<>", "]"}],
+  JLink`JavaClass["nounous.analysis.SpikeStats$", 2, {
+    JLink`JVM["vm1"]}, 1, "nounous`analysis`SpikeStats$`", False, 
+   True]]], "Output",
+ CellChangeTimes->{3.5824566370900297`*^9, 3.582456863140959*^9, 
+  3.5824569032122507`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Methods", "[", "class", "]"}]], "Input",
+ CellChangeTimes->{{3.5824565211854*^9, 3.5824565817088623`*^9}, {
+  3.582456629036569*^9, 3.5824566360359693`*^9}, {3.5824566782033815`*^9, 
+  3.5824566818195877`*^9}, {3.5824568666831617`*^9, 3.5824568700723553`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  TagBox[GridBox[{
+     {"\<\"boolean equals(Object)\"\>"},
+     {"\<\"Class getClass()\"\>"},
+     {"\<\"int hashCode()\"\>"},
+     {"\<\"double hello()\"\>"},
+     {"\<\"void notify()\"\>"},
+     {"\<\"void notifyAll()\"\>"},
+     {"\<\"String toString()\"\>"},
+     {"\<\"void wait(long, int) throws InterruptedException\"\>"},
+     {"\<\"void wait(long) throws InterruptedException\"\>"},
+     {"\<\"void wait() throws InterruptedException\"\>"}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.5599999999999999]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}],
+   Column],
+  Function[BoxForm`e$, 
+   TableForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{3.5824566827376404`*^9, 3.582456870344371*^9, 
+  3.5824569061174173`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SpikeStats`hello", "[", "]"}]], "Input",
+ CellChangeTimes->{{3.582456921938322*^9, 3.5824569628416615`*^9}}],
+
+Cell[BoxData["0.`"], "Output",
+ CellChangeTimes->{3.582456932144906*^9, 3.5824569637437134`*^9}]
+}, Open  ]]
+},
+WindowSize->{716, 867},
+WindowMargins->{{322, Automatic}, {-1026, Automatic}},
+FrontEndVersion->"9.0 for Microsoft Windows (64-bit) (January 25, 2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[557, 20, 117, 2, 31, "Input"],
+Cell[CellGroupData[{
+Cell[699, 26, 300, 5, 72, "Input"],
+Cell[1002, 33, 15203, 294, 4152, "Output"]
+}, Open  ]],
+Cell[16220, 330, 129, 2, 31, "Input"],
+Cell[CellGroupData[{
+Cell[16374, 336, 251, 6, 31, "Input"],
+Cell[16628, 344, 348, 7, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17013, 356, 284, 4, 31, "Input"],
+Cell[17300, 362, 1039, 27, 176, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18376, 394, 277, 6, 31, "Input"],
+Cell[18656, 402, 378, 8, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19071, 415, 284, 4, 31, "Input"],
+Cell[19358, 421, 1059, 28, 176, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20454, 454, 132, 2, 31, "Input"],
+Cell[20589, 458, 96, 1, 31, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
