@@ -4,6 +4,8 @@ import _root_.nounou.data.ranges.SampleRangeValid
 import nounou.data._
 import breeze.linalg.{DenseVector => DV}
 
+import scala.nounou.data.XLayout.XLayout
+
 /**This class serves as an "immutable" reference point for various data structures, which may change.
   *The `_parent` variable is not valid in the usual sense, and everything is redirected to the
   * variable `heldData`. Overwrite `heldData` to change the output of this class.

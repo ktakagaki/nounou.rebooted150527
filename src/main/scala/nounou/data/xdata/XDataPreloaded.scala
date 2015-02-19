@@ -4,6 +4,8 @@ import nounou._
 import nounou.data.traits.{XDataTimingImmutable, XConcatenatable}
 import breeze.linalg.{DenseMatrix => DM, DenseVector => DV}
 
+import scala.nounou.data.XLayout.{XLayoutNull, XLayout}
+
 /**xdata class with internal representation as data array
  * Created with IntelliJ IDEA.
  * User: takagaki

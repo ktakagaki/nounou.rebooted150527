@@ -2,6 +2,8 @@ package nounou.data
 
 import javafx.scene.shape.Rectangle
 
+import _root_.nounou.data.X
+
 
 /**XLayout object for detector fields with square, matrix layouts.
  * @author takagaki

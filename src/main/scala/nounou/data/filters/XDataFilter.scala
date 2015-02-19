@@ -2,8 +2,10 @@ package nounou.data.filters
 
 import nounou._
 import nounou.data.ranges.{SampleRangeSpecifier, SampleRangeValid}
-import nounou.data.{XLayout, X, XData}
+import nounou.data.{X, XData}
 import breeze.linalg.{DenseVector => DV}
+
+import scala.nounou.data.XLayout.XLayout
 
 /** A passthrough object, which is overriden and inherited with various XDataFilterTr traits to create a filter block.
   */
@@ -45,20 +47,18 @@ class XDataFilter( private var _parent: XData ) extends XData {
     _parent.readPoint(channel, frame, segment)
   }
 
-  override final def readTrace(channel: Int, range: SampleRangeSpecifier): DV[Int] =
+  override final def readTraceDV(channel: Int, range: SampleRangeSpecifier): DV[Int] =
     if(_active){
-      super.readTrace(channel, range)
+      super.readTraceDV(channel, range)
     }else{
-      _parent.readTrace(channel, range)
+      _parent.readTraceDV(channel, range)
     }
     // </editor-fold>
-
 
 //  override def channelNames: scala.Vector[String] = _parent.channelNames
   override def channelCount = _parent.channelCount
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = _parent.readPointImpl(channel, frame, segment: Int)
-  //override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] = _parent.readTraceImpl(channel, range, segment: Int)
   override def readTraceImpl(channel: Int, range: SampleRangeValid): DV[Int] = _parent.readTraceImpl(channel, range)
 //  override def readFrameImpl(frame: Int): DV[Int] = _parent.readFrameImpl(frame)
 //  override def readFrameImpl(frame: Int, channels: Array[Int]): DV[Int] = _parent.readFrameImpl(frame, channels)

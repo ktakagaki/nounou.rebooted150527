@@ -79,7 +79,7 @@ class XDataFilterFIR(private var _parent: XData ) extends XDataFilter( _parent )
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = {
     //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-    val tempData = _parent.readTrace( channel,
+    val tempData = _parent.readTraceDV( channel,
         SampleRange(frame - kernel.overhangPre, frame + kernel.overhangPost, 1, segment))
     val tempRet = convolve( DV( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None )
     require( tempRet.length == 1, "something is wrong with the convolution!" )
@@ -88,7 +88,7 @@ class XDataFilterFIR(private var _parent: XData ) extends XDataFilter( _parent )
 
   override def readTraceImpl(channel: Int, range: SampleRangeValid): DV[Int] = {
     //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-    val tempData = _parent.readTrace( channel,
+    val tempData = _parent.readTraceDV( channel,
       SampleRangeReal( range.start - kernel.overhangPre, range.last + kernel.overhangPost, 1, range.segment))
 //    println("XDataFilterFIR " + ran.toString())
     val tempRes: DV[Long] = convolve(

@@ -9,6 +9,8 @@ import scala.collection.immutable.{TreeMap}
 import breeze.linalg.{DenseMatrix => DM, DenseVector => DV}
 import nounou.data.headers.{HeaderValue, XHeader}
 
+import scala.nounou.data.XLayout.{XLayoutPoint, XLayout, XLayoutSquare}
+
 /**Reader for MiCAM unified form data (gsd/gsh).
   * Currently, it actually only reads from the gsd, and ignores the accompanying gsh file.
  * @author ktakagaki
