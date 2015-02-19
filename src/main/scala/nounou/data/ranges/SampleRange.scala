@@ -5,60 +5,53 @@ import nounou._
 import nounou.util.LoggingExt
 import nounou.data.traits.XDataTiming
 
-// <editor-fold defaultstate="collapsed" desc=" RangeFr ">
-
-/**
+/**FrameRange is the central class for specifying frame-based
+  * data sample timepoints. Constructor methods are located within the
+  * convenience class [[nounou.NN]].
+  *
  * @author ktakagaki
  * @date 2/9/14.
  */
-object RangeFr {
 
-  final def apply(start: Int, last: Int, step: Int, optSegment: OptSegment) = new RangeFr(start, last, step, optSegment)
-  final def apply(start: Int, last: Int, step: Int) = new RangeFr(start, last, step)
-  final def apply(start: Int, last: Int, optSegment: OptSegment) = new RangeFr(start, last, optSegment)
-  final def apply(start: Int, last: Int) = new RangeFr(start, last)
+class SampleRange(val start: Int, val last: Int, val step: Int, val segment: Int)
+  extends SampleRangeSpecifier with LoggingExt {
 
-}
+  override def toString() = s"FrameRange($start, $last, step=$step, segment=$segment)"
 
-class RangeFr(val start: Int, val last: Int, val step: Int, val optSegment: OptSegment)
-  extends RangeFrSpecifier with LoggingExt {
-
-  override def toString() = s"RangeFr($start, $last, step=$step, segment=$optSegment)"
-
-  def this(start: Int, last: Int, step: Int) = this(start, last, step, OptSegmentAutomatic)
-  def this(start: Int, last: Int, optSegment: OptSegment) = this(start, last, 1, optSegment)
-  def this(start: Int, last: Int) = this(start, last, 1, OptSegmentAutomatic)
-
-  loggerRequire( start <= last, "RangeFr requires start <= last. start={}, last={}", start.toString, last.toString)
-  loggerRequire( step > 0, "step must be specified as positive. Invalid value: " + step.toString)
+  loggerRequire( start <= last, s"FrameRange requires start <= last. start=$start, last=$last")
+  loggerRequire( step >= 1 || step == -1, s"step must be -1 (automatic) or positive. Invalid value: $step")
+  loggerRequire( segment >= -1, s"segment must be -1 (automatic first segment) or positive. Invalid value: $segment")
 
   // <editor-fold defaultstate="collapsed" desc=" range info accessors ">
 
-  override final def getRangeFrReal(xDataTiming: XDataTiming): RangeFrReal = { //Range.Inclusive = {
+  override final def getFrameRangeReal(xDataTiming: XDataTiming): SampleRangeReal = { //Range.Inclusive = {
     val realSegment = getRealSegment(xDataTiming)
     if(0<=start){
       val segmentLength = xDataTiming.segmentLength(realSegment)
       if( last < segmentLength){
-        new RangeFrValid( start, last, getRealStep(xDataTiming), realSegment)
+        new SampleRangeValid( start, last, getRealStep(xDataTiming), realSegment)
       }
-      else new RangeFrReal( start, last, getRealStep(xDataTiming), realSegment)
+      else new SampleRangeReal( start, last, getRealStep(xDataTiming), realSegment)
     }
-    else new RangeFrReal( start, last, getRealStep(xDataTiming), realSegment)
+    else new SampleRangeReal( start, last, getRealStep(xDataTiming), realSegment)
   }
 
-  override final def getRangeFrValid(xDataTiming: XDataTiming): RangeFrValid = { //Range.Inclusive = {
-    new RangeFrValid( firstValid(xDataTiming), lastValid(xDataTiming), getRealStep(xDataTiming), getRealSegment(xDataTiming) )
+  override final def getFrameRangeValid(xDataTiming: XDataTiming): SampleRangeValid = { //Range.Inclusive = {
+    new SampleRangeValid( firstValid(xDataTiming), lastValid(xDataTiming), getRealStep(xDataTiming), getRealSegment(xDataTiming) )
   }
-  override final def getRangeFrValidPrePost(xDataTiming: XDataTiming): (Int, RangeFrValid, Int) = {
+
+  override final def getFrameRangeValidPrePost(xDataTiming: XDataTiming): (Int, SampleRangeValid, Int) = {
     val totalLength =  xDataTiming.segmentLength( getRealSegment(xDataTiming) )
     val preL = preLength( totalLength )
     val postL = postLength( totalLength )
-    (preL, getRangeFrValid(xDataTiming), postL)
+    (preL, getFrameRangeValid(xDataTiming), postL)
   }
 
+  /** For FrameRange, just read -1 as 1 (default).
+    */
   override final def getRealStep(xDataTiming: XDataTiming): Int =  if ( step == -1 ) 1 else step
 
-  override final def getRealSegment(xDataTiming: XDataTiming) = xDataTiming.getRealSegment( optSegment )
+  override final def getRealSegment(xDataTiming: XDataTiming) = xDataTiming.getRealSegment( segment )
 
   // </editor-fold>
 
@@ -213,22 +206,15 @@ class RangeFr(val start: Int, val last: Int, val step: Int, val optSegment: OptS
 
   // </editor-fold>
 
-//  /**Will return self, this is in order to comply with [[RangeFrSpecifier]]
-//   */
-//  def getRangeFr(xFrames: XFrames): RangeFr = this
-//  //def getRangeFr(totalLength: Int): RangeFr = this
-
-
 }
 
-/**Extends Range.Inclusive to include "segment" variable. All values should be real values (ie not including "-1"
- * for "Automatic", etc).
+/**Extends FrameRange but with the enforced assumption that all defaults are instantiated.
  */
-class RangeFrReal(val start: Int, val last: Int, val step: Int, val segment: Int) extends RangeFrSpecifier {
+class SampleRangeReal(val start: Int, val last: Int, val step: Int, val segment: Int) extends SampleRangeSpecifier {
 //  extends Range.Inclusive(start, end, step) {
 
-  override def toString() = s"RangeFrReal($start, $last, step=$step, segment=$segment)"
-  loggerRequire(start < last, s"Start $start must be < last $last")
+  override def toString() = s"FrameRangeReal($start, $last, step=$step, segment=$segment)"
+  loggerRequire(start <= last, s"Start $start must be < last $last")
   loggerRequire(1 <= step, s"Step $step must be >= 1")
   loggerRequire(0 <= segment, s"Segment $segment must be >= 0")
 
@@ -237,27 +223,30 @@ class RangeFrReal(val start: Int, val last: Int, val step: Int, val segment: Int
   // <editor-fold defaultstate="collapsed" desc=" RangeFrSpecifier ">
   override final def getRealSegment(xDataTiming: XDataTiming): Int = segment
   override final def getRealStep(xDataTiming: XDataTiming): Int = step
-  override final def getRangeFrReal(xDataTiming: XDataTiming): RangeFrReal = this
-  override def getRangeFrValid(xDataTiming: XDataTiming): RangeFrValid =
-    (new RangeFr(start, last, step, OptSegment(segment))).getRangeFrValid(xDataTiming)
-  override def getRangeFrValidPrePost(xDataTiming: XDataTiming): (Int, RangeFrValid, Int) =
-    (new RangeFr(start, last, step, OptSegment(segment))).getRangeFrValidPrePost(xDataTiming)
+  override final def getFrameRangeReal(xDataTiming: XDataTiming): SampleRangeReal = this
+  override def getFrameRangeValid(xDataTiming: XDataTiming): SampleRangeValid =
+    (new SampleRange(start, last, step, segment)).getFrameRangeValid(xDataTiming)
+  override def getFrameRangeValidPrePost(xDataTiming: XDataTiming): (Int, SampleRangeValid, Int) =
+    (new SampleRange(start, last, step, segment)).getFrameRangeValidPrePost(xDataTiming)
   // </editor-fold>
 
 }
 
+/**Extends FrameRange but with the implicit assumption that start and last are within range,
+  * and that step and segment are instantiated.
+  */
 /**Extends RangeFrReal to be within valid data range.
   */
-class RangeFrValid(override val start: Int, override val last: Int, override val step: Int, override val segment: Int)
-  extends RangeFrReal(start, last, step, segment) {
+class SampleRangeValid(override val start: Int, override val last: Int, override val step: Int, override val segment: Int)
+  extends SampleRangeReal(start, last, step, segment) {
 
-  override def toString() = s"RangeFrValid($start, $last, step=$step, segment=$segment)"
+  override def toString() = s"FrameRangeValid($start, $last, step=$step, segment=$segment)"
 
   loggerRequire(0 <= start, s"Start $start must be >= 0")
 
   // <editor-fold defaultstate="collapsed" desc=" RangeFrSpecifier ">
-  override def getRangeFrValid(xDataTiming: XDataTiming): RangeFrValid = this
-  override def getRangeFrValidPrePost(xDataTiming: XDataTiming): (Int, RangeFrValid, Int) = (0, this, 0)
+  override def getFrameRangeValid(xDataTiming: XDataTiming): SampleRangeValid = this
+  override def getFrameRangeValidPrePost(xDataTiming: XDataTiming): (Int, SampleRangeValid, Int) = (0, this, 0)
   // </editor-fold>
 
 }

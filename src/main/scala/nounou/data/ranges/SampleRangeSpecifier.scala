@@ -1,17 +1,16 @@
 package nounou.data.ranges
 
-import nounou.OptSegment
 import nounou.data.traits.XDataTiming
 import nounou.util.LoggingExt
 
-/** This trait specifies a range of data frames to extract, for instance, when reading traces.</br>
+/** This trait specifies a range of data frames to extract, for instance, when reading data traces.</br>
   * It allows specification of ranges such as "all frames"
-  * ([[nounou.data.ranges.RangeFrAll]]) and millisecond- or timestamp(Long)-
+  * ([[nounou.data.ranges.SampleRangeAll]]) and millisecond- or timestamp(Long)-
   * dependent frame ranges. These specifications can only be resolved to real data frame
   * ranges using sampling information given in the actual data
   * ([[nounou.data.traits.XDataTiming]]).
   */
-trait RangeFrSpecifier extends LoggingExt {
+trait SampleRangeSpecifier extends LoggingExt {
 
   /** Returns the real segment number for the frame range, taking into account -1 for automatic determination.
     */
@@ -24,15 +23,15 @@ trait RangeFrSpecifier extends LoggingExt {
   /** Returns the concrete real frame range with start (can be negative), end (can be beyond end of assumed data),
     * steps (must be positive int), and segment (present within assumed data).
     */
-  def getRangeFrReal(xDataTiming: XDataTiming): RangeFrReal //Range.Inclusive
+  def getFrameRangeReal(xDataTiming: XDataTiming): SampleRangeReal //Range.Inclusive
   /** Returns the concrete valid frame range with start/end (within assumed data),
     * steps (must be positive int), and segment (present within assumed data).
     */
-  def getRangeFrValid(xDataTiming: XDataTiming): RangeFrValid //Range.Inclusive
-  /** Returns [[getRangeFrValid]], along with pre- and post- padding frame counts
+  def getFrameRangeValid(xDataTiming: XDataTiming): SampleRangeValid //Range.Inclusive
+  /** Returns [[getFrameRangeValid]], along with pre- and post- padding frame counts
     * for when the range exceeds available data.
     */
-  def getRangeFrValidPrePost(xDataTiming: XDataTiming): (Int, RangeFrValid, Int)
+  def getFrameRangeValidPrePost(xDataTiming: XDataTiming): (Int, SampleRangeValid, Int)
 
   // </editor-fold>
 

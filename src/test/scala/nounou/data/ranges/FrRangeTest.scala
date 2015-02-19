@@ -9,25 +9,25 @@ import org.scalatest.junit.JUnitRunner
  * @date 2/16/14.
  */
 @RunWith(classOf[JUnitRunner])
-class RangeFrTest extends FunSuite {
+class FrRangeTest extends FunSuite {
 
   test("length odd"){
 
     val totalLen = 5
     val totalLen2 = 7
 
-    val testFrRange11 = RangeFr(0, 4, 1)
-    val testFrRange21= RangeFr(-4, 4, 1)
-    val testFrRange31= RangeFr(0, 7, 1)
-    val testFrRange41= RangeFr(-3, 8, 1)
+    val testFrRange11 = FrRange(0, 4, 1)
+    val testFrRange21= FrRange(-4, 4, 1)
+    val testFrRange31= FrRange(0, 7, 1)
+    val testFrRange41= FrRange(-3, 8, 1)
 
-    val testFrRange12 = RangeFr(0, 4, 2)
-    val testFrRange22= RangeFr(-4, 4, 2)
-    val testFrRange32= RangeFr(0, 7, 2)
-    val testFrRange42= RangeFr(-3, 8, 2)
+    val testFrRange12 = FrRange(0, 4, 2)
+    val testFrRange22= FrRange(-4, 4, 2)
+    val testFrRange32= FrRange(0, 7, 2)
+    val testFrRange42= FrRange(-3, 8, 2)
 
-    val testFrRange52= RangeFr(3, 8, 2)
-    val testFrRange62= RangeFr(5, 8, 2)
+    val testFrRange52= FrRange(3, 8, 2)
+    val testFrRange62= FrRange(5, 8, 2)
 
     // <editor-fold defaultstate="collapsed" desc=" intervalContains/intervalMod ">
     assert( testFrRange11.intervalContains(-4, -1, 2) == 2 )
@@ -183,19 +183,19 @@ class RangeFrTest extends FunSuite {
 
     val totalLen = 6
 
-    val testFrRange11 = RangeFr(0, 3, 1)
-    val testFrRange21= RangeFr(-3, 3, 1)
-    val testFrRange31= RangeFr(0, 8, 1)
-    val testFrRange41= RangeFr(-2, 7, 1)
+    val testFrRange11 = FrRange(0, 3, 1)
+    val testFrRange21= FrRange(-3, 3, 1)
+    val testFrRange31= FrRange(0, 8, 1)
+    val testFrRange41= FrRange(-2, 7, 1)
 
-    val testFrRange12 = RangeFr(0, 3, 2)
-    val testFrRange22= RangeFr(-3, 3, 2)
-    val testFrRange32= RangeFr(0, 8, 2)
-    val testFrRange42= RangeFr(-2, 7, 2)
+    val testFrRange12 = FrRange(0, 3, 2)
+    val testFrRange22= FrRange(-3, 3, 2)
+    val testFrRange32= FrRange(0, 8, 2)
+    val testFrRange42= FrRange(-2, 7, 2)
 
-    val testFrRange52= RangeFr(3, 8, 2)
-    val testFrRange62= RangeFr(5, 8, 2)
-    val testFrRange72= RangeFr(4, 8, 2)
+    val testFrRange52= FrRange(3, 8, 2)
+    val testFrRange62= FrRange(5, 8, 2)
+    val testFrRange72= FrRange(4, 8, 2)
 
     // <editor-fold defaultstate="collapsed" desc=" length ">
 
