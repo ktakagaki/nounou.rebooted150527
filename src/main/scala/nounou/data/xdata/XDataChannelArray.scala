@@ -4,6 +4,8 @@ import breeze.linalg.{DenseVector, min}
 import nounou._
 import nounou.data.traits.{XDataTimingImmutable, XConcatenatable}
 
+import scala.nounou.data.XLayout.{XLayoutNull, XLayout}
+
 /**Immutable data object to encapsulate arrays of [[XDataChannel]] objects
   *
  * Created by Kenta on 12/15/13.

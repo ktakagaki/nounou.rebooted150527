@@ -12,6 +12,21 @@ import nounou.data.traits.XDataTiming
  * @author ktakagaki
  * @date 2/9/14.
  */
+object SampleRange{
+
+  def convertToSampleRange(array: Array[Int]): SampleRangeSpecifier = {
+
+    loggerRequire(array != null, "Input array cannot be null!")
+    array.length match {
+      case 0 => SampleRangeAll()
+      //case 1 => RangeFrAll(array(0))
+      case 2 => new SampleRange(array(0), array(1), 1,)
+      case 3 => new SampleRange(array(0), array(1), array(2))
+    }
+
+  }
+
+}
 
 class SampleRange(val start: Int, val last: Int, val step: Int, val segment: Int)
   extends SampleRangeSpecifier with LoggingExt {

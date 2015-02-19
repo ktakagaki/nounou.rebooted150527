@@ -2,42 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="90e76743-d952-4fa9-a3a3-9e2ed22567e9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="MOVED" beforePath="C:\prog\nounou\src\main\scala\nounou\data\discrete\XMask.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/discrete/XSampleMask.scala" />
-      <change type="MOVED" beforePath="C:\prog\nounou\src\main\scala\nounou\data\ranges\RangeFr.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/ranges/SampleRange.scala" />
-      <change type="MOVED" beforePath="C:\prog\nounou\src\main\scala\nounou\data\ranges\RangeFrAll.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/ranges/SampleRangeAll.scala" />
-      <change type="MOVED" beforePath="C:\prog\nounou\src\main\scala\nounou\data\ranges\RangeFrSpecifier.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/ranges/SampleRangeSpecifier.scala" />
-      <change type="MOVED" beforePath="C:\prog\nounou\src\main\scala\nounou\data\ranges\RangeTs.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/ranges/SampleRangeTs.scala" />
-      <change type="MOVED" beforePath="C:\prog\nounou\src\test\scala\nounou\data\ranges\RangeFrTest.scala" afterPath="$PROJECT_DIR$/src/test/scala/nounou/data/ranges/FrRangeTest.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/io/FileAdapter.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/io/FileAdapter.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/scala/nounou/data/layout/RectangleEquals.sc" />
+      <change type="DELETED" beforePath="C:\prog\nounou\projectFilesBackup\.idea\libraries\SBT___scala_compiler_bundle_2_11_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\prog\nounou\projectFilesBackup\.idea\libraries\SBT__org_scala_lang_scala_library_2_11_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\prog\nounou\projectFilesBackup\.idea_modules\nounou.iml" afterPath="" />
+      <change type="MOVED" beforePath="C:\prog\nounou\src\main\scala\nounou\data\layout\XLayout.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/XLayout/XLayout.scala" />
+      <change type="MOVED" beforePath="C:\prog\nounou\src\main\scala\nounou\data\layout\XLayoutNeighbor.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/XLayout/XLayoutNeighbor.scala" />
+      <change type="MOVED" beforePath="C:\prog\nounou\src\main\scala\nounou\data\layout\XLayoutSingle.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/XLayout/XLayoutSingle.scala" />
+      <change type="MOVED" beforePath="C:\prog\nounou\src\main\scala\nounou\data\layout\XLayoutSquare.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/XLayout/XLayoutSquare.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/io/FileAdapterGSDGSH.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/io/FileAdapterGSDGSH.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/io/FileAdapterKlustaDAT.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/io/FileAdapterKlustaDAT.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/nounou/data/io/FileAdapterNCSTest.scala" afterPath="$PROJECT_DIR$/src/test/scala/nounou/data/io/FileAdapterNCSTest.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/NN.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/NN.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/NNData.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/NNData.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/ranges/RangeTsEvent.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/ranges/RangeTsEvent.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/analysis/units/SpikeDetect.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/analysis/units/SpikeDetect.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/ranges/SampleRange.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/ranges/SampleRange.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/analysis/units/TraceMedianSD.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/analysis/units/TraceMedianSD.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/traits/XChannels.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/traits/XChannels.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/xdata/XData.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/xdata/XData.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/xdata/XDataChannel.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/xdata/XDataChannel.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/xdata/XDataChannelArray.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/xdata/XDataChannelArray.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilter.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilter.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterBuffer.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterBuffer.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterDecimate.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterDecimate.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterDownsample.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterDownsample.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterFIR.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterFIR.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/nounou/data/filters/XDataFilterFIRTest.scala" afterPath="$PROJECT_DIR$/src/test/scala/nounou/data/filters/XDataFilterFIRTest.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterHolder.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterHolder.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterImageBin.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterImageBin.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterInvert.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterInvert.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterMask.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterMask.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterMedianSubtract.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterMedianSubtract.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterStatistics.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterStatistics.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/traits/XDataStream.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/traits/XDataStream.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/traits/XDataTiming.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/traits/XDataTiming.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/xdata/XDataPreloaded.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/xdata/XDataPreloaded.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/data/discrete/XSpike.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/data/discrete/XSpike.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/nounou.iml" afterPath="$PROJECT_DIR$/.idea/nounou.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/package.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/package.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/nounou/data/ranges/rangesDataTest.scala" afterPath="$PROJECT_DIR$/src/test/scala/nounou/data/ranges/rangesDataTest.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/util/package.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/util/package.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nounou.iws" />
@@ -65,69 +51,53 @@
       <file leaf-file-name="XDataFilterMask.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterMask.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="814" max-vertical-offset="1144">
+            <state vertical-scroll-proportion="0.0" vertical-offset="59" max-vertical-offset="1078">
               <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NN.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/NN.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="836" max-vertical-offset="2926">
-              <caret line="38" column="26" selection-start-line="38" selection-start-column="26" selection-end-line="38" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XSampleMask.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/discrete/XSampleMask.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="176" max-vertical-offset="4048">
-              <caret line="8" column="30" selection-start-line="0" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XData.scala" pinned="false" current-in-tab="true">
+      <file leaf-file-name="XData.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/xdata/XData.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.6555448" vertical-offset="1496" max-vertical-offset="7656">
-              <caret line="195" column="0" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="3225" max-vertical-offset="7722">
+              <caret line="178" column="56" selection-start-line="178" selection-start-column="56" selection-end-line="178" selection-end-column="56" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="XSpike.scala" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SampleRange.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/ranges/SampleRange.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="20" max-vertical-offset="6006">
+              <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
+              <folding>
+                <element signature="e#28#59#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="XChannels.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/traits/XChannels.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="528">
+              <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="XSpike.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/discrete/XSpike.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="197" max-vertical-offset="1254">
-              <caret line="17" column="102" selection-start-line="17" selection-start-column="102" selection-end-line="17" selection-end-column="102" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XDataFilterBuffer.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterBuffer.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1848" max-vertical-offset="3850">
-              <caret line="84" column="51" selection-start-line="84" selection-start-column="51" selection-end-line="84" selection-end-column="51" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XDataFilterDownsample.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterDownsample.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1694" max-vertical-offset="2486">
-              <caret line="77" column="57" selection-start-line="77" selection-start-column="57" selection-end-line="77" selection-end-column="57" />
-              <folding />
+            <state vertical-scroll-proportion="0.734053" vertical-offset="0" max-vertical-offset="1320">
+              <caret line="34" column="71" selection-start-line="34" selection-start-column="70" selection-end-line="34" selection-end-column="71" />
+              <folding>
+                <element signature="e#21#57#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -135,18 +105,8 @@
       <file leaf-file-name="XDataFilter.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilter.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1144" max-vertical-offset="1980">
-              <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XDataFilterDecimate.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterDecimate.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1694" max-vertical-offset="2068">
-              <caret line="77" column="99" selection-start-line="77" selection-start-column="99" selection-end-line="77" selection-end-column="99" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="616" max-vertical-offset="1980">
+              <caret line="28" column="19" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -156,6 +116,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.scala" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -177,22 +140,33 @@
         <option value="$PROJECT_DIR$/src/main/scala/nounou/analysis/units/TraceMedianSD.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/data/traits/XDataTiming.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/data/ranges/SampleRangeSpecifier.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterDownsample.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterFIR.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/discrete/XSpike.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterDecimate.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilter.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterHolder.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterInvert.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterMask.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/data/discrete/XMask.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterImageBin.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/NN.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/xdata/XData.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterBuffer.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterMedianSubtract.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/data/discrete/XSampleMask.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/NNData.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilter.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/discrete/test.java" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterDownsample.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/traits/XChannels.scala" />
+        <option value="$PROJECT_DIR$/src/test/java/RectangleEquals.sc" />
+        <option value="$PROJECT_DIR$/src/test/scala/nounou/data/layout/RectangleEquals.sc" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/layout/XLayout.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/XLayout/XLayoutNeighbor.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/XLayout/XLayoutSingle.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/XLayout/XLayoutSquare.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/XLayout/XLayout.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/util/package.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/ranges/SampleRange.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/xdata/XData.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/data/discrete/XSpike.scala" />
       </list>
     </option>
   </component>
@@ -241,6 +215,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -256,6 +231,84 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -376,6 +429,36 @@
               <option name="myItemId" value="util" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="package.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -429,14 +512,47 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="discrete" />
+              <option name="myItemId" value="ranges" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nounou" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ranges" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SampleRange.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -457,6 +573,11 @@
     <property name="options.lastSelected" value="editor.preferences.folding" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\prog\nounou\src\test\java\tests" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="JUnit" factoryName="JUnit">
@@ -696,7 +817,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-1204" width="1928" height="1208" extended-state="6" />
+    <frame x="-4" y="-1204" width="1928" height="1208" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -716,7 +837,7 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3286385" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286385" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -743,7 +864,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -752,73 +873,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/NN.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1003" max-vertical-offset="2210">
-          <caret line="59" column="33" selection-start-line="59" selection-start-column="33" selection-end-line="59" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/NNData.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="100">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/xdata/XData.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="782" max-vertical-offset="6001">
-          <caret line="46" column="36" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/NNDataReader.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="867" max-vertical-offset="7038">
-          <caret line="51" column="3" selection-start-line="51" selection-start-column="3" selection-end-line="51" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/package.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="833">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterDecimate.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="561" max-vertical-offset="1598">
-          <caret line="33" column="23" selection-start-line="33" selection-start-column="23" selection-end-line="33" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/NN.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1003" max-vertical-offset="2210">
-          <caret line="59" column="33" selection-start-line="59" selection-start-column="33" selection-end-line="59" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/NNData.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="1972">
-          <caret line="27" column="25" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/xdata/XData.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="100">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/NNDataReader.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="867" max-vertical-offset="7038">
@@ -899,13 +953,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/util/package.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14761215" vertical-offset="0" max-vertical-offset="691">
-          <caret line="6" column="15" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/io/FileAdapter.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.44283646" vertical-offset="0" max-vertical-offset="2618">
@@ -931,13 +978,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.31982633" vertical-offset="0" max-vertical-offset="697">
           <caret line="13" column="75" selection-start-line="13" selection-start-column="75" selection-end-line="13" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/X.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3876652" vertical-offset="0" max-vertical-offset="726">
-          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -984,13 +1024,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/ranges/SampleRange.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5610">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/analysis/units/TraceMedianSD.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.58064514" vertical-offset="506" max-vertical-offset="1188">
@@ -1027,22 +1060,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterDownsample.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1295" max-vertical-offset="2486">
-          <caret line="77" column="57" selection-start-line="77" selection-start-column="57" selection-end-line="77" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilter.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="877" max-vertical-offset="1914">
-          <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterImageBin.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3670265" vertical-offset="44" max-vertical-offset="1386">
@@ -1064,34 +1081,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/NN.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="613" max-vertical-offset="2882">
-          <caret line="38" column="26" selection-start-line="38" selection-start-column="26" selection-end-line="38" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterBuffer.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1559" max-vertical-offset="3740">
-          <caret line="84" column="51" selection-start-line="84" selection-start-column="51" selection-end-line="84" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterMedianSubtract.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.55904335" vertical-offset="0" max-vertical-offset="1386">
           <caret line="17" column="32" selection-start-line="0" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterMask.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="409" max-vertical-offset="1078">
-          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1110,19 +1103,160 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/discrete/XSpike.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterDownsample.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="197" max-vertical-offset="1254">
-          <caret line="17" column="102" selection-start-line="17" selection-start-column="102" selection-end-line="17" selection-end-column="102" />
+        <state vertical-scroll-proportion="0.3454367" vertical-offset="0" max-vertical-offset="2398">
+          <caret line="20" column="42" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="42" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterBuffer.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.10794897" vertical-offset="1848" max-vertical-offset="3740">
+          <caret line="84" column="51" selection-start-line="84" selection-start-column="51" selection-end-line="84" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilter.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="616" max-vertical-offset="1980">
+          <caret line="28" column="19" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_25/javafx-src.zip!/javafx/scene/shape/Rectangle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14147286" vertical-offset="536" max-vertical-offset="5236">
+          <caret line="71" column="14" selection-start-line="71" selection-start-column="14" selection-end-line="71" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_25/src.zip!/java/lang/Object.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8449612" vertical-offset="1812" max-vertical-offset="11396">
+          <caret line="147" column="19" selection-start-line="147" selection-start-column="19" selection-end-line="147" selection-end-column="25" />
+          <folding>
+            <element signature="e#5748#5749#0" expanded="false" />
+            <element signature="e#5784#5785#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/nounou/data/layout/RectangleEquals.sc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30923694" vertical-offset="0" max-vertical-offset="996">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/traits/XConcatenatable.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25581396" vertical-offset="0" max-vertical-offset="1032">
+          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/XLayout/XLayoutSingle.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="352">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/XLayout/XLayoutSquare.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2530">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/XLayout/XLayoutNeighbor.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="990">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/XLayout/XLayout.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.06395349" vertical-offset="0" max-vertical-offset="2640">
+          <caret line="5" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/util/package.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.93604654" vertical-offset="24" max-vertical-offset="1232">
+          <caret line="45" column="6" selection-start-line="45" selection-start-column="6" selection-end-line="45" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/X.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.12790698" vertical-offset="0" max-vertical-offset="1032">
+          <caret line="6" column="16" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/ranges/SampleRange.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="20" max-vertical-offset="6006">
+          <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
+          <folding>
+            <element signature="e#28#59#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/xdata/XData.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.6555448" vertical-offset="1496" max-vertical-offset="7656">
-          <caret line="195" column="0" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="3225" max-vertical-offset="7722">
+          <caret line="178" column="56" selection-start-line="178" selection-start-column="56" selection-end-line="178" selection-end-column="56" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/NN.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3326791" vertical-offset="563" max-vertical-offset="2882">
+          <caret line="43" column="12" selection-start-line="43" selection-start-column="12" selection-end-line="43" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/filters/XDataFilterMask.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="409" max-vertical-offset="1078">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/traits/XChannels.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="528">
+          <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/data/discrete/XSpike.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.734053" vertical-offset="0" max-vertical-offset="1320">
+          <caret line="34" column="71" selection-start-line="34" selection-start-column="70" selection-end-line="34" selection-end-column="71" />
+          <folding>
+            <element signature="e#21#57#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
