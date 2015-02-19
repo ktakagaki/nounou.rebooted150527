@@ -32,13 +32,14 @@ package object nounou extends LoggingExt {
 //  }
 //  val OptStep1 = OptStep(1)
 
-  case class OptSegment(segment: Int) extends Opt {
-    loggerRequire(segment >= -1, "OptSegment value must be -1 (not specified) or larger!")
-
-    override def toString() = s"OptSegment($segment)"
-
-  }
-  val OptSegmentAutomatic = OptSegment(-1)
+//  /**This Opt class allows segments to be specified without ambiguity with step: Int, etc.*/
+//  case class OptSegment(segment: Int) extends Opt {
+//    loggerRequire(segment >= -1, "OptSegment value must be -1 (not specified) or larger!")
+//
+//    override def toString() = s"OptSegment($segment)"
+//
+//  }
+//  val OptSegmentAutomatic = OptSegment(-1)
 
 
 }

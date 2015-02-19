@@ -24,7 +24,7 @@ class SampleRange(val start: Int, val last: Int, val step: Int, val segment: Int
 
   // <editor-fold defaultstate="collapsed" desc=" range info accessors ">
 
-  override final def getFrameRangeReal(xDataTiming: XDataTiming): SampleRangeReal = { //Range.Inclusive = {
+  override final def getSampleRangeReal(xDataTiming: XDataTiming): SampleRangeReal = { //Range.Inclusive = {
     val realSegment = getRealSegment(xDataTiming)
     if(0<=start){
       val segmentLength = xDataTiming.segmentLength(realSegment)
@@ -36,15 +36,15 @@ class SampleRange(val start: Int, val last: Int, val step: Int, val segment: Int
     else new SampleRangeReal( start, last, getRealStep(xDataTiming), realSegment)
   }
 
-  override final def getFrameRangeValid(xDataTiming: XDataTiming): SampleRangeValid = { //Range.Inclusive = {
+  override final def getSampleRangeValid(xDataTiming: XDataTiming): SampleRangeValid = { //Range.Inclusive = {
     new SampleRangeValid( firstValid(xDataTiming), lastValid(xDataTiming), getRealStep(xDataTiming), getRealSegment(xDataTiming) )
   }
 
-  override final def getFrameRangeValidPrePost(xDataTiming: XDataTiming): (Int, SampleRangeValid, Int) = {
+  override final def getSampleRangeValidPrePost(xDataTiming: XDataTiming): (Int, SampleRangeValid, Int) = {
     val totalLength =  xDataTiming.segmentLength( getRealSegment(xDataTiming) )
     val preL = preLength( totalLength )
     val postL = postLength( totalLength )
-    (preL, getFrameRangeValid(xDataTiming), postL)
+    (preL, getSampleRangeValid(xDataTiming), postL)
   }
 
   /** For FrameRange, just read -1 as 1 (default).
@@ -223,11 +223,11 @@ class SampleRangeReal(val start: Int, val last: Int, val step: Int, val segment:
   // <editor-fold defaultstate="collapsed" desc=" RangeFrSpecifier ">
   override final def getRealSegment(xDataTiming: XDataTiming): Int = segment
   override final def getRealStep(xDataTiming: XDataTiming): Int = step
-  override final def getFrameRangeReal(xDataTiming: XDataTiming): SampleRangeReal = this
-  override def getFrameRangeValid(xDataTiming: XDataTiming): SampleRangeValid =
-    (new SampleRange(start, last, step, segment)).getFrameRangeValid(xDataTiming)
-  override def getFrameRangeValidPrePost(xDataTiming: XDataTiming): (Int, SampleRangeValid, Int) =
-    (new SampleRange(start, last, step, segment)).getFrameRangeValidPrePost(xDataTiming)
+  override final def getSampleRangeReal(xDataTiming: XDataTiming): SampleRangeReal = this
+  override def getSampleRangeValid(xDataTiming: XDataTiming): SampleRangeValid =
+    (new SampleRange(start, last, step, segment)).getSampleRangeValid(xDataTiming)
+  override def getSampleRangeValidPrePost(xDataTiming: XDataTiming): (Int, SampleRangeValid, Int) =
+    (new SampleRange(start, last, step, segment)).getSampleRangeValidPrePost(xDataTiming)
   // </editor-fold>
 
 }
@@ -245,8 +245,8 @@ class SampleRangeValid(override val start: Int, override val last: Int, override
   loggerRequire(0 <= start, s"Start $start must be >= 0")
 
   // <editor-fold defaultstate="collapsed" desc=" RangeFrSpecifier ">
-  override def getFrameRangeValid(xDataTiming: XDataTiming): SampleRangeValid = this
-  override def getFrameRangeValidPrePost(xDataTiming: XDataTiming): (Int, SampleRangeValid, Int) = (0, this, 0)
+  override def getSampleRangeValid(xDataTiming: XDataTiming): SampleRangeValid = this
+  override def getSampleRangeValidPrePost(xDataTiming: XDataTiming): (Int, SampleRangeValid, Int) = (0, this, 0)
   // </editor-fold>
 
 }

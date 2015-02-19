@@ -5,7 +5,7 @@ import scala.Vector
 import java.io.DataInput
 import nounou.data.traits.{XDataTimingImmutable, XConcatenatable, XDataTiming, XDataScale}
 import breeze.linalg.{DenseVector => DV}
-import nounou.data.ranges.{RangeFrAll, RangeFr}
+import nounou.data.ranges.{SampleRangeAll, FrRange$}
 
 /**
  * Created by Kenta on 12/14/13.
@@ -33,12 +33,12 @@ abstract class XDataChannel extends X with XDataTiming with XDataScale with XCon
   /** Read a single trace from the data, in internal integer scaling.
     */
   final def readTrace(segment: Int): DV[Int] = {
-    val range = RangeFrAll().getRangeFrValid( this )
+    val range = SampleRangeAll().getSampleRangeValid( this )
     readTraceImpl(range, segment)
   }
   /** Read a single trace (within the span) from the data, in internal integer scaling.
     */
-  final def readTrace(range: RangeFr): DV[Int] = {
+  final def readTrace(range: FrRange): DV[Int] = {
 
     val seg = range.getRealSegment(this)
     val segLen =  segmentLength(seg)

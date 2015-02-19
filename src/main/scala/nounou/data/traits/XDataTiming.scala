@@ -3,7 +3,7 @@ package nounou.data.traits
 import nounou._
 import nounou.data.X
 import breeze.numerics.round
-import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
+import nounou.data.ranges.{SampleRangeSpecifier}
 
 /**This trait of XData and XDataChannel objects encapsulates segment,
   * frame, and sampling information for electrophysiological and imaging recordings..
@@ -29,16 +29,15 @@ trait XDataTiming extends X {
     */
   def segmentLength(): Array[Int]
   def segmentLength( segment: Int ): Int = segmentLength()( getRealSegment(segment) )
-  def segmentLength( optSegment: OptSegment ): Int = segmentLength()( getRealSegment(optSegment) )
+  //def segmentLength( optSegment: OptSegment ): Int = segmentLength()( getRealSegment(optSegment) )
   def getRealSegment( segment: Int ): Int =
     if(segment == -1){
       loggerRequire( segmentCount == 1, "You must always specify a segment when reading from data with multiple segments!")
-      1
+      0
     } else {
       loggerRequire( segment < segmentCount, s"Segment specified does not exist in data object ${this.toString()}!")
       segment
     }
-  def getRealSegment( optSegment: OptSegment ): Int = getRealSegment( optSegment.segment )
 
 //  /**Return [[segmentLength]] as Array, for easy access from Java/Mathematica/MatLab.
 //    */
@@ -97,9 +96,9 @@ trait XDataTiming extends X {
     (-100000 <= frame && frame < segmentLength(segment) + 100000)
 //  final def isRealisticFr(range: Range.Inclusive, segment: Int): Boolean =
 //    (-100000 <= range.start && range.end < segmentLength(segment) + 100000)
-  final def isRealisticRange(range: RangeFrSpecifier): Boolean = {
+  final def isRealisticRange(range: SampleRangeSpecifier): Boolean = {
     val seg = range.getRealSegment(this)
-    val ran = range.getRangeFrReal(this)
+    val ran = range.getSampleRangeReal(this)
     isRealisticFrsg(ran.start, seg) && isRealisticFrsg(ran.last, seg)
   }
 

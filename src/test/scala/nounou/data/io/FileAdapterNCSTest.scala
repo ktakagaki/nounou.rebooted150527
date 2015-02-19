@@ -5,7 +5,7 @@ import breeze.numerics.pow
 import nounou._
 import org.scalatest.FunSuite
 import java.io.{File}
-import nounou.data.ranges.{RangeFr, RangeFrAll}
+import nounou.data.ranges.{FrRange$, SampleRangeAll}
 import nounou.data.XDataChannelArray
 import nounou.data.filters.XDataFilterHolder
 
@@ -59,10 +59,10 @@ class FileAdapterNCSTest extends FunSuite {
 
   test("readTrace") {
 
-    assert( dataObj.readTrace(RangeFr(0, 0, 1, 0) )(0) == -1528*FileAdapterNCS.xBits)
-    assert( dataObj.readTrace(RangeFr(0, 4, 1, 0) ) == DenseVector(-1528,-1841, -1282, -670, -500)*FileAdapterNCS.xBits)
-    assert( dataObj.readTrace(RangeFr(0, 4, 2, 0) ) == DenseVector(-1528, -1282, -500)*FileAdapterNCS.xBits)
-    assert( dataObj.readTrace(RangeFr(-2, 4, 2, 0) ) == DenseVector(0, -1528, -1282, -500)*FileAdapterNCS.xBits)
+    assert( dataObj.readTrace(FrRange(0, 0, 1, 0) )(0) == -1528*FileAdapterNCS.xBits)
+    assert( dataObj.readTrace(FrRange(0, 4, 1, 0) ) == DenseVector(-1528,-1841, -1282, -670, -500)*FileAdapterNCS.xBits)
+    assert( dataObj.readTrace(FrRange(0, 4, 2, 0) ) == DenseVector(-1528, -1282, -500)*FileAdapterNCS.xBits)
+    assert( dataObj.readTrace(FrRange(-2, 4, 2, 0) ) == DenseVector(0, -1528, -1282, -500)*FileAdapterNCS.xBits)
 
   }
 //  test("readTrace"){
