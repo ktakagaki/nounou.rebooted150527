@@ -5,7 +5,7 @@ import nounou.data._
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
 import java.io.File
 
-import nounou.data.ranges.RangeFr
+import nounou.data.ranges.FrRange$
 
 /**
  * @author ktakagaki
@@ -42,7 +42,7 @@ object FileAdapterKlustaDAT extends FileAdapter {
         case _ => loggerError("{} is not a valid option for OptFileAdapter!", opt.toString ); throw new IllegalArgumentException
       }
 
-      val realRange = parsedOpt.range.getRangeFrValid( data )
+      val realRange = parsedOpt.range.getSampleRangeValid( data )
       val writeFrameLength = 1024 //32kb if 16 channels
 
       var currentFrameStart = 0
@@ -51,7 +51,7 @@ object FileAdapterKlustaDAT extends FileAdapter {
         while(currentFrameStart + writeFrameLength < realRange.length){
           val writeArray = new Array[Short]( data.channelCount * writeFrameLength )
           currentIndex = 0
-          val writeData = for(ch <- 0 until data.channelCount) yield data.readTrace(ch, RangeFr(currentFrameStart, currentFrameStart + writeFrameLength - 1))//, OptSegment(0)))
+          val writeData = for(ch <- 0 until data.channelCount) yield data.readTrace(ch, FrRange(currentFrameStart, currentFrameStart + writeFrameLength - 1))//, OptSegment(0)))
           for(fr <- 0 until writeFrameLength)
             for(ch <- 0 until data.channelCount) {
               writeArray( currentIndex ) = ( writeData(ch)(fr) / data.xBits).toShort

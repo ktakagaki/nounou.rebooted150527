@@ -2,11 +2,13 @@ package nounou
 
 //import breeze.linalg.DenseVector
 
+import _root_.nounou.data.ranges.{SampleRangeValid, SampleRangeReal, SampleRangeTS, SampleRange}
 import breeze.linalg.DenseVector
-import nounou.data.{XSpike, XTrodeN, ranges}
+import nounou.data.{/*XSpike,*/ XTrodeN}
 
-/**A static class which encapsulates convenience functions from nounou for
-  * use in Mathematica/MatLab/Java
+
+/**A static class which encapsulates convenience functions for using nounou, with
+ * an emphasis on use from Mathematica/MatLab/Java
  * @author ktakagaki
  * @date 2/17/14.
  */
@@ -17,36 +19,37 @@ object NN {
   // <editor-fold defaultstate="collapsed" desc=" options ">
 
   def OptNull() = nounou.OptNull
-  def OptSegment(segment: Int) = nounou.OptSegment(segment)
-  def OptSegment() = nounou.OptSegmentAutomatic
 
   // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc=" frame ranges ">
 
-  // <editor-fold defaultstate="collapsed" desc=" RangeFrAll ">
+  final def SampleRange(start: Int, last: Int, step: Int, segment: Int) = new SampleRange(start, last, step, segment)
+  final def SampleRangeReal(start: Int, last: Int, step: Int, segment: Int) = new SampleRangeReal(start, last, step, segment)
+  final def SampleRangeValid(start: Int, last: Int, step: Int, segment: Int) = new SampleRangeValid(start, last, step, segment)
+//The following are deprecated due to the ambiguity between step and segment variables
+//  final def SampleRange(start: Int, last: Int, step: Int)               = new SampleRange(start, last, step, -1)
+//  final def SampleRange(start: Int, last: Int, segment: Int)            = new SampleRange(start, last, -1,   segment)
+//  final def SampleRange(start: Int, last: Int)                          = new SampleRange(start,    last,     -1,       -1)
+  final def SampleRange( range: (Int, Int) )                            = new SampleRange(range._1, range._2, -1,       -1)
+  final def SampleRange( range: (Int, Int), segment: Int)               = new SampleRange(range._1, range._2, -1,       segment)
+  final def SampleRange( range: (Int, Int, Int) )                       = new SampleRange(range._1, range._2, range._3, -1)
+  final def SampleRange( range: (Int, Int, Int), segment: Int )         = new SampleRange(range._1, range._2, range._3, segment)
+  final def SampleRange( range: Array[Int], segment: Int ): SampleRange = {
+    val len = range.length
+    loggerRequire( len == 2 || len == 3, s"The first variable of SampleRange must be a 2- or 3-element array, not $range")
+    if( len == 3 ) SampleRange(range(0), range(1), range(2), segment)
+    else SampleRange(range(0), range(1), -1, segment)
+  }
+  final def SampleRange( range: Array[Int]): SampleRange = SampleRange( range, -1 )
 
-  final def RangeFrAll(step: Int, optSegment: OptSegment): ranges.RangeFrAll = ranges.RangeFrAll( step, optSegment )
-// deprecated due to potential confusion with this(segment: Int)
-//  final def RangeFrAll(step: Int): ranges.RangeFrAll = ranges.RangeFrAll( step, -1 )
-  final def RangeFrAll(optSegment: OptSegment): ranges.RangeFrAll = ranges.RangeFrAll(1, optSegment)
-  final def RangeFrAll(): ranges.RangeFrAll = ranges.RangeFrAll()
-
-  // </editor-fold>
-  // <editor-fold defaultstate="collapsed" desc=" RangeFr ">
-
-  final def RangeFr(start: Int, last: Int, step: Int, optSegment: OptSegment) = ranges.RangeFr(start, last, step, optSegment)
-  final def RangeFr(start: Int, last: Int, step: Int)                         = ranges.RangeFr(start, last, step)
-  final def RangeFr(start: Int, last: Int, optSegment: OptSegment)            = ranges.RangeFr(start, last, optSegment)
-  final def RangeFr(start: Int, last: Int)                                    = ranges.RangeFr(start, last)
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc=" RangeTs ">
 
-  final def RangeTs(startTs: Long, endTS: Long, stepTS: Long): ranges.RangeTS =
-    ranges.RangeTS(startTs, endTS, stepTS)
-
-  final def RangeTs(startTS: Long, endTS: Long): ranges.RangeTS =
-    ranges.RangeTS(startTS, endTS)
+  final def SampleRangeTs(startTs: Long, endTS: Long, stepTS: Long): SampleRangeTS =
+    new SampleRangeTS(startTs, endTS, stepTS)
+  final def FrameRangeTs(startTs: Long, endTS: Long): SampleRangeTS =
+    new SampleRangeTS(startTs, endTS, -1L)
 
 //  final def RangeTs(stamps: Array[Long], preTS: Long, postTS: Long): Array[ranges.RangeTs] =
 //    stamps.map( (s: Long) => ranges.RangeTs(s-preTS, s+postTS) )
@@ -58,8 +61,8 @@ object NN {
   // <editor-fold defaultstate="collapsed" desc=" toArray methods ">
 
   def toArray(denseVector: DenseVector[Long]) = breeze.util.JavaArrayOps.dvToArray(denseVector)
-  def toArray(xSpike: XSpike) = XSpike.toArray( xSpike )
-  def toArray(xSpikes: Array[XSpike]) = XSpike.toArray( xSpikes )
+//  def toArray(xSpike: XSpike) = XSpike.toArray( xSpike )
+//  def toArray(xSpikes: Array[XSpike]) = XSpike.toArray( xSpikes )
 
   // </editor-fold>
 

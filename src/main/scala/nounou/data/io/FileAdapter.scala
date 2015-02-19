@@ -4,7 +4,7 @@ import nounou.Opt
 import nounou.util.LoggingExt
 import java.io.File
 import nounou.data.X
-import nounou.data.ranges.{RangeFrSpecifier, RangeFrAll, RangeFr}
+import nounou.data.ranges.{SampleRangeSpecifier, SampleRangeAll, FrRange$}
 
 
 //object FileAdapter {
@@ -147,6 +147,6 @@ class OptFileAdapter extends Opt
 
 object OptFileAdapter{
   case object Automatic extends OptFileAdapter
-  case class XDataFrames(range: RangeFrSpecifier = RangeFrAll()) extends OptFileAdapter
+  case class XDataFrames(range: SampleRangeSpecifier = SampleRangeAll()) extends OptFileAdapter
   //case class ListOpt(list: List[OptFileAdapter]) extends OptFileAdapter
 }

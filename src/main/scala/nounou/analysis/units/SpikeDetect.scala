@@ -1,12 +1,11 @@
 package nounou.analysis.units
 
-import breeze.linalg.{argmax, randomInt, DenseVector}
-
-import nounou.{OptNull, Opt}
+//import breeze.linalg.{argmax, randomInt, DenseVector}
+//import nounou.{OptNull, Opt}
 import nounou.util.LoggingExt
-import nounou.data.{XTrodeN, XData}
-import nounou.data.filters.{XDataFilterInvert, XDataFilterBuffer, XDataFilterMedianSubtract}
-import nounou.data.ranges.{RangeFrSpecifier, RangeFr}
+//import nounou.data.{XTrodeN, XData}
+//import nounou.data.filters.{XDataFilterInvert, XDataFilterBuffer, XDataFilterMedianSubtract}
+//import nounou.data.ranges.{SampleRangeSpecifier, FrRange$}
 
 import scala.collection.mutable.ArrayBuffer
 

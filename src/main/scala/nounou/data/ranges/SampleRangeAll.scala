@@ -25,10 +25,10 @@ class SampleRangeAll(val step: Int, val optSegment: OptSegment) extends SampleRa
   override final def getRealStep(xFrames: XDataTiming): Int = {
     if ( step == -1 ) 1 else step
   }
-  override final def getFrameRangeReal(xFrames: XDataTiming): Range.Inclusive = {
+  override final def getSampleRangeReal(xFrames: XDataTiming): Range.Inclusive = {
     Range.inclusive( 0, xFrames.segmentLength(getRealSegment(xFrames)), getRealStep(xFrames))
   }
-  override final def getFrameRangeValid(xFrames: XDataTiming): Range.Inclusive = {
+  override final def getSampleRangeValid(xFrames: XDataTiming): Range.Inclusive = {
     val realSegment = FrameRange(0, xFrames.segmentLength(getRealSegment(xFrames)), step)
     realSegment.getFrameRangeValid(xFrames)
   }

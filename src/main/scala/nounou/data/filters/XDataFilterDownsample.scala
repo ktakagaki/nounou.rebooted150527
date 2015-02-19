@@ -1,5 +1,6 @@
 package nounou.data.filters
 
+import _root_.nounou.data.ranges.SampleRangeValid
 import nounou.data.XData
 import breeze.signal.support.FIRKernel1D
 import breeze.signal._
@@ -50,15 +51,17 @@ class XDataFilterDownsample( private var _parent: XData ) extends XDataFilter( _
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
       _parent.readPointImpl(channel, frame/factor, segment)
 
-  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] =
+  override def readTraceImpl(channel: Int, range: SampleRangeValid): DV[Int] =
     if(factor == 1){
-        _parent.readTraceImpl(channel, range, segment)
+        _parent.readTraceImpl(channel, range)
     } else {
         _parent.readTraceImpl(channel,
-                new Range.Inclusive(range.start*factor,
-                                    min(range.end*factor, _parent.segmentLength(segment)-1),
-                                    range.step*factor),
-                segment)
+                new SampleRangeValid(
+                          range.start*factor,
+                          min(range.last*factor, _parent.segmentLength(range.segment)-1),
+                          range.step*factor,
+                          range.segment)
+        )
     }
 
   // </editor-fold>

@@ -1,5 +1,6 @@
 package nounou.data.filters
 
+import _root_.nounou.data.ranges.{SampleRangeValid, SampleRange}
 import nounou.data.XData
 import scala.beans.BooleanBeanProperty
 import breeze.linalg.DenseVector
@@ -40,11 +41,12 @@ class XDataFilterInvert(private var _parent: XData ) extends XDataFilter( _paren
       _parent.readPointImpl(channel, frame, segment)
     }
 
-  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DenseVector[Int] =
+  override def readTraceImpl(channel: Int, range: SampleRangeValid): DenseVector[Int] =
     if(inverted){
-      - _parent.readTraceImpl(channel, range, segment)
+      - _parent.readTraceImpl(channel, range)
     } else {
-      _parent.readTraceImpl(channel, range, segment)
+      _parent.readTraceImpl(channel, range)
     }
 
 }
+

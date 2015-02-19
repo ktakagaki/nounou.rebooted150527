@@ -4,7 +4,7 @@ import nounou.data.XData
 import breeze.math.Complex
 import breeze.linalg.{DenseVector}
 import breeze.signal.{rootMeanSquare, fourierTr}
-import nounou.data.ranges.RangeFr
+import nounou.data.ranges.FrRange$
 
 /**
  * @author ktakagaki
@@ -14,7 +14,7 @@ class XDataFilterStatistics( private var _parent: XData ) extends XDataFilter( _
 
   override def toString() =  "XDataFilterStatistics: "
 
-  def readTraceAbsFourier( ch: Int, range: RangeFr ): DenseVector[Complex] = {
+  def readTraceAbsFourier( ch: Int, range: FrRange ): DenseVector[Complex] = {
     val tempTrace = readTraceAbs( ch, range )
     fourierTr( DenseVector( tempTrace.toArray ) )
   }
@@ -24,7 +24,7 @@ class XDataFilterStatistics( private var _parent: XData ) extends XDataFilter( _
 //    mean( fourierTr( DenseVector( tempTrace.toArray ), fourierRange ) )
 //  }
 
-  def readTraceAbsRMS( ch: Int, range: RangeFr ): Double = {
+  def readTraceAbsRMS( ch: Int, range: FrRange ): Double = {
     val tempTrace = readTraceAbs( ch, range )
     rootMeanSquare( tempTrace )
   }

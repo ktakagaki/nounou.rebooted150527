@@ -3,7 +3,7 @@ package nounou.data.traits
 import breeze.linalg.DenseVector
 import nounou.data.XData
 import nounou.data.filters.XDataFilter
-import nounou.data.ranges.RangeFrSpecifier
+import nounou.data.ranges.SampleRangeSpecifier
 
 /**This trait encapsulates the ability to read and process data in time chunks in parallel.
   * If an [[XData]] object implements this trait, the standard "readTrace" functions
