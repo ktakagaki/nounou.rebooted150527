@@ -1,24 +1,22 @@
 package nounou.data
 
+import _root_.nounou.util.LoggingExt
 import breeze.linalg.{DenseVector, DenseMatrix}
 import nounou.NN._
 
-object XSpike {
+object XSpike extends LoggingExt {
 
-  def toArray(xSpike : XSpike): Array[Array[Int]] = xSpike.toArray
-  def toArray(xSpikes: Array[XSpike]): Array[Array[Array[Int]]] = xSpikes.map( _.toArray )
-
-  def readSpikes(xData: XData, channels: Array[Int], xFrames: Array[Int], length: Int, trigger: Int) = {
-    xFrames.map( readSpike(xData, channels, _, length, trigger))
+//  def toArray(xSpike : XSpike): Array[Array[Int]] = xSpike.toArray
+//  def toArray(xSpikes: Array[XSpike]): Array[Array[Array[Int]]] = xSpikes.map( _.toArray )
+  def readSpikeFrames(xData: XData, channels: Array[Int], xFrames: Array[Int], length: Int, trigger: Int) = {
+    xFrames.map( readSpikeFrame(xData, channels, _, length, trigger))
   }
-  def readSpike(xData: XData, channels: Array[Int], frame: Int, length: Int, trigger: Int) = {
-    val tempWF = new DenseVector( new Array[Int]( channels.length * length ) )
-    for(ch <- 0 until channels.length){
-      tempWF(ch*length until (ch+1)*length) :=
-        xData.readTrace(ch, SampleRange(frame-trigger, frame-trigger + length - 1, step = 1, segment= xFrame.segment))//, OptSegment(xFrame.segment)))
-    }
-    new XSpike( new DenseMatrix( rows = length, cols = channels.length, data = tempWF.toArray ),
-                frame, trigger, unitNo = 0)
+  def readSpikeFrame(xData: XData, channels: Array[Int], frame: Int, segment: Int, length: Int): XSpike = {
+    loggerRequire( frame > 0, s"frame must be >0, not ${frame}")
+    loggerRequire( length > 0, s"length must be >0, not ${length}")
+
+    val tempWF = channels.map( ch => xData.readTrace( ch, SampleRangeReal(frame, frame+length-1, step=1, segment) ))
+    new XSpikeFrame( frame, tempWF, frame, segment)
   }
 
 }
@@ -27,26 +25,30 @@ object XSpike {
 * @author ktakagaki
 * @date 07/14/2014.
 */
-class XSpike(val waveform: DenseMatrix[Int],
-             val frame: Int,
-             val trigger: Int = -1,
-             val unitNo: Int = 0) extends X {
+abstract class XSpike(val time: Long, val waveform: Array[Array[Int]], var unitNo: Int = 0) extends X {
 
-  lazy val channels = waveform.cols
-  val length = waveform.rows
+  val channels = waveform.length
+  val length = waveform(0).length
+  def getUnitNo() = unitNo
+  def setUnitNo(unitNo: Int) = {this.unitNo = unitNo}
 
-  loggerRequire( length != 0, "waveform must have some samples!")
-  loggerRequire( trigger < length, "trigger point must be negative or smaller than length!")
-  //if(xTrode.channelCount != waveform.cols) throw loggerError("waveform must include same number of channels as xTrode!")
+  loggerRequire( channels >= 1, s"Waveform must have at least one channel, $channels is invalid!")
+  loggerRequire( length >= 0, "Waveform must have some samples, $length is invalid!")
+  loggerRequire( nounou.util.isMatrix(waveform), "Waveform is not non-null and non-ragged")
 
-  override def toString = "XSpike( unitNo=" + unitNo + ", channels="+ channels + ", length="+ length + " )"
+  override def toString = s"XSpike(time=${time}, channels=${channels}, length=${length}, unitNo=${unitNo}} )"
 
 
   def toArray() = Array.tabulate(channels)(p => waveform( :: , p ).toArray )
-//  def frame() = xFrame.frame
-//  def segment() = xFrame.segment
-
-  def sort(unitNo: Int) = new XSpike(waveform, frame, unitNo, trigger)
 
   override def isCompatible(that: X) = false
 }
+
+class XSpikeFrame(override val time : Long,
+                  override val waveform: Array[Array[Int]],
+                  override var unitNo: Int = 0,
+                  val segment: Int)
+  extends XSpike(time, waveform, unitNo){
+  lazy val frame = time.toInt
+}
+

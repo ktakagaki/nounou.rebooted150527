@@ -20,4 +20,31 @@ package object util {
     } else throw new IllegalArgumentException
   }
 
+  def isMatrix(data: Array[Array[Int]]): Boolean = {
+    if(data==null) false
+    else{
+      data.length match {
+        case 0 => false
+        case 1 => if (data(0).length == 0) false else true
+        case _ => {
+          val templen0 = data(0).length
+          if (templen0 == 0) false
+          else {
+            var temp = 1
+            var tempres = true
+            while (temp < data.length) {
+              if (data(temp) == null || templen0 != data(temp).length){
+                tempres = false
+                temp = data.length
+              }else{
+                temp += 1
+              }
+            }
+            tempres
+          }
+        }
+      }
+    }
+  }
+
 }
