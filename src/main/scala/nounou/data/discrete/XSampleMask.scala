@@ -4,7 +4,7 @@ import scala.collection.immutable.{TreeMap}
 import scala.reflect.ClassTag
 import nounou.data.traits.XDataTiming
 import scala.collection.mutable.ArrayBuffer
-import nounou.data.ranges.{RangeFrValid, RangeFrSpecifier, RangeFr}
+import _root_.nounou.data.ranges.{SampleRange, SampleRangeValid, SampleRangeSpecifier}
 
 //ToDo 1: Mask serialization
 
@@ -12,12 +12,9 @@ import nounou.data.ranges.{RangeFrValid, RangeFrSpecifier, RangeFr}
    * @author ktakagaki
    * @date 1/30/14.
    */
-  class XMask extends X {
-
-
+  class XSampleMask extends X {
 
   // <editor-fold defaultstate="collapsed" desc=" TreeMap[Long, Long] accessor methods ">
-
   private var _masks: TreeMap[Long, Long] = new TreeMap[Long, Long]()
   def getMask() = _masks
   def getMaskA(): Array[Array[Long]] = _masks.map( p => Array[Long](p._1, p._2) ).toArray
@@ -93,11 +90,11 @@ import nounou.data.ranges.{RangeFrValid, RangeFrSpecifier, RangeFr}
   def isMaskedFrame( frameStart: Int, frameEnd: Int, segment: Int, x: XData ): Boolean =
     isMaskedTs(x.convertFStoTS(frameStart, segment) , x.convertFStoTS(frameEnd, segment) )
 
-  def isMaskedFrame( range: RangeFr, segment: Int, x: XData ): Boolean ={
-    isMaskedFrame( range.getRangeFrValid(x), segment, x)
+  def isMaskedFrame( range: SampleRange, segment: Int, x: XData ): Boolean ={
+    isMaskedFrame( range.getSampleRangeValid(x), segment, x)
   }
 
-  def isMaskedFrame( rangeFrValid: RangeFrValid/*Range.Inclusive*/, segment: Int, x: XData ): Boolean ={
+  def isMaskedFrame( rangeFrValid: SampleRangeValid/*Range.Inclusive*/, segment: Int, x: XData ): Boolean ={
     isMaskedTs(x.convertFStoTS(rangeFrValid.start, segment) , x.convertFStoTS(rangeFrValid.last, segment) )
   }
 
@@ -129,12 +126,12 @@ import nounou.data.ranges.{RangeFrValid, RangeFrSpecifier, RangeFr}
   }
 
 
-  def getActiveMasks( rangeFr: RangeFrSpecifier, xFrames: XDataTiming ): TreeMap[Long, Long]  = {
-    val rangeFrValid = rangeFr.getRangeFrValid(xFrames)
+  def getActiveMasks( rangeFr: SampleRangeSpecifier, xFrames: XDataTiming ): TreeMap[Long, Long]  = {
+    val rangeFrValid = rangeFr.getSampleRangeValid(xFrames)
     getActiveMasks(rangeFrValid.start, rangeFrValid.last)
   }
 
-  def getActiveMasksA( rangeFr: RangeFrSpecifier, xFrames: XDataTiming ): Array[Array[Long]]  = {
+  def getActiveMasksA( rangeFr: SampleRangeSpecifier, xFrames: XDataTiming ): Array[Array[Long]]  = {
     getActiveMasks( rangeFr, xFrames ).map( ele => Array(ele._1, ele._2)).toArray
   }
 

@@ -7,28 +7,12 @@ import nounou.data.traits.XDataTiming
  * @author ktakagaki
  * @date 3/19/14.
  */
-object RangeTS {
+class SampleRangeTS(val startTS: Long, val lastTS: Long, val stepTS: Long) extends SampleRangeSpecifier {
 
-  /** Gives a [[nounou.data.ranges.RangeFrSpecifier]] object which specifies
-    * start, end, and step based on timestamps (absolute microseconds).
-    * @param step must be -1 (default; one data frame step) or a real frame step that amounts to > 0
-    *             when converted with the appropriate frame rate
-    */
-  def apply(startTS: Long, lastTS: Long, step: Long) = new RangeTS(startTS, lastTS, step)
+  loggerRequire( startTS <= lastTS, s"FrameRangeTS requires startTS <= lastTS. startTS=$startTS, lastTS=$lastTS")
+  loggerRequire( stepTS >= 1 || stepTS == -1, s"step must be -1 (automatic) or positive. Invalid value: $stepTS")
 
-  /** Gives a [[nounou.data.ranges.RangeFrSpecifier]] object which specifies
-    * start, end, and step based on timestamps (absolute microseconds).
-    * Step size will be a default value of 1 data frame.
-    */
-  def apply(startTS: Long, lastTS: Long) = new RangeTS(startTS, lastTS)
-
-}
-
-class RangeTS(val startTS: Long, val lastTS: Long, val stepTS: Long) extends RangeFrSpecifier {
-
-  override def toString() = s"RangeTs($startTS, $lastTS, $stepTS)"
-
-  def this(startTS: Long, endTS: Long) = this(startTS, endTS, -1L)
+  override def toString() = s"FrameRangeTS($startTS, $lastTS, $stepTS)"
 
   // <editor-fold defaultstate="collapsed" desc=" RangeFrSpecifier methods ">
     
@@ -50,17 +34,17 @@ class RangeTS(val startTS: Long, val lastTS: Long, val stepTS: Long) extends Ran
     }
     realStepFramesBuffer
   }
-  override final def getRangeFrReal(xDataTiming: XDataTiming): Range.Inclusive = {
+  override final def getSampleRangeReal(xDataTiming: XDataTiming): Range.Inclusive = {
     realSegmentBufferRefresh(xDataTiming)
     Range.inclusive( realStartFrameBuffer, realLastFrameBuffer, getRealStep(xDataTiming))
     //Range.inclusive( 0, xDataTiming.segmentLength(getRealSegment(xDataTiming)), getRealStep(xDataTiming))
   }
 
-  override final def getRangeFrValid(xDataTiming: XDataTiming): Range.Inclusive = {
+  override final def getSampleRangeValid(xDataTiming: XDataTiming): Range.Inclusive = {
     realSegmentBufferRefresh(xDataTiming)
-    val realSegment = RangeFr(realStartFrameBuffer, realLastFrameBuffer, getRealStep(xDataTiming), OptSegment(realSegmentBuffer))
+    val realSegment = FrameRange(realStartFrameBuffer, realLastFrameBuffer, getRealStep(xDataTiming), OptSegment(realSegmentBuffer))
     //val realSegment = RangeFr(0, xFrames.segmentLength(realSegmentBuffer), getRealStep(xFrames), OptSegment(realSegmentBuffer))
-    realSegment.getRangeFrValid(xDataTiming)
+    realSegment.getFrameRangeValid(xDataTiming)
   }
   
   // </editor-fold>
