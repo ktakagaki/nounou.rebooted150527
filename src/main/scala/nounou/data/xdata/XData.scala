@@ -4,7 +4,7 @@ import nounou._
 import scala.collection.immutable.Vector
 import nounou.data.traits._
 import breeze.linalg.{DenseVector => DV}
-import nounou.data.ranges.{RangeFrValid, RangeFrAll, RangeFrSpecifier, RangeFr}
+import nounou.data.ranges.{SampleRangeValid, SampleRangeAll, SampleRangeSpecifier}
 
 /** Base class for data encoded as Int arrays.
   * This object is mutable, to allow inheritance by [[nounou.data.filters.XDataFilter]].
@@ -40,22 +40,34 @@ abstract class XData extends X with XConcatenatable with XDataTiming with XChann
   final def clearChildren(xs: TraversableOnce[XData]): Unit = xs.map( clearChild(_) )
 
   /** Must be overriden and expanded, especially by buffering functions
-    * and functions which have an active update which must be updated.
+    * and display functions which have an internal state to update.
+    * Always remember to start with super.changedData(), in order to
+    * map to all children.
     */
   def changedData(): Unit = _children.map(_.changedData())
   /** Must be overriden and expanded, especially by buffering functions
-    * and functions which have an active update which must be updated.
+    * and display functions which have an internal state to update.
+    * Always remember to start with super.changedData(Int), in order to
+    * map to all children.
     */
   def changedData(channel: Int): Unit = _children.map(_.changedData(channel))
-  def changedData(channels: Vector[Int]): Unit = _children.map(_.changedData(channels))
   /** Must be overriden and expanded, especially by buffering functions
-    * and functions which have an active update which must be updated.
+    * and display functions which have an internal state to update.
+    * Always remember to start with super.changedData(Array[Int]), in order to
+    * map to all children.
+    */
+  def changedData(channels: Array[Int]): Unit = _children.map(_.changedData(channels))
+  /** Must be overriden and expanded, especially by buffering functions
+    * and display functions which have an internal state to update.
     * Covers sampleRate, segmentLengths, segmentEndTSs, segmentStartTSs, segmentCount
+    * Always remember to start with super.changedTiming(), in order to
+    * map to all children.
     */
   def changedTiming(): Unit = _children.map(_.changedTiming())
   /** Must be overriden and expanded, especially by buffering functions
-    * and functions which have an active update which must be updated.
-    * Covers
+    * and display functions which have an internal state to update.
+    * Always remember to start with super.changedLayout(), in order to
+    * map to all children.
     */
   def changedLayout(): Unit = _children.map(_.changedLayout())
 
@@ -79,22 +91,22 @@ abstract class XData extends X with XConcatenatable with XDataTiming with XChann
     * Implement via readPointImpl. Prefer [[readTrace()]] and [[readFrame()]]
     * when possible, as these will avoid repeated function calling overhead.
     */
-  def readPoint(channel: Int, frame: Int, optSegment: OptSegment): Int = {
-    require(isRealisticFrsg(frame, getRealSegment(optSegment)), "Unrealistic frame/segment: " + frame.toString)
+  def readPoint(channel: Int, frame: Int, segment: Int /*optSegment: OptSegment*/): Int = {
+    require(isRealisticFrsg(frame, getRealSegment(segment)), "Unrealistic frame/segment: " + frame.toString)
     require(isValidChannel(channel), "Invalid channel: " + channel.toString)
 
-    if( isValidFrsg(frame, getRealSegment(optSegment)) ) readPointImpl(channel, frame, getRealSegment(optSegment)) else 0
+    if( isValidFrsg(frame, getRealSegment(segment)) ) readPointImpl(channel, frame, getRealSegment(segment)) else 0
   }
-  final def readPoint(channel: Int, frame: Int, segment: Int): Int = readPoint(channel, frame, OptSegment(segment))
-  final def readPoint(channel: Int, frame: Int): Int = readPoint(channel, frame, OptSegmentAutomatic)
+  //final def readPoint(channel: Int, frame: Int, segment: Int): Int = readPoint(channel, frame, OptSegment(segment))
+  final def readPoint(channel: Int, frame: Int): Int = readPoint(channel, frame, 1)//OptSegmentAutomatic)
 
   // <editor-fold defaultstate="collapsed" desc=" convenience readPoint variations ">
 
   /** [[readPoint()]] but in physical units.
     */
   final def readPointAbs(channel: Int, frame: Int, segment: Int): Double = convertINTtoABS( readPoint(channel, frame, segment) )
-  final def readPointAbs(channel: Int, frame: Int, optSegment: OptSegment): Double = convertINTtoABS( readPoint(channel, frame, optSegment) )
-  final def readPointAbs(channel: Int, frame: Int): Double = readPointAbs(channel, frame, OptSegmentAutomatic)
+  //final def readPointAbs(channel: Int, frame: Int, optSegment: OptSegment): Double = convertINTtoABS( readPoint(channel, frame, optSegment) )
+  final def readPointAbs(channel: Int, frame: Int): Double = readPointAbs(channel, frame, -1)//OptSegmentAutomatic)
 
   // </editor-fold>
 
@@ -108,30 +120,24 @@ abstract class XData extends X with XConcatenatable with XDataTiming with XChann
 
   /**  CAN OVERRIDE: Read a single trace from the data, in internal integer scaling.
     */
-  def readTrace(channel: Int, range: RangeFrSpecifier): DV[Int] = {
+  def readTrace(channel: Int, range: SampleRangeSpecifier): DV[Int] = {
 
     loggerRequire(isRealisticRange(range), "Unrealistic frame/segment: " + range.toString)
     loggerRequire(isValidChannel(channel), "Invalid channel: " + channel.toString)
 
-    val preValidPost = range.getRangeFrValidPrePost(this)
+    val preValidPost = range.getSampleRangeValidPrePost(this)
     readTracePVPImpl(channel, preValidPost)
-//
-//    //ToDo 3: organize the range handling a bit more
-//    val seg = range.getRealSegment(this)
-//    val realRange = range.getRangeFrReal(this)
-//    val rangeFr = RangeFr(realRange.start, realRange.last, realRange.step, OptSegment(seg) )
-//
-//    val totalLength =  segmentLength( seg )
-//    val preLength = rangeFr.preLength( totalLength )
-//    val postLength = rangeFr.postLength( totalLength )
-//
-//    val vr = range.getRangeFrValid(this)
-//    val tempData: DV[Int] = if( vr.length == 0 ) DV[Int]() else readTraceImpl(channel, vr, range.getRealSegment(this))
-//
-//    DV.vertcat( DV.zeros[Int]( preLength ), tempData, DV.zeros[Int]( postLength ) )
 
   }
-  private final def readTracePVPImpl(channel: Int, preValidPost: (Int, RangeFrValid, Int)): DV[Int] = {
+  /** CAN OVERRIDE:
+    *
+    */
+  def readTrace(channels: Array[Int],  range: SampleRangeSpecifier): Array[DV[Int]] = {
+    val preValidPost = range.getSampleRangeValidPrePost(this)
+    channels.map( readTracePVPImpl(_, preValidPost) )
+  }
+
+  private final def readTracePVPImpl(channel: Int, preValidPost: (Int, SampleRangeValid, Int)): DV[Int] = {
     val validTrace = readTraceImpl(channel, preValidPost._2)
     preValidPost match {
       case (0, rfv, 0) => validTrace
@@ -141,55 +147,48 @@ abstract class XData extends X with XConcatenatable with XDataTiming with XChann
     }
   }
 
-  /** CAN OVERRIDE:
-    *
-    */
-  def readTrace(channels: Array[Int],  range: RangeFrSpecifier): Array[DV[Int]] = {
-    val preValidPost = range.getRangeFrValidPrePost(this)
-    channels.map( readTracePVPImpl(_, preValidPost) )
-  }
 
   // <editor-fold defaultstate="collapsed" desc=" convenience readTrace variations ">
 
   /** Read a single trace in internal integer scaling.
     */
-  final def readTrace(channel: Int): DV[Int] = readTrace(channel, RangeFrAll())
+  final def readTrace(channel: Int): DV[Int] = readTrace(channel, SampleRangeAll())
 
   /** Read a single trace in absolute unit scaling (as recorded).
     */
   final def readTraceAbs(channel: Int): DV[Double] =                                                 convertINTtoABS(readTrace(channel))
-  final def readTraceAbs(channel: Int,         range: RangeFrSpecifier): DV[Double] =                convertINTtoABS(readTrace(channel, range))
-  final def readTraceAbs(channels: Array[Int], range: RangeFrSpecifier): Array[DV[Double]] =         readTrace(channels, range).map( convertINTtoABS(_) )
+  final def readTraceAbs(channel: Int,         range: SampleRangeSpecifier): DV[Double] =                convertINTtoABS(readTrace(channel, range))
+  final def readTraceAbs(channels: Array[Int], range: SampleRangeSpecifier): Array[DV[Double]] =         readTrace(channels, range).map( convertINTtoABS(_) )
 
 
   final def readTraceA(channel: Int) =                                                               readTrace(channel).toArray
-  final def readTraceA(channel: Int,           range: RangeFrSpecifier) =                            readTrace(channel, range).toArray
-  final def readTraceA(channels: Array[Int],   range: RangeFrSpecifier): Array[Array[Int]] =         readTrace(channels, range).map(_.toArray)
+  final def readTraceA(channel: Int,           range: SampleRangeSpecifier) =                            readTrace(channel, range).toArray
+  final def readTraceA(channels: Array[Int],   range: SampleRangeSpecifier): Array[Array[Int]] =         readTrace(channels, range).map(_.toArray)
   final def readTraceA(channel: Int,           range: Array[Int]): Array[Int] =                readTraceA(channel, convertARRtoRANGE(range))
-  final def readTraceA(channels: Array[Int], range: Array[Int]): Array[Array[Int]] =           readTraceA(channels, convertARRtoRANGE(range))
+//  final def readTraceA(channels: Array[Int], range: Array[Int]): Array[Array[Int]] =           readTraceA(channels, convertARRtoRANGE(range))
 
   final def readTraceAbsA(channel: Int): Array[Double] = readTraceAbs(channel).toArray
-  final def readTraceAbsA(channel: Int,         range: RangeFrSpecifier): Array[Double] =                readTraceAbs(channel, range).toArray
-  final def readTraceAbsA(channels: Array[Int], range: RangeFrSpecifier): Array[Array[Double]] =         readTraceAbs(channels, range).map(_.toArray)
+  final def readTraceAbsA(channel: Int,         range: SampleRangeSpecifier): Array[Double] =                readTraceAbs(channel, range).toArray
+//  final def readTraceAbsA(channels: Array[Int], range: SampleRangeSpecifier): Array[Array[Double]] =         readTraceAbs(channels, range).map(_.toArray)
   final def readTraceAbsA(channel: Int,         range: Array[Int]): Array[Double] =                readTraceAbsA(channel, convertARRtoRANGE(range))
-  final def readTraceAbsA(channels: Array[Int], range: Array[Int]): Array[Array[Double]] =         readTraceAbsA(channels, convertARRtoRANGE(range))
+//  final def readTraceAbsA(channels: Array[Int], range: Array[Int]): Array[Array[Double]] =         readTraceAbsA(channels, convertARRtoRANGE(range))
 
-  private def convertARRtoRANGE(array: Array[Int]): RangeFrSpecifier = {
-    loggerRequire(array != null, "Input array cannot be null!")
-    array.length match {
-      case 0 => RangeFrAll()
-      //case 1 => RangeFrAll(array(0))
-      case 2 => RangeFr(array(0), array(1))
-      case 3 => RangeFr(array(0), array(1), array(2))
-    }
-  }
+//  private def convertARRtoRANGE(array: Array[Int]): SampleRangeSpecifier = {
+//    loggerRequire(array != null, "Input array cannot be null!")
+//    array.length match {
+//      case 0 => SampleRangeAll()
+//      //case 1 => RangeFrAll(array(0))
+//      case 2 => SampleRange(array(0), array(1))
+//      case 3 => SampleRange(array(0), array(1), array(2))
+//    }
+//  }
 
   //</editor-fold>
 
   /** CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
     * Should return a defensive clone. Assumes that channel and range are within the data range!
     */
-  def readTraceImpl(channel: Int, rangeFrValid: RangeFrValid/*range: Range.Inclusive, segment: Int*/): DV[Int] = {
+  def readTraceImpl(channel: Int, rangeFrValid: SampleRangeValid/*range: Range.Inclusive, segment: Int*/): DV[Int] = {
     val res = DV.zeros[Int]( rangeFrValid.length )
     nounou.util.forJava(rangeFrValid.start, rangeFrValid.last + 1, rangeFrValid.step, (c: Int) => (res(c) = readPointImpl(channel, c, rangeFrValid.segment)))
     res

@@ -3,10 +3,10 @@ package nounou.data.ranges
 import nounou.data.traits.XDataTiming
 import nounou.util.LoggingExt
 
-/** This trait specifies a range of data frames to extract, for instance, when reading data traces.</br>
-  * It allows specification of ranges such as "all frames"
+/** This trait specifies a range of data samples to extract, for instance, when reading data traces.
+  * It allows specification of ranges such as "all samples"
   * ([[nounou.data.ranges.SampleRangeAll]]) and millisecond- or timestamp(Long)-
-  * dependent frame ranges. These specifications can only be resolved to real data frame
+  * dependent sample ranges. These latter specifications can only be resolved to real data frame
   * ranges using sampling information given in the actual data
   * ([[nounou.data.traits.XDataTiming]]).
   */
@@ -16,22 +16,25 @@ trait SampleRangeSpecifier extends LoggingExt {
     */
   def getRealSegment(xDataTiming: XDataTiming): Int
 
-  /** Returns the real frame steps for the frame range, taking into account -1 for automatic determination.
+  /** Returns the real step for the sample range in units of single data samples,
+    * taking into account -1 for automatic determination.
     */
   def getRealStep(xDataTiming: XDataTiming): Int
   
-  /** Returns the concrete real frame range with start (can be negative), end (can be beyond end of assumed data),
+  /** Returns the concrete real sample range with start (can be negative, starting before the data),
+    * end (can be beyond end of assumed data as specified in xDataTiming),
     * steps (must be positive int), and segment (present within assumed data).
     */
-  def getFrameRangeReal(xDataTiming: XDataTiming): SampleRangeReal //Range.Inclusive
-  /** Returns the concrete valid frame range with start/end (within assumed data),
+  def getSampleRangeReal(xDataTiming: XDataTiming): SampleRangeReal
+  /** Returns the concrete valid sample range with start/end (within assumed data),
     * steps (must be positive int), and segment (present within assumed data).
+    * In contrast to [[getSampleRangeReal()]], the resulting sample range here cuts off overhangs.
     */
-  def getFrameRangeValid(xDataTiming: XDataTiming): SampleRangeValid //Range.Inclusive
-  /** Returns [[getFrameRangeValid]], along with pre- and post- padding frame counts
-    * for when the range exceeds available data.
+  def getSampleRangeValid(xDataTiming: XDataTiming): SampleRangeValid
+  /** Returns [[getSampleRangeValid]], along with pre- and post- padding sample counts
+    * for when the original sample range exceeds/overhangs the available data.
     */
-  def getFrameRangeValidPrePost(xDataTiming: XDataTiming): (Int, SampleRangeValid, Int)
+  def getSampleRangeValidPrePost(xDataTiming: XDataTiming): (Int, SampleRangeValid, Int)
 
   // </editor-fold>
 

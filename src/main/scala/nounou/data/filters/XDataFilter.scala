@@ -1,7 +1,7 @@
 package nounou.data.filters
 
 import nounou._
-import nounou.data.ranges.{RangeFrSpecifier, RangeFrValid}
+import nounou.data.ranges.{SampleRangeSpecifier, SampleRangeValid}
 import nounou.data.{XLayout, X, XData}
 import breeze.linalg.{DenseVector => DV}
 
@@ -39,17 +39,18 @@ class XDataFilter( private var _parent: XData ) extends XData {
 
   // <editor-fold defaultstate="collapsed" desc=" adjust reading functions for active state ">
 
-  override final def readPoint(channel: Int, frame: Int, optSegment: OptSegment): Int = if(_active){
-    super.readPoint(channel, frame, optSegment)
+  override final def readPoint(channel: Int, frame: Int, segment: Int): Int = if(_active){
+    super.readPoint(channel, frame, segment)
   }else{
-    _parent.readPoint(channel, frame, optSegment)
+    _parent.readPoint(channel, frame, segment)
   }
 
-  override final def readTrace(channel: Int, range: RangeFrSpecifier): DV[Int] = if(_active){
-    super.readTrace(channel, range)
-  }else{
-    _parent.readTrace(channel, range)
-  }
+  override final def readTrace(channel: Int, range: SampleRangeSpecifier): DV[Int] =
+    if(_active){
+      super.readTrace(channel, range)
+    }else{
+      _parent.readTrace(channel, range)
+    }
     // </editor-fold>
 
 
@@ -58,7 +59,7 @@ class XDataFilter( private var _parent: XData ) extends XData {
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = _parent.readPointImpl(channel, frame, segment: Int)
   //override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] = _parent.readTraceImpl(channel, range, segment: Int)
-  override def readTraceImpl(channel: Int, rangeFrValid: RangeFrValid/*, segment: Int*/): DV[Int] = _parent.readTraceImpl(channel, rangeFrValid/*, segment: Int*/)
+  override def readTraceImpl(channel: Int, range: SampleRangeValid): DV[Int] = _parent.readTraceImpl(channel, range)
 //  override def readFrameImpl(frame: Int): DV[Int] = _parent.readFrameImpl(frame)
 //  override def readFrameImpl(frame: Int, channels: Array[Int]): DV[Int] = _parent.readFrameImpl(frame, channels)
 

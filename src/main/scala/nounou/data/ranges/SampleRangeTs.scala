@@ -9,10 +9,10 @@ import nounou.data.traits.XDataTiming
  */
 class SampleRangeTS(val startTS: Long, val lastTS: Long, val stepTS: Long) extends SampleRangeSpecifier {
 
-  loggerRequire( startTS <= lastTS, s"FrameRangeTS requires startTS <= lastTS. startTS=$startTS, lastTS=$lastTS")
+  loggerRequire( startTS <= lastTS, s"SampleRangeTS requires startTS <= lastTS. startTS=$startTS, lastTS=$lastTS")
   loggerRequire( stepTS >= 1 || stepTS == -1, s"step must be -1 (automatic) or positive. Invalid value: $stepTS")
 
-  override def toString() = s"FrameRangeTS($startTS, $lastTS, $stepTS)"
+  override def toString() = s"SampleRangeTS($startTS, $lastTS, $stepTS)"
 
   // <editor-fold defaultstate="collapsed" desc=" RangeFrSpecifier methods ">
     
@@ -42,9 +42,8 @@ class SampleRangeTS(val startTS: Long, val lastTS: Long, val stepTS: Long) exten
 
   override final def getSampleRangeValid(xDataTiming: XDataTiming): Range.Inclusive = {
     realSegmentBufferRefresh(xDataTiming)
-    val realSegment = FrameRange(realStartFrameBuffer, realLastFrameBuffer, getRealStep(xDataTiming), OptSegment(realSegmentBuffer))
-    //val realSegment = RangeFr(0, xFrames.segmentLength(realSegmentBuffer), getRealStep(xFrames), OptSegment(realSegmentBuffer))
-    realSegment.getFrameRangeValid(xDataTiming)
+    val realSegment = new SampleRangeReal(realStartFrameBuffer, realLastFrameBuffer, getRealStep(xDataTiming), realSegmentBuffer)
+    realSegment.getSampleRangeValid(xDataTiming)
   }
   
   // </editor-fold>
@@ -72,38 +71,4 @@ class SampleRangeTS(val startTS: Long, val lastTS: Long, val stepTS: Long) exten
     }
   }
 
-
-
-
 }
-
-
-
-
-
-
-//class All(step: Double) extends RangeMs(0, 0, step, true)
-
-//  /** Gives a [[nounou.data.ranges.RangeFrSpecifier]] object which specifies
-//    * start, end, and step based on timestamps (absolute microseconds).
-//    * @param step must be -1 (default; one data frame step) or a real frame step that amounts to > 0
-//    *             when converted with the appropriate frame rate
-//    */
-//  def apply(startTs: Long, lastTs: Long, step: Long, optSegment: OptSegment) = new RangeTs(startTs, lastTs, step, optSegment)
-
-
-//  /** Gives a [[nounou.data.ranges.RangeFrSpecifier]] object which specifies
-//    * start, end, and step based on timestamps (absolute microseconds).
-//    * Step size will be a default value of 1 data frame.
-//    */
-//  def apply(startTs: Long, lastTs: Long, optSegment: OptSegment) = new RangeTs(startTs, lastTs, optSegment)
-
-
-
-//  private def getRangeFr(xFrames: XFrames): RangeFr = {
-//    realSegmentBufferRefresh(xFrames)
-//    RangeFr(realStartFrameBuffer, realLastFrameBuffer, getRealStep(xFrames), OptSegment(realSegmentBuffer))
-//  }
-
-//  override def getSegment(): Int = -1
-//  override def getOptSegment(): OptSegment = OptSegment(-1)

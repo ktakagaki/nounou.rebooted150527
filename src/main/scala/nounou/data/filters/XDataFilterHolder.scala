@@ -1,5 +1,6 @@
 package nounou.data.filters
 
+import _root_.nounou.data.ranges.SampleRangeValid
 import nounou.data._
 import breeze.linalg.{DenseVector => DV}
 
@@ -54,8 +55,8 @@ class XDataFilterHolder extends XData with XDataAux {
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
     heldData.readPointImpl(channel, frame, segment)
-  override def readTraceImpl(channel: Int, range: Range.Inclusive, segment: Int): DV[Int] =
-    heldData.readTraceImpl(channel, range, segment)
+  override def readTraceImpl(channel: Int, range: SampleRangeValid): DV[Int] =
+    heldData.readTraceImpl(channel, range)
 //  override def readFrameImpl(frame: Int): DV[Int] =
 //    heldData.readFrameImpl(frame)
 //  override def readFrameImpl(frame: Int, channels: Array[Int]): DV[Int] =

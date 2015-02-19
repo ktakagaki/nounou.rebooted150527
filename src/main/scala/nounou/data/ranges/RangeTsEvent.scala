@@ -1,30 +1,25 @@
 package nounou.data.ranges
 
-import nounou._
+import nounou.NN._
 import nounou.data.traits.XDataTiming
 
 /**Encapsulates a TS(timestamp, Long)-based frame range, with appropriate values.
   * @author ktakagaki
   * @date 3/19/14.
   */
-object RangeTSEvent {
+object SampleRangeTSEvent {
 
-  /** Gives a [[nounou.data.ranges.RangeFrSpecifier]] object which specifies
-    * an event range based on timestamps (absolute microseconds) and pre/post frames.
-    * @param step must be -1 (default; one data frame step) or a real frame step that amounts to > 0
-    *             when converted with the appropriate frame rate
-    */
-  def apply(eventTS: Long, preFrames: Int, postFrames: Int, step: Int) = new RangeTSEvent(eventTS, preFrames, postFrames, step)
+  def apply(eventTS: Long, preFrames: Int, postFrames: Int, step: Int) = new SampleRangeTSEvent(eventTS, preFrames, postFrames, step)
 
-  /** Gives a [[nounou.data.ranges.RangeFrSpecifier]] object which specifies
+  /** Gives a [[nounou.data.ranges.SampleRangeSpecifier]] object which specifies
     * an event range based on timestamps (absolute microseconds) and pre/post frames.
     * Step size will be a default value of 1 data frame.
     */
-  def apply(eventTS: Long, preFrames: Int, postFrames: Int) = new RangeTSEvent(eventTS, preFrames, postFrames)
+  def apply(eventTS: Long, preFrames: Int, postFrames: Int) = new SampleRangeTSEvent(eventTS, preFrames, postFrames)
 
 }
 
-class RangeTSEvent(val eventTS: Long, val preFrames: Int, val postFrames: Int, val step: Int) extends RangeFrSpecifier {
+class SampleRangeTSEvent(val eventTS: Long, val preFrames: Int, val postFrames: Int, val step: Int) extends SampleRangeSpecifier {
 
   override def toString() = s"RangeTsEvent($eventTS, $preFrames, $postFrames, $step)"
 
@@ -42,17 +37,17 @@ class RangeTSEvent(val eventTS: Long, val preFrames: Int, val postFrames: Int, v
 
   override def getRealStep(xDataTiming: XDataTiming): Int = step
 
-  override final def getRangeFrReal(xDataTiming: XDataTiming): Range.Inclusive = {
+  override final def getSampleRangeReal(xDataTiming: XDataTiming): Range.Inclusive = {
     realSegmentBufferRefresh(xDataTiming)
     Range.inclusive( realEventFrameBuffer-preFrames, realEventFrameBuffer+postFrames, getRealStep(xDataTiming))
     //Range.inclusive( 0, xDataTiming.segmentLength(getRealSegment(xDataTiming)), getRealStep(xDataTiming))
   }
 
-  override final def getRangeFrValid(xDataTiming: XDataTiming): Range.Inclusive = {
+  override final def getSampleRangeValid(xDataTiming: XDataTiming): Range.Inclusive = {
     realSegmentBufferRefresh(xDataTiming)
-    val realSegment = RangeFr(realEventFrameBuffer-preFrames, realEventFrameBuffer+postFrames, getRealStep(xDataTiming), OptSegment(realEventSegmentBuffer))
+    val realSegment = SampleRange(realEventFrameBuffer-preFrames, realEventFrameBuffer+postFrames, getRealStep(xDataTiming), realEventSegmentBuffer)
     //val realSegment = RangeFr(0, xFrames.segmentLength(realSegmentBuffer), getRealStep(xFrames), OptSegment(realSegmentBuffer))
-    realSegment.getRangeFrValid(xDataTiming)
+    realSegment.getSampleRangeValid(xDataTiming)
   }
 
   // </editor-fold>

@@ -1,6 +1,6 @@
 package nounou.data.filters
 
-import nounou.data.ranges.RangeFrValid
+import nounou.data.ranges.SampleRangeValid
 
 import scala.collection.mutable.{ArrayBuffer, WeakHashMap}
 import nounou.data.XData
@@ -46,7 +46,7 @@ class XDataFilterBuffer( private var _parent: XData ) extends XDataFilter(_paren
     flushBuffer( channel )
     for(child <- getChildren()) child.changedData( channel )
   }
-  override def changedData(channels: Vector[Int]) = {
+  override def changedData(channels: Array[Int]) = {
     flushBuffer( channels )
     for(child <- getChildren()) child.changedData( channels )
   }
@@ -63,7 +63,7 @@ class XDataFilterBuffer( private var _parent: XData ) extends XDataFilter(_paren
     garbageQue = garbageQue.filter( ( p: Long ) => (bufferHashKeyToChannel(p) != channel) )
   }
 
-  def flushBuffer(channels: Vector[Int]): Unit = {
+  def flushBuffer(channels: Array[Int]): Unit = {
     logger.debug( "flushBuffer({}) conducted", channels.toString )
     buffer = buffer.filterNot( ( p:(Long, DenseVector[Int]) ) => ( channels.contains( bufferHashKeyToChannel(p._1) ) ) )
     garbageQue = garbageQue.filterNot( ( p:Long ) => ( channels.contains( bufferHashKeyToChannel(p) ) ) )
@@ -134,7 +134,7 @@ class XDataFilterBuffer( private var _parent: XData ) extends XDataFilter(_paren
   // <editor-fold defaultstate="collapsed" desc=" ReadingHashMapBuffer ">
 
   //redirection function to deal with scope issues regarding super
-  private def tempTraceReader(ch: Int, rangeFrValid: RangeFrValid) = _parent.readTraceImpl(ch, rangeFrValid)
+  private def tempTraceReader(ch: Int, rangeFrValid: SampleRangeValid) = _parent.readTraceImpl(ch, rangeFrValid)
 
   class ReadingHashMapBuffer extends WeakHashMap[Long, DenseVector[Int]] {
 
@@ -158,7 +158,7 @@ class XDataFilterBuffer( private var _parent: XData ) extends XDataFilter(_paren
     override def default( key: Long  ): DenseVector[Int] = {
       val startFrame = bufferHashKeyToPage(key) * bufferPageLength
       val endFramePlusOne: Int = scala.math.min( startFrame + bufferPageLength, segmentLength( bufferHashKeyToSegment(key) ) )
-      val returnValue = tempTraceReader( bufferHashKeyToChannel(key), new RangeFrValid(startFrame, endFramePlusOne-1, 1, bufferHashKeyToSegment(key))  )
+      val returnValue = tempTraceReader( bufferHashKeyToChannel(key), new SampleRangeValid(startFrame, endFramePlusOne-1, 1, bufferHashKeyToSegment(key))  )
       this.+=( key -> returnValue )
       returnValue
     }
