@@ -6,6 +6,9 @@ package nounou
  */
 package object util {
 
+  // <editor-fold defaultstate="collapsed" desc=" forJava ">
+
+
   /** Provides a quick java-based for loop, avoiding Scala for-comprehensions
     *
     */
@@ -19,6 +22,10 @@ package object util {
       count = count + step
     } else throw new IllegalArgumentException
   }
+
+  // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc=" isMatrix ">
 
   def isMatrix(data: Array[Array[Int]]): Boolean = {
     if(data==null) false
@@ -46,5 +53,15 @@ package object util {
       }
     }
   }
+
+  // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc=" getFileExtensionCapital ">
+
+  def getFileExtension(fileName: String): String = {
+    ??? //fileName.matches("*.")
+  }
+
+  // </editor-fold>
 
 }
