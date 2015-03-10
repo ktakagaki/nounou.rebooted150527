@@ -8,7 +8,7 @@ package object nounou extends LoggingExt {
 
   // <editor-fold defaultstate="collapsed" desc=" rangeInclusiveToFrameRange ">
 
-  import nounou.data.ranges._
+  import nounou.elements.ranges._
 
 //  //This implicit should not be triggered within the package (see next comment)... check by commenting and compiling
 //  //Use of this implicit implies OptSegmentAutomatic, i.e., a single-segment data set
