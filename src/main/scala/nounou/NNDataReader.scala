@@ -1,59 +1,60 @@
-package nounou
-
-import java.io.File
-
-import com.typesafe.scalalogging.slf4j.LazyLogging
-import nounou.data._
-import nounou.data.io.{FileAdapterGSDGSH, FileAdapterNEV, FileAdapterNCS, FileAdapterNEX}
-import nounou.data.filters._
-import scala.beans.BeanProperty
-import nounou.data.headers.{XHeaderNull, XHeader}
-
-
-object NNDataReader extends LazyLogging {
-
-  //ToDo 1: java.lang.IllegalStateException: Not on FX application thread
-//  def load(): Array[X]  =  {
-//    val fileChooser = new scalafx.stage.FileChooser
-//    //val extFilter = new ExtensionFilter
-//    val window = new scalafx.stage.Popup
-//    fileChooser.showOpenDialog(window)
+//package nounou
 //
-//    val filesChosen: List[File] = fileChooser.showOpenMultipleDialog(null).toList
-//    loadPostProcess(filesChosen.flatMap( load(_) ).toArray)
+//import java.io.File
+//
+//import com.typesafe.scalalogging.slf4j.LazyLogging
+//import nounou.elements._
+//import nounou.elements.data.{NNDataChannelArray, NNDataChannel}
+//import nounou.elements.io.{FileAdapterNEV, FileAdapterNCS}
+//import nounou.elements.data.filters._
+//import scala.beans.BeanProperty
+//import nounou.elements.headers.{NNHeaderNull$$, NNHeader}
+//
+//
+//object NNDataReader extends LazyLogging {
+//
+//  //ToDo 1: java.lang.IllegalStateException: Not on FX application thread
+////  def load(): Array[X]  =  {
+////    val fileChooser = new scalafx.stage.FileChooser
+////    //val extFilter = new ExtensionFilter
+////    val window = new scalafx.stage.Popup
+////    fileChooser.showOpenDialog(window)
+////
+////    val filesChosen: List[File] = fileChooser.showOpenMultipleDialog(null).toList
+////    loadPostProcess(filesChosen.flatMap( load(_) ).toArray)
+////  }
+//
+//  def load(files: Array[String]): Array[NNElement] = loadPostProcess(files.flatMap( (file: String) => load( new File( file ) ) ))
+//
+//  def load(file: File): Array[NNElement] = {
+//    loadPostProcess(
+//    (file.getName.toLowerCase match {
+//      //case n: String if n.endsWith(".nex") => FileAdapterNEX.load( file )
+//      case n: String if n.endsWith(".ncs") => FileAdapterNCS.load( file )
+//      case n: String if n.endsWith(".nev") => FileAdapterNEV.load( file )
+//      //case n: String if (n.endsWith(".gsd") || n.endsWith(".gsh")) => FileAdapterGSDGSH.load( file )
+//      case n => throw new IllegalArgumentException("File format for " + n + " is not supported yet.")
+//    }).toArray )
 //  }
-
-  def load(files: Array[String]): Array[X] = loadPostProcess(files.flatMap( (file: String) => load( new File( file ) ) ))
-
-  def load(file: File): Array[X] = {
-    loadPostProcess(
-    (file.getName.toLowerCase match {
-      case n: String if n.endsWith(".nex") => FileAdapterNEX.load( file )
-      case n: String if n.endsWith(".ncs") => FileAdapterNCS.load( file )
-      case n: String if n.endsWith(".nev") => FileAdapterNEV.load( file )
-      case n: String if (n.endsWith(".gsd") || n.endsWith(".gsh")) => FileAdapterGSDGSH.load( file )
-      case n => throw new IllegalArgumentException("File format for " + n + " is not supported yet.")
-    }).toArray )
-  }
-
-  def load(string: String): Array[X] = load( new File(string) )
-
-  private def loadPostProcess(x: Array[X]): Array[X] = {
-    val tempretXDC = x.filter(_.isInstanceOf[XDataChannel]).map(_.asInstanceOf[XDataChannel])
-    if(tempretXDC.length > 1 && tempretXDC.head.isCompatible(tempretXDC.tail)){
-      Array( new XDataChannelArray(tempretXDC) ) ++ x.filter(!_.isInstanceOf[XDataChannel])
-    } else {
-      x
-    }
-  }
-
-}
-
-/**
-* @author ktakagaki
-*/
-class NNDataReader extends LazyLogging {
-}
+//
+//  def load(string: String): Array[NNElement] = load( new File(string) )
+//
+//  private def loadPostProcess(x: Array[NNElement]): Array[NNElement] = {
+//    val tempretXDC = x.filter(_.isInstanceOf[NNDataChannel]).map(_.asInstanceOf[NNDataChannel])
+//    if(tempretXDC.length > 1 && tempretXDC.head.isCompatible(tempretXDC.tail)){
+//      Array( new NNDataChannelArray(tempretXDC) ) ++ x.filter(!_.isInstanceOf[NNDataChannel])
+//    } else {
+//      x
+//    }
+//  }
+//
+//}
+//
+///**
+//* @author ktakagaki
+//*/
+//class NNDataReader extends LazyLogging {
+//}
 
 //  /**Header object covering the whole block.*/
 //  var header: XHeader = XHeaderNull
