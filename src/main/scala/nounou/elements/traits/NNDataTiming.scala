@@ -1,11 +1,16 @@
-package nounou.elements.data.traits
+package nounou.elements.traits
 
 import breeze.numerics.round
 import nounou.elements.NNElement
 import nounou.elements.ranges.SampleRangeSpecifier
 
-/**This trait of XData and XDataChannel objects encapsulates segment,
-  * frame, and sampling information for electrophysiological and imaging recordings..
+/**This trait of NNElement objects (especially [[nounou.elements.data.NNData]] encapsulates
+  * segment, frame, and sampling information for electrophysiological and imaging data.
+  *
+  * Envisioned uses are for [[nounou.elements.data.NNData]],
+  * [[nounou.elements.layouts.NNLayout]], and [[nounou.elements.NNSpikes]].
+  * Channel names/count are intentionally mutable for [[nounou.elements.data.filters.NNDataFilter]]
+  * objects which conduct binning and therefore may change dynamically.
   */
 trait NNDataTiming extends NNElement {
 

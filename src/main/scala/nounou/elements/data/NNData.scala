@@ -1,13 +1,11 @@
 package nounou.elements.data
 
 import nounou.elements.NNElement
-import nounou.elements.data.traits.{NNDataTiming, NNDataScale}
 import scala.collection.immutable.Vector
 import nounou._
 import nounou.elements.traits._
 import breeze.linalg.{DenseVector => DV}
 import nounou.elements.ranges.{SampleRange, SampleRangeValid, SampleRangeSpecifier}
-import nounou.elements.layouts.{NNLayoutNull, NNLayout}
 
 /** Base class for data encoded as Int arrays, this is the main data element for an experiment,
   * whether it be electrophysiolgical or high-sampling-rate imaging.
@@ -82,8 +80,8 @@ abstract class NNData extends NNElement with NNConcatenatable with NNDataTiming 
 
   // <editor-fold defaultstate="collapsed" desc=" NNLayout, channel count ">
 
-  def layout(): NNLayout
-  override def channelCount(): Int = layout().channelCount
+//  def layout(): NNLayout
+  override def channelCount(): Int// = layout().channelCount
 
   // </editor-fold>
 
@@ -328,7 +326,7 @@ class NNDataNull$ extends NNData {
   override def segmentLengthImpl(segment: Int): Int = 0
   override val segmentStartTs: Array[Long] = Array[Long]()
   override val sampleRate: Double = 1d
-  override val layout: NNLayout = NNLayoutNull
+//  override val layout: NNLayout = NNLayoutNull
 
 
   override def :::(x: NNElement): NNData = x match {

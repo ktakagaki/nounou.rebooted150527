@@ -10,7 +10,7 @@ import nounou.elements.traits.{NNChannels, NNConcatenatable}
  * new object should be generated.
  *
  */
-abstract class NNLayout extends NNElement with NNChannels {
+abstract class NNLayout extends NNChannels {
 
   override def toString() = "XLayout(fieldX="+fieldX+", fY="+fieldY+", fWidth="+fieldWidth+", fHeight="+fieldHeight+")"
 

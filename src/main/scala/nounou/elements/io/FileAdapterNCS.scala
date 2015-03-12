@@ -2,11 +2,10 @@ package nounou.elements.io
 
 import java.io.File
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
-import nounou.elements.data.traits.{NNDataTimingImmutable, NNDataTiming}
 import nounou.elements.NNElement
 import nounou.elements.data.NNDataChannelFilestream
 import nounou.elements.ranges.SampleRangeValid
-import scala.collection.mutable.ListBuffer
+import nounou.elements.traits.NNDataTimingImmutable
 import breeze.linalg.{DenseVector => DV, convert}
 
 /**

@@ -1,14 +1,15 @@
 package nounou.elements.traits
 
+import nounou.elements.NNElement
 import nounou.util.LoggingExt
 
-/**This trait of XData objects encapsulates the channel names and count information for
-  * electrophysiological and imaging recordings. Channel names/count may be immutable
-  * for XDataFilter objects which conduct binning
-  *
-  * Created by Kenta on 12/15/13.
+/**This trait of NNElement objects encapsulates the channel count information for
+  * electrophysiological and imaging data. Envisioned uses are for [[nounou.elements.data.NNData]],
+  * [[nounou.elements.layouts.NNLayout]], and [[nounou.elements.NNSpikes]].
+  * Channel names/count are intentionally mutable for [[nounou.elements.data.filters.NNDataFilter]]
+  * objects which conduct binning and therefore may change dynamically.
  */
-trait NNChannels extends LoggingExt {
+trait NNChannels extends NNElement with LoggingExt {
 
   /**Get the name of a given channel.
     * Throws error if channel out of range and not valid*/

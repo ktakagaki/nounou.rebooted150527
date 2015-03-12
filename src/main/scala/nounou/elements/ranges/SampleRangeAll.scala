@@ -3,7 +3,7 @@ package nounou.elements.ranges
 //import nounou.data.Frame
 
 import nounou._
-import nounou.elements.data.traits.NNDataTiming
+import nounou.elements.traits.NNDataTiming
 import nounou.util.LoggingExt
 
 //convenience accessors all to NN

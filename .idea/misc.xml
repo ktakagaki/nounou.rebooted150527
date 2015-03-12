@@ -3,7 +3,15 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" assert-keyword="true" jdk-15="true" project-jdk-name="1.8 (link)" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/target" />
+  </component>
+  <component name="ScaladocSettings">
+    <option name="outputDir" value="C:\prog\nounou\docs" />
+    <option name="additionalFlags" value="" />
+    <option name="maxHeapSize" value="" />
+    <option name="docTitle" value="nounou documentation" />
+    <option name="verbose" value="false" />
+    <option name="openInBrowser" value="true" />
   </component>
 </project>

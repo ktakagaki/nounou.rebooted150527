@@ -3,8 +3,7 @@ package nounou.elements.data
 import nounou._
 import nounou.elements.NNElement
 import java.io.DataInput
-import nounou.elements.data.traits.{NNDataTimingImmutable, NNDataTiming, NNDataScale}
-import nounou.elements.traits.NNConcatenatable
+import nounou.elements.traits.{NNDataTimingImmutable, NNDataTiming, NNDataScale, NNConcatenatable}
 import breeze.linalg.{DenseVector => DV}
 import nounou.elements.ranges.{SampleRangeSpecifier, SampleRangeValid, SampleRangeAll}
 
