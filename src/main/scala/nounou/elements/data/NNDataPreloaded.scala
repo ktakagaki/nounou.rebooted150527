@@ -4,8 +4,7 @@ import nounou._
 import nounou.elements.NNElement
 import nounou.elements.layouts.NNLayoutNull
 import nounou.elements.ranges.{SampleRangeValid, SampleRangeSpecifier}
-import nounou.elements.traits.NNConcatenatable
-import nounou.elements.data.traits.{NNDataTimingImmutable, NNDataTiming}
+import nounou.elements.traits.{NNDataTimingImmutable, NNConcatenatable}
 import breeze.linalg.{DenseMatrix => DM, DenseVector => DV}
 
 /**xdata class with internal representation as data array
@@ -47,37 +46,39 @@ class NNDataPreloaded(  val data: Array[DM[Int]],
       data(rangeFrValid.segment)( rangeFrValid.toRangeInclusive(), channel )
     }
 
-  // <editor-fold desc="XConcatenatable">
+//  // <editor-fold desc="XConcatenatable">
+//
+//    override def :::(that: NNElement): NNData = {
+//      that match {
+//        case t: NNDataPreloaded => {
+//          if(this.isCompatible(that)){
+//
+//            val oriThis = this
+//            new NNDataPreloaded( data = oriThis.data.zip(t.data).map( (tup: (DM[Int], DM[Int])) => DM.horzcat(tup._1, tup._2) ).toArray,
+//                                xBits = oriThis.xBits,
+//                                absGain = oriThis.absGain,
+//                                absOffset = oriThis.absOffset,
+//                                absUnit = oriThis.absUnit,
+//                                scaleMax = oriThis.scaleMax,
+//                                scaleMin = oriThis.scaleMin,
+//                                //channelNames = oriThis.channelNames ++ t.channelNames,
+//                                segmentStartTs = oriThis.segmentStartTs,
+//                    segmentLength = oriThis.segmentLength,
+//                                sampleRate = oriThis.sampleRate/*,
+//                                layout = oriThis.layout ::: t.layout*/
+//            )
+//          } else {
+//            throw new IllegalArgumentException("the two XDataPreloaded types are not compatible, and cannot be concatenated.")
+//          }
+//        }
+//        case _ => throw new IllegalArgumentException("the two X types are not compatible, and cannot be concatenated.")
+//      }
+//    }
+//
+//  // </editor-fold>
 
-    override def :::(that: NNElement): NNData = {
-      that match {
-        case t: NNDataPreloaded => {
-          if(this.isCompatible(that)){
-
-            val oriThis = this
-            new NNDataPreloaded( data = oriThis.data.zip(t.data).map( (tup: (DM[Int], DM[Int])) => DM.horzcat(tup._1, tup._2) ).toArray,
-                                xBits = oriThis.xBits,
-                                absGain = oriThis.absGain,
-                                absOffset = oriThis.absOffset,
-                                absUnit = oriThis.absUnit,
-                                scaleMax = oriThis.scaleMax,
-                                scaleMin = oriThis.scaleMin,
-                                //channelNames = oriThis.channelNames ++ t.channelNames,
-                                segmentStartTs = oriThis.segmentStartTs,
-                    segmentLength = oriThis.segmentLength,
-                                sampleRate = oriThis.sampleRate/*,
-                                layout = oriThis.layout ::: t.layout*/
-            )
-          } else {
-            throw new IllegalArgumentException("the two XDataPreloaded types are not compatible, and cannot be concatenated.")
-          }
-        }
-        case _ => throw new IllegalArgumentException("the two X types are not compatible, and cannot be concatenated.")
-      }
-    }
-
-  // </editor-fold>
   override def channelCount: Int = data.length
+
 }
 
 class NNDataPreloadedSingleSegment(

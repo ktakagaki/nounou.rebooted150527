@@ -4,8 +4,7 @@ import _root_.nounou.elements.ranges.SampleRangeValid
 import breeze.linalg.{DenseVector, min}
 import nounou._
 import nounou.elements.NNElement
-import nounou.elements.traits.NNConcatenatable
-import nounou.elements.data.traits.NNDataTiming
+import nounou.elements.traits.{NNDataTiming, NNConcatenatable}
 import nounou.elements.layouts.NNLayout
 
 /**Immutable data object to encapsulate arrays of [[NNDataChannel]] objects

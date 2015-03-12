@@ -1,6 +1,6 @@
 package nounou.elements.ranges
 
-import nounou.elements.data.traits.NNDataTiming
+import nounou.elements.traits.NNDataTiming
 import nounou.util.LoggingExt
 
 /** This trait specifies a range of data samples to extract, for instance, when reading data traces.
