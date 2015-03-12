@@ -2,7 +2,7 @@ package nounou.elements.ranges
 
 import breeze.linalg.{max, min}
 import nounou._
-import nounou.elements.data.traits.NNDataTiming
+import nounou.elements.traits.NNDataTiming
 import nounou.util.LoggingExt
 
 /**FrameRange is the central class for specifying frame-based
