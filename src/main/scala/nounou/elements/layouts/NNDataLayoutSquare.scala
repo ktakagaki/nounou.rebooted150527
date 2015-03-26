@@ -9,7 +9,7 @@ import _root_.nounou.elements.NNElement
  * @author takagaki
  *
  */
-class NNLayoutSquare(val xDimensions: Int, val yDimensions: Int) extends NNLayout {
+class NNDataLayoutSquare(val xDimensions: Int, val yDimensions: Int) extends NNDataLayoutSpatial {
 
   val channelRadius = 0.5D
   val channelCount = xDimensions*yDimensions
@@ -35,7 +35,7 @@ class NNLayoutSquare(val xDimensions: Int, val yDimensions: Int) extends NNLayou
                   (if( tempx < 0 ) 0 else if (tempx >= xDimensions ) xDimensions - 1 else tempx)
   }
 
-  override def channelToCoordinatesImpl(ch: Int): Vector[Double] = Vector( ( ch % xDimensions).toDouble, (ch / xDimensions).toDouble )
+  override def channelToCoordinatesImpl(ch: Int): Array[Double] = Array( ( ch % xDimensions).toDouble, (ch / xDimensions).toDouble )
 
 
 //  override def :::(x: NNElement): NNLayoutSquare = x match {

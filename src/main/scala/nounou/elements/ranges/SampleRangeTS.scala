@@ -58,8 +58,8 @@ class SampleRangeTS(val startTS: Long, val lastTS: Long, val stepTS: Long) exten
 
   private def realSegmentBufferRefresh(xDataTiming: NNDataTiming): Unit = {
     if( realSegmentXFrameBuffer != xDataTiming) {
-      val fs1 = xDataTiming.convertTStoFS(startTS)
-      val fs2 = xDataTiming.convertTStoFS(lastTS)
+      val fs1 = xDataTiming.convertTsToFrsg(startTS)
+      val fs2 = xDataTiming.convertTsToFrsg(lastTS)
       loggerRequire(fs1._2 == fs2._2, "The two specified timestamps belong to different recording segments " +
         fs1._2.toString + " and " + fs2._2.toString)
       realSegmentXFrameBuffer = xDataTiming
@@ -73,5 +73,4 @@ class SampleRangeTS(val startTS: Long, val lastTS: Long, val stepTS: Long) exten
       //println("Real segment buff " + realSegmentBuffer.toString )
     }
   }
-
 }

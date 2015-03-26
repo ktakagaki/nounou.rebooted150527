@@ -4,6 +4,6 @@ package nounou.elements.layouts
  * @author takagaki
  *
  */
-abstract class NNLayoutSingle extends NNLayout {
+abstract class NNDataLayoutSingle extends NNDataLayout {
 
 }

@@ -3,13 +3,20 @@ package nounou.elements.traits
 import nounou.elements.NNElement
 import nounou.util.LoggingExt
 
-/**This trait of NNElement objects encapsulates the channel count information for
+/**This subclass of NNElement objects encapsulates the channel count information for
   * electrophysiological and imaging data. Envisioned uses are for [[nounou.elements.data.NNData]],
-  * [[nounou.elements.layouts.NNLayout]], and [[nounou.elements.NNSpikes]].
+  * [[nounou.elements.layouts.NNDataLayout]].
   * Channel names/count are intentionally mutable for [[nounou.elements.data.filters.NNDataFilter]]
   * objects which conduct binning and therefore may change dynamically.
  */
-trait NNChannels extends NNElement with LoggingExt {
+trait NNChannelsElement extends NNElement {
+
+  /** Number of channels for this layout. Note that [[nounou.elements.data.NNData]] and [[nounou.elements.layouts.NNDataLayout]]
+    * both keep local channel counts,
+    * so equality should be tested before setting/using a certain [[nounou.elements.layouts.NNDataLayout]]
+    * to plot or interpret a certain [[nounou.elements.data.NNData]].
+    */
+  def channelCount: Int
 
   /**Get the name of a given channel.
     * Throws error if channel out of range and not valid*/
@@ -18,7 +25,6 @@ trait NNChannels extends NNElement with LoggingExt {
     channelNameImpl(channel)
   }
   def channelNameImpl(channel: Int): String = s"Class ${this.getClass}, channel #${channel}"
-  def channelCount: Int
 
   /** Is this channel valid?
     */

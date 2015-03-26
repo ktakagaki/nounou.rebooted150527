@@ -4,8 +4,9 @@ import nounou._
 import nounou.elements.NNElement
 import nounou.elements.data.NNData
 import nounou.elements.ranges.{SampleRangeSpecifier, SampleRangeValid}
-import nounou.elements.layouts.NNLayout
+import nounou.elements.layouts.NNDataLayout
 import breeze.linalg.{DenseVector => DV}
+import nounou.elements.traits.{NNDataScale, NNDataTiming}
 
 /** A passthrough object, which is overriden and inherited with various XDataFilterTr traits to create a filter block.
   */
@@ -63,23 +64,26 @@ class NNDataFilter( private var _parent: NNData ) extends NNData {
 //  override def readFrameImpl(frame: Int): DV[Int] = _parent.readFrameImpl(frame)
 //  override def readFrameImpl(frame: Int, channels: Array[Int]): DV[Int] = _parent.readFrameImpl(frame, channels)
 
-  override def absUnit: String = _parent.absUnit
-  override def absOffset: Double = _parent.absOffset
-  override def absGain: Double = _parent.absGain
-  override def scaleMax = _parent.scaleMax
-  override def scaleMin = _parent.scaleMin
+  override def getTiming() = _parent.timing()
+  override def getScale() = _parent.scale()
+  override def setTiming( timing: NNDataTiming ) =
+    throw loggerError(s"Cannot set timing for data filter ${this.getClass.getCanonicalName}.")
+  override def setScale( scale: NNDataScale ) =
+    throw loggerError(s"Cannot set scale for data filter ${this.getClass.getCanonicalName}.")
+//  override def absUnit: String = _parent.absUnit
+//  override def absOffset: Double = _parent.absOffset
+//  override def absGain: Double = _parent.absGain
+//  override def scaleMax = _parent.scaleMax
+//  override def scaleMin = _parent.scaleMin
 
-  override def sampleRate: Double = _parent.sampleRate
-  override def segmentEndTs: Array[Long] = _parent.segmentEndTs
-  override def segmentStartTs: Array[Long] = _parent.segmentStartTs
-  override def segmentLengthImpl(segment: Int): Int = _parent.segmentLengthImpl( segment )
-  override def segmentCount: Int = _parent.segmentCount
+//  override def sampleRate: Double = _parent.sampleRate
+//  override def segmentEndTs: Array[Long] = _parent.segmentEndTs
+//  override def segmentStartTs: Array[Long] = _parent.segmentStartTs
+//  override def segmentLengthImpl(segment: Int): Int = _parent.segmentLengthImpl( segment )
+//  override def segmentCount: Int = _parent.segmentCount
 
   /*override def layout: NNLayout = _parent.layout()*/
 
   override def isCompatible(target: NNElement) = false
-  override def :::(target: NNElement): NNData = {
-    throw loggerError("cannot append a XDataFilter object!")
-  }
 
 }

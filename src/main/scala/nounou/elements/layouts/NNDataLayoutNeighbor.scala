@@ -7,7 +7,7 @@ package nounou.elements.layouts
  * Time: 19:17
  * To change this template use File | Settings | File Templates.
  */
-trait NNLayoutNeighbor extends NNLayout {
+trait NNDataLayoutNeighbor extends NNDataLayout {
 
   def getNeighbor(channel: Int, direction: Int): Int = getNeighbor(channel, direction, 1)
   def getNeighbor(channel: Int, direction: Int, ring: Int): Int
