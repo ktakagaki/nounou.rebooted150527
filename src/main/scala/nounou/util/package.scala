@@ -58,9 +58,7 @@ package object util {
 
   // <editor-fold defaultstate="collapsed" desc=" getFileExtensionCapital ">
 
-  def getFileExtension(fileName: String): String = {
-    ??? //fileName.matches("*.")
-  }
+  def getFileExtension(fileName: String): String = fileName.split('.').last
 
   // </editor-fold>
 

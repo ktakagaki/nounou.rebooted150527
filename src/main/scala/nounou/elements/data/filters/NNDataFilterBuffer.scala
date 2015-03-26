@@ -158,7 +158,7 @@ class NNDataFilterBuffer( private var _parent: NNData ) extends NNDataFilter(_pa
 
     override def default( key: Long  ): DenseVector[Int] = {
       val startFrame = bufferHashKeyToPage(key) * bufferPageLength
-      val endFramePlusOne: Int = scala.math.min( startFrame + bufferPageLength, segmentLength( bufferHashKeyToSegment(key) ) )
+      val endFramePlusOne: Int = scala.math.min( startFrame + bufferPageLength, timing.segmentLength( bufferHashKeyToSegment(key) ) )
       val returnValue = tempTraceReader( bufferHashKeyToChannel(key), new SampleRangeValid(startFrame, endFramePlusOne-1, 1, bufferHashKeyToSegment(key))  )
       this.+=( key -> returnValue )
       returnValue

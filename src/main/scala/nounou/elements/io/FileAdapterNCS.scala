@@ -5,17 +5,16 @@ import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
 import nounou.elements.NNElement
 import nounou.elements.data.NNDataChannelFilestream
 import nounou.elements.ranges.SampleRangeValid
-import nounou.elements.traits.NNDataTimingImmutable
+import nounou.elements.traits.{NNDataScale, NNDataTiming}
 import breeze.linalg.{DenseVector => DV, convert}
 
 /**
- * @author ktakagaki
- */
-object FileAdapterNCS extends FileAdapterNLX {
+* @author ktakagaki
+*/
+class FileAdapterNCS extends FileAdapterNLX {
 
-  override val canWriteExt: Array[String] = Array[String]()
-  override val canLoadExt: Array[String] = Array[String]( "ncs" )
-
+  override val canLoadExtensions = Array("ncs")
+  def load( file: File ): Array[NNElement] = loadImpl( file )
 
   //Constants for NCS files
   //val headerBytes = 16384L FileAdapterNLX
@@ -35,7 +34,7 @@ object FileAdapterNCS extends FileAdapterNLX {
   val xBits = 1024
   lazy val xBitsD = xBits.toDouble
 
-  override def loadImpl(file: File): Array[NNElement] = {
+  private def loadImpl(file: File): Array[NNElement] = {
 
       fHand = new RandomAccessFile(file, "r")(ByteConverterLittleEndian)
 
@@ -52,7 +51,6 @@ object FileAdapterNCS extends FileAdapterNLX {
       // </editor-fold>
 
       val tempRecTSIncrement = 16000L //(1000000D * tempRecLength.toDouble/tempSampleFreqD).toLong
-      //require(tempRecTSIncrement == 16000L, "NCS file with non-standard combi of record length and sampling")
 
       //Calculate the number of records in the ncs file, based on the file length
       val tempNoRecords = ((fHand.length - headerBytes).toDouble/tempRecordSize.toDouble).toInt
@@ -183,62 +181,58 @@ object FileAdapterNCS extends FileAdapterNLX {
 
     //println("FANCS segmentLength " + tempLengths.toString)
 
-    val xDataChannelNCS = new NNDataChannelNCS(fileHandle = fHand,
-                                              absGain = 1.0E6 * tempADBitVolts / xBitsD,
-                                              scaleMax = Short.MaxValue.toInt*xBits,
-                                              scaleMin = Short.MinValue.toInt*xBits,
-                                              segmentLength = tempLengths.toArray,
-                                              segmentStartTs = tempStartTimestamps.toArray,
-                                              channelName = tempAcqEntName
+    val xDataChannelNCS = new NNDataChannelNCS(
+                  fileHandle = fHand,
+                  NNDataTiming.apply(32000d, tempLengths.toArray, tempStartTimestamps.toArray),
+                  NNDataScale.apply(Short.MinValue.toInt*xBits, Short.MaxValue.toInt*xBits,
+                          absGain = 1.0E6 * tempADBitVolts / xBitsD,
+                          absOffset = 0d,
+                          absUnit = "mV"),
+                  channelName = tempAcqEntName
                                               )
-
+    println("absGain " + xDataChannelNCS.scale.absGain)
     logger.info( "loaded {}", xDataChannelNCS )
     Array[NNElement]( xDataChannelNCS )
 
   }
-
 }
 
-/**A specialized immutable [nounou.data.XDataChannelFileStream] for NCS files.
- */
-class NNDataChannelNCS
-( override val fileHandle: RandomAccessFile,
-                       override val absGain: Double,
-                       override val scaleMax: Int,
-                       override val scaleMin: Int,
-                       override val segmentLength: Array[Int],
-                       override val segmentStartTs: Array[Long],
-                       override val channelName: String     )
-                              extends NNDataChannelFilestream
-                              with NNDataTimingImmutable {
+object FileAdapterNCS {
+  val instance = new FileAdapterNCS
+}
 
-  val t = FileAdapterNCS
-  override val absOffset: Double = t.absOffset
-  override val absUnit: String = t.absUnit
-  override val sampleRate: Double = t.sampleRate
-  override val xBits = t.xBits
+
+
+/**A specialized immutable [nounou.data.XDataChannelFileStream] for NCS files.
+  */
+class NNDataChannelNCS( override val fileHandle: RandomAccessFile,
+                        timingEntry: NNDataTiming, scaleEntry: NNDataScale,
+                        override val channelName: String ) extends NNDataChannelFilestream {
+
+  val t = FileAdapterNCS.instance
+
+  setTiming( timingEntry )
+  setScale( scaleEntry )
 
   def recordIndexStartByte(record: Int, index: Int) = {
     t.recordStartByte(record) + 20L + (index * 2)
   }
 
   def fsToRecordIndex(frame: Int, segment: Int) = {
-//    ( frame / t.recordSampleCount, frame % t.recordSampleCount)
-    val cumFrame = segmentStartFrames(segment) + frame
+    val cumFrame = timing.segmentStartFrame(segment) + frame
     ( cumFrame / t.recordSampleCount, cumFrame % t.recordSampleCount)
   }
-
 
   // <editor-fold defaultstate="collapsed" desc=" data implementations ">
 
   override def readPointImpl(frame: Int, segment: Int): Int = {
     val (record, index) = fsToRecordIndex( frame, segment )
     fileHandle.seek( recordIndexStartByte( record, index ) )
-    fileHandle.readInt16 * xBits
+    fileHandle.readInt16 * scale.xBits
   }
 
   override def readTraceDVImpl(range: SampleRangeValid): DV[Int] = {
-//println("XDataChannelNCS " + range.toString())
+    //println("XDataChannelNCS " + range.toString())
     var (currentRecord: Int, currentIndex: Int) = fsToRecordIndex(range.start, range.segment)
     val (endReadRecord: Int, endReadIndex: Int) = fsToRecordIndex(range.last, range.segment) //range is inclusive of lastValid
 
@@ -256,16 +250,16 @@ class NNDataChannelNCS
       //if the whole requested trace fits in one record
       val writeLen = (endReadIndex - currentIndex) + 1
       val writeEnd = currentTempRetPos + writeLen
-//      println( "writeLen " + writeLen.toString + " writeEnd " + writeEnd.toString )
+      //      println( "writeLen " + writeLen.toString + " writeEnd " + writeEnd.toString )
       //ToDo 3: improve breeze dv requirement documentation
-      tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(writeLen)), Int)  * xBits
+      tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(writeLen)), Int)  * scale.xBits
       currentTempRetPos = writeEnd
     } else {
-    //if the requested trace spans multiple records
+      //if the requested trace spans multiple records
 
       //read data contained in first record
       var writeEnd = currentTempRetPos + (512 - currentIndex)
-      tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(512 - currentIndex)), Int)  * xBits
+      tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(512 - currentIndex)), Int)  * scale.xBits
       currentRecord += 1
       currentTempRetPos = writeEnd
       fileHandle.jumpBytes(t.recordNonDataBytes)
@@ -273,7 +267,7 @@ class NNDataChannelNCS
       //read data from subsequent records, excluding lastValid record
       while (currentRecord < endReadRecord) {
         writeEnd = currentTempRetPos + 512
-        tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(512 /*- currentIndex*/)), Int) * xBits
+        tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(512 /*- currentIndex*/)), Int) * scale.xBits
         currentRecord += 1
         currentTempRetPos = writeEnd
         fileHandle.jumpBytes(t.recordNonDataBytes)
@@ -281,13 +275,13 @@ class NNDataChannelNCS
 
       //read data contained in lastValid record
       writeEnd = currentTempRetPos + endReadIndex + 1
-      tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(endReadIndex + 1)), Int) * xBits
+      tempRet(currentTempRetPos until writeEnd ) := convert( DV(fileHandle.readInt16(endReadIndex + 1)), Int) * scale.xBits
 
     }
 
     tempRet( 0 until tempRet.length by range.step )
 
     // </editor-fold>
-}
+  }
 
 }

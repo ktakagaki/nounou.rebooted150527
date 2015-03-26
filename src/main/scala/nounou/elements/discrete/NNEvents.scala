@@ -3,7 +3,6 @@ package nounou.elements
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.TreeSet
 import scala.collection.immutable.TreeMap
-import nounou.elements.traits.NNConcatenatable
 
 /**Database to encapsulate marked events in data recording.
   * Events are stored as [[NNEvent]] objects, which encapsulate timestamp, duration, code, and comment string.
@@ -12,7 +11,7 @@ import nounou.elements.traits.NNConcatenatable
   * (TreeSet's with black-red trees cannot support keys with equivalent sorting values)
   * @author ktakagaki
  */
-class NNEvents extends NNElement with NNConcatenatable {
+class NNEvents extends NNElement {
 
   private var _database: TreeMap[Int, TreeSet[NNEvent]] = new TreeMap[Int, TreeSet[NNEvent]]()
 
@@ -90,7 +89,7 @@ class NNEvents extends NNElement with NNConcatenatable {
 
   // <editor-fold desc="XConcatenatable">
 
-  override def :::(that: NNElement): NNEvents = ???
+  //override def :::(that: NNElement): NNEvents = ???
 //    that match {
 //      case x: XEvents => {
 //        new XEvents( this._database ++ x._database)

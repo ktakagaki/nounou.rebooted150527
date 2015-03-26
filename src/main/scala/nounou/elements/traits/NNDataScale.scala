@@ -3,6 +3,7 @@ package nounou.elements.traits
 import breeze.linalg.DenseVector
 import nounou.elements.NNElement
 
+
 /**This trait of XData and XDataChannel objects encapsulates scaling and unit information for
  * electrophysiological and imaging recordings.
   *
@@ -13,72 +14,69 @@ trait NNDataScale extends NNElement {
   /**The number (eg 1024) multiplied to original raw data from the recording instrument
     *(usu 14-16 bit) to obtain internal Int representation.
     */
-  def xBits = 1024
+  val xBits: Int = 1024
   /**(xBits:Int).toDouble
     */
-  def xBitsD = xBits.toDouble
+  final lazy val xBitsD = xBits.toDouble
+  /**The minimum extent down to which the data runs
+    */
+  val minValue: Int
   /**The maximum extent up to which the data runs
     */
-  def scaleMax: Int
-  /**The maximum extent down to which the data runs
-    */
-  def scaleMin: Int
+  val maxValue: Int
 
   /**Used to calculate the absolute value (mV, etc) based on internal representation.<p>
     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(absolute value)=(internal value)*dataAbsoluteGain + dataAbsoluteOffset
     * absoluteGain must take into account the extra bits used to pad Int values.
     */
-  def absGain: Double
+  val absGain: Double
 
   /**Used to calculate the absolute value (mV, etc) based on internal representation.<p>
     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(absolute value)=(internal value)*dataAbsoluteGain + dataAbsoluteOffset
     */
-  def absOffset: Double
+  val absOffset: Double
 
   /**The name of the absolute units, as a String (eg mv).
     */
-  def absUnit: String
+  val absUnit: String
 
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
     * absUnit (e.g. "mV")
     */
-  final def convertINTtoABS(data: Int) = data.toDouble * absGain + absOffset
+  final def convertIntToAbsolute(data: Int) = data.toDouble * absGain + absOffset
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
     * absUnit (e.g. "mV")
     */
-  final def convertINTtoABS(data: DenseVector[Int]): DenseVector[Double] = data.map( convertINTtoABS _ )
-  final def convertINTtoABSA(data: Array[Int]): Array[Double] = convertINTtoABS(DenseVector(data)).toArray
-  //ToDo 3: convertINTtoABS erasure
+  final def convertIntToAbsolute(data: DenseVector[Int]): DenseVector[Double] = data.map( convertIntToAbsolute _ )
+  final def convertIntToAbsolute(data: Array[Int]): Array[Double] = convertIntToAbsolute(DenseVector(data)).toArray
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
     * absUnit (e.g. "mV")
     */
-  final def convertABStoINT(dataAbs: Double) = ((dataAbs - absOffset) / absGain).toInt //ToDo 4: change to multiply?
+  final def convertAbsoluteToInt(dataAbs: Double) = ((dataAbs - absOffset) / absGain).toInt //ToDo 4: change to multiply?
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
     * absUnit (e.g. "mV")
     */
-  final def convertABStoINT(dataAbs: DenseVector[Double]): DenseVector[Int] = dataAbs.map( convertABStoINT _ )
-  final def convertABStoINTA(dataAbs: Array[Double]): Array[Int] = dataAbs.map( convertABStoINT _ )
+  final def convertAbsoluteToInt(dataAbs: DenseVector[Double]): DenseVector[Int] = dataAbs.map( convertAbsoluteToInt _ )
+  final def convertAbsoluteToInt(dataAbs: Array[Double]): Array[Int] = dataAbs.map( convertAbsoluteToInt _ )
 
   override def isCompatible(that: NNElement): Boolean = {
     that match {
       case x: NNDataScale => {
         (this.xBits == x.xBits) && (this.absGain == x.absGain) && (this.absOffset == x.absOffset) && (this.absUnit == x.absUnit) &&
-          (this.scaleMax == x.scaleMax) && (this.scaleMin == x.scaleMin)
+          (this.maxValue == x.maxValue) && (this.minValue == x.minValue)
       }
       case _ => false
     }
   }
+
 }
 
-//trait XAbsoluteImmutable extends XAbsolute {
-//
-//  override val xBits = 1024
-//  /**(xBits:Int).toDouble buffered, since it will be used often.
-//    */
-//  override lazy val xBitsD = xBits.toDouble
-//
-//  override val absGain: Double
-//  override val absOffset: Double
-//  override val absUnit: String
-//
-//}
+class NNDataScaleObj(
+  override val minValue: Int, override val maxValue: Int,
+  override val absGain: Double,  override val absOffset: Double,  override val absUnit: String)  extends NNDataScale
+
+object NNDataScale {
+  val raw: NNDataScale = new NNDataScaleObj( Int.MinValue, Int.MaxValue, 1d, 0d, "Raw scaling")
+  def apply(minValue: Int, maxValue: Int, absGain: Double, absOffset: Double,  absUnit: String): NNDataScale =
+    new NNDataScaleObj( minValue, maxValue, absGain, absOffset, absUnit)
+}

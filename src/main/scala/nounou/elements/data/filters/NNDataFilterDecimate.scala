@@ -22,10 +22,7 @@ import nounou.NN._
 
     var kernel: FIRKernel1D[Long] = null
 
-    override def factor: Int = _factor
-    _factor = 1
-
-    override def factor_= ( factor: Int ): Unit = {
+    override def setFactor( factor: Int ): Unit = {
       require( factor <= 16,
         logger.error( "Downsample rate {} must be <= 16." , factor.toString )
       )
