@@ -1,21 +1,21 @@
 package nounou.elements.io
 
 import breeze.io.RandomAccessFile
-import java.io.File
 import nounou.elements.NNElement
+import nounou.util.LoggingExt
 
 
 /**
- * @author ktakagaki
- * @date 12/16/13
- */
-abstract class FileAdapterNLX extends FileAdapter {
+* @author ktakagaki
+* @date 12/16/13
+*/
+abstract class FileAdapterNLX extends LoggingExt with FileLoader  {
 
-  //saving not implemented yet
-  //override
-  def saveImpl(data: NNElement, fileName: String/*, options: OptFileAdapter*/) =
-    throw loggerError("not implemented yet!")
-    //saveCannotImpl(data, fileName/*, options*/)
+//  //saving not implemented yet
+//  //override
+//  def saveImpl(data: NNElement, fileName: String/*, options: OptFileAdapter*/) =
+//    throw loggerError("not implemented yet!")
+//    //saveCannotImpl(data, fileName/*, options*/)
 
   /** File handle for the file to be read.
     *

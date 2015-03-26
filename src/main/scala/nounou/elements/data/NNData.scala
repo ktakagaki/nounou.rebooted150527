@@ -1,6 +1,7 @@
 package nounou.elements.data
 
 import nounou.elements.NNElement
+import nounou.elements.layouts.NNDataLayout
 import scala.collection.immutable.Vector
 import nounou._
 import nounou.elements.traits._
@@ -15,10 +16,11 @@ import nounou.elements.ranges.{SampleRange, SampleRangeValid, SampleRangeSpecifi
   * Each trace of data must share the following variables:
   * sampling, start, length, xBits, absGain, absOffset, absUnit
   */
-abstract class NNData extends NNElement with NNConcatenatable with NNDataTiming with NNChannels with NNDataScale {
+abstract class NNData extends NNElement
+    with NNChannelsElement with NNDataScaleElement with NNDataTimingElement {
 
   override def toString(): String =
-    s"XData: ${channelCount} ch, ${segmentCount} seg, fs=${sampleRate}"
+    s"XData: ${channelCount} ch, ${timing().segmentCount} seg, fs=${timing().sampleRate}"
 
   /** Provides a textual representation of the child hierarchy starting from this data object.
     * If multiple XDataFilter objects (e.g. an XDataFilterFIR object) is chained after this data,
@@ -32,7 +34,6 @@ abstract class NNData extends NNElement with NNConcatenatable with NNDataTiming 
       ""
     })
   }
-
 
   // <editor-fold defaultstate="collapsed" desc=" DataSource related ">
 
@@ -80,7 +81,14 @@ abstract class NNData extends NNElement with NNConcatenatable with NNDataTiming 
 
   // <editor-fold defaultstate="collapsed" desc=" NNLayout, channel count ">
 
-//  def layout(): NNLayout
+  private var varLayout: NNDataLayout = null
+  final def layout(): NNDataLayout = getLayout()
+  def getLayout(): NNDataLayout = varLayout
+  def setLayout(layout: NNDataLayout): Unit = {
+    loggerRequire( layout.channelCount == this.channelCount(),
+      s"Channel count ${layout.channelCount} of new layout does not match channel count ${this.channelCount()} for ${this.getClass.toString}" )
+  }
+
   override def channelCount(): Int// = layout().channelCount
 
   // </editor-fold>
@@ -95,11 +103,11 @@ abstract class NNData extends NNElement with NNConcatenatable with NNDataTiming 
     * when possible, as these will avoid repeated function calling overhead.
     */
   def readPoint(channel: Int, frame: Int, segment: Int /*optSegment: OptSegment*/): Int = {
-    val realSegment = getRealSegment(segment)
-    loggerRequire( isRealisticFrsg(frame, realSegment), s"Unrealistic frame/segment: ${frame}/${segment})" )
+    val realSegment = timing.getRealSegment(segment)
+    loggerRequire( timing.isRealisticFrsg(frame, realSegment), s"Unrealistic frame/segment: ${frame}/${segment})" )
     loggerRequire(isValidChannel(channel), s"Invalid channel: " + channel.toString)
 
-    if( isValidFrsg(frame, realSegment) ) readPointImpl(channel, frame, realSegment)
+    if( timing.isValidFrsg(frame, realSegment) ) readPointImpl(channel, frame, realSegment)
     else 0
   }
   final def readPoint(channel: Int, frame: Int): Int = readPoint(channel, frame, -1)
@@ -108,7 +116,7 @@ abstract class NNData extends NNElement with NNConcatenatable with NNDataTiming 
 
   /** [[readPoint()]] but in physical units.
     */
-  final def readPointAbs(channel: Int, frame: Int, segment: Int): Double = convertINTtoABS( readPoint(channel, frame, segment) )
+  final def readPointAbs(channel: Int, frame: Int, segment: Int): Double = scale.convertIntToAbsolute( readPoint(channel, frame, segment) )
   //final def readPointAbs(channel: Int, frame: Int, optSegment: OptSegment): Double = convertINTtoABS( readPoint(channel, frame, optSegment) )
   final def readPointAbs(channel: Int, frame: Int): Double = readPointAbs(channel, frame, -1)//OptSegmentAutomatic)
 
@@ -132,7 +140,7 @@ abstract class NNData extends NNElement with NNConcatenatable with NNDataTiming 
     range match {
       case ran: SampleRangeValid => readTraceDVImpl(channel, ran)
       case _ => {
-        loggerRequire(isRealisticRange(range), "Unrealistic frame/segment: " + range.toString)
+        loggerRequire(timing.isRealisticRange(range), "Unrealistic frame/segment: " + range.toString)
         val preValidPost = range.getSampleRangeValidPrePost(this)
         readTraceDVPVPImpl(channel, preValidPost)
       }
@@ -166,9 +174,12 @@ abstract class NNData extends NNElement with NNConcatenatable with NNDataTiming 
 
   /** Read a single trace in absolute unit scaling (as recorded).
     */
-  final def readTraceAbsDV(channel: Int): DV[Double] =                                                 convertINTtoABS(readTraceDV(channel))
-  final def readTraceAbsDV(channel: Int,         range: SampleRangeSpecifier): DV[Double] =                convertINTtoABS(readTraceDV(channel, range))
-  final def readTraceAbsDV(channels: Array[Int], range: SampleRangeSpecifier): Array[DV[Double]] =         readTraceDV(channels, range).map( convertINTtoABS(_) )
+  final def readTraceAbsDV(channel: Int): DV[Double]
+    = scale.convertIntToAbsolute(readTraceDV(channel))
+  final def readTraceAbsDV(channel: Int,         range: SampleRangeSpecifier): DV[Double]
+    = scale.convertIntToAbsolute(readTraceDV(channel, range))
+  final def readTraceAbsDV(channels: Array[Int], range: SampleRangeSpecifier): Array[DV[Double]]
+    = readTraceDV(channels, range).map( scale.convertIntToAbsolute(_) )
 
 
   final def readTrace(channel: Int) =
@@ -252,23 +263,18 @@ abstract class NNData extends NNElement with NNConcatenatable with NNDataTiming 
 
   // </editor-fold>
 
-
-  // <editor-fold defaultstate="collapsed" desc="XConcatenatable">
-
   override def isCompatible(that: NNElement): Boolean = {
     that match {
       case x: NNData => {
-        (super[NNDataTiming].isCompatible(x)) &&
-          (super[NNDataScale].isCompatible(x)) //&& this.layout.isCompatible(x.layout)
+        (timing().isCompatible(x.timing())) && scale().isCompatible(x.scale())
+        //&& this.layout.isCompatible(x.layout)
         //not channel info
       }
       case _ => false
     }
   }
 
-  override def :::(x: NNElement): NNData
-
-  // </editor-fold>
+//  override def :::(x: NNElement): NNData
 
 }
 
@@ -315,46 +321,46 @@ abstract class NNData extends NNElement with NNConcatenatable with NNDataTiming 
 //
 //}
 
-
-class NNDataNull$ extends NNData {
-  override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = 0
-  override val absGain: Double = 1D
-  override val absOffset: Double = 0D
-  override val absUnit: String = "Null unit"
-  override val scaleMax: Int = 0
-  override val scaleMin: Int = 0
-  override def segmentLengthImpl(segment: Int): Int = 0
-  override val segmentStartTs: Array[Long] = Array[Long]()
-  override val sampleRate: Double = 1d
-//  override val layout: NNLayout = NNLayoutNull
-
-
-  override def :::(x: NNElement): NNData = x match {
-    case NNDataNull => this
-    case xData: NNData => xData
-    case xDataChannel: NNDataChannel => new NNDataChannelArray( Vector(xDataChannel) )
-    case _ => require(false, "cannot append incompatible data types (XDataNull)"); this
-  }
-  override def toString() = "XDataNull()"
-
-  override val segmentCount: Int = 0
-  override val channelCount: Int = 0
-
-  /** OVERRIDE: End timestamp for each segment. Implement by overriding _endTimestamp
-    */
-  override val segmentEndTs: Array[Long] = Array[Long]()
-}
-
-object NNDataNull extends NNDataNull$
-
-
-class NNDataAuxNull extends NNDataNull$ with NNDataAux {
-
-  override def :::(x: NNElement): NNDataAux = x match {
-    case xDataAux: NNDataAux => xDataAux
-    case _ => require(false, "cannot append incompatible data types (XDataAuxNull)"); this
-  }
-  override def toString() = "XDataAuxNull()"
-}
-
-object NNDataAuxNull extends NNDataAuxNull
+//
+//class NNDataNull$ extends NNData {
+//  override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = 0
+//  override val absGain: Double = 1D
+//  override val absOffset: Double = 0D
+//  override val absUnit: String = "Null unit"
+//  override val scaleMax: Int = 0
+//  override val scaleMin: Int = 0
+//  override def segmentLengthImpl(segment: Int): Int = 0
+//  override val segmentStartTs: Array[Long] = Array[Long]()
+//  override val sampleRate: Double = 1d
+////  override val layout: NNLayout = NNLayoutNull
+//
+//
+//  override def :::(x: NNElement): NNData = x match {
+//    case NNDataNull => this
+//    case xData: NNData => xData
+//    case xDataChannel: NNDataChannel => new NNDataChannelArray( Vector(xDataChannel) )
+//    case _ => require(false, "cannot append incompatible data types (XDataNull)"); this
+//  }
+//  override def toString() = "XDataNull()"
+//
+//  override val segmentCount: Int = 0
+//  override val channelCount: Int = 0
+//
+//  /** OVERRIDE: End timestamp for each segment. Implement by overriding _endTimestamp
+//    */
+//  override val segmentEndTs: Array[Long] = Array[Long]()
+//}
+//
+//object NNDataNull extends NNDataNull$
+//
+//
+//class NNDataAuxNull extends NNDataNull$ with NNDataAux {
+//
+//  override def :::(x: NNElement): NNDataAux = x match {
+//    case xDataAux: NNDataAux => xDataAux
+//    case _ => require(false, "cannot append incompatible data types (XDataAuxNull)"); this
+//  }
+//  override def toString() = "XDataAuxNull()"
+//}
+//
+//object NNDataAuxNull extends NNDataAuxNull

@@ -22,7 +22,6 @@ trait LoggingExt extends LazyLogging {
 
 
   /** If input 'boolean' is false, logs a message using slf4j and throws an error.
-   *
    */
   @throws[IllegalArgumentException]
   def loggerRequire(boolean: Boolean, message: String, params: AnyRef*): Unit = {

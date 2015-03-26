@@ -65,11 +65,15 @@ class NNDataFilterFIR(private var _parent: NNData ) extends NNDataFilter( _paren
   }
 
   def setFilterHz( f0: Double, f1: Double): Unit = {
+    val sampleRate = timing.sampleRate
     require(f0 >= 0 && f1 > f0 && f1 <= sampleRate/2, logger.error("setFilterHz: Frequencies must be 0 <= f0 < f1 <= sampleRate/2. f0={}, f1={}", f0.toString, f1.toString) )
     setFilter(f0/(sampleRate/2d), f1/(sampleRate/2d))
   }
 
-  def getFilterHz(): Array[Double] = Array[Double]( kernelOmega0*(sampleRate/2d), kernelOmega1*(sampleRate/2d) )
+  def getFilterHz(): Array[Double] = {
+    val sampleRate = timing.sampleRate
+    Array[Double]( kernelOmega0*(sampleRate/2d), kernelOmega1*(sampleRate/2d) )
+  }
 
   @BeanProperty
   var taps = 4096

@@ -2,11 +2,12 @@ package nounou
 
 //import breeze.linalg.DenseVector
 
-import _root_.nounou.elements.io.FileAdapter
-import _root_.nounou.elements.ranges._
+import java.util.ServiceLoader
+
+import nounou.elements.NNElement
+import nounou.elements.io.FileLoader
+import nounou.elements.ranges._
 import breeze.linalg.DenseVector
-import _root_.nounou.elements.{NNElement, NNTrodeN}
-import scala.collection._
 
 
 /**A static class which encapsulates convenience functions for using nounou, with
@@ -18,13 +19,8 @@ object NN {
 
   override final def toString(): String = "Welcome to nounou, a Scala/Java adapter for neurophysiological data."
 
-  // <editor-fold defaultstate="collapsed" desc=" loading, writing ">
 
-  final val loaders = new mutable.HashMap[String, FileAdapter]
-  def load(fileName: String): Array[NNElement] = {
-    val ext = nounou.util.getFileExtension(fileName)
-    ??? //loaders.ke
-  }
+  def load(fileName: String): Array[NNElement] = FileLoader.load(fileName)
 
 
 
@@ -50,11 +46,6 @@ object NN {
   final def SampleRange( range: (Int, Int, Int), segment: Int )         = new SampleRange(range._1, range._2, range._3, segment)
   final def SampleRange( range: Array[Int], segment: Int ): SampleRangeSpecifier =
     nounou.elements.ranges.SampleRange.convertArrayToSampleRange(range, segment)
-//    val len = range.length
-//    loggerRequire( len == 2 || len == 3, s"The first variable of SampleRange must be a 2- or 3-element array, not $range")
-//    if( len == 3 ) SampleRange(range(0), range(1), range(2), segment)
-//    else SampleRange(range(0), range(1), -1, segment)
-//  }
   final def SampleRange( range: Array[Int] ): SampleRangeSpecifier = SampleRange( range, -1 )
 
   final def SampleRangeAll(step: Int, segment: Int) = new SampleRangeAll(step, segment)
@@ -89,9 +80,9 @@ object NN {
 //  def readSpike(xData: XData, channels: Array[Int], xFrame: Frame, length: Int, trigger: Int) =
 //    data.XSpike.readSpike(xData, channels, xFrame, length, trigger)
 
-
-  //final def XTrodes( trodeGroup: Array[Array[Int]] ): XTrodes = data.XTrodes( trodeGroup )
-  final def XTrodeN( trodeGroup: Array[Int] ): NNTrodeN = new elements.NNTrodeN( trodeGroup.toVector )
+//
+//  //final def XTrodes( trodeGroup: Array[Array[Int]] ): XTrodes = data.XTrodes( trodeGroup )
+//  final def XTrodeN( trodeGroup: Array[Int] ): NNTrodeN = new elements.NNTrodeN( trodeGroup.toVector )
 
 
 }

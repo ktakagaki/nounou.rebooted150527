@@ -261,6 +261,7 @@ class SampleRangeValid(override val start: Int, override val last: Int, override
   override def toString() = s"FrameRangeValid($start, $last, step=$step, segment=$segment)"
 
   final def toRangeInclusive() = new Range.Inclusive(start, last, step)
+  final def toRangeInclusive(increment: Int) = new Range.Inclusive(start + increment, last + increment, step)
 
   // <editor-fold defaultstate="collapsed" desc=" RangeFrSpecifier ">
   override def getSampleRangeValid(xDataTiming: NNDataTiming): SampleRangeValid = this

@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: scala-library.jar scala-swing.jar scala-actors.jar scalafx
- _2.10-1.0.0-M4.jar
-
