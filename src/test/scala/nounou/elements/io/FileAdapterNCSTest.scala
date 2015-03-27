@@ -4,6 +4,7 @@ import breeze.linalg.DenseVector
 import breeze.numerics.pow
 import nounou._
 import nounou.elements.NNElement
+import nounou.elements.io.neuralynx.NNDataChannelNCS
 import org.scalatest.FunSuite
 import java.io.File
 

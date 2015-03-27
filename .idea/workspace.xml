@@ -10,13 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90e76743-d952-4fa9-a3a3-9e2ed22567e9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/production/nounou/nounou/elements/io/FileAdapterNCS.class" afterPath="$PROJECT_DIR$/target/production/nounou/nounou/elements/io/FileAdapterNCS.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test/nounou/nounou/elements/io/FileAdapterNCSTest.class" afterPath="$PROJECT_DIR$/target/test/nounou/nounou/elements/io/FileAdapterNCSTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/artifacts/nounou/nounou.jar" afterPath="$PROJECT_DIR$/target/artifacts/nounou/nounou.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/elements/io/FileAdapterNCS.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/elements/io/FileAdapterNCS.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/nounou/elements/io/FileSaver.scala" />
+      <change type="MOVED" beforePath="C:\prog\nounou\src\main\scala\nounou\elements\io\FileAdapterNCS.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/elements/io/neuralynx/FileAdapterNCS.scala" />
+      <change type="MOVED" beforePath="C:\prog\nounou\src\main\scala\nounou\elements\io\FileAdapterNLX.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/elements/io/neuralynx/FileAdapterNeuralynx.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/nounou/elements/io/FileAdapterNCSTest.scala" afterPath="$PROJECT_DIR$/src/test/scala/nounou/elements/io/FileAdapterNCSTest.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/nounou/elements/traits/NNDataTiming.scala" afterPath="$PROJECT_DIR$/src/main/scala/nounou/elements/traits/NNDataTiming.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/nounou/elements/io/FileLoaderNEV.sc" afterPath="$PROJECT_DIR$/src/test/scala/nounou/elements/io/FileLoaderNEV.sc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/nounou/elements/filters/XDataFilterDownsampleTest.scala" afterPath="$PROJECT_DIR$/src/test/scala/nounou/elements/filters/XDataFilterDownsampleTest.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/META-INF/services/nounou.elements.NNElement" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/services/nounou.elements.NNElement" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/META-INF/services/nounou.elements.io.FileLoader" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/services/nounou.elements.io.FileLoader" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/nounou/elements/ranges/rangesDataTest.scala" afterPath="$PROJECT_DIR$/src/test/scala/nounou/elements/ranges/rangesDataTest.scala" />
     </list>
     <ignored path="nounou.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,51 +64,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FileLoader.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/io/FileLoader.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="FileAdapterNCS.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/io/FileAdapterNCS.scala">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/io/neuralynx/FileAdapterNCS.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="187" column="36" selection-start-line="187" selection-start-column="36" selection-end-line="187" selection-end-column="41" />
+              <caret line="199" column="0" selection-start-line="199" selection-start-column="0" selection-end-line="199" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NNDataScale.scala" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/traits/NNDataScale.scala">
+      <file leaf-file-name="FileAdapterNeuralynx.scala" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/io/neuralynx/FileAdapterNeuralynx.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.7488987">
-              <caret line="79" column="49" selection-start-line="79" selection-start-column="42" selection-end-line="79" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FileAdapterNCSTest.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/scala/nounou/elements/io/FileAdapterNCSTest.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Long.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk8/src.zip!/java/lang/Long.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1447" column="0" selection-start-line="1447" selection-start-column="0" selection-end-line="1447" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.90697676">
+              <caret line="47" column="7" selection-start-line="47" selection-start-column="7" selection-end-line="47" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -125,11 +97,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/scala/nounou/elements/data/NNDataPreloaded.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/nounou/elements/data/filters/NNDataFilterFIR.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/nounou/elements/data/NNData.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/nounou/elements/data/filters/NNDataFilterDownsample.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/nounou/elements/discrete/NNEvents.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/elements/layouts/NNDataLayout.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/elements/trodes/NNTrode.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/elements/layouts/NNDataLayoutTrode.scala" />
@@ -176,6 +143,11 @@
         <option value="$PROJECT_DIR$/src/main/scala/nounou/elements/io/FileAdapterNCS.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/nounou/elements/io/FileAdapterNCSTest.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/nounou/elements/traits/NNDataTiming.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/elements/traits/NNDataScale.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/elements/io/neuralynx/FileAdapterNLX.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/elements/io/neuralynx/FileAdapterNeuralynx.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/elements/io/FileSaver.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/nounou/elements/io/neuralynx/FileAdapterNCS.scala" />
       </list>
     </option>
   </component>
@@ -484,8 +456,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="FileAdapterNCS.scala" />
-              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
+              <option name="myItemId" value="neuralynx" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -546,8 +518,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -575,6 +547,9 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\prog\nounou\src\main\scala\nounou\elements\io" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\prog\nounou\src\main\java" />
       <recent name="C:\prog\nounou\src\main\scala\nounou\elements\data\filters" />
@@ -582,6 +557,7 @@
       <recent name="C:\prog\nounou\src\test\java\tests" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="nounou.elements.io.neuralynx" />
       <recent name="nounou.elements.traits" />
       <recent name="nounou.elements.data.traits" />
       <recent name="nounou.elements.data.traitstraits" />
@@ -923,8 +899,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-2404" width="1928" height="1208" extended-state="7" />
-    <editor active="false" />
+    <frame x="-4" y="-2404" width="1928" height="1208" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286385" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -934,25 +910,25 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32957748" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32957748" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33615023" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19679144" sideWeight="0.6708772" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run with VisualVM" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19679144" sideWeight="0.6708772" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32957748" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19293286" sideWeight="0.3291228" order="1" side_tool="true" content_ui="tabs" x="22" y="507" width="480" height="717" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug with VisualVM" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24973261" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32957748" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32957748" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32994652" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32957748" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run with VisualVM" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug with VisualVM" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -977,13 +953,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/layouts/NNDataLayoutSpatial.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33206832">
-          <caret line="13" column="50" selection-start-line="13" selection-start-column="50" selection-end-line="13" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/layouts/NNDataLayoutTrode.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1236,13 +1205,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/services/nounou.elements.io.FileLoader">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.03524229">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/nounou/elements/io/TestingFileLoader.sc">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.11392405">
@@ -1254,14 +1216,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.105726875">
           <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/NNElement.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1280,14 +1234,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/io/FileLoader.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/data/NNDataChannel.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.1982379">
@@ -1295,26 +1241,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/io/FileAdapterNLX.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.07048458">
-          <caret line="11" column="65" selection-start-line="11" selection-start-column="65" selection-end-line="11" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/io/FileAdapterNCS.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="187" column="36" selection-start-line="187" selection-start-column="36" selection-end-line="187" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/traits/NNDataTiming.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.26284876">
           <caret line="58" column="7" selection-start-line="58" selection-start-column="7" selection-end-line="58" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1322,22 +1252,150 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="1447" column="0" selection-start-line="1447" selection-start-column="0" selection-end-line="1447" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#61416#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="method#toString#0;class#Long#0" expanded="false" />
+            <element signature="method#toUnsignedString#0;class#Long#0" expanded="false" />
+            <element signature="method#toUnsignedBigInteger#0;class#Long#0" expanded="false" />
+            <element signature="e#9199#9200#0" expanded="false" />
+            <element signature="e#9245#9246#0" expanded="false" />
+            <element signature="e#10741#10742#0" expanded="false" />
+            <element signature="e#10787#10788#0" expanded="false" />
+            <element signature="e#12188#12189#0" expanded="false" />
+            <element signature="e#12234#12235#0" expanded="false" />
+            <element signature="method#toUnsignedString0#0;class#Long#0" expanded="false" />
+            <element signature="method#formatUnsignedLong#0;class#Long#0" expanded="false" />
+            <element signature="method#toString#1;class#Long#0" expanded="false" />
+            <element signature="e#15002#15003#0" expanded="false" />
+            <element signature="e#15048#15049#0" expanded="false" />
+            <element signature="method#getChars#0;class#Long#0" expanded="false" />
+            <element signature="method#stringSize#0;class#Long#0" expanded="false" />
+            <element signature="method#parseLong#0;class#Long#0" expanded="false" />
+            <element signature="method#parseLong#1;class#Long#0" expanded="false" />
+            <element signature="method#parseUnsignedLong#0;class#Long#0" expanded="false" />
+            <element signature="method#parseUnsignedLong#1;class#Long#0" expanded="false" />
+            <element signature="method#valueOf#0;class#Long#0" expanded="false" />
+            <element signature="method#valueOf#1;class#Long#0" expanded="false" />
+            <element signature="class#LongCache#0;class#Long#0" expanded="false" />
+            <element signature="initializer##0;class#LongCache#0;class#Long#0" expanded="false" />
+            <element signature="method#valueOf#2;class#Long#0" expanded="false" />
+            <element signature="method#decode#0;class#Long#0" expanded="false" />
+            <element signature="e#35809#35810#0" expanded="false" />
+            <element signature="e#35843#35844#0" expanded="false" />
+            <element signature="method#Long#1;class#Long#0" expanded="false" />
+            <element signature="e#36752#36753#0" expanded="false" />
+            <element signature="e#36786#36787#0" expanded="false" />
+            <element signature="e#36997#36998#0" expanded="false" />
+            <element signature="e#37032#37033#0" expanded="false" />
+            <element signature="e#37238#37239#0" expanded="false" />
+            <element signature="e#37271#37272#0" expanded="false" />
+            <element signature="e#37396#37397#0" expanded="false" />
+            <element signature="e#37424#37425#0" expanded="false" />
+            <element signature="e#37633#37634#0" expanded="false" />
+            <element signature="e#37668#37669#0" expanded="false" />
+            <element signature="e#37880#37881#0" expanded="false" />
+            <element signature="e#37916#37917#0" expanded="false" />
+            <element signature="e#38378#38379#0" expanded="false" />
+            <element signature="e#38416#38417#0" expanded="false" />
+            <element signature="e#38889#38890#0" expanded="false" />
+            <element signature="e#38932#38933#0" expanded="false" />
+            <element signature="e#39217#39218#0" expanded="false" />
+            <element signature="e#39269#39270#0" expanded="false" />
+            <element signature="method#equals#0;class#Long#0" expanded="false" />
+            <element signature="e#41211#41212#0" expanded="false" />
+            <element signature="e#41251#41252#0" expanded="false" />
+            <element signature="method#getLong#1;class#Long#0" expanded="false" />
+            <element signature="method#getLong#2;class#Long#0" expanded="false" />
+            <element signature="e#46463#46464#0" expanded="false" />
+            <element signature="e#46524#46525#0" expanded="false" />
+            <element signature="e#47101#47102#0" expanded="false" />
+            <element signature="e#47157#47158#0" expanded="false" />
+            <element signature="e#47685#47686#0" expanded="false" />
+            <element signature="e#47745#47746#0" expanded="false" />
+            <element signature="method#divideUnsigned#0;class#Long#0" expanded="false" />
+            <element signature="method#remainderUnsigned#0;class#Long#0" expanded="false" />
+            <element signature="method#highestOneBit#0;class#Long#0" expanded="false" />
+            <element signature="method#lowestOneBit#0;class#Long#0" expanded="false" />
+            <element signature="method#numberOfLeadingZeros#0;class#Long#0" expanded="false" />
+            <element signature="method#bitCount#0;class#Long#0" expanded="false" />
+            <element signature="e#56870#56871#0" expanded="false" />
+            <element signature="e#56928#56929#0" expanded="false" />
+            <element signature="e#58058#58059#0" expanded="false" />
+            <element signature="e#58116#58117#0" expanded="false" />
+            <element signature="method#reverse#0;class#Long#0" expanded="false" />
+            <element signature="method#signum#0;class#Long#0" expanded="false" />
+            <element signature="method#reverseBytes#0;class#Long#0" expanded="false" />
+            <element signature="e#60416#60417#0" expanded="false" />
+            <element signature="e#60444#60445#0" expanded="false" />
+            <element signature="e#60817#60818#0" expanded="false" />
+            <element signature="e#60854#60855#0" expanded="false" />
+            <element signature="e#61227#61228#0" expanded="false" />
+            <element signature="e#61264#61265#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/services/nounou.elements.io.FileLoader">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="19" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/nounou/elements/io/FileAdapterNCSTest.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/io/FileSaver.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/io/FileLoader.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33206832">
+          <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/NNElement.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/traits/NNDataScale.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.7488987">
+        <state vertical-scroll-proportion="0.0">
           <caret line="79" column="49" selection-start-line="79" selection-start-column="42" selection-end-line="79" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/io/neuralynx/FileAdapterNCS.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="199" column="0" selection-start-line="199" selection-start-column="0" selection-end-line="199" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/nounou/elements/io/FileAdapterNCSTest.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.13953489">
+          <caret line="29" column="12" selection-start-line="29" selection-start-column="12" selection-end-line="29" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/nounou/elements/io/neuralynx/FileAdapterNeuralynx.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.90697676">
+          <caret line="47" column="7" selection-start-line="47" selection-start-column="7" selection-end-line="47" selection-end-column="7" />
           <folding />
         </state>
       </provider>

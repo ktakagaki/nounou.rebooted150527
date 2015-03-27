@@ -1,7 +1,7 @@
-package nounou.elements.io
+package nounou.elements.io.neuralynx
 
 import breeze.io.RandomAccessFile
-import nounou.elements.NNElement
+import nounou.elements.io.FileLoader
 import nounou.util.LoggingExt
 
 
@@ -9,7 +9,7 @@ import nounou.util.LoggingExt
 * @author ktakagaki
 * @date 12/16/13
 */
-abstract class FileAdapterNLX extends LoggingExt with FileLoader  {
+abstract class FileAdapterNeuralynx extends LoggingExt with FileLoader  {
 
 //  //saving not implemented yet
 //  //override

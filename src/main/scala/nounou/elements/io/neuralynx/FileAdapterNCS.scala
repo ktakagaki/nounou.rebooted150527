@@ -1,17 +1,18 @@
-package nounou.elements.io
+package nounou.elements.io.neuralynx
 
 import java.io.File
+
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
+import breeze.linalg.{DenseVector => DV, convert}
 import nounou.elements.NNElement
 import nounou.elements.data.NNDataChannelFilestream
 import nounou.elements.ranges.SampleRangeValid
 import nounou.elements.traits.{NNDataScale, NNDataTiming}
-import breeze.linalg.{DenseVector => DV, convert}
 
 /**
 * @author ktakagaki
 */
-class FileAdapterNCS extends FileAdapterNLX {
+class FileAdapterNCS extends FileAdapterNeuralynx {
 
   override val canLoadExtensions = Array("ncs")
   def load( file: File ): Array[NNElement] = loadImpl( file )
@@ -179,7 +180,7 @@ class FileAdapterNCS extends FileAdapterNLX {
 
 // </editor-fold>
 
-    println("tempADBitVolts " + tempADBitVolts)
+    //println("tempADBitVolts " + tempADBitVolts)
 
     val xDataChannelNCS = new NNDataChannelNCS(
                   fileHandle = fHand,
@@ -190,7 +191,7 @@ class FileAdapterNCS extends FileAdapterNLX {
                           absUnit = "mV"),
                   channelName = tempAcqEntName
                                               )
-    println("absGain " + xDataChannelNCS.scale.absGain)
+    //println("absGain " + xDataChannelNCS.scale.absGain)
     logger.info( "loaded {}", xDataChannelNCS )
     Array[NNElement]( xDataChannelNCS )
 

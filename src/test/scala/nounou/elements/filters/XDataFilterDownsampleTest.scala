@@ -1,7 +1,7 @@
 //package nounou.elements.filters
 //
 //import nounou.elements.{NNDataChannel, NNDataChannelArray}
-//import nounou.elements.io.FileAdapterNCS
+//import nounou.elements.io.neuralynx.FileAdapterNCS
 //import org.scalatest.FunSuite
 //
 //import scala.nounou.obj.data.filters.NNDataFilterDownsample
