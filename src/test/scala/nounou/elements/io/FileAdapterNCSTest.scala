@@ -13,18 +13,18 @@ import java.io.File
 */
 class FileAdapterNCSTest extends FunSuite {
 
-  val testFileTet4a = getClass.getResource("/_testFiles/Neuralynx/t130911/Tet4a.ncs").getPath()
-    //new File(  )
-  //val testFileE04LC_CSC1 = new File( "C:\\prog\\_gh\\_kt\\nounou.testfiles\\Neuralynx\\E04LC\\CSC1.ncs" )
-  val data = NN.load(testFileTet4a).apply(0)
+  //val testFileTet4a = getClass.getResource("/_testFiles/Neuralynx/t130911/Tet4a.ncs").getPath()
+  val testFileE04LC_CSC1 = getClass.getResource("/_testFiles/Neuralynx/E04LC/CSC1.ncs").getPath()
+  //new File( "C:\\prog\\_gh\\_kt\\nounou.testfiles\\Neuralynx\\E04LC\\CSC1.ncs" )
+  val data = NN.load(testFileE04LC_CSC1).apply(0)
   assert( data.isInstanceOf[NNDataChannelNCS] )
   val dataObj = data.asInstanceOf[NNDataChannelNCS]
 
   test("readInfo"){
 
-    assert( dataObj.scale.absGain == 1.4901660156250002E-5 )
+    assert( dataObj.scale.absGain == 1.4901660156250002E-5 ) //1.0E6* 3.05185E-8 / 1024d )
     assert( dataObj.scale.absOffset == 0d )
-    assert( dataObj.scale.absUnit.contentEquals("microV") )
+    assert( dataObj.scale.absUnit.contentEquals("mV") )
 
     //trait XFrames
     assert( dataObj.timing.segmentCount == 94 )

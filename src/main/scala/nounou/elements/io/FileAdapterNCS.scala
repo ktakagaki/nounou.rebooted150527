@@ -179,7 +179,7 @@ class FileAdapterNCS extends FileAdapterNLX {
 
 // </editor-fold>
 
-    //println("FANCS segmentLength " + tempLengths.toString)
+    println("tempADBitVolts " + tempADBitVolts)
 
     val xDataChannelNCS = new NNDataChannelNCS(
                   fileHandle = fHand,
