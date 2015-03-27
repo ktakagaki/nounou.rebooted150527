@@ -58,7 +58,7 @@ trait NNDataTiming extends NNElement {
       loggerRequire( segmentCount == 1, "You must always specify a segment when reading from data with multiple segments!")
       0
     } else {
-      loggerRequire( segment < segmentCount, s"Segment specified does not exist in data object ${this.toString()}!")
+      loggerRequire( segment < segmentCount, s"Segment specified ${segment} does not exist in data object!")
       segment
     }
 
