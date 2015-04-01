@@ -1,4 +1,4 @@
-package nounou.elements.layouts
+package nounou.elements.traits.layouts
 
 import javafx.scene.shape.Rectangle
 

@@ -1,4 +1,4 @@
-package nounou.elements.layouts
+package nounou.elements.traits.layouts
 
 import nounou.elements.NNElement
 import nounou.elements.traits.NNChannelsElement

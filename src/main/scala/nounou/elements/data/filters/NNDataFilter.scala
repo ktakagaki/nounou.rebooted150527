@@ -4,7 +4,7 @@ import nounou._
 import nounou.elements.NNElement
 import nounou.elements.data.NNData
 import nounou.elements.ranges.{SampleRangeSpecifier, SampleRangeValid}
-import nounou.elements.layouts.NNDataLayout
+import nounou.elements.traits.layouts.NNDataLayout
 import breeze.linalg.{DenseVector => DV}
 import nounou.elements.traits.{NNDataScale, NNDataTiming}
 

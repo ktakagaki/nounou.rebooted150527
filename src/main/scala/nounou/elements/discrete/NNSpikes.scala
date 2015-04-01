@@ -1,6 +1,6 @@
 package nounou.elements
 
-import nounou.elements.layouts.NNDataLayoutTrode
+import nounou.elements.traits.layouts.NNDataLayoutTrode
 import nounou.elements.traits.{NNDataScaleElement, NNDataTimingElement}
 
 import scala.collection.immutable.TreeMap

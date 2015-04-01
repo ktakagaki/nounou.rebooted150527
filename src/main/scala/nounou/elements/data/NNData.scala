@@ -1,7 +1,7 @@
 package nounou.elements.data
 
 import nounou.elements.NNElement
-import nounou.elements.layouts.NNDataLayout
+import nounou.elements.traits.layouts.NNDataLayout
 import scala.collection.immutable.Vector
 import nounou._
 import nounou.elements.traits._

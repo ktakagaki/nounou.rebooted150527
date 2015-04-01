@@ -1,11 +1,6 @@
-package nounou.elements.layouts
+package nounou.elements.traits.layouts
 
 /**
- * Created with IntelliJ IDEA.
- * User: takagaki
- * Date: 30.09.13
- * Time: 19:17
- * To change this template use File | Settings | File Templates.
  */
 trait NNDataLayoutNeighbor extends NNDataLayout {
 
@@ -21,18 +16,5 @@ trait NNDataLayoutNeighbor extends NNDataLayout {
 
   def isEdge(channel: Int): Boolean
   def isEdge(channel: Int, ring: Int): Boolean
-
-  // <editor-fold desc="XConcatenatable">
-  // </editor-fold>
-//  override def isCompatible(that: X): Boolean = {
-//    that match {
-//      case x: XLayoutNeighbor => {
-//        //not Channels
-//        (super[XLayout].isCompatible(x)) &&
-//        (this.field == x.field) && (this.channelRadius == x.channelRadius)
-//      }
-//      case _ => false
-//    }
-//  }
 
 }

@@ -3,7 +3,7 @@
 //import nounou.elements.NNElement
 //import nounou.elements.ranges.SampleRangeValid
 //import nounou.elements.data.{NNDataNull, NNDataAux, NNData}
-//import nounou.elements.layouts.NNDataLayout
+//import nounou.elements.traits.layouts.NNDataLayout
 //import breeze.linalg.{DenseVector => DV}
 //
 ///**This class serves as an "immutable" reference point for various data structures, which may change.

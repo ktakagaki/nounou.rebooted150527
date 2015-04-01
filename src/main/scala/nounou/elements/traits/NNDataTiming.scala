@@ -8,9 +8,7 @@ import nounou.elements.ranges.SampleRangeSpecifier
   * segment, frame, and sampling information for electrophysiological and imaging data.
   *
   * Envisioned uses are for [[nounou.elements.data.NNData]],
-  * [[nounou.elements.layouts.NNDataLayout]], and [[nounou.elements.NNSpikes]].
-  * Channel names/count are intentionally mutable for [[nounou.elements.data.filters.NNDataFilter]]
-  * objects which conduct binning and therefore may change dynamically.
+  * [[nounou.elements.traits.layouts.NNDataLayout]], and [[nounou.elements.NNSpikes]].
   */
 trait NNDataTiming extends NNElement {
 
@@ -19,19 +17,23 @@ trait NNDataTiming extends NNElement {
     * @param altFunc  name of function/signature which should be called instead, with explicit specification of segment = 0
     */
   @throws[IllegalArgumentException]
-  private def errorIfMultipleSegments(func:String, altFunc:String): Unit = {
-    loggerRequire(segmentCount == 1, func + " should not be used if the file has more than one segment. Use " + altFunc + " instead")
+  private def errorIfMultipleSegments(func: String, altFunc: String): Unit = {
+    loggerRequire(
+      segmentCount == 1,
+      func + " should not be used if the file has more than one segment. Use " + altFunc + " instead"
+    )
   }
 
-  /**Sample rate in Hz
+  /**Sample rate in Hz.
    */
   val sampleRate: Double
+
   final lazy val sampleInterval = 1.0/sampleRate
 
   // <editor-fold defaultstate="collapsed" desc="segment related: segmentCount, segmentLength/length ">
   
   /**Total number of frames in each segment.
-    */
+   */
   val segmentLengths: Array[Int]
 
   /** Number of segments in data.

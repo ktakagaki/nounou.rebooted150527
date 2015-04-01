@@ -9,36 +9,32 @@ import nounou.elements.NNElement
   *
  * Created by Kenta on 12/15/13.
  */
-trait NNDataScale extends NNElement {
+class NNDataScale(
+                   /**The minimum extent down to which the data runs*/
+                   val minValue: Int,
+                   /**The maximum extent up to which the data runs */
+                   val maxValue: Int,
+                   /**Used to calculate the absolute value (mV, etc) based on internal representation.<p>
+                     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(absolute value)=(internal value)*dataAbsoluteGain + dataAbsoluteOffset
+                     * absoluteGain must take into account the extra bits used to pad Int values.
+                     */
+                   val absGain: Double,
+                   /**Used to calculate the absolute value (mV, etc) based on internal representation.<p>
+                     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(absolute value)=(internal value)*dataAbsoluteGain + dataAbsoluteOffset
+                     */
+                   val absOffset: Double,
+                   /**The name of the absolute units, as a String (eg mv).
+                     */
+                   val absUnit: String,
+                   /**The number (eg 1024) multiplied to original raw data from the recording instrument
+                     *(usu 14-16 bit) to obtain internal Int representation.
+                     */
+                   val xBits: Int = 1024) extends NNElement {
 
-  /**The number (eg 1024) multiplied to original raw data from the recording instrument
-    *(usu 14-16 bit) to obtain internal Int representation.
-    */
-  val xBits: Int = 1024
   /**(xBits:Int).toDouble
     */
   final lazy val xBitsD = xBits.toDouble
-  /**The minimum extent down to which the data runs
-    */
-  val minValue: Int
-  /**The maximum extent up to which the data runs
-    */
-  val maxValue: Int
 
-  /**Used to calculate the absolute value (mV, etc) based on internal representation.<p>
-    * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(absolute value)=(internal value)*dataAbsoluteGain + dataAbsoluteOffset
-    * absoluteGain must take into account the extra bits used to pad Int values.
-    */
-  val absGain: Double
-
-  /**Used to calculate the absolute value (mV, etc) based on internal representation.<p>
-    * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(absolute value)=(internal value)*dataAbsoluteGain + dataAbsoluteOffset
-    */
-  val absOffset: Double
-
-  /**The name of the absolute units, as a String (eg mv).
-    */
-  val absUnit: String
 
   /**Converts data in the internal representation (Int) to absolute units (Double), with unit of
     * absUnit (e.g. "mV")
@@ -71,12 +67,8 @@ trait NNDataScale extends NNElement {
 
 }
 
-class NNDataScaleObj(
-  override val minValue: Int, override val maxValue: Int,
-  override val absGain: Double,  override val absOffset: Double,  override val absUnit: String)  extends NNDataScale
-
 object NNDataScale {
-  val raw: NNDataScale = new NNDataScaleObj( Int.MinValue, Int.MaxValue, 1d, 0d, "Raw scaling")
+  val raw: NNDataScale = new NNDataScale( Int.MinValue, Int.MaxValue, 1d, 0d, "Raw scaling")
   def apply(minValue: Int, maxValue: Int, absGain: Double, absOffset: Double,  absUnit: String): NNDataScale =
-    new NNDataScaleObj( minValue, maxValue, absGain, absOffset, absUnit)
+    new NNDataScale( minValue, maxValue, absGain, absOffset, absUnit)
 }
