@@ -11,4 +11,5 @@ file.exists()
 
 val stream = NN.getClass.getClassLoader.getResourceAsStream("NNGit.gson.txt")
 IOUtils.toString(stream, "UTF-8")
+stream.toString
 

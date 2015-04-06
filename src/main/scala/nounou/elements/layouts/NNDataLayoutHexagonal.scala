@@ -13,6 +13,9 @@ import scala.collection.mutable.ArrayBuffer
  */
 class NNDataLayoutHexagonal extends NNDataLayoutSpatial {
 
+  /** Main variable for this layout.
+    * This [[Array]] should contain the channels laid out in tilted hexagonal space.
+    */
   protected var layoutArray: Array[Array[Int]] = null
 
   def this(layoutArray: Array[Array[Int]]) {
@@ -35,9 +38,12 @@ class NNDataLayoutHexagonal extends NNDataLayoutSpatial {
   @transient private var minLayArrY = Integer.MAX_VALUE
   @transient private var maxLayArrY = Integer.MIN_VALUE
 
+  /**This initialization is done here, and not in the constructor automatically,
+    * to allow serialization with gson. Gson requires classes to be
+    * initializable with a no-argument constructor.
+   */
   override def initialize(): Unit = {
     loggerRequire(!initialized, "NNDataLayoutHexagonal should only be initialized once!")
-
 
     val allChannels = new ArrayBuffer[Boolean]()
     val layoutLookupTemp = new mutable.HashMap[Int, (Int, Int)]()
@@ -49,9 +55,11 @@ class NNDataLayoutHexagonal extends NNDataLayoutSpatial {
       if( y > maxLayArrY ) maxLayArrY = y
     }
     def writeNewChannelCache(newChannel: Int, coordinates: (Int, Int)): Unit = {
-      if( newChannel >= allChannels.length ) allChannels ++= new Array[Boolean   ](newChannel - allChannels.length + 1)
+      //Expand allChannels if new channel is beyond extent
+      if( newChannel >= allChannels.length ) allChannels ++= new Array[Boolean](newChannel - allChannels.length + 1)
       loggerRequire( !allChannels(newChannel), s"specified layout contains duplicate channel entry for: $newChannel!" )
       allChannels(newChannel) = true
+      //Add channel coordinates to the layout lookup
       layoutLookupTemp  += newChannel -> coordinates
     }
 
@@ -79,9 +87,15 @@ class NNDataLayoutHexagonal extends NNDataLayoutSpatial {
 
   }
 
-  override def channelToCoordinatesImpl(ch: Int): Array[Double] = {
-    val hexCoord = layoutLookupCache(ch)
-    Array( (layoutArray.length - hexCoord._1) * channelDistance, hexCoord._2 * channelDistance * vertFactor )
+  override def getChannelCoordinatesImpl(ch: Int): Array[Double] = {
+   getCoordinatesFromHexCoordinates( layoutLookupCache(ch) )
+  }
+
+  private def getCoordinatesFromHexCoordinates( hexCoord: (Int, Int) ): Array[Double] = {
+    Array(
+      (hexCoord._1 + hexCoord._2 * 0.5) * channelDistance ,
+      (layoutArray.length - hexCoord._2) * channelDistance * vertFactor
+    )
   }
 
 //  override def coordinatesToChannelImpl(x: Double, y: Double): Int = {

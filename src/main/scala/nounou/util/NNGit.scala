@@ -10,36 +10,46 @@ import org.apache.commons.io.IOUtils
 import org.eclipse.jgit.lib.Repository
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder
 
-/**
- * Created by ktakagaki on 15/04/02.
+/**This object uses jgit to read current Git head information, via the
+  * companion class [[NNGit]]. There is no real need for this to be a
+  * companion object, just that it is more aesthetically pleasing that way.
+  *
+  * All serialized objects should be tagged with this Git information
+  * for reproducibility.
  */
 object NNGit {
 
-  /**Filename for git information serialization*/
-  @transient val jsonFile = new java.io.File( "./src/main/resources/NNGit.gson.txt" )
-//  @transient val jsonResource = {
-//    val tempResource = getClass.getClassLoader.getResource("NNGit.gson.txt")
-//
-//    if(tempResource == null) null
-//
-//    else new java.io.File( tempResource.getPath() )
-//  }
-  @transient val jsonStream = NN.getClass.getClassLoader.getResourceAsStream("NNGit.gson.txt")
+  @transient val jsonFileName = "NNGit.gson.txt"
 
-  @transient var repository = (new FileRepositoryBuilder()).
+  /**File for saved git information. It will not be accessible at this path
+    * (i.e. jsonFile.exists == false) if this library is accessed from a .jar file.
+    *
+    * This file will be overwritten with new information if this object is initialized
+    * from within an active Git repository ( contained in "./.git" ).
+    * */
+  @transient val jsonFile = new java.io.File( "./src/main/resources/" + jsonFileName)
+
+  /** Resource stream for pre-serialized Git version information.
+    * It will be null if the resource does not exist.
+    * This resource stream will be used to read Git information if this
+    * library is accessed from within a *.jar file.
+    * Use of stream (and not java.io.File) is necessary to read from within a compressed jar file.
+    */
+  @transient val jsonStream = NN.getClass.getClassLoader.getResourceAsStream(jsonFileName)
+
+  /**Current repository in "./.git". Repository will be invalid if this library is accessed via
+    * jar file (repository.getRef("HEAD") == null). In this case,
+    * [[jsonStream]] will be used as the source for pre-serialized
+    * Git information.
+   */
+  @transient private val repository = (new FileRepositoryBuilder()).
     setGitDir( new java.io.File( "./.git" ) ). //( null )
     readEnvironment().findGitDir().build()
 
-//  @transient val gsonFile = new java.io.File(jsonFile)
-//println("gsonFile exists: " + gsonFile.exists.toString)
-//println("gsonFile: " + gsonFile.getCanonicalPath)
-//println("gsonFile canRead: " + gsonFile.canRead)
-
-  @transient private val gson = new Gson
   /**Whether the info was loaded from a repository*/
-  @transient var repoLoaded: Boolean = false
+  @transient private var repoLoaded: Boolean = false
   /**Whether the info was loaded from a file*/
-  @transient var fileLoaded: Boolean = false
+  @transient private var fileLoaded: Boolean = false
 
   @transient
   private val obj: NNGit = {
@@ -51,13 +61,14 @@ object NNGit {
       //return either the deserialized object or empty (if file not present)
       if( jsonFile.exists ){
         fileLoaded = true
-        gson.fromJson( Files.readAllLines(jsonFile.toPath, StandardCharsets.UTF_8).toArray.mkString("\n"),
+        nounou.gson.fromJson( Files.readAllLines(jsonFile.toPath, StandardCharsets.UTF_8).toArray.mkString("\n"),
           classOf[NNGit]   )
       } else if (jsonStream != null ){
         fileLoaded = true
-        gson.fromJson(  IOUtils.toString(jsonStream, "UTF-8"), classOf[NNGit])
+        nounou.gson.fromJson(  IOUtils.toString(jsonStream, "UTF-8"), classOf[NNGit])
       } else {
         fileLoaded = false
+        //If no information available, default (empty) class is initialized
         new NNGit
       }
 
@@ -70,7 +81,7 @@ object NNGit {
         if (jsonFile.exists()) jsonFile.delete
         jsonFile.createNewFile()
         val writer = new BufferedWriter( new FileWriter( jsonFile ) )
-        writer.write( gson.toJson(tempRet) )
+        writer.write( nounou.gson.toJson(tempRet) )
         writer.close
 
       repoLoaded = true
@@ -92,11 +103,11 @@ object NNGit {
   def gitFileLoaded = fileLoaded
 
   def contentText() =
-    "  + current HEAD is: " + getGitHead + "\n" +
+    "  + current HEAD is: " + obj.head + "\n" +
     "  + current branch is: " + obj.branch  + "\n" +
     "  + remote names are: " + obj.remotes.mkString(", ") + "\n"
   def repoText() = "GIT repo directory: " + obj.gitDirectory + "\n"
-  def fileText() = "Last GIT info from file: " + jsonFile + "\n"
+  def fileText() = "Last GIT info from file resource: " + jsonFileName + "\n"
 
   def infoPrintout() = {
     if(gitRepoLoaded) repoText() + contentText()
@@ -106,6 +117,8 @@ object NNGit {
 
 }
 
+/**This class will be serialized by gson.
+ */
 class NNGit  {
 
   var head: String = "Head not initialized"
@@ -113,6 +126,10 @@ class NNGit  {
   var remotes: Array[String] = Array("Remotes not initialized")
   var gitDirectory: String = "Git directory not initialized"
 
+  /**Initializes the NNGit class based on a given input repository.
+    * This initialization is NOT done in constructor, due to gson
+    * requiring a no-argument constructor for correct serialization.
+   */
   def initializeFromRepository(repository: Repository): Unit = {
     NN.loggerRequire(repository != null, "Called with null repository!" )
     head = repository.getRef("HEAD").getObjectId.name match {

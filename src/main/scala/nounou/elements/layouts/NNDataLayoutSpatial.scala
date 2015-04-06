@@ -66,17 +66,17 @@ abstract class NNDataLayoutSpatial extends NNDataLayout {
   /** Center coordinate of chosen detector (or channel,
    *  if it is designated a part of the field for display.
    */
-  final def channelToCoordinates(ch: Int): Array[Double] = {
+  final def getChannelCoordinates(ch: Int): Array[Double] = {
     if(!initialized) initialize()
     require(isValidChannel(ch), "Invalid channel!")
-    channelToCoordinatesImpl(ch)
+    getChannelCoordinatesImpl(ch)
   }
 
-  /** Implementation for [[channelToCoordinates(Int)]].
+  /** Implementation for [[getChannelCoordinates(Int)]].
     * Will return Array for Java compatibility, but this should be a newly generated
     * copy Array with immutable intent.
     */
-  def channelToCoordinatesImpl(ch: Int): Array[Double]
+  def getChannelCoordinatesImpl(ch: Int): Array[Double]
 
 //  /** Detector which covers the chosen coordinates.
 //    * If x or y coordinates are outside of field,
