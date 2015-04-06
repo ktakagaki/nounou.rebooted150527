@@ -1,7 +1,7 @@
 package nounou.elements.data
 
 import nounou.elements.NNElement
-import nounou.elements.traits.layouts.NNDataLayout
+import nounou.elements.layouts.NNDataLayout
 import scala.collection.immutable.Vector
 import nounou._
 import nounou.elements.traits._
@@ -89,7 +89,7 @@ abstract class NNData extends NNElement
       s"Channel count ${layout.channelCount} of new layout does not match channel count ${this.channelCount()} for ${this.getClass.toString}" )
   }
 
-  override def channelCount(): Int// = layout().channelCount
+  override def getChannelCount(): Int// = layout().channelCount
 
   // </editor-fold>
 

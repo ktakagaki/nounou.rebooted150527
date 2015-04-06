@@ -16,15 +16,16 @@ trait NNChannelsElement extends NNElement {
     * so equality should be tested before setting/using a certain [[nounou.elements.layouts.NNDataLayout]]
     * to plot or interpret a certain [[nounou.elements.data.NNData]].
     */
-  def channelCount: Int
+  def getChannelCount: Int
+  final def channelCount(): Int = getChannelCount
 
-  /**Get the name of a given channel.
-    * Throws error if channel out of range and not valid*/
-  final def channelName(channel: Int): String = {
-    requireValidChannel(channel)
-    channelNameImpl(channel)
-  }
-  def channelNameImpl(channel: Int): String = s"Class ${this.getClass}, channel #${channel}"
+//  /**Get the name of a given channel.
+//    * Throws error if channel out of range and not valid*/
+//  final def channelName(channel: Int): String = {
+//    requireValidChannel(channel)
+//    channelNameImpl(channel)
+//  }
+//  def channelNameImpl(channel: Int): String = s"Class ${this.getClass}, channel #${channel}"
 
   /** Is this channel valid?
     */

@@ -1,7 +1,7 @@
 package nounou.elements.traits
 
 import nounou.elements.NNElement
-import nounou.elements.traits.layouts.NNDataLayout
+import nounou.elements.layouts.NNDataLayout
 
 /**
  * Created by ktakagaki on 15/03/12.

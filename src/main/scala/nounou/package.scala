@@ -1,10 +1,14 @@
 import _root_.nounou.util.LoggingExt
+import com.google.gson.Gson
 
 /**
  * @author ktakagaki
  * @date 2/4/14.
  */
 package object nounou extends LoggingExt {
+
+  val gson = new Gson
+  val version = 0.5
 
   // <editor-fold defaultstate="collapsed" desc=" rangeInclusiveToFrameRange ">
 

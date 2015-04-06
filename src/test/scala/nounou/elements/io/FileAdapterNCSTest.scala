@@ -42,7 +42,7 @@ class FileAdapterNCSTest extends FunSuite {
     assert(dataObj.timing.convertTsToFrsg(10245373715L - 9223372036854775807L-1/*2^63*/) == (500*512, 0))
     assert(dataObj.timing.segmentStartTss(1) == (10664246433L - 9223372036854775807L-1/*2^63*/))
     assert(dataObj.timing.convertTsToFrsg(10664246433L - 9223372036854775807L-1/*2^63*/) == (0, 1))
-    assert(dataObj.timing.segmentEndTs(0)   == (dataObj.timing.segmentStartTss(0) + (2546176L-1) *1000 /32 ) )
+    assert(dataObj.timing.segmentEndTss(0)   == (dataObj.timing.segmentStartTss(0) + (2546176L-1) *1000 /32 ) )
 
   }
 

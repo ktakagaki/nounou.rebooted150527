@@ -2,7 +2,7 @@
 //
 //import nounou.elements.{NNTrodes, NNEvents, NNSpikes}
 //import nounou.elements.data.{NNDataAux, NNData}
-//import nounou.elements.traits.layouts.NNLayout
+//import nounou.elements.layouts.NNLayout
 //
 ///**This trait encapsulates the output of an electrophysiological experiment, which consists
 //  * of various [[nounou.elements.NNElement]] objects.

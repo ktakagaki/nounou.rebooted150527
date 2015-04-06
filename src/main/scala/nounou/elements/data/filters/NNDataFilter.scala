@@ -4,7 +4,7 @@ import nounou._
 import nounou.elements.NNElement
 import nounou.elements.data.NNData
 import nounou.elements.ranges.{SampleRangeSpecifier, SampleRangeValid}
-import nounou.elements.traits.layouts.NNDataLayout
+import nounou.elements.layouts.NNDataLayout
 import breeze.linalg.{DenseVector => DV}
 import nounou.elements.traits.{NNDataScale, NNDataTiming}
 
@@ -57,7 +57,7 @@ class NNDataFilter( private var _parent: NNData ) extends NNData {
     // </editor-fold>
 
 //  override def channelNames: scala.Vector[String] = _parent.channelNames
-  override def channelCount = _parent.channelCount
+  override def getChannelCount = _parent.channelCount
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = _parent.readPointImpl(channel, frame, segment: Int)
   override def readTraceDVImpl(channel: Int, range: SampleRangeValid): DV[Int] = _parent.readTraceDVImpl(channel, range)

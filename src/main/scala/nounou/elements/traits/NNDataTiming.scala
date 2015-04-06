@@ -10,7 +10,16 @@ import nounou.elements.ranges.SampleRangeSpecifier
   * Envisioned uses are for [[nounou.elements.data.NNData]],
   * [[nounou.elements.traits.layouts.NNDataLayout]], and [[nounou.elements.NNSpikes]].
   */
-trait NNDataTiming extends NNElement {
+class NNDataTiming(  /**Sample rate in Hz.*/
+                     val sampleRate: Double,
+                     /**Total number of frames in each segment.*/
+                     val segmentLengths: Array[Int],
+                     /** List of starting timestamps for each segment.*/
+                     val segmentStartTss: Array[Long]
+
+
+
+                    ) extends NNElement {
 
   /** Throws IllegalArgumentException if segmentCount != 1... use as check for functions which assume segment = 0.
     * @param func name of current function/signature called (which assumes segment = 0 )
@@ -24,17 +33,10 @@ trait NNDataTiming extends NNElement {
     )
   }
 
-  /**Sample rate in Hz.
-   */
-  val sampleRate: Double
-
   final lazy val sampleInterval = 1.0/sampleRate
 
   // <editor-fold defaultstate="collapsed" desc="segment related: segmentCount, segmentLength/length ">
   
-  /**Total number of frames in each segment.
-   */
-  val segmentLengths: Array[Int]
 
   /** Number of segments in data.
     */
@@ -81,9 +83,6 @@ trait NNDataTiming extends NNElement {
   // </editor-fold>
   // <editor-fold defaultstate="collapsed" desc="segment timestamps: segmentStartTs/startTs/segmentEndTs/lastTs ">
 
-  /** OVERRIDE: List of starting timestamps for each segment.
-    */
-  val segmentStartTss: Array[Long]
 
   lazy val startTs: Long = {
     errorIfMultipleSegments("startTs", "segmentStartTS(segment: Int)")
@@ -92,14 +91,14 @@ trait NNDataTiming extends NNElement {
 
   /** OVERRIDE: End timestamp for each segment. Implement by overriding _endTimestamp
     */
-  lazy val segmentEndTs: Array[Long] = {
+  lazy val segmentEndTss: Array[Long] = {
     ( for(seg <- 0 until segmentCount) yield
       segmentStartTss(seg) + ((segmentLength(seg)-1)*factorTsPerFr).toLong ).toArray
   }
 
   lazy val endTs: Long = {
     errorIfMultipleSegments("lastTs", "segmentEndTS(segment: Int)")
-    segmentEndTs(0)
+    segmentEndTss(0)
   }
 
   // </editor-fold>
@@ -158,15 +157,15 @@ trait NNDataTiming extends NNElement {
       //loop through segments to find appropriate segment which (contains) given timestamp
       var seg = 0
       while(seg < segmentCount - 1 && !changed ){
-        if( timestamp <= segmentEndTs(seg) ){
+        if( timestamp <= segmentEndTss(seg) ){
           // if the timestamp is smaller than the end of the current segment, it fits in the current segment
           tempret = ( convertImpl(segmentStartTss(seg)), seg)
           changed = true
         } else if( timestamp < segmentStartTss(seg+1) ) {
           //The timestamp is between the end of the current segment and the beginning of the next segment...
-          if( timestamp - segmentEndTs(seg) < segmentStartTss(seg+1) - timestamp){
+          if( timestamp - segmentEndTss(seg) < segmentStartTss(seg+1) - timestamp){
             //  ...timestamp is closer to end of current segment than beginning of next segment
-            tempret = ( convertImpl(segmentEndTs(seg)), seg)
+            tempret = ( convertImpl(segmentEndTss(seg)), seg)
             changed = true
           } else {
             //  ...timestamp is closer to beginning of next segment than end of current segment
@@ -181,12 +180,12 @@ trait NNDataTiming extends NNElement {
 
       //deal with the lastValid segment separately
       if( !changed ){
-        if(timestamp <= segmentEndTs(segmentCount -1)){
+        if(timestamp <= segmentEndTss(segmentCount -1)){
           // if the timestamp is smaller than the end of the current segment, it fits in the current segment
           tempret = ( convertImpl(segmentStartTss(segmentCount-1)), segmentCount - 1 )
         } else {
           // if the timestamp is larger than the end of the lastValid segment
-          tempret = ( convertImpl(segmentEndTs(segmentCount-1)), segmentCount - 1 )
+          tempret = ( convertImpl(segmentEndTss(segmentCount-1)), segmentCount - 1 )
         }
       }
 
@@ -238,10 +237,10 @@ trait NNDataTiming extends NNElement {
       var tempret = -1
       var seg = 0
       while(seg < segmentCount - 1 && tempret == -1){
-        if( timestamp < segmentEndTs(seg) ){
+        if( timestamp < segmentEndTss(seg) ){
           tempret = seg
         } else if(timestamp < segmentStartTss(seg+1)) {
-          tempret = if(timestamp - segmentEndTs(seg) < segmentStartTss(seg+1) - timestamp) seg else seg + 1
+          tempret = if(timestamp - segmentEndTss(seg) < segmentStartTss(seg+1) - timestamp) seg else seg + 1
         } else {
           seg += 1
         }
@@ -280,15 +279,12 @@ trait NNDataTiming extends NNElement {
 
 }
 
-class NNDataTimingObj( override val sampleRate: Double, override val segmentLengths: Array[Int],
-                       override val segmentStartTss: Array[Long]) extends NNDataTiming
-
 object NNDataTiming {
   def apply( sampleRate: Double, segmentLengths: Array[Int], segmentStartTs: Array[Long] ): NNDataTiming =
-    new NNDataTimingObj( sampleRate, segmentLengths, segmentStartTs )
+    new NNDataTiming( sampleRate, segmentLengths, segmentStartTs )
   def singleSegment( sampleRate: Double, segmentLength: Int, startTs: Long ): NNDataTiming =
-    new NNDataTimingObj( sampleRate, Array[Int](segmentLength), Array[Long](startTs) )
-  def singleSegment( sampleRate: Double, segmentLength: Int ): NNDataTiming = singleSegment( sampleRate, segmentLength, 0)
+    new NNDataTiming( sampleRate, Array[Int](segmentLength), Array[Long](startTs) )
+  def singleSegment( sampleRate: Double, segmentLength: Int ): NNDataTiming = singleSegment( sampleRate, segmentLength, 0L)
 }
 
 //trait NNDataTimingImmutable extends NNDataTiming {

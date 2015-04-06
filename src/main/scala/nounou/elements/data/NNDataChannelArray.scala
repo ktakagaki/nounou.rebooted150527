@@ -5,15 +5,13 @@ import breeze.linalg.{DenseVector, min}
 import nounou._
 import nounou.elements.NNElement
 import nounou.elements.traits.NNDataTiming
-import nounou.elements.traits.layouts.NNDataLayout
+import nounou.elements.layouts.NNDataLayout
 
 /**Immutable data object to encapsulate arrays of [[NNDataChannel]] objects
   *
  * Created by Kenta on 12/15/13.
  */
- class NNDataChannelArray(val array: Seq[NNDataChannel]/*,
-                          override val layout: NNLayout = NNLayoutNull*/)
-  extends NNData {
+ class NNDataChannelArray(val array: Seq[NNDataChannel]) extends NNData {
 
   //enforce channel compatibility
   loggerRequire( array != null && array.length > 0, "input Vector must be non-negative, non-empty" )
@@ -26,9 +24,6 @@ import nounou.elements.traits.layouts.NNDataLayout
 //  def this( array: Array[NNDataChannel], layout: NNLayout ) = this( array.toVector, layout )
 
   def apply(channel: Int) = array(channel)
-
-
-
 
 //  override def segmentLengthImpl(segment: Int) = {
 //    array(0).segmentLengthImpl(segment)
@@ -109,6 +104,6 @@ import nounou.elements.traits.layouts.NNDataLayout
 //    */
 //  override def segmentEndTs: Array[Long] = array(0).segmentEndTs
 
-  override def channelCount: Int = array.length
+  override def getChannelCount: Int = array.length
 
 }
