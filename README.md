@@ -1,6 +1,6 @@
 # nounou
 
-Nounou is a JVM-based interface for loading neurophysiological data, written mainly in Scala. It is a full rewrite of a prior version in Java.
+Nounou is a JVM-based interface for loading neurophysiological data, written mainly in Scala. It is a full rewrite of a prior version in Java (Takagaki, 2011), and old functions are gradually being translated to Scala and refactored in as needed.
 
 ## Package Goals
 
