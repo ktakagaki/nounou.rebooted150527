@@ -1,4 +1,4 @@
-package nounou.elements.io.neuralynx
+package nounou.io.neuralynx
 
 import java.io.File
 
@@ -188,7 +188,7 @@ class FileAdapterNCS extends FileAdapterNeuralynx {
                   NNDataScale.apply(Short.MinValue.toInt*xBits, Short.MaxValue.toInt*xBits,
                           absGain = 1.0E6 * tempADBitVolts / xBitsD,
                           absOffset = 0d,
-                          absUnit = "mV"),
+                          absUnit = "microV"),
                   channelName = tempAcqEntName
                                               )
     //println("absGain " + xDataChannelNCS.scale.absGain)

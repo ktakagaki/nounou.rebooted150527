@@ -1,4 +1,4 @@
-//package nounou.elements.io
+//package nounou.io
 //
 //import java.io.{IOException, File}
 //import nounou.elements.{NNEvent, NNElement, NNEvents}

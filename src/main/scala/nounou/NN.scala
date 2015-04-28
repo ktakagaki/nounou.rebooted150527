@@ -6,7 +6,7 @@ import java.util.ServiceLoader
 
 import com.google.gson.Gson
 import nounou.elements.NNElement
-import nounou.elements.io.FileLoader
+import nounou.io.FileLoader
 import nounou.elements.ranges._
 import breeze.linalg.DenseVector
 import nounou.util.{LoggingExt, NNGit}

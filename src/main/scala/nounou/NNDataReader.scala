@@ -5,7 +5,7 @@
 //import com.typesafe.scalalogging.slf4j.LazyLogging
 //import nounou.elements._
 //import nounou.elements.data.{NNDataChannelArray, NNDataChannel}
-//import nounou.elements.io.{FileAdapterNEV, FileAdapterNCS}
+//import nounou.io.{FileAdapterNEV, FileAdapterNCS}
 //import nounou.elements.data.filters._
 //import scala.beans.BeanProperty
 //import nounou.elements.headers.{NNHeaderNull$$, NNHeader}

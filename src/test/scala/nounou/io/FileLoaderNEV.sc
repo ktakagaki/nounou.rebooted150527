@@ -1,7 +1,7 @@
 import breeze.io.{ByteConverterLittleEndian, RandomAccessFile}
 import java.io.File
 
-import nounou.elements.io.neuralynx.FileAdapterNCS
+import nounou.io.neuralynx.FileAdapterNCS
 
 /**
  * @author ktakagaki

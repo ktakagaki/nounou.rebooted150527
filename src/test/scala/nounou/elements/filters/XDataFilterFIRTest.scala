@@ -2,7 +2,7 @@
 //
 ////import nounou.OptSegment
 //import org.scalatest.FunSuite
-//import nounou.elements.io.{NNDataChannelNCS, FileAdapterNCS}
+//import nounou.io.{NNDataChannelNCS, FileAdapterNCS}
 //import nounou.elements.{NNDataChannel, NNDataChannelArray}
 //import nounou.elements.ranges.FrRange$
 //

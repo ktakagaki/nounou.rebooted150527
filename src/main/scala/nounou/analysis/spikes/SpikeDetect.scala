@@ -1,4 +1,4 @@
-package nounou.analysis.units
+package nounou.analysis.spikes
 
 //import breeze.linalg.{argmax, randomInt, DenseVector}
 //import nounou.{OptNull, Opt}

@@ -1,4 +1,4 @@
-//package nounou.elements.io
+//package nounou.io
 //
 //import nounou.elements.NNEvents
 //import org.scalatest.FunSuite

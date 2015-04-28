@@ -1,5 +1,5 @@
 import java.util.ServiceLoader
-import nounou.elements.io.FileLoader
+import nounou.io.FileLoader
 import scala.collection.JavaConverters._
 
 classOf[FileLoader].getCanonicalName()
@@ -15,7 +15,7 @@ loader.toList.toString
 //loader.reload()
 //(for(l <- loader) yield l).toList
 
-//val resources = getClass().getClassLoader().getResources("META-INF/services/nounou.elements.io.FileLoader")
+//val resources = getClass().getClassLoader().getResources("META-INF/services/nounou.io.FileLoader")
 //var output = "";
 //while(resources.hasMoreElements){
 //  output = output + ";\n " + resources.nextElement().toString

@@ -4,7 +4,7 @@
 //
 //import breeze.linalg.DenseVector
 //import nounou.{OptSegment, NNDataReader}
-//import nounou.elements.io.neuralynx.NNDataChannelNCS
+//import nounou.io.neuralynx.NNDataChannelNCS
 //import org.junit.runner.RunWith
 //import org.scalatest.FunSuite
 //import org.scalatest.junit.JUnitRunner

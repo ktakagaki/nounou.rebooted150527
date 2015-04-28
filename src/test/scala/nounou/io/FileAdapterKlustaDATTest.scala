@@ -1,9 +1,9 @@
-//package nounou.elements.io
+//package nounou.io
 //
 //import org.scalatest.FunSuite
 //import nounou.NNDataReader
 //import nounou.elements.filters.NNDataFilterMask
-//import nounou.elements.io._
+//import nounou.io._
 //import nounou.elements.NNData
 //
 ///**

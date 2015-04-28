@@ -6,7 +6,7 @@ import nounou.Opt
  * @author ktakagaki
  * @date 07/14/2014.
  */
-package object units {
+package object spikes {
 
   abstract class OptAnalysisUnits extends Opt
 

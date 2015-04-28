@@ -1,7 +1,7 @@
-package nounou.elements.io.neuralynx
+package nounou.io.neuralynx
 
 import breeze.io.RandomAccessFile
-import nounou.elements.io.FileLoader
+import nounou.io.FileLoader
 import nounou.util.LoggingExt
 
 
