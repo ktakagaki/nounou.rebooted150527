@@ -15,10 +15,15 @@ abstract class NNElement extends LoggingExt {
   //This temporary val is necessary to trigger initialization of `object NNGit`
   @transient private lazy val nnGitObj = nounou.util.NNGit
   val gitHead = nnGitObj.getGitHead
+  @transient lazy val gitHeadShort = gitHead.take(10)
   val version = nounou.version
 
   def toJsonString: String = nounou.gson.toJson( this )
-
+  def toStringFull(): String = {
+    var tempout = toString().dropRight(1) + s"$gitHeadShort)/n" //+
+    //"============================================================/n" +
+    tempout.dropRight(1)
+  }
   def isCompatible(that: NNElement): Boolean
   final def isCompatible(that: Seq[NNElement]): Boolean = that.forall( this.isCompatible(_) )
 

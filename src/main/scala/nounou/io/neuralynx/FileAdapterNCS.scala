@@ -21,11 +21,11 @@ class FileAdapterNCS extends FileAdapterNeuralynx {
   //val headerBytes = 16384L FileAdapterNLX
   /**Size of each record, in bytes*/
   override val recordBytes = 1044
+  /**Sample rate, Hz*/
+  var sampleRate: Double = -1d
   /**Number of samples per record*/
   val recordSampleCount= 512
   val recordNonDataBytes = recordBytes - recordSampleCount * 2
-  /**Sample rate, Hz*/
-  val sampleRate = 32000D
   val absOffset = 0D
   val absUnit: String = "microV"
   //val absGain = ???
@@ -44,14 +44,17 @@ class FileAdapterNCS extends FileAdapterNeuralynx {
       nlxHeaderLoad()
       val tempAcqEntName = nlxHeaderParserS("AcqEntName", "NoName")
       val tempRecordSize = nlxHeaderParserI("RecordSize", "0")
-        require(tempRecordSize == recordBytes, "NCS file with non-standard record size: " + tempRecordSize)
-      val tempSampleFreqD = nlxHeaderParserD("SamplingFrequency", "1")
-        require(tempSampleFreqD == sampleRate, "NCS file with non-standard sampling frequency: " + tempSampleFreqD)
+        require(tempRecordSize == recordBytes,
+          s"NCS file with non-standard record size: $tempRecordSize")
+      sampleRate = nlxHeaderParserD("SamplingFrequency", "1")
+      require(sampleRate >= 1000d,
+          //tempSampleFreqD == sampleRate,
+          s"NCS file with non-standard sampling frequency: $sampleRate")
       val tempADBitVolts = nlxHeaderParserD("ADBitVolts", "1")
 
       // </editor-fold>
 
-      val tempRecTSIncrement = 16000L //(1000000D * tempRecLength.toDouble/tempSampleFreqD).toLong
+      val tempRecTSIncrement = (1000000D * tempRecordSize.toDouble/sampleRate).toLong
 
       //Calculate the number of records in the ncs file, based on the file length
       val tempNoRecords = ((fHand.length - headerBytes).toDouble/tempRecordSize.toDouble).toInt
@@ -74,11 +77,14 @@ class FileAdapterNCS extends FileAdapterNeuralynx {
 
       //dwSampleFreq
       val dwSampleFreq = fHand.readUInt32
-      require(dwSampleFreq == sampleRate, "Reported sampling frequency for record " + 0 + " is different from file sampling frequency " + dwSampleFreq)
+      require(dwSampleFreq == sampleRate,
+        "Reported sampling frequency for record 0 is different from file sampling frequency " +
+          dwSampleFreq)
 
       //dwNumValidSamples
       val dwNumValidSamples = fHand.readUInt32
-      require(dwNumValidSamples == recordSampleCount, "Currently can only deal with records which are " + recordSampleCount + " samples long.")
+      require(dwNumValidSamples == recordSampleCount,
+        s"Currently can only deal with records which are $recordSampleCount samples long.")
 
 //      //snSamples
 //      fHand.jumpBytes(recordSampleCount*2)
@@ -96,39 +102,18 @@ class FileAdapterNCS extends FileAdapterNeuralynx {
         //qwTimeStamp
         thisRecTS = fHand.readUInt64Shifted
 
-            if(thisRecTS > lastRecTS + tempRecTSIncrement*lastRecJump){
+        if(thisRecTS > lastRecTS + tempRecTSIncrement*lastRecJump){
 
-                if( lastRecJump != 1 ){
-                  //Went over change in segment, rewind and try a stepMs of 1
-                  rec = rec - lastRecJump + 1
-                  fHand.seek( recordStartByte(rec) )
-                  lastRecJump = 1
-                  //qwTimeStamp
-                  thisRecTS = fHand.readUInt64Shifted
+              if( lastRecJump != 1 ){
+                //Went over change in segment, rewind and try a stepMs of 1
+                rec = rec - lastRecJump + 1
+                fHand.seek( recordStartByte(rec) )
+                lastRecJump = 1
+                //qwTimeStamp
+                thisRecTS = fHand.readUInt64Shifted
 
-                  if(thisRecTS > lastRecTS + tempRecTSIncrement/*lastRecJump*/){
-                    //We got the correct start of a segment, with lastRecJump of 1!!!
-
-                    //Append timestamp for record rec as a new segment start
-                    tempStartTimestamps = tempStartTimestamps :+ thisRecTS
-                    //Append length of previous segment as segment length
-                    tempLengths = tempLengths :+ (rec*512 - tempSegmentStartFrame)
-                    //New segment's start frame
-                    tempSegmentStartFrame = rec*512
-
-                    //reset next jump attempt count
-                    lastTriedJump = 4096
-
-                  } else {
-                    //We went ahead by lastRecJump = 1, but the record was just one frame ahead in the same jump
-                    if( lastTriedJump > 1 ){
-                      //Jump less next loop
-                      lastTriedJump = lastTriedJump / 2
-                    }
-                  }
-
-                } else {
-                  //We went forward lastRecJump = 1, and hit a new segment
+                if(thisRecTS > lastRecTS + tempRecTSIncrement/*lastRecJump*/){
+                  //We got the correct start of a segment, with lastRecJump of 1!!!
 
                   //Append timestamp for record rec as a new segment start
                   tempStartTimestamps = tempStartTimestamps :+ thisRecTS
@@ -140,38 +125,63 @@ class FileAdapterNCS extends FileAdapterNeuralynx {
                   //reset next jump attempt count
                   lastTriedJump = 4096
 
+                } else {
+                  //We went ahead by lastRecJump = 1, but the record was just one frame ahead in the same jump
+                  if( lastTriedJump > 1 ){
+                    //Jump less at next loop
+                    lastTriedJump = lastTriedJump / 2
+                  }
                 }
 
-            } //else { } //advanced correctly within segment
+              } else {
+                //lastRecJump = 1, we've found the start of a new segment
 
-            //reset marker for lastTS
-            lastRecTS = thisRecTS
+                //Append timestamp for record rec as a new segment start
+                tempStartTimestamps = tempStartTimestamps :+ thisRecTS
+                //Append length of previous segment as segment length
+                tempLengths = tempLengths :+ (rec*512 - tempSegmentStartFrame)
+                //New segment's start frame
+                tempSegmentStartFrame = rec*512
 
-            //VARIOUS CHECKS, NOT NECESSARY
-            //dwChannelNumber
-            fHand.jumpBytes(4)
-            //dwSampleFreq
-            val dwSampleFreq = fHand.readUInt32
-            require(dwSampleFreq == sampleRate, "Reported sampling frequency for record " + rec + ", " + dwSampleFreq + " is different from file sampling frequency " + sampleRate )
-            //dwNumValidSamples
-            val dwNumValidSamples = fHand.readUInt32
-            require(dwNumValidSamples == recordSampleCount, "Currently can only deal with records which are " + recordSampleCount + " samples long.")
+                //reset next jump attempt count
+                lastTriedJump = 4096
 
+              }
 
-            //Loop advancement
-            if( rec == tempNoRecords -1 ){
-              //was on lastValid record
-              rec += 1 //this will cause break in while
-            } else if (rec + lastTriedJump < tempNoRecords ) {
-              //try the jump in lastTriedJump
-              lastRecJump = lastTriedJump
-              rec += lastRecJump
-            } else {
-              //jump to the end of the file
-              lastRecJump = tempNoRecords-1-rec
-              lastTriedJump = lastRecJump
-              rec += lastRecJump
-            }
+        } //else { } //advanced correctly within segment
+
+        //reset marker for lastTS
+        lastRecTS = thisRecTS
+
+        // <editor-fold defaultstate="collapsed" desc=" VARIOUS CHECKS, NOT NECESSARY ">
+        //dwChannelNumber
+        fHand.jumpBytes(4)
+        //dwSampleFreq
+        val dwSampleFreq = fHand.readUInt32
+        require(dwSampleFreq == sampleRate,
+          s"Reported sampling frequency for record $rec, $dwSampleFreq, " +
+            s"is different from file sampling frequency $sampleRate )" )
+        //dwNumValidSamples
+        val dwNumValidSamples = fHand.readUInt32
+        require(dwNumValidSamples == recordSampleCount,
+          s"Currently can only deal with records which are $recordSampleCount samples long.")
+        // </editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc=" loop 'rec' advancement ">
+        if( rec == tempNoRecords -1 ){
+          //was on lastValid record
+          rec += 1 //this will cause break in while
+        } else if (rec + lastTriedJump < tempNoRecords ) {
+          //try the jump in lastTriedJump
+          lastRecJump = lastTriedJump
+          rec += lastRecJump
+        } else {
+          //jump to the end of the file
+          lastRecJump = tempNoRecords-1-rec
+          lastTriedJump = lastRecJump
+          rec += lastRecJump
+        }
+        // </editor-fold>
 
 
       }
@@ -184,7 +194,7 @@ class FileAdapterNCS extends FileAdapterNeuralynx {
 
     val xDataChannelNCS = new NNDataChannelNCS(
                   fileHandle = fHand,
-                  NNDataTiming.apply(32000d, tempLengths.toArray, tempStartTimestamps.toArray),
+                  NNDataTiming.apply(sampleRate, tempLengths.toArray, tempStartTimestamps.toArray),
                   NNDataScale.apply(Short.MinValue.toInt*xBits, Short.MaxValue.toInt*xBits,
                           absGain = 1.0E6 * tempADBitVolts / xBitsD,
                           absOffset = 0d,
@@ -215,6 +225,8 @@ class NNDataChannelNCS( override val fileHandle: RandomAccessFile,
   setTiming( timingEntry )
   setScale( scaleEntry )
 
+  // <editor-fold defaultstate="collapsed" desc=" recordIndex ">
+
   def recordIndexStartByte(record: Int, index: Int) = {
     t.recordStartByte(record) + 20L + (index * 2)
   }
@@ -223,6 +235,8 @@ class NNDataChannelNCS( override val fileHandle: RandomAccessFile,
     val cumFrame = timing.segmentStartFrame(segment) + frame
     ( cumFrame / t.recordSampleCount, cumFrame % t.recordSampleCount)
   }
+
+  // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc=" data implementations ">
 

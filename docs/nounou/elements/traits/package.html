@@ -1,0 +1,253 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>traits - nounou documentation - nounou.elements.traits</title>
+          <meta name="description" content="traits - nounou documentation - nounou.elements.traits" />
+          <meta name="keywords" content="traits nounou documentation nounou.elements.traits" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../index.html';
+            var hash = 'nounou.elements.traits.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img src="../../../lib/package_big.png" />
+        <p id="owner"><a href="../../package.html" class="extype" name="nounou">nounou</a>.<a href="../package.html" class="extype" name="nounou.elements">elements</a></p>
+        <h1>traits</h1> <span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.package" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">traits</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        
+        
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="nounou.elements.traits.NNChannelsElement" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="NNChannelsElementextendsNNElement"></a>
+      <a id="NNChannelsElement:NNChannelsElement"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="NNChannelsElement.html"><span class="name">NNChannelsElement</span></a><span class="result"> extends <a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.package@NNChannelsElementextendsNNElement" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This subclass of NNElement objects encapsulates the channel count information for
+electrophysiological and imaging data.</p><div class="fullcomment"><div class="comment cmt"><p>This subclass of NNElement objects encapsulates the channel count information for
+electrophysiological and imaging data. Envisioned uses are for <a href="../data/NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a>,
+<a href="../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>.
+Channel names/count are intentionally mutable for <a href="../data/filters/NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">nounou.elements.data.filters.NNDataFilter</a>
+objects which conduct binning and therefore may change dynamically.
+</p></div></div>
+    </li><li name="nounou.elements.traits.NNDataLayoutElement" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="NNDataLayoutElementextendsNNElement"></a>
+      <a id="NNDataLayoutElement:NNDataLayoutElement"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="NNDataLayoutElement.html"><span class="name">NNDataLayoutElement</span></a><span class="result"> extends <a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.package@NNDataLayoutElementextendsNNElement" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Created by ktakagaki on 15/03/12.</p>
+    </li><li name="nounou.elements.traits.NNDataScale" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="NNDataScaleextendsNNElement"></a>
+      <a id="NNDataScale:NNDataScale"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="NNDataScale.html"><span class="name">NNDataScale</span></a><span class="result"> extends <a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.package@NNDataScaleextendsNNElement" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This trait of XData and XDataChannel objects encapsulates scaling and unit information for
+electrophysiological and imaging recordings.</p><div class="fullcomment"><div class="comment cmt"><p>This trait of XData and XDataChannel objects encapsulates scaling and unit information for
+electrophysiological and imaging recordings.</p><p>Created by Kenta on 12/15/13.
+</p></div></div>
+    </li><li name="nounou.elements.traits.NNDataScaleElement" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="NNDataScaleElementextendsNNElement"></a>
+      <a id="NNDataScaleElement:NNDataScaleElement"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="NNDataScaleElement.html"><span class="name">NNDataScaleElement</span></a><span class="result"> extends <a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.package@NNDataScaleElementextendsNNElement" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Created by ktakagaki on 15/03/12.</p>
+    </li><li name="nounou.elements.traits.NNDataTiming" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="NNDataTimingextendsNNElement"></a>
+      <a id="NNDataTiming:NNDataTiming"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="NNDataTiming.html"><span class="name">NNDataTiming</span></a><span class="result"> extends <a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.package@NNDataTimingextendsNNElement" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This trait of NNElement objects (especially <a href="../data/NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a> encapsulates
+segment, frame, and sampling information for electrophysiological and imaging data.</p><div class="fullcomment"><div class="comment cmt"><p>This trait of NNElement objects (especially <a href="../data/NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a> encapsulates
+segment, frame, and sampling information for electrophysiological and imaging data.</p><p>Envisioned uses are for <a href="../data/NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a>,
+<span class="extype" name="nounou.elements.traits.layouts.NNDataLayout">nounou.elements.traits.layouts.NNDataLayout</span>, and <span class="extype" name="nounou.elements.NNSpikes">nounou.elements.NNSpikes</span>.
+</p></div></div>
+    </li><li name="nounou.elements.traits.NNDataTimingElement" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="NNDataTimingElementextendsNNElement"></a>
+      <a id="NNDataTimingElement:NNDataTimingElement"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="NNDataTimingElement.html"><span class="name">NNDataTimingElement</span></a><span class="result"> extends <a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.package@NNDataTimingElementextendsNNElement" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Created by ktakagaki on 15/03/12.</p>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="nounou.elements.traits.NNDataScale" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="NNDataScale"></a>
+      <a id="NNDataScale:NNDataScale"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="NNDataScale$.html"><span class="name">NNDataScale</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.package@NNDataScale" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="nounou.elements.traits.NNDataTiming" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="NNDataTiming"></a>
+      <a id="NNDataTiming:NNDataTiming"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="NNDataTiming$.html"><span class="name">NNDataTiming</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.package@NNDataTiming" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>

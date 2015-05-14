@@ -1,0 +1,1012 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>NNDataChannelNCS - nounou documentation - nounou.io.neuralynx.NNDataChannelNCS</title>
+          <meta name="description" content="NNDataChannelNCS - nounou documentation - nounou.io.neuralynx.NNDataChannelNCS" />
+          <meta name="keywords" content="NNDataChannelNCS nounou documentation nounou.io.neuralynx.NNDataChannelNCS" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../index.html';
+            var hash = 'nounou.io.neuralynx.NNDataChannelNCS';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <img src="../../../lib/class_big.png" />
+        <p id="owner"><a href="../../package.html" class="extype" name="nounou">nounou</a>.<a href="../package.html" class="extype" name="nounou.io">io</a>.<a href="package.html" class="extype" name="nounou.io.neuralynx">neuralynx</a></p>
+        <h1>NNDataChannelNCS</h1> <span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">NNDataChannelNCS</span><span class="result"> extends <a href="../../elements/data/NNDataChannelFilestream.html" class="extype" name="nounou.elements.data.NNDataChannelFilestream">NNDataChannelFilestream</a></span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>A specialized immutable [nounou.data.XDataChannelFileStream] for NCS files.
+</p></div><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><a href="../../elements/data/NNDataChannelFilestream.html" class="extype" name="nounou.elements.data.NNDataChannelFilestream">NNDataChannelFilestream</a>, <a href="../../elements/data/NNDataChannel.html" class="extype" name="nounou.elements.data.NNDataChannel">NNDataChannel</a>, <a href="../../elements/traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a>, <a href="../../elements/traits/NNDataTimingElement.html" class="extype" name="nounou.elements.traits.NNDataTimingElement">NNDataTimingElement</a>, <a href="../../elements/NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a>, <a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a>, <span class="extype" name="com.typesafe.scalalogging.slf4j.LazyLogging">LazyLogging</span>, <span class="extype" name="com.typesafe.scalalogging.Logging">Logging</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="nounou.io.neuralynx.NNDataChannelNCS"><span>NNDataChannelNCS</span></li><li class="in" name="nounou.elements.data.NNDataChannelFilestream"><span>NNDataChannelFilestream</span></li><li class="in" name="nounou.elements.data.NNDataChannel"><span>NNDataChannel</span></li><li class="in" name="nounou.elements.traits.NNDataScaleElement"><span>NNDataScaleElement</span></li><li class="in" name="nounou.elements.traits.NNDataTimingElement"><span>NNDataTimingElement</span></li><li class="in" name="nounou.elements.NNElement"><span>NNElement</span></li><li class="in" name="nounou.util.LoggingExt"><span>LoggingExt</span></li><li class="in" name="com.typesafe.scalalogging.slf4j.LazyLogging"><span>LazyLogging</span></li><li class="in" name="com.typesafe.scalalogging.Logging"><span>Logging</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="nounou.io.neuralynx.NNDataChannelNCS#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(fileHandle:breeze.io.RandomAccessFile,timingEntry:nounou.elements.traits.NNDataTiming,scaleEntry:nounou.elements.traits.NNDataScale,channelName:String):nounou.io.neuralynx.NNDataChannelNCS"></a>
+      <a id="&lt;init&gt;:NNDataChannelNCS"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">NNDataChannelNCS</span><span class="params">(<span name="fileHandle">fileHandle: <span class="extype" name="breeze.io.RandomAccessFile">RandomAccessFile</span></span>, <span name="timingEntry">timingEntry: <a href="../../elements/traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>, <span name="scaleEntry">scaleEntry: <a href="../../elements/traits/NNDataScale.html" class="extype" name="nounou.elements.traits.NNDataScale">NNDataScale</a></span>, <span name="channelName">channelName: <span class="extype" name="scala.Predef.String">String</span></span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@&lt;init&gt;(fileHandle:breeze.io.RandomAccessFile,timingEntry:nounou.elements.traits.NNDataTiming,scaleEntry:nounou.elements.traits.NNDataScale,channelName:String):nounou.io.neuralynx.NNDataChannelNCS" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@##():Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="nounou.io.neuralynx.NNDataChannelNCS#channelName" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="channelName:String"></a>
+      <a id="channelName:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">channelName</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@channelName:String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">MUST OVERRIDE: name of the given channel.</p><div class="fullcomment"><div class="comment cmt"><p>MUST OVERRIDE: name of the given channel.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounou.io.neuralynx.NNDataChannelNCS">NNDataChannelNCS</a> → <a href="../../elements/data/NNDataChannel.html" class="extype" name="nounou.elements.data.NNDataChannel">NNDataChannel</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#className" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="className:String"></a>
+      <a id="className:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">className</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@className:String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@clone():Object" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="nounou.io.neuralynx.NNDataChannelNCS#fileHandle" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fileHandle:breeze.io.RandomAccessFile"></a>
+      <a id="fileHandle:RandomAccessFile"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fileHandle</span><span class="result">: <span class="extype" name="breeze.io.RandomAccessFile">RandomAccessFile</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@fileHandle:breeze.io.RandomAccessFile" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounou.io.neuralynx.NNDataChannelNCS">NNDataChannelNCS</a> → <a href="../../elements/data/NNDataChannelFilestream.html" class="extype" name="nounou.elements.data.NNDataChannelFilestream">NNDataChannelFilestream</a></dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="nounou.io.neuralynx.NNDataChannelNCS#fsToRecordIndex" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="fsToRecordIndex(frame:Int,segment:Int):(Int,Int)"></a>
+      <a id="fsToRecordIndex(Int,Int):(Int,Int)"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fsToRecordIndex</span><span class="params">(<span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>, <span name="segment">segment: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: (<span class="extype" name="scala.Int">Int</span>, <span class="extype" name="scala.Int">Int</span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@fsToRecordIndex(frame:Int,segment:Int):(Int,Int)" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="nounou.elements.traits.NNDataScaleElement#getScale" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getScale():nounou.elements.traits.NNDataScale"></a>
+      <a id="getScale():NNDataScale"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getScale</span><span class="params">()</span><span class="result">: <a href="../../elements/traits/NNDataScale.html" class="extype" name="nounou.elements.traits.NNDataScale">NNDataScale</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@getScale():nounou.elements.traits.NNDataScale" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a></dd></dl></div>
+    </li><li name="nounou.elements.traits.NNDataTimingElement#getTiming" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getTiming():nounou.elements.traits.NNDataTiming"></a>
+      <a id="getTiming():NNDataTiming"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getTiming</span><span class="params">()</span><span class="result">: <a href="../../elements/traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@getTiming():nounou.elements.traits.NNDataTiming" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/traits/NNDataTimingElement.html" class="extype" name="nounou.elements.traits.NNDataTimingElement">NNDataTimingElement</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#gitHead" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="gitHead:String"></a>
+      <a id="gitHead:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">gitHead</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@gitHead:String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#gitHeadShort" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="gitHeadShort:String"></a>
+      <a id="gitHeadShort:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">gitHeadShort</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@gitHeadShort:String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@hashCode():Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="nounou.elements.data.NNDataChannel#isCompatible" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isCompatible(that:nounou.elements.NNElement):Boolean"></a>
+      <a id="isCompatible(NNElement):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isCompatible</span><span class="params">(<span name="that">that: <a href="../../elements/NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@isCompatible(that:nounou.elements.NNElement):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/data/NNDataChannel.html" class="extype" name="nounou.elements.data.NNDataChannel">NNDataChannel</a> → <a href="../../elements/traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a> → <a href="../../elements/traits/NNDataTimingElement.html" class="extype" name="nounou.elements.traits.NNDataTimingElement">NNDataTimingElement</a> → <a href="../../elements/NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#isCompatible" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isCompatible(that:Seq[nounou.elements.NNElement]):Boolean"></a>
+      <a id="isCompatible(Seq[NNElement]):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isCompatible</span><span class="params">(<span name="that">that: <span class="extype" name="scala.Seq">Seq</span>[<a href="../../elements/NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a>]</span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@isCompatible(that:Seq[nounou.elements.NNElement]):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.typesafe.scalalogging.slf4j.LazyLogging#logger" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logger:com.typesafe.scalalogging.slf4j.Logger"></a>
+      <a id="logger:Logger"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logger</span><span class="result">: <span class="extype" name="com.typesafe.scalalogging.slf4j.Logger">Logger</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@logger:com.typesafe.scalalogging.slf4j.Logger" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>LazyLogging → Logging</dd></dl></div>
+    </li><li name="nounou.util.LoggingExt#loggerError" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="loggerError(message:String,params:AnyRef*):IllegalArgumentException"></a>
+      <a id="loggerError(String,AnyRef*):IllegalArgumentException"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loggerError</span><span class="params">(<span name="message">message: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="params">params: <span class="extype" name="scala.AnyRef">AnyRef</span>*</span>)</span><span class="result">: <span class="extype" name="scala.IllegalArgumentException">IllegalArgumentException</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@loggerError(message:String,params:AnyRef*):IllegalArgumentException" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p>Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.
+Use as follows:
+<code><code><code><code>
+throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
+<code><code><code><code></code></code></code></code></code></code></code></code></p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></dd></dl></div>
+    </li><li name="nounou.util.LoggingExt#loggerRequire" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="loggerRequire(boolean:Boolean,message:String,params:AnyRef*):Unit"></a>
+      <a id="loggerRequire(Boolean,String,AnyRef*):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loggerRequire</span><span class="params">(<span name="boolean">boolean: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="message">message: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="params">params: <span class="extype" name="scala.AnyRef">AnyRef</span>*</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@loggerRequire(boolean:Boolean,message:String,params:AnyRef*):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">If input 'boolean' is false, logs a message using slf4j and throws an error.</p><div class="fullcomment"><div class="comment cmt"><p>If input 'boolean' is false, logs a message using slf4j and throws an error.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="scala.this.throws.&lt;init&gt;$default$1[IllegalArgumentException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@notify():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="nounou.elements.data.NNDataChannel#readPoint" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readPoint(frame:Int,segment:Int):Int"></a>
+      <a id="readPoint(Int,Int):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readPoint</span><span class="params">(<span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>, <span name="segment">segment: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@readPoint(frame:Int,segment:Int):Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Read a single point from the data, in internal integer scaling, after checking values.</p><div class="fullcomment"><div class="comment cmt"><p>Read a single point from the data, in internal integer scaling, after checking values.
+Implement via readPointImpl.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/data/NNDataChannel.html" class="extype" name="nounou.elements.data.NNDataChannel">NNDataChannel</a></dd></dl></div>
+    </li><li name="nounou.io.neuralynx.NNDataChannelNCS#readPointImpl" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readPointImpl(frame:Int,segment:Int):Int"></a>
+      <a id="readPointImpl(Int,Int):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readPointImpl</span><span class="params">(<span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>, <span name="segment">segment: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@readPointImpl(frame:Int,segment:Int):Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">MUST OVERRIDE: Read a single point from the data, in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p>MUST OVERRIDE: Read a single point from the data, in internal integer scaling.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounou.io.neuralynx.NNDataChannelNCS">NNDataChannelNCS</a> → <a href="../../elements/data/NNDataChannel.html" class="extype" name="nounou.elements.data.NNDataChannel">NNDataChannel</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNDataChannel#readTrace" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTrace(range:nounou.elements.ranges.SampleRangeSpecifier):Array[Int]"></a>
+      <a id="readTrace(SampleRangeSpecifier):Array[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTrace</span><span class="params">(<span name="range">range: <a href="../../elements/ranges/SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@readTrace(range:nounou.elements.ranges.SampleRangeSpecifier):Array[Int]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/data/NNDataChannel.html" class="extype" name="nounou.elements.data.NNDataChannel">NNDataChannel</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNDataChannel#readTrace" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTrace(segment:Int):Array[Int]"></a>
+      <a id="readTrace(Int):Array[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTrace</span><span class="params">(<span name="segment">segment: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@readTrace(segment:Int):Array[Int]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Read a single trace from the data, in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p>Read a single trace from the data, in internal integer scaling.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/data/NNDataChannel.html" class="extype" name="nounou.elements.data.NNDataChannel">NNDataChannel</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNDataChannel#readTraceDV" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTraceDV(range:nounou.elements.ranges.SampleRangeSpecifier):breeze.linalg.DenseVector[Int]"></a>
+      <a id="readTraceDV(SampleRangeSpecifier):DenseVector[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTraceDV</span><span class="params">(<span name="range">range: <a href="../../elements/ranges/SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a></span>)</span><span class="result">: <span class="extype" name="breeze.linalg.DenseVector">DenseVector</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@readTraceDV(range:nounou.elements.ranges.SampleRangeSpecifier):breeze.linalg.DenseVector[Int]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Read a single trace (within the span) from the data, in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p>Read a single trace (within the span) from the data, in internal integer scaling.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/data/NNDataChannel.html" class="extype" name="nounou.elements.data.NNDataChannel">NNDataChannel</a></dd></dl></div>
+    </li><li name="nounou.io.neuralynx.NNDataChannelNCS#readTraceDVImpl" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTraceDVImpl(range:nounou.elements.ranges.SampleRangeValid):breeze.linalg.DenseVector[Int]"></a>
+      <a id="readTraceDVImpl(SampleRangeValid):DenseVector[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTraceDVImpl</span><span class="params">(<span name="range">range: <a href="../../elements/ranges/SampleRangeValid.html" class="extype" name="nounou.elements.ranges.SampleRangeValid">SampleRangeValid</a></span>)</span><span class="result">: <span class="extype" name="breeze.linalg.DenseVector">DenseVector</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@readTraceDVImpl(range:nounou.elements.ranges.SampleRangeValid):breeze.linalg.DenseVector[Int]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p>CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
+Should return a defensive clone.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounou.io.neuralynx.NNDataChannelNCS">NNDataChannelNCS</a> → <a href="../../elements/data/NNDataChannel.html" class="extype" name="nounou.elements.data.NNDataChannel">NNDataChannel</a></dd></dl></div>
+    </li><li name="nounou.io.neuralynx.NNDataChannelNCS#recordIndexStartByte" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="recordIndexStartByte(record:Int,index:Int):Long"></a>
+      <a id="recordIndexStartByte(Int,Int):Long"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">recordIndexStartByte</span><span class="params">(<span name="record">record: <span class="extype" name="scala.Int">Int</span></span>, <span name="index">index: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@recordIndexStartByte(record:Int,index:Int):Long" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="nounou.elements.traits.NNDataScaleElement#scale" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="scale():nounou.elements.traits.NNDataScale"></a>
+      <a id="scale():NNDataScale"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">scale</span><span class="params">()</span><span class="result">: <a href="../../elements/traits/NNDataScale.html" class="extype" name="nounou.elements.traits.NNDataScale">NNDataScale</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@scale():nounou.elements.traits.NNDataScale" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a></dd></dl></div>
+    </li><li name="nounou.elements.traits.NNDataScaleElement#setScale" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setScale(scale:nounou.elements.traits.NNDataScale):Unit"></a>
+      <a id="setScale(NNDataScale):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setScale</span><span class="params">(<span name="scale">scale: <a href="../../elements/traits/NNDataScale.html" class="extype" name="nounou.elements.traits.NNDataScale">NNDataScale</a></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@setScale(scale:nounou.elements.traits.NNDataScale):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a></dd></dl></div>
+    </li><li name="nounou.elements.traits.NNDataTimingElement#setTiming" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setTiming(timing:nounou.elements.traits.NNDataTiming):Unit"></a>
+      <a id="setTiming(NNDataTiming):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setTiming</span><span class="params">(<span name="timing">timing: <a href="../../elements/traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@setTiming(timing:nounou.elements.traits.NNDataTiming):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/traits/NNDataTimingElement.html" class="extype" name="nounou.elements.traits.NNDataTimingElement">NNDataTimingElement</a></dd></dl></div>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="nounou.io.neuralynx.NNDataChannelNCS#t" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="t:nounou.io.neuralynx.FileAdapterNCS"></a>
+      <a id="t:FileAdapterNCS"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">t</span><span class="result">: <a href="FileAdapterNCS.html" class="extype" name="nounou.io.neuralynx.FileAdapterNCS">FileAdapterNCS</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@t:nounou.io.neuralynx.FileAdapterNCS" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="nounou.elements.traits.NNDataTimingElement#timing" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="timing():nounou.elements.traits.NNDataTiming"></a>
+      <a id="timing():NNDataTiming"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">timing</span><span class="params">()</span><span class="result">: <a href="../../elements/traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@timing():nounou.elements.traits.NNDataTiming" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/traits/NNDataTimingElement.html" class="extype" name="nounou.elements.traits.NNDataTimingElement">NNDataTimingElement</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#toJsonString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toJsonString:String"></a>
+      <a id="toJsonString:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toJsonString</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@toJsonString:String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNDataChannel#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@toString():String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/data/NNDataChannel.html" class="extype" name="nounou.elements.data.NNDataChannel">NNDataChannel</a> → AnyRef → Any</dd></dl></div>
+    </li><li name="nounou.elements.data.NNDataChannel#toStringFull" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toStringFull():String"></a>
+      <a id="toStringFull():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toStringFull</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@toStringFull():String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/data/NNDataChannel.html" class="extype" name="nounou.elements.data.NNDataChannel">NNDataChannel</a> → <a href="../../elements/NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#version" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="version:Double"></a>
+      <a id="version:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">version</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@version:Double" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../elements/NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@wait():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.NNDataChannelNCS@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="nounou.elements.data.NNDataChannelFilestream">
+              <h3>Inherited from <a href="../../elements/data/NNDataChannelFilestream.html" class="extype" name="nounou.elements.data.NNDataChannelFilestream">NNDataChannelFilestream</a></h3>
+            </div><div class="parent" name="nounou.elements.data.NNDataChannel">
+              <h3>Inherited from <a href="../../elements/data/NNDataChannel.html" class="extype" name="nounou.elements.data.NNDataChannel">NNDataChannel</a></h3>
+            </div><div class="parent" name="nounou.elements.traits.NNDataScaleElement">
+              <h3>Inherited from <a href="../../elements/traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a></h3>
+            </div><div class="parent" name="nounou.elements.traits.NNDataTimingElement">
+              <h3>Inherited from <a href="../../elements/traits/NNDataTimingElement.html" class="extype" name="nounou.elements.traits.NNDataTimingElement">NNDataTimingElement</a></h3>
+            </div><div class="parent" name="nounou.elements.NNElement">
+              <h3>Inherited from <a href="../../elements/NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></h3>
+            </div><div class="parent" name="nounou.util.LoggingExt">
+              <h3>Inherited from <a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></h3>
+            </div><div class="parent" name="com.typesafe.scalalogging.slf4j.LazyLogging">
+              <h3>Inherited from <span class="extype" name="com.typesafe.scalalogging.slf4j.LazyLogging">LazyLogging</span></h3>
+            </div><div class="parent" name="com.typesafe.scalalogging.Logging">
+              <h3>Inherited from <span class="extype" name="com.typesafe.scalalogging.Logging">Logging</span></h3>
+            </div><div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>

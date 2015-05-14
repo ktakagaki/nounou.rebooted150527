@@ -3,22 +3,22 @@ package nounou.elements.traits
 import breeze.numerics.round
 import nounou.elements.NNElement
 import nounou.elements.ranges.SampleRangeSpecifier
+import nounou.util.NNGit
 
 /**This trait of NNElement objects (especially [[nounou.elements.data.NNData]] encapsulates
   * segment, frame, and sampling information for electrophysiological and imaging data.
   *
   * Envisioned uses are for [[nounou.elements.data.NNData]],
   * [[nounou.elements.traits.layouts.NNDataLayout]], and [[nounou.elements.NNSpikes]].
+  *
+  * @param sampleRate Sample rate in Hz.
+  * @param segmentLengths Total number of frames in each segment.
+  * @param segmentStartTss  List of starting timestamps for each segment.
+  *
   */
-class NNDataTiming(  /**Sample rate in Hz.*/
-                     val sampleRate: Double,
-                     /**Total number of frames in each segment.*/
-                     val segmentLengths: Array[Int],
-                     /** List of starting timestamps for each segment.*/
-                     val segmentStartTss: Array[Long]
-
-
-
+class NNDataTiming( val sampleRate: Double,
+                    val segmentLengths: Array[Int],
+                    val segmentStartTss: Array[Long]
                     ) extends NNElement {
 
   /** Throws IllegalArgumentException if segmentCount != 1... use as check for functions which assume segment = 0.
@@ -267,13 +267,17 @@ class NNDataTiming(  /**Sample rate in Hz.*/
     }
   }
 
-  override def toString(): String = {
-    var tempout = "XDataTiming: fs=" + sampleRate.toString() + ", segmentCount=" + segmentCount.toString() + ""
+  override def toString(): String =
+    s"NNDataTiming(fs=$sampleRate, segmentCount=$segmentCount)"
+
+  override def toStringFull(): String = {
+    var tempout = toString().dropRight(1) + s", $gitHeadShort)\n"    +
+    "   seg#\t\tsegLen\t\tsegStartTs\n"
+
     for( seg <- 0 until segmentCount) {
-      tempout += "\n               Seg " + seg.toString() + ": length=" + segmentLength(seg).toString()+", ms=[0, " +
-        (segmentLength(seg).toDouble/sampleRate*1000).toString + "], segmentStartTs=" + segmentStartTss(seg).toString()
+      tempout = tempout + s"   $seg\t\t	${segmentLength(seg)}\t${segmentStartTss(seg)}\n"
     }
-    tempout
+    tempout.dropRight(1)
   }
 
 

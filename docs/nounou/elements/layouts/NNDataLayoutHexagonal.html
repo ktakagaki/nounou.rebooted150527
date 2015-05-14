@@ -1,0 +1,1263 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>NNDataLayoutHexagonal - nounou documentation - nounou.elements.layouts.NNDataLayoutHexagonal</title>
+          <meta name="description" content="NNDataLayoutHexagonal - nounou documentation - nounou.elements.layouts.NNDataLayoutHexagonal" />
+          <meta name="keywords" content="NNDataLayoutHexagonal nounou documentation nounou.elements.layouts.NNDataLayoutHexagonal" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../index.html';
+            var hash = 'nounou.elements.layouts.NNDataLayoutHexagonal';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <img src="../../../lib/class_big.png" />
+        <p id="owner"><a href="../../package.html" class="extype" name="nounou">nounou</a>.<a href="../package.html" class="extype" name="nounou.elements">elements</a>.<a href="package.html" class="extype" name="nounou.elements.layouts">layouts</a></p>
+        <h1>NNDataLayoutHexagonal</h1> <span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">NNDataLayoutHexagonal</span><span class="result"> extends <a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>A hexagonal detector layout, useful for hexagonally packed
+imaging arrays or ECoG arrays.</p></div><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a>, <a href="NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">NNDataLayout</a>, <a href="../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a>, <a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a>, <a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a>, <span class="extype" name="com.typesafe.scalalogging.slf4j.LazyLogging">LazyLogging</span>, <span class="extype" name="com.typesafe.scalalogging.Logging">Logging</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="nounou.elements.layouts.NNDataLayoutHexagonal"><span>NNDataLayoutHexagonal</span></li><li class="in" name="nounou.elements.layouts.NNDataLayoutSpatial"><span>NNDataLayoutSpatial</span></li><li class="in" name="nounou.elements.layouts.NNDataLayout"><span>NNDataLayout</span></li><li class="in" name="nounou.elements.traits.NNChannelsElement"><span>NNChannelsElement</span></li><li class="in" name="nounou.elements.NNElement"><span>NNElement</span></li><li class="in" name="nounou.util.LoggingExt"><span>LoggingExt</span></li><li class="in" name="com.typesafe.scalalogging.slf4j.LazyLogging"><span>LazyLogging</span></li><li class="in" name="com.typesafe.scalalogging.Logging"><span>Logging</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="nounou.elements.layouts.NNDataLayoutHexagonal#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(layoutArray:Array[Array[Int]],channelRadius:Double,channelDistance:Double):nounou.elements.layouts.NNDataLayoutHexagonal"></a>
+      <a id="&lt;init&gt;:NNDataLayoutHexagonal"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">NNDataLayoutHexagonal</span><span class="params">(<span name="layoutArray">layoutArray: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]]</span>, <span name="channelRadius">channelRadius: <span class="extype" name="scala.Double">Double</span></span>, <span name="channelDistance">channelDistance: <span class="extype" name="scala.Double">Double</span></span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@&lt;init&gt;(layoutArray:Array[Array[Int]],channelRadius:Double,channelDistance:Double):nounou.elements.layouts.NNDataLayoutHexagonal" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="nounou.elements.layouts.NNDataLayoutHexagonal#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(layoutArray:Array[Array[Int]]):nounou.elements.layouts.NNDataLayoutHexagonal"></a>
+      <a id="&lt;init&gt;:NNDataLayoutHexagonal"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">NNDataLayoutHexagonal</span><span class="params">(<span name="layoutArray">layoutArray: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]]</span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@&lt;init&gt;(layoutArray:Array[Array[Int]]):nounou.elements.layouts.NNDataLayoutHexagonal" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="nounou.elements.layouts.NNDataLayoutHexagonal#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;():nounou.elements.layouts.NNDataLayoutHexagonal"></a>
+      <a id="&lt;init&gt;:NNDataLayoutHexagonal"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">NNDataLayoutHexagonal</span><span class="params">()</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@&lt;init&gt;():nounou.elements.layouts.NNDataLayoutHexagonal" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@##():Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="nounou.elements.traits.NNChannelsElement#channelCount" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="channelCount():Int"></a>
+      <a id="channelCount():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">channelCount</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@channelCount():Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#channelCountCache" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="channelCountCache:Int"></a>
+      <a id="channelCountCache:Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">channelCountCache</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@channelCountCache:Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#channelDistance" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="channelDistance:Double"></a>
+      <a id="channelDistance:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">channelDistance</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@channelDistance:Double" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#channelRadius" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="channelRadius:Double"></a>
+      <a id="channelRadius:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">channelRadius</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@channelRadius:Double" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#className" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="className:String"></a>
+      <a id="className:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">className</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@className:String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@clone():Object" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#field" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="field:javafx.scene.shape.Rectangle"></a>
+      <a id="field:Rectangle"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">field</span><span class="result">: <span class="extype" name="javafx.scene.shape.Rectangle">Rectangle</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@field:javafx.scene.shape.Rectangle" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">The bounding rectangle of the detector field.</p><div class="fullcomment"><div class="comment cmt"><p>The bounding rectangle of the detector field.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#fieldCache" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fieldCache:javafx.scene.shape.Rectangle"></a>
+      <a id="fieldCache:Rectangle"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fieldCache</span><span class="result">: <span class="extype" name="javafx.scene.shape.Rectangle">Rectangle</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@fieldCache:javafx.scene.shape.Rectangle" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#fieldHeight" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fieldHeight:Double"></a>
+      <a id="fieldHeight:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fieldHeight</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@fieldHeight:Double" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Height of the bounding rectangle of the detector field.</p><div class="fullcomment"><div class="comment cmt"><p>Height of the bounding rectangle of the detector field.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#fieldMaxX" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fieldMaxX:Double"></a>
+      <a id="fieldMaxX:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fieldMaxX</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@fieldMaxX:Double" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Maximum X of the bounding rectangle of the detector field (right-hand edge).</p><div class="fullcomment"><div class="comment cmt"><p>Maximum X of the bounding rectangle of the detector field (right-hand edge).</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#fieldMaxY" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fieldMaxY:Double"></a>
+      <a id="fieldMaxY:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fieldMaxY</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@fieldMaxY:Double" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Maximum Y of the bounding rectangle of the detector field (bottom edge).</p><div class="fullcomment"><div class="comment cmt"><p>Maximum Y of the bounding rectangle of the detector field (bottom edge).</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#fieldWidth" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fieldWidth:Double"></a>
+      <a id="fieldWidth:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fieldWidth</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@fieldWidth:Double" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Width of the bounding rectangle of the detector field.</p><div class="fullcomment"><div class="comment cmt"><p>Width of the bounding rectangle of the detector field.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#fieldX" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fieldX:Double"></a>
+      <a id="fieldX:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fieldX</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@fieldX:Double" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">X origin of the bounding rectangle of the detector field (left-hand edge).</p><div class="fullcomment"><div class="comment cmt"><p>X origin of the bounding rectangle of the detector field (left-hand edge).</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#fieldY" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fieldY:Double"></a>
+      <a id="fieldY:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fieldY</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@fieldY:Double" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Y origin of the bounding rectangle of the detector field (top edge).</p><div class="fullcomment"><div class="comment cmt"><p>Y origin of the bounding rectangle of the detector field (top edge).</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#getChannelCoordinates" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getChannelCoordinates(ch:Int):Array[Double]"></a>
+      <a id="getChannelCoordinates(Int):Array[Double]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getChannelCoordinates</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Double">Double</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@getChannelCoordinates(ch:Int):Array[Double]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Center coordinate of chosen detector (or channel,
+ if it is designated a part of the field for display.</p><div class="fullcomment"><div class="comment cmt"><p>Center coordinate of chosen detector (or channel,
+ if it is designated a part of the field for display.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutHexagonal#getChannelCoordinatesImpl" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getChannelCoordinatesImpl(ch:Int):Array[Double]"></a>
+      <a id="getChannelCoordinatesImpl(Int):Array[Double]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getChannelCoordinatesImpl</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Double">Double</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@getChannelCoordinatesImpl(ch:Int):Array[Double]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Implementation for <span class="extype" name="getChannelCoordinates(Int)">getChannelCoordinates(Int)</span>.</p><div class="fullcomment"><div class="comment cmt"><p>Implementation for <span class="extype" name="getChannelCoordinates(Int)">getChannelCoordinates(Int)</span>.
+Will return Array for Java compatibility, but this should be a newly generated
+copy Array with immutable intent.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounou.elements.layouts.NNDataLayoutHexagonal">NNDataLayoutHexagonal</a> → <a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#getChannelCount" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getChannelCount:Int"></a>
+      <a id="getChannelCount:Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getChannelCount</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@getChannelCount:Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Number of channels for this layout.</p><div class="fullcomment"><div class="comment cmt"><p>Number of channels for this layout. Note that <a href="../data/NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a> and <a href="NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>
+both keep local channel counts,
+so equality should be tested before setting/using a certain <a href="NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>
+to plot or interpret a certain <a href="../data/NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a>.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a> → <a href="../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#getChannelDistance" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getChannelDistance:Double"></a>
+      <a id="getChannelDistance:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getChannelDistance</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@getChannelDistance:Double" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Geometric radius of detectors.</p><div class="fullcomment"><div class="comment cmt"><p>Geometric radius of detectors.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#getChannelRadius" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getChannelRadius:Double"></a>
+      <a id="getChannelRadius:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getChannelRadius</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@getChannelRadius:Double" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Geometric radius of detectors.</p><div class="fullcomment"><div class="comment cmt"><p>Geometric radius of detectors.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="nounou.elements.NNElement#gitHead" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="gitHead:String"></a>
+      <a id="gitHead:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">gitHead</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@gitHead:String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#gitHeadShort" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="gitHeadShort:String"></a>
+      <a id="gitHeadShort:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">gitHeadShort</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@gitHeadShort:String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@hashCode():Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutHexagonal#initialize" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="initialize():Unit"></a>
+      <a id="initialize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">initialize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@initialize():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This initialization is done here, and not in the constructor automatically,
+to allow serialization with gson.</p><div class="fullcomment"><div class="comment cmt"><p>This initialization is done here, and not in the constructor automatically,
+to allow serialization with gson. Gson requires classes to be
+initializable with a no-argument constructor.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounou.elements.layouts.NNDataLayoutHexagonal">NNDataLayoutHexagonal</a> → <a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#initialized" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="initialized:Boolean"></a>
+      <a id="initialized:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">initialized</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@initialized:Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#isCompatible" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isCompatible(that:nounou.elements.NNElement):Boolean"></a>
+      <a id="isCompatible(NNElement):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isCompatible</span><span class="params">(<span name="that">that: <a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@isCompatible(that:nounou.elements.NNElement):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a> → <a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#isCompatible" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isCompatible(that:Seq[nounou.elements.NNElement]):Boolean"></a>
+      <a id="isCompatible(Seq[NNElement]):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isCompatible</span><span class="params">(<span name="that">that: <span class="extype" name="scala.Seq">Seq</span>[<a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a>]</span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@isCompatible(that:Seq[nounou.elements.NNElement]):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayout#isMasked" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isMasked(ch:Int):Boolean"></a>
+      <a id="isMasked(Int):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isMasked</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@isMasked(ch:Int):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">NNDataLayout</a></dd></dl></div>
+    </li><li name="nounou.elements.traits.NNChannelsElement#isValidChannel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isValidChannel(channel:Int):Boolean"></a>
+      <a id="isValidChannel(Int):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isValidChannel</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@isValidChannel(channel:Int):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Is this channel valid?
+</p><div class="fullcomment"><div class="comment cmt"><p>Is this channel valid?
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutHexagonal#layoutArray" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="layoutArray:Array[Array[Int]]"></a>
+      <a id="layoutArray:Array[Array[Int]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">layoutArray</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@layoutArray:Array[Array[Int]]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Main variable for this layout.</p><div class="fullcomment"><div class="comment cmt"><p>Main variable for this layout.
+This <span class="extype" name="Array">Array</span> should contain the channels laid out in tilted hexagonal space.
+</p></div><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutHexagonal#layoutLookupCache" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="layoutLookupCache:scala.collection.mutable.HashMap[Int,(Int,Int)]"></a>
+      <a id="layoutLookupCache:HashMap[Int,(Int,Int)]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">layoutLookupCache</span><span class="result">: <span class="extype" name="scala.collection.mutable.HashMap">HashMap</span>[<span class="extype" name="scala.Int">Int</span>, (<span class="extype" name="scala.Int">Int</span>, <span class="extype" name="scala.Int">Int</span>)]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@layoutLookupCache:scala.collection.mutable.HashMap[Int,(Int,Int)]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+    </li><li name="com.typesafe.scalalogging.slf4j.LazyLogging#logger" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logger:com.typesafe.scalalogging.slf4j.Logger"></a>
+      <a id="logger:Logger"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logger</span><span class="result">: <span class="extype" name="com.typesafe.scalalogging.slf4j.Logger">Logger</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@logger:com.typesafe.scalalogging.slf4j.Logger" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>LazyLogging → Logging</dd></dl></div>
+    </li><li name="nounou.util.LoggingExt#loggerError" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="loggerError(message:String,params:AnyRef*):IllegalArgumentException"></a>
+      <a id="loggerError(String,AnyRef*):IllegalArgumentException"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loggerError</span><span class="params">(<span name="message">message: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="params">params: <span class="extype" name="scala.AnyRef">AnyRef</span>*</span>)</span><span class="result">: <span class="extype" name="scala.IllegalArgumentException">IllegalArgumentException</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@loggerError(message:String,params:AnyRef*):IllegalArgumentException" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p>Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.
+Use as follows:
+<code><code><code><code>
+throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
+<code><code><code><code></code></code></code></code></code></code></code></code></p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></dd></dl></div>
+    </li><li name="nounou.util.LoggingExt#loggerRequire" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="loggerRequire(boolean:Boolean,message:String,params:AnyRef*):Unit"></a>
+      <a id="loggerRequire(Boolean,String,AnyRef*):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loggerRequire</span><span class="params">(<span name="boolean">boolean: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="message">message: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="params">params: <span class="extype" name="scala.AnyRef">AnyRef</span>*</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@loggerRequire(boolean:Boolean,message:String,params:AnyRef*):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">If input 'boolean' is false, logs a message using slf4j and throws an error.</p><div class="fullcomment"><div class="comment cmt"><p>If input 'boolean' is false, logs a message using slf4j and throws an error.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="scala.this.throws.&lt;init&gt;$default$1[IllegalArgumentException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayout#mask" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="mask(ch:Int):Unit"></a>
+      <a id="mask(Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">mask</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@mask(ch:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">NNDataLayout</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayout#mask" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="mask(ch:Int*):Unit"></a>
+      <a id="mask(Int*):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">mask</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span>*</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@mask(ch:Int*):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">NNDataLayout</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayout#masked" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="masked:java.util.HashSet[Int]"></a>
+      <a id="masked:HashSet[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">masked</span><span class="result">: <span class="extype" name="java.util.HashSet">HashSet</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@masked:java.util.HashSet[Int]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Specifies if any channels are masked.</p><div class="fullcomment"><div class="comment cmt"><p>Specifies if any channels are masked.
+This uses java.util collections for successful serialization with gson.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">NNDataLayout</a></dd></dl></div>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@notify():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="nounou.elements.traits.NNChannelsElement#requireValidChannel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="requireValidChannel(channel:Int):Unit"></a>
+      <a id="requireValidChannel(Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">requireValidChannel</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@requireValidChannel(channel:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Log error if !isValidChannel(channel)
+</p><div class="fullcomment"><div class="comment cmt"><p>Log error if !isValidChannel(channel)
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a></dd></dl></div>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="nounou.elements.NNElement#toJsonString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toJsonString:String"></a>
+      <a id="toJsonString:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toJsonString</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@toJsonString:String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayoutSpatial#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@toString():String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a> → AnyRef → Any</dd></dl></div>
+    </li><li name="nounou.elements.NNElement#toStringFull" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toStringFull():String"></a>
+      <a id="toStringFull():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toStringFull</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@toStringFull():String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayout#unmask" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="unmask(ch:Int):Unit"></a>
+      <a id="unmask(Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">unmask</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@unmask(ch:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">NNDataLayout</a></dd></dl></div>
+    </li><li name="nounou.elements.layouts.NNDataLayout#unmask" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="unmask(ch:Int*):Unit"></a>
+      <a id="unmask(Int*):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">unmask</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Int">Int</span>*</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@unmask(ch:Int*):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">NNDataLayout</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#version" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="version:Double"></a>
+      <a id="version:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">version</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@version:Double" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@wait():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.layouts.NNDataLayoutHexagonal@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="nounou.elements.layouts.NNDataLayoutSpatial">
+              <h3>Inherited from <a href="NNDataLayoutSpatial.html" class="extype" name="nounou.elements.layouts.NNDataLayoutSpatial">NNDataLayoutSpatial</a></h3>
+            </div><div class="parent" name="nounou.elements.layouts.NNDataLayout">
+              <h3>Inherited from <a href="NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">NNDataLayout</a></h3>
+            </div><div class="parent" name="nounou.elements.traits.NNChannelsElement">
+              <h3>Inherited from <a href="../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a></h3>
+            </div><div class="parent" name="nounou.elements.NNElement">
+              <h3>Inherited from <a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></h3>
+            </div><div class="parent" name="nounou.util.LoggingExt">
+              <h3>Inherited from <a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></h3>
+            </div><div class="parent" name="com.typesafe.scalalogging.slf4j.LazyLogging">
+              <h3>Inherited from <span class="extype" name="com.typesafe.scalalogging.slf4j.LazyLogging">LazyLogging</span></h3>
+            </div><div class="parent" name="com.typesafe.scalalogging.Logging">
+              <h3>Inherited from <span class="extype" name="com.typesafe.scalalogging.Logging">Logging</span></h3>
+            </div><div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>

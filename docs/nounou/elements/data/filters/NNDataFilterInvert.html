@@ -1,0 +1,1700 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>NNDataFilterInvert - nounou documentation - nounou.elements.data.filters.NNDataFilterInvert</title>
+          <meta name="description" content="NNDataFilterInvert - nounou documentation - nounou.elements.data.filters.NNDataFilterInvert" />
+          <meta name="keywords" content="NNDataFilterInvert nounou documentation nounou.elements.data.filters.NNDataFilterInvert" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../index.html';
+            var hash = 'nounou.elements.data.filters.NNDataFilterInvert';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <img src="../../../../lib/class_big.png" />
+        <p id="owner"><a href="../../../package.html" class="extype" name="nounou">nounou</a>.<a href="../../package.html" class="extype" name="nounou.elements">elements</a>.<a href="../package.html" class="extype" name="nounou.elements.data">data</a>.<a href="package.html" class="extype" name="nounou.elements.data.filters">filters</a></p>
+        <h1>NNDataFilterInvert</h1> <span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">NNDataFilterInvert</span><span class="result"> extends <a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a></span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"></div><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a>, <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a>, <a href="../../traits/NNDataTimingElement.html" class="extype" name="nounou.elements.traits.NNDataTimingElement">NNDataTimingElement</a>, <a href="../../traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a>, <a href="../../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a>, <a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a>, <a href="../../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a>, <span class="extype" name="com.typesafe.scalalogging.slf4j.LazyLogging">LazyLogging</span>, <span class="extype" name="com.typesafe.scalalogging.Logging">Logging</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="nounou.elements.data.filters.NNDataFilterInvert"><span>NNDataFilterInvert</span></li><li class="in" name="nounou.elements.data.filters.NNDataFilter"><span>NNDataFilter</span></li><li class="in" name="nounou.elements.data.NNData"><span>NNData</span></li><li class="in" name="nounou.elements.traits.NNDataTimingElement"><span>NNDataTimingElement</span></li><li class="in" name="nounou.elements.traits.NNDataScaleElement"><span>NNDataScaleElement</span></li><li class="in" name="nounou.elements.traits.NNChannelsElement"><span>NNChannelsElement</span></li><li class="in" name="nounou.elements.NNElement"><span>NNElement</span></li><li class="in" name="nounou.util.LoggingExt"><span>LoggingExt</span></li><li class="in" name="com.typesafe.scalalogging.slf4j.LazyLogging"><span>LazyLogging</span></li><li class="in" name="com.typesafe.scalalogging.Logging"><span>Logging</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="nounou.elements.data.filters.NNDataFilterInvert#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(upstream:nounou.elements.data.NNData,inverted:Boolean):nounou.elements.data.filters.NNDataFilterInvert"></a>
+      <a id="&lt;init&gt;:NNDataFilterInvert"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">NNDataFilterInvert</span><span class="params">(<span name="upstream">upstream: <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></span>, <span name="inverted">inverted: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@&lt;init&gt;(upstream:nounou.elements.data.NNData,inverted:Boolean):nounou.elements.data.filters.NNDataFilterInvert" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="nounou.elements.data.filters.NNDataFilterInvert#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(_parent:nounou.elements.data.NNData):nounou.elements.data.filters.NNDataFilterInvert"></a>
+      <a id="&lt;init&gt;:NNDataFilterInvert"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">NNDataFilterInvert</span><span class="params">(<span name="_parent">_parent: <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@&lt;init&gt;(_parent:nounou.elements.data.NNData):nounou.elements.data.filters.NNDataFilterInvert" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@##():Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#changedData" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="changedData(channels:Array[Int]):Unit"></a>
+      <a id="changedData(Array[Int]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">changedData</span><span class="params">(<span name="channels">channels: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@changedData(channels:Array[Int]):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Must be overriden and expanded, especially by buffering functions
+and display functions which have an internal state to update.</p><div class="fullcomment"><div class="comment cmt"><p>Must be overriden and expanded, especially by buffering functions
+and display functions which have an internal state to update.
+Always remember to start with super.changedData(Array[Int]), in order to
+map to all children.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#changedData" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="changedData(channel:Int):Unit"></a>
+      <a id="changedData(Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">changedData</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@changedData(channel:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Must be overriden and expanded, especially by buffering functions
+and display functions which have an internal state to update.</p><div class="fullcomment"><div class="comment cmt"><p>Must be overriden and expanded, especially by buffering functions
+and display functions which have an internal state to update.
+Always remember to start with super.changedData(Int), in order to
+map to all children.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#changedData" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="changedData():Unit"></a>
+      <a id="changedData():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">changedData</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@changedData():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Must be overriden and expanded, especially by buffering functions
+and display functions which have an internal state to update.</p><div class="fullcomment"><div class="comment cmt"><p>Must be overriden and expanded, especially by buffering functions
+and display functions which have an internal state to update.
+Always remember to start with super.changedData(), in order to
+map to all children.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#changedLayout" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="changedLayout():Unit"></a>
+      <a id="changedLayout():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">changedLayout</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@changedLayout():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Must be overriden and expanded, especially by buffering functions
+and display functions which have an internal state to update.</p><div class="fullcomment"><div class="comment cmt"><p>Must be overriden and expanded, especially by buffering functions
+and display functions which have an internal state to update.
+Always remember to start with super.changedLayout(), in order to
+map to all children.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#changedTiming" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="changedTiming():Unit"></a>
+      <a id="changedTiming():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">changedTiming</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@changedTiming():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Must be overriden and expanded, especially by buffering functions
+and display functions which have an internal state to update.</p><div class="fullcomment"><div class="comment cmt"><p>Must be overriden and expanded, especially by buffering functions
+and display functions which have an internal state to update.
+Covers sampleRate, segmentLengths, segmentEndTSs, segmentStartTSs, segmentCount
+Always remember to start with super.changedTiming(), in order to
+map to all children.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.traits.NNChannelsElement#channelCount" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="channelCount():Int"></a>
+      <a id="channelCount():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">channelCount</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@channelCount():Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#className" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="className:String"></a>
+      <a id="className:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">className</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@className:String" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#clearChild" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clearChild(x:nounou.elements.data.NNData):Unit"></a>
+      <a id="clearChild(NNData):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clearChild</span><span class="params">(<span name="x">x: <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@clearChild(x:nounou.elements.data.NNData):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#clearChildren" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clearChildren(xs:TraversableOnce[nounou.elements.data.NNData]):Unit"></a>
+      <a id="clearChildren(TraversableOnce[NNData]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clearChildren</span><span class="params">(<span name="xs">xs: <span class="extype" name="scala.TraversableOnce">TraversableOnce</span>[<a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@clearChildren(xs:TraversableOnce[nounou.elements.data.NNData]):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#clearChildren" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clearChildren():Unit"></a>
+      <a id="clearChildren():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clearChildren</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@clearChildren():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@clone():Object" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilter#getActive" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getActive():Boolean"></a>
+      <a id="getActive():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getActive</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@getActive():Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a></dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilter#getChannelCount" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getChannelCount():Int"></a>
+      <a id="getChannelCount():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getChannelCount</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@getChannelCount():Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Number of channels for this layout.</p><div class="fullcomment"><div class="comment cmt"><p>Number of channels for this layout. Note that <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a> and <a href="../../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>
+both keep local channel counts,
+so equality should be tested before setting/using a certain <a href="../../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>
+to plot or interpret a certain <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a>.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a> → <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a> → <a href="../../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#getChildren" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getChildren():scala.collection.mutable.Set[nounou.elements.data.NNData]"></a>
+      <a id="getChildren():Set[NNData]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getChildren</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.collection.mutable.Set">Set</span>[<a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@getChildren():scala.collection.mutable.Set[nounou.elements.data.NNData]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#getLayout" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getLayout():nounou.elements.layouts.NNDataLayout"></a>
+      <a id="getLayout():NNDataLayout"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getLayout</span><span class="params">()</span><span class="result">: <a href="../../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">NNDataLayout</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@getLayout():nounou.elements.layouts.NNDataLayout" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilter#getParent" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getParent():nounou.elements.data.NNData"></a>
+      <a id="getParent():NNData"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getParent</span><span class="params">()</span><span class="result">: <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@getParent():nounou.elements.data.NNData" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a></dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilter#getScale" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getScale():nounou.elements.traits.NNDataScale"></a>
+      <a id="getScale():NNDataScale"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getScale</span><span class="params">()</span><span class="result">: <a href="../../traits/NNDataScale.html" class="extype" name="nounou.elements.traits.NNDataScale">NNDataScale</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@getScale():nounou.elements.traits.NNDataScale" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a> → <a href="../../traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a></dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilter#getTiming" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getTiming():nounou.elements.traits.NNDataTiming"></a>
+      <a id="getTiming():NNDataTiming"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getTiming</span><span class="params">()</span><span class="result">: <a href="../../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@getTiming():nounou.elements.traits.NNDataTiming" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a> → <a href="../../traits/NNDataTimingElement.html" class="extype" name="nounou.elements.traits.NNDataTimingElement">NNDataTimingElement</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#gitHead" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="gitHead:String"></a>
+      <a id="gitHead:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">gitHead</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@gitHead:String" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#gitHeadShort" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="gitHeadShort:String"></a>
+      <a id="gitHeadShort:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">gitHeadShort</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@gitHeadShort:String" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@hashCode():Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilterInvert#inverted" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="inverted:Boolean"></a>
+      <a id="inverted:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">inverted</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@inverted:Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="nounou.elements.data.filters.NNDataFilter#isCompatible" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isCompatible(target:nounou.elements.NNElement):Boolean"></a>
+      <a id="isCompatible(NNElement):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isCompatible</span><span class="params">(<span name="target">target: <a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@isCompatible(target:nounou.elements.NNElement):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a> → <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a> → <a href="../../traits/NNDataTimingElement.html" class="extype" name="nounou.elements.traits.NNDataTimingElement">NNDataTimingElement</a> → <a href="../../traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a> → <a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#isCompatible" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isCompatible(that:Seq[nounou.elements.NNElement]):Boolean"></a>
+      <a id="isCompatible(Seq[NNElement]):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isCompatible</span><span class="params">(<span name="that">that: <span class="extype" name="scala.Seq">Seq</span>[<a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a>]</span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@isCompatible(that:Seq[nounou.elements.NNElement]):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="nounou.elements.traits.NNChannelsElement#isValidChannel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isValidChannel(channel:Int):Boolean"></a>
+      <a id="isValidChannel(Int):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isValidChannel</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@isValidChannel(channel:Int):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Is this channel valid?
+</p><div class="fullcomment"><div class="comment cmt"><p>Is this channel valid?
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#layout" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="layout():nounou.elements.layouts.NNDataLayout"></a>
+      <a id="layout():NNDataLayout"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">layout</span><span class="params">()</span><span class="result">: <a href="../../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">NNDataLayout</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@layout():nounou.elements.layouts.NNDataLayout" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="com.typesafe.scalalogging.slf4j.LazyLogging#logger" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logger:com.typesafe.scalalogging.slf4j.Logger"></a>
+      <a id="logger:Logger"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logger</span><span class="result">: <span class="extype" name="com.typesafe.scalalogging.slf4j.Logger">Logger</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@logger:com.typesafe.scalalogging.slf4j.Logger" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>LazyLogging → Logging</dd></dl></div>
+    </li><li name="nounou.util.LoggingExt#loggerError" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="loggerError(message:String,params:AnyRef*):IllegalArgumentException"></a>
+      <a id="loggerError(String,AnyRef*):IllegalArgumentException"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loggerError</span><span class="params">(<span name="message">message: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="params">params: <span class="extype" name="scala.AnyRef">AnyRef</span>*</span>)</span><span class="result">: <span class="extype" name="scala.IllegalArgumentException">IllegalArgumentException</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@loggerError(message:String,params:AnyRef*):IllegalArgumentException" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p>Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.
+Use as follows:
+<code><code><code><code>
+throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
+<code><code><code><code></code></code></code></code></code></code></code></code></p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></dd></dl></div>
+    </li><li name="nounou.util.LoggingExt#loggerRequire" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="loggerRequire(boolean:Boolean,message:String,params:AnyRef*):Unit"></a>
+      <a id="loggerRequire(Boolean,String,AnyRef*):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loggerRequire</span><span class="params">(<span name="boolean">boolean: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="message">message: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="params">params: <span class="extype" name="scala.AnyRef">AnyRef</span>*</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@loggerRequire(boolean:Boolean,message:String,params:AnyRef*):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">If input 'boolean' is false, logs a message using slf4j and throws an error.</p><div class="fullcomment"><div class="comment cmt"><p>If input 'boolean' is false, logs a message using slf4j and throws an error.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="scala.this.throws.&lt;init&gt;$default$1[IllegalArgumentException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@notify():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilter#readPoint" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readPoint(channel:Int,frame:Int,segment:Int):Int"></a>
+      <a id="readPoint(Int,Int,Int):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readPoint</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>, <span name="segment">segment: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readPoint(channel:Int,frame:Int,segment:Int):Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Read a single point from the data, in internal integer scaling, after checking values.</p><div class="fullcomment"><div class="comment cmt"><p>Read a single point from the data, in internal integer scaling, after checking values.
+Implement via readPointImpl. Prefer <span class="extype" name="readTraceDV()">readTraceDV()</span> and readFrame()
+when possible, as these will avoid repeated function calling overhead.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a> → <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readPoint" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readPoint(channel:Int,frame:Int):Int"></a>
+      <a id="readPoint(Int,Int):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readPoint</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readPoint(channel:Int,frame:Int):Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readPointAbs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readPointAbs(channel:Int,frame:Int):Double"></a>
+      <a id="readPointAbs(Int,Int):Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readPointAbs</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readPointAbs(channel:Int,frame:Int):Double" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readPointAbs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readPointAbs(channel:Int,frame:Int,segment:Int):Double"></a>
+      <a id="readPointAbs(Int,Int,Int):Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readPointAbs</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>, <span name="segment">segment: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readPointAbs(channel:Int,frame:Int,segment:Int):Double" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"><a href="../NNData.html#readPoint(channel:Int,frame:Int):Int" class="extmbr" name="nounou.elements.data.NNData#readPoint">readPoint</a> but in physical units.</p><div class="fullcomment"><div class="comment cmt"><p><a href="../NNData.html#readPoint(channel:Int,frame:Int):Int" class="extmbr" name="nounou.elements.data.NNData#readPoint">readPoint</a> but in physical units.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilterInvert#readPointImpl" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readPointImpl(channel:Int,frame:Int,segment:Int):Int"></a>
+      <a id="readPointImpl(Int,Int,Int):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readPointImpl</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="frame">frame: <span class="extype" name="scala.Int">Int</span></span>, <span name="segment">segment: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readPointImpl(channel:Int,frame:Int,segment:Int):Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">MUST OVERRIDE: Read a single point from the data, in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p>MUST OVERRIDE: Read a single point from the data, in internal integer scaling.
+Assumes that channel, frame, and segment are all valid and within range.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounou.elements.data.filters.NNDataFilterInvert">NNDataFilterInvert</a> → <a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a> → <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readTrace" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTrace(channel:Int,range:Array[Int],segment:Int):Array[Int]"></a>
+      <a id="readTrace(Int,Array[Int],Int):Array[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTrace</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="range">range: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="segment">segment: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTrace(channel:Int,range:Array[Int],segment:Int):Array[Int]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readTrace" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTrace(channel:Int,range:Array[Int]):Array[Int]"></a>
+      <a id="readTrace(Int,Array[Int]):Array[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTrace</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="range">range: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTrace(channel:Int,range:Array[Int]):Array[Int]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readTrace" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTrace(channels:Array[Int],range:nounou.elements.ranges.SampleRangeSpecifier):Array[Array[Int]]"></a>
+      <a id="readTrace(Array[Int],SampleRangeSpecifier):Array[Array[Int]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTrace</span><span class="params">(<span name="channels">channels: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="range">range: <a href="../../ranges/SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTrace(channels:Array[Int],range:nounou.elements.ranges.SampleRangeSpecifier):Array[Array[Int]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readTrace" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTrace(channel:Int,range:nounou.elements.ranges.SampleRangeSpecifier):Array[Int]"></a>
+      <a id="readTrace(Int,SampleRangeSpecifier):Array[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTrace</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="range">range: <a href="../../ranges/SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTrace(channel:Int,range:nounou.elements.ranges.SampleRangeSpecifier):Array[Int]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readTrace" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTrace(channel:Int):Array[Int]"></a>
+      <a id="readTrace(Int):Array[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTrace</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTrace(channel:Int):Array[Int]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readTraceAbs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTraceAbs(channel:Int,range:Array[Int]):Array[Double]"></a>
+      <a id="readTraceAbs(Int,Array[Int]):Array[Double]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTraceAbs</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="range">range: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Double">Double</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTraceAbs(channel:Int,range:Array[Int]):Array[Double]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readTraceAbs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTraceAbs(channel:Int,range:Array[Int],segment:Int):Array[Double]"></a>
+      <a id="readTraceAbs(Int,Array[Int],Int):Array[Double]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTraceAbs</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="range">range: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="segment">segment: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Double">Double</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTraceAbs(channel:Int,range:Array[Int],segment:Int):Array[Double]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readTraceAbs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTraceAbs(channel:Int,range:nounou.elements.ranges.SampleRangeSpecifier):Array[Double]"></a>
+      <a id="readTraceAbs(Int,SampleRangeSpecifier):Array[Double]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTraceAbs</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="range">range: <a href="../../ranges/SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Double">Double</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTraceAbs(channel:Int,range:nounou.elements.ranges.SampleRangeSpecifier):Array[Double]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readTraceAbs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTraceAbs(channel:Int):Array[Double]"></a>
+      <a id="readTraceAbs(Int):Array[Double]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTraceAbs</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Double">Double</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTraceAbs(channel:Int):Array[Double]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readTraceAbsDV" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTraceAbsDV(channels:Array[Int],range:nounou.elements.ranges.SampleRangeSpecifier):Array[breeze.linalg.DenseVector[Double]]"></a>
+      <a id="readTraceAbsDV(Array[Int],SampleRangeSpecifier):Array[DenseVector[Double]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTraceAbsDV</span><span class="params">(<span name="channels">channels: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="range">range: <a href="../../ranges/SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="breeze.linalg.DenseVector">DenseVector</span>[<span class="extype" name="scala.Double">Double</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTraceAbsDV(channels:Array[Int],range:nounou.elements.ranges.SampleRangeSpecifier):Array[breeze.linalg.DenseVector[Double]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readTraceAbsDV" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTraceAbsDV(channel:Int,range:nounou.elements.ranges.SampleRangeSpecifier):breeze.linalg.DenseVector[Double]"></a>
+      <a id="readTraceAbsDV(Int,SampleRangeSpecifier):DenseVector[Double]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTraceAbsDV</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="range">range: <a href="../../ranges/SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a></span>)</span><span class="result">: <span class="extype" name="breeze.linalg.DenseVector">DenseVector</span>[<span class="extype" name="scala.Double">Double</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTraceAbsDV(channel:Int,range:nounou.elements.ranges.SampleRangeSpecifier):breeze.linalg.DenseVector[Double]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readTraceAbsDV" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTraceAbsDV(channel:Int):breeze.linalg.DenseVector[Double]"></a>
+      <a id="readTraceAbsDV(Int):DenseVector[Double]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTraceAbsDV</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="breeze.linalg.DenseVector">DenseVector</span>[<span class="extype" name="scala.Double">Double</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTraceAbsDV(channel:Int):breeze.linalg.DenseVector[Double]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Read a single trace in absolute unit scaling (as recorded).</p><div class="fullcomment"><div class="comment cmt"><p>Read a single trace in absolute unit scaling (as recorded).
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilter#readTraceDV" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTraceDV(channel:Int,range:nounou.elements.ranges.SampleRangeSpecifier):breeze.linalg.DenseVector[Int]"></a>
+      <a id="readTraceDV(Int,SampleRangeSpecifier):DenseVector[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTraceDV</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="range">range: <a href="../../ranges/SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a></span>)</span><span class="result">: <span class="extype" name="breeze.linalg.DenseVector">DenseVector</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTraceDV(channel:Int,range:nounou.elements.ranges.SampleRangeSpecifier):breeze.linalg.DenseVector[Int]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"> CAN OVERRIDE: Read a single trace from the data, in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p> CAN OVERRIDE: Read a single trace from the data, in internal integer scaling.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a> → <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readTraceDV" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTraceDV(channel:Int):breeze.linalg.DenseVector[Int]"></a>
+      <a id="readTraceDV(Int):DenseVector[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTraceDV</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="breeze.linalg.DenseVector">DenseVector</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTraceDV(channel:Int):breeze.linalg.DenseVector[Int]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Read a single trace in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p>Read a single trace in internal integer scaling.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#readTraceDV" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTraceDV(channels:Array[Int],range:nounou.elements.ranges.SampleRangeSpecifier):Array[breeze.linalg.DenseVector[Int]]"></a>
+      <a id="readTraceDV(Array[Int],SampleRangeSpecifier):Array[DenseVector[Int]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTraceDV</span><span class="params">(<span name="channels">channels: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="range">range: <a href="../../ranges/SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="breeze.linalg.DenseVector">DenseVector</span>[<span class="extype" name="scala.Int">Int</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTraceDV(channels:Array[Int],range:nounou.elements.ranges.SampleRangeSpecifier):Array[breeze.linalg.DenseVector[Int]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">CAN OVERRIDE:</p><div class="fullcomment"><div class="comment cmt"><p>CAN OVERRIDE:</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilterInvert#readTraceDVImpl" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readTraceDVImpl(channel:Int,range:nounou.elements.ranges.SampleRangeValid):breeze.linalg.DenseVector[Int]"></a>
+      <a id="readTraceDVImpl(Int,SampleRangeValid):DenseVector[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readTraceDVImpl</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="range">range: <a href="../../ranges/SampleRangeValid.html" class="extype" name="nounou.elements.ranges.SampleRangeValid">SampleRangeValid</a></span>)</span><span class="result">: <span class="extype" name="breeze.linalg.DenseVector">DenseVector</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@readTraceDVImpl(channel:Int,range:nounou.elements.ranges.SampleRangeValid):breeze.linalg.DenseVector[Int]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p>CAN OVERRIDE: Read a single data trace from the data, in internal integer scaling.
+Should return a defensive clone. Assumes that channel and range are within the data range!
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounou.elements.data.filters.NNDataFilterInvert">NNDataFilterInvert</a> → <a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a> → <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.traits.NNChannelsElement#requireValidChannel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="requireValidChannel(channel:Int):Unit"></a>
+      <a id="requireValidChannel(Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">requireValidChannel</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@requireValidChannel(channel:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Log error if !isValidChannel(channel)
+</p><div class="fullcomment"><div class="comment cmt"><p>Log error if !isValidChannel(channel)
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a></dd></dl></div>
+    </li><li name="nounou.elements.traits.NNDataScaleElement#scale" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="scale():nounou.elements.traits.NNDataScale"></a>
+      <a id="scale():NNDataScale"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">scale</span><span class="params">()</span><span class="result">: <a href="../../traits/NNDataScale.html" class="extype" name="nounou.elements.traits.NNDataScale">NNDataScale</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@scale():nounou.elements.traits.NNDataScale" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a></dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilter#setActive" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setActive(active:Boolean):Unit"></a>
+      <a id="setActive(Boolean):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setActive</span><span class="params">(<span name="active">active: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@setActive(active:Boolean):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#setChild" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setChild(x:nounou.elements.data.NNData):Unit"></a>
+      <a id="setChild(NNData):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setChild</span><span class="params">(<span name="x">x: <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@setChild(x:nounou.elements.data.NNData):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#setChildren" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setChildren(xs:TraversableOnce[nounou.elements.data.NNData]):Unit"></a>
+      <a id="setChildren(TraversableOnce[NNData]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setChildren</span><span class="params">(<span name="xs">xs: <span class="extype" name="scala.TraversableOnce">TraversableOnce</span>[<a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@setChildren(xs:TraversableOnce[nounou.elements.data.NNData]):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilterInvert#setInverted" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="setInverted(trueFalse:Double):Unit"></a>
+      <a id="setInverted(Double):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setInverted</span><span class="params">(<span name="trueFalse">trueFalse: <span class="extype" name="scala.Double">Double</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@setInverted(trueFalse:Double):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="nounou.elements.data.filters.NNDataFilterInvert#setInverted" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="setInverted(trueFalse:Int):Unit"></a>
+      <a id="setInverted(Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setInverted</span><span class="params">(<span name="trueFalse">trueFalse: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@setInverted(trueFalse:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="nounou.elements.data.filters.NNDataFilterInvert#setInverted" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="setInverted(trueFalse:Boolean):Unit"></a>
+      <a id="setInverted(Boolean):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setInverted</span><span class="params">(<span name="trueFalse">trueFalse: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@setInverted(trueFalse:Boolean):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="nounou.elements.data.NNData#setLayout" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setLayout(layout:nounou.elements.layouts.NNDataLayout):Unit"></a>
+      <a id="setLayout(NNDataLayout):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setLayout</span><span class="params">(<span name="layout">layout: <a href="../../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">NNDataLayout</a></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@setLayout(layout:nounou.elements.layouts.NNDataLayout):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilter#setParent" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setParent(parent:nounou.elements.data.NNData):Unit"></a>
+      <a id="setParent(NNData):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setParent</span><span class="params">(<span name="parent">parent: <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@setParent(parent:nounou.elements.data.NNData):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a></dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilter#setScale" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setScale(scale:nounou.elements.traits.NNDataScale):Nothing"></a>
+      <a id="setScale(NNDataScale):Nothing"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setScale</span><span class="params">(<span name="scale">scale: <a href="../../traits/NNDataScale.html" class="extype" name="nounou.elements.traits.NNDataScale">NNDataScale</a></span>)</span><span class="result">: <span class="extype" name="scala.Nothing">Nothing</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@setScale(scale:nounou.elements.traits.NNDataScale):Nothing" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a> → <a href="../../traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a></dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilter#setTiming" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setTiming(timing:nounou.elements.traits.NNDataTiming):Nothing"></a>
+      <a id="setTiming(NNDataTiming):Nothing"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setTiming</span><span class="params">(<span name="timing">timing: <a href="../../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>)</span><span class="result">: <span class="extype" name="scala.Nothing">Nothing</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@setTiming(timing:nounou.elements.traits.NNDataTiming):Nothing" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a> → <a href="../../traits/NNDataTimingElement.html" class="extype" name="nounou.elements.traits.NNDataTimingElement">NNDataTimingElement</a></dd></dl></div>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="nounou.elements.traits.NNDataTimingElement#timing" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="timing():nounou.elements.traits.NNDataTiming"></a>
+      <a id="timing():NNDataTiming"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">timing</span><span class="params">()</span><span class="result">: <a href="../../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@timing():nounou.elements.traits.NNDataTiming" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../traits/NNDataTimingElement.html" class="extype" name="nounou.elements.traits.NNDataTimingElement">NNDataTimingElement</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#toJsonString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toJsonString:String"></a>
+      <a id="toJsonString:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toJsonString</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@toJsonString:String" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="nounou.elements.data.filters.NNDataFilterInvert#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@toString():String" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounou.elements.data.filters.NNDataFilterInvert">NNDataFilterInvert</a> → <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a> → AnyRef → Any</dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#toStringChain" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toStringChain():String"></a>
+      <a id="toStringChain():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toStringChain</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@toStringChain():String" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Provides a textual representation of the child hierarchy starting from this data object.</p><div class="fullcomment"><div class="comment cmt"><p>Provides a textual representation of the child hierarchy starting from this data object.
+If multiple XDataFilter objects (e.g. an XDataFilterFIR object) is chained after this data,
+this method will show the chained objects and their tree hierarchy.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+    </li><li name="nounou.elements.data.NNData#toStringFull" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toStringFull():String"></a>
+      <a id="toStringFull():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toStringFull</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@toStringFull():String" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a> → <a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="nounou.elements.NNElement#version" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="version:Double"></a>
+      <a id="version:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">version</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@version:Double" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@wait():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterInvert@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="nounou.elements.data.filters.NNDataFilter">
+              <h3>Inherited from <a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a></h3>
+            </div><div class="parent" name="nounou.elements.data.NNData">
+              <h3>Inherited from <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></h3>
+            </div><div class="parent" name="nounou.elements.traits.NNDataTimingElement">
+              <h3>Inherited from <a href="../../traits/NNDataTimingElement.html" class="extype" name="nounou.elements.traits.NNDataTimingElement">NNDataTimingElement</a></h3>
+            </div><div class="parent" name="nounou.elements.traits.NNDataScaleElement">
+              <h3>Inherited from <a href="../../traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a></h3>
+            </div><div class="parent" name="nounou.elements.traits.NNChannelsElement">
+              <h3>Inherited from <a href="../../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a></h3>
+            </div><div class="parent" name="nounou.elements.NNElement">
+              <h3>Inherited from <a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></h3>
+            </div><div class="parent" name="nounou.util.LoggingExt">
+              <h3>Inherited from <a href="../../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></h3>
+            </div><div class="parent" name="com.typesafe.scalalogging.slf4j.LazyLogging">
+              <h3>Inherited from <span class="extype" name="com.typesafe.scalalogging.slf4j.LazyLogging">LazyLogging</span></h3>
+            </div><div class="parent" name="com.typesafe.scalalogging.Logging">
+              <h3>Inherited from <span class="extype" name="com.typesafe.scalalogging.Logging">Logging</span></h3>
+            </div><div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>

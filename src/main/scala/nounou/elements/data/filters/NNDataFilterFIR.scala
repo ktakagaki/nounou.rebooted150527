@@ -1,4 +1,4 @@
-package scala.nounou.obj.data.filters
+package nounou.elements.data.filters
 
 import _root_.nounou.elements.ranges.SampleRangeValid
 import nounou.NN._
@@ -6,7 +6,6 @@ import nounou.elements.data.NNData
 import breeze.linalg.{DenseVector => DV, max, convert}
 import breeze.signal.support.FIRKernel1D
 import breeze.signal._
-import nounou.elements.data.filters.NNDataFilter
 import scala.beans.BeanProperty
 //import nounou.data.ranges.FrRange$
 

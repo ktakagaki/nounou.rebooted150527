@@ -98,7 +98,10 @@ object NNGit {
     if(obj==null) "NNGit is not yet initialized!"
     else obj.head
   }
-
+//  def getGitHeadShort: String = {
+//    if(obj==null) "NNGit is not yet initialized!"
+//    else obj.headShort
+//  }
   def gitRepoLoaded = repoLoaded
   def gitFileLoaded = fileLoaded
 
@@ -122,6 +125,7 @@ object NNGit {
 class NNGit  {
 
   var head: String = "Head not initialized"
+//  var headShort: String = "Short head not initialized"
   var branch: String = "Branch not initialized"
   var remotes: Array[String] = Array("Remotes not initialized")
   var gitDirectory: String = "Git directory not initialized"
@@ -136,6 +140,7 @@ class NNGit  {
       case x: String => x
       case _ => "Head not detected"
     }
+//    headShort = head.take(10)
     branch = repository.getBranch match {
       case x: String => x
       case _ => "Head not detected"

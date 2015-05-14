@@ -26,7 +26,8 @@ object NNSpike extends LoggingExt {
 * @author ktakagaki
 * @date 07/14/2014.
 */
-abstract class NNSpike(val time: Long, val waveform: Array[Array[Int]], var unitNo: Int = 0) extends NNElement {
+abstract class NNSpike(val time: Long, val waveform: Array[Array[Int]], var unitNo: Int = 0)
+  extends NNElement {
 
   val channels = waveform.length
   val length = waveform(0).length
@@ -50,6 +51,8 @@ class NNSpikeFrame(override val time : Long,
                   unitNo: Int = 0,
                   val segment: Int)
   extends NNSpike(time, waveform, unitNo){
-  lazy val frame = time.toInt
+
+    lazy val frame = time.toInt
+
 }
 
