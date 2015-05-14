@@ -1,24 +1,23 @@
-  package scala.nounou.obj.data.filters
+package nounou.elements.data.filters
 
 import nounou.NN._
   import nounou.elements.data.NNData
   import breeze.linalg.{DenseVector => DV, convert}
   import breeze.signal._
-  import nounou.elements.data.filters.NNDataFilterDownsample
-  import scala.beans.BeanProperty
   import nounou.elements.ranges.{SampleRangeReal, SampleRangeValid}
   import breeze.signal.support.FIRKernel1D
 
-  /**
-   * @author ktakagaki
-   * @date 2/1314.
-   */
-  class NNDataFilterDecimate( private var _parent: NNData ) extends NNDataFilterDownsample( _parent ) {
+/**
+ * @author ktakagaki
+ * @date 2/1314.
+ */
+class NNDataFilterDecimate( parentVar: NNData )
+    extends NNDataFilterDownsample( parentVar ) {
 
-    override def toString() = {
-      if(factor == 1) "XDataFilterDecimate: off (factor=1)"
-      else "XDataFilterDecimate: factor=" + factor
-    }
+  override def toString() = {
+    if(factor == 1) "XDataFilterDecimate: off (factor=1)"
+    else "XDataFilterDecimate: factor=" + factor
+  }
 
     var kernel: FIRKernel1D[Long] = null
 
@@ -32,7 +31,7 @@ import nounou.NN._
       } else if(factor == 1) setDecimateOff()
       else {
         kernel = designFilterDecimation[ FIRKernel1D[Long] ](factor, multiplier = 1024L)
-        this._factor = factor
+        this.factorVar = factor
         changedData()
         logger.info( "set kernel to {}", kernel )
       }
@@ -42,7 +41,7 @@ import nounou.NN._
       logger.info( "filter is already off, not changing. ")
     } else {
       logger.info( "Turning filter kernel off." )
-      _factor = 1
+      factorVar = 1
       kernel = null
     }
 
@@ -51,10 +50,10 @@ import nounou.NN._
 
     override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
       if(kernel == null){
-        _parent.readPointImpl(channel, frame, segment)
+        parentVar.readPointImpl(channel, frame, segment)
       } else {
         //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
-        val tempData = _parent.readTraceDV( channel, SampleRange(frame * factor - kernel.overhangPre, frame * factor + kernel.overhangPost, 1))//, OptSegment(segment) ))
+        val tempData = parentVar.readTraceDV( channel, SampleRange(frame * factor - kernel.overhangPre, frame * factor + kernel.overhangPost, 1))//, OptSegment(segment) ))
         val tempRet = convolve( DV( tempData.map(_.toLong).toArray ), kernel.kernel, overhang = OptOverhang.None )
         require( tempRet.length == 1, "something is wrong with the convolution!" )
         tempRet(0).toInt
@@ -62,11 +61,11 @@ import nounou.NN._
 
     override def readTraceDVImpl(channel: Int, range: SampleRangeValid/*Range.Inclusive, segment: Int*/): DV[Int] =
       if(kernel == null){
-          _parent.readTraceDVImpl(channel, range/*, segment*/)
+          parentVar.readTraceDVImpl(channel, range/*, segment*/)
       } else {
           //by calling _parent.readTrace instead of _parent.readTraceImpl, we can deal with cases where the kernel will overhang actual data, since the method will return zeros
           val realRange = new SampleRangeReal(range.start * factor - kernel.overhangPre, range.last * factor + kernel.overhangPost, 1, range.segment )
-          val tempData = _parent.readTraceDV(channel, realRange)
+          val tempData = parentVar.readTraceDV(channel, realRange)
             //RangeFr(range.start * factor - kernel.overhangPre, range.last * factor + kernel.overhangPost, 1, OptSegment(segment) ))
 //        println("tempData: " + tempData.length)
 //        println("kernel: " + kernel.kernel.length)

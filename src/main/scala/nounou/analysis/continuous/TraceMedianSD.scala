@@ -10,18 +10,16 @@ import nounou.util.LoggingExt
 
 object TraceMedianSD extends LoggingExt {
 
-  def apply(data: NNData, channel: Int, frameRange: SampleRangeSpecifier): Int =
-    apply(data: NNData, channel: Int, frameRange: SampleRangeSpecifier, 6400)
+  //ToDo2: better options handling?
+  //    for( opt <- opts ) opt match {
+  //      case OptTraceSDReadLengthFr( fr ) => sampleLength = fr
+  //      case _ => {}
+  //    }
+
+//  def apply(data: NNData, channel: Int, frameRange: SampleRangeSpecifier): Int =
+//    apply(data: NNData, channel: Int, frameRange: SampleRangeSpecifier, 6400)
 
   def apply(data: NNData, channel: Int, frameRange: SampleRangeSpecifier, sampleLength: Int ): Int ={
-
-    var sampleLength = 6400
-    // <editor-fold defaultstate="collapsed" desc=" Handle options ">
-
-//    for( opt <- opts ) opt match {
-//      case OptTraceSDReadLengthFr( fr ) => sampleLength = fr
-//      case _ => {}
-//    }
 
     if(sampleLength < 3200) throw loggerError("optTraceSDReadLength must be 3200 or larger!")
 

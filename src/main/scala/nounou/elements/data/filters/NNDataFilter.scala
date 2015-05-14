@@ -10,22 +10,23 @@ import nounou.elements.traits.{NNDataScale, NNDataTiming}
 
 /** A passthrough object, which is overriden and inherited with various XDataFilterTr traits to create a filter block.
   */
-class NNDataFilter( private var _parent: NNData ) extends NNData {
+class NNDataFilter( /**Explanation*/
+                    private var parenVar: NNData ) extends NNData {
 
-  setParent(_parent)
+  setParent(parenVar)
 
   // <editor-fold defaultstate="collapsed" desc=" set/getParent ">
 
   def setParent(parent: NNData): Unit = {
-    _parent.clearChild(this)
-    _parent = parent
-    _parent.setChild(this)
+    parenVar.clearChild(this)
+    parenVar = parent
+    parenVar.setChild(this)
     changedData()
     changedTiming()
     changedLayout()
   }
 
-  def getParent(): NNData = _parent
+  def getParent(): NNData = parenVar
 
   // </editor-fold>
 
@@ -45,27 +46,27 @@ class NNDataFilter( private var _parent: NNData ) extends NNData {
   override final def readPoint(channel: Int, frame: Int, segment: Int): Int = if(_active){
     super.readPoint(channel, frame, segment)
   }else{
-    _parent.readPoint(channel, frame, segment)
+    parenVar.readPoint(channel, frame, segment)
   }
 
   override final def readTraceDV(channel: Int, range: SampleRangeSpecifier): DV[Int] =
     if(_active){
       super.readTraceDV(channel, range)
     }else{
-      _parent.readTraceDV(channel, range)
+      parenVar.readTraceDV(channel, range)
     }
     // </editor-fold>
 
 //  override def channelNames: scala.Vector[String] = _parent.channelNames
-  override def getChannelCount = _parent.channelCount
+  override def getChannelCount = parenVar.channelCount
 
-  override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = _parent.readPointImpl(channel, frame, segment: Int)
-  override def readTraceDVImpl(channel: Int, range: SampleRangeValid): DV[Int] = _parent.readTraceDVImpl(channel, range)
+  override def readPointImpl(channel: Int, frame: Int, segment: Int): Int = parenVar.readPointImpl(channel, frame, segment: Int)
+  override def readTraceDVImpl(channel: Int, range: SampleRangeValid): DV[Int] = parenVar.readTraceDVImpl(channel, range)
 //  override def readFrameImpl(frame: Int): DV[Int] = _parent.readFrameImpl(frame)
 //  override def readFrameImpl(frame: Int, channels: Array[Int]): DV[Int] = _parent.readFrameImpl(frame, channels)
 
-  override def getTiming() = _parent.timing()
-  override def getScale() = _parent.scale()
+  override def getTiming() = parenVar.timing()
+  override def getScale() = parenVar.scale()
   override def setTiming( timing: NNDataTiming ) =
     throw loggerError(s"Cannot set timing for data filter ${this.getClass.getCanonicalName}.")
   override def setScale( scale: NNDataScale ) =

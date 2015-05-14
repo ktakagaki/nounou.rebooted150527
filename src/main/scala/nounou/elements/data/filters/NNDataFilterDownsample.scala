@@ -11,43 +11,46 @@ import nounou.elements.traits.NNDataTiming
  * @author ktakagaki
  * @date 2/16/14.
  */
-class NNDataFilterDownsample( private var _parent: NNData ) extends NNDataFilter( _parent ) {
+class NNDataFilterDownsample( private val parentVal: NNData, protected var factorVar: Int )
+  extends NNDataFilter( parentVal ) {
 
-  def this(_parent: NNData, factor: Int) = {
-    this(_parent)
-    setFactor(factor)
-  }
+  setFactor(factorVar)
+
+  def this(parentVal: NNData) = this(parentVal, 10)
+
+  // <editor-fold defaultstate="collapsed" desc=" toString/toStringFull ">
 
   override def toString() = {
     if(factor == 1) "XDataFilterDownsample: off (factor=1)"
     else "XDataFilterDownsample: factor=" + factor
   }
 
+  // </editor-fold>
+
   // <editor-fold defaultstate="collapsed" desc=" factor-related ">
 
-  final def factor(): Int = getFactor()
+  protected var timingBuffer: NNDataTiming = parentVal.timing()
 
-  /** Java-style alias for [[factor()]].
+  final def factor(): Int = getFactor()
+  /** Java-style alias for [[factor]].
     */
-  def getFactor(): Int = _factor
+  def getFactor(): Int = factorVar
   def setFactor( factor: Int ) = {
     loggerRequire( factor >= 1, "new factor {} cannot be less than 1!", factor.toString )
     if( factor == this.factor ){
       logger.trace( "factor is already {}, not changing. ", factor.toString )
     } else {
-      _factor = factor
+      factorVar = factor
       timingBuffer = NNDataTiming.apply(
-        _parent.timing.sampleRate / factor,
-        (for(seg <- 0 until _parent.timing.segmentCount)
-        yield ( (_parent.timing.segmentLength(seg) - 1).toDouble/factor).round.toInt + 1 ).toArray,
-        _parent.timing.segmentStartTss
+        parentVal.timing.sampleRate / factor,
+        (for(seg <- 0 until parentVal.timing.segmentCount)
+        yield ( (parentVal.timing.segmentLength(seg) - 1).toDouble/factor).round.toInt + 1 ).toArray,
+        parentVal.timing.segmentStartTss
         )
       //logger.info( "changed factor to {}", factor.toString )
       changedData()
     }
   }
-  protected var _factor: Int = 1
-  protected var timingBuffer: NNDataTiming = _parent.timing()
 
   override def getTiming(): NNDataTiming = timingBuffer
 
@@ -69,16 +72,16 @@ class NNDataFilterDownsample( private var _parent: NNData ) extends NNDataFilter
   // <editor-fold defaultstate="collapsed" desc=" readXXX ">
 
   override def readPointImpl(channel: Int, frame: Int, segment: Int): Int =
-      _parent.readPointImpl(channel, frame*factor, segment)
+    parentVal.readPointImpl(channel, frame*factor, segment)
 
   override def readTraceDVImpl(channel: Int, range: SampleRangeValid): DV[Int] =
     if(factor == 1){
-        _parent.readTraceDVImpl(channel, range)
+      parentVal.readTraceDVImpl(channel, range)
     } else {
-        _parent.readTraceDVImpl(channel,
+      parentVal.readTraceDVImpl(channel,
                 new SampleRangeValid(
                           range.start*factor,
-                          min(range.last*factor, _parent.timing.segmentLength(range.segment)-1),
+                          min(range.last*factor, parentVal.timing.segmentLength(range.segment)-1),
                           range.step*factor,
                           range.segment)
         )

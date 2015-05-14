@@ -11,7 +11,7 @@ import nounou.elements.ranges.{SampleRange, SampleRangeValid, SampleRangeSpecifi
 /** Base class for data encoded as Int arrays, this is the main data element for an experiment,
   * whether it be electrophysiolgical or high-sampling-rate imaging.
   *
-  * This object is mutable, to allow inheritance by [[nounou.elements.data.filters.XDataFilter]].
+  * This object is mutable, to allow inheritance by [[nounou.elements.data.filters.NNDataFilter]].
   * For that class, output results may change, depending upon _parent changes.
   * Each trace of data must share the following variables:
   * sampling, start, length, xBits, absGain, absOffset, absUnit
@@ -20,10 +20,17 @@ abstract class NNData extends NNElement
     with NNChannelsElement with NNDataScaleElement with NNDataTimingElement {
 
   override def toString(): String =
-    s"XData: ${channelCount} ch, ${timing().segmentCount} seg, fs=${timing().sampleRate}"
+    s"NNData(${channelCount} ch, ${timing().segmentCount} seg, fs=${timing().sampleRate})"
+  override def toStringFull(): String = {
+    var tempout = toString().dropRight(1) + s" $gitHeadShort)/n" //+
+    //"============================================================/n" +
+    //"seg#/tsegmentLength/tsegmentStartTs/n"
+    tempout.dropRight(1)
+  }
 
   /** Provides a textual representation of the child hierarchy starting from this data object.
-    * If multiple XDataFilter objects (e.g. an XDataFilterFIR object) is chained after this data,
+    * If multiple XDataFilter objects (e.g. an [[nounou.elements.data.filters.NNDataFilterFIR]] object)
+    * are chained after this data,
     * this method will show the chained objects and their tree hierarchy.
     * @return
     */
@@ -99,7 +106,7 @@ abstract class NNData extends NNElement
   //<editor-fold defaultstate="collapsed" desc="reading a point">
 
   /** Read a single point from the data, in internal integer scaling, after checking values.
-    * Implement via readPointImpl. Prefer [[readTraceDV()]] and readFrame()
+    * Implement via readPointImpl. Prefer [[nounou.elements.data.NNData!.readTraceDV]] and readFrame()
     * when possible, as these will avoid repeated function calling overhead.
     */
   def readPoint(channel: Int, frame: Int, segment: Int /*optSegment: OptSegment*/): Int = {
@@ -114,10 +121,12 @@ abstract class NNData extends NNElement
 
   // <editor-fold defaultstate="collapsed" desc=" convenience readPoint variations ">
 
-  /** [[readPoint()]] but in physical units.
+  /** [[nounou.elements.data.NNData!.readPoint readPoint]] but in physical units.
     */
   final def readPointAbs(channel: Int, frame: Int, segment: Int): Double = scale.convertIntToAbsolute( readPoint(channel, frame, segment) )
   //final def readPointAbs(channel: Int, frame: Int, optSegment: OptSegment): Double = convertINTtoABS( readPoint(channel, frame, optSegment) )
+  /** [[nounou.elements.data.NNData!.readPoint readPoint]] but in physical units.
+    */
   final def readPointAbs(channel: Int, frame: Int): Double = readPointAbs(channel, frame, -1)//OptSegmentAutomatic)
 
   // </editor-fold>
