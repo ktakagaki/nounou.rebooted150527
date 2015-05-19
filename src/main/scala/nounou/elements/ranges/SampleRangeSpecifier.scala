@@ -8,7 +8,7 @@ import nounou.util.LoggingExt
   * ([[nounou.elements.ranges.SampleRangeAll]]) and millisecond- or timestamp(Long)-
   * dependent sample ranges. These latter specifications can only be resolved to real data frame
   * ranges using sampling information given in the actual data
-  * ([[NNDataTiming]]).
+  * ([[nounou.elements.traits.NNDataTiming]]).
   */
 trait SampleRangeSpecifier extends LoggingExt {
 
@@ -35,13 +35,14 @@ trait SampleRangeSpecifier extends LoggingExt {
 
   /** Returns the concrete valid sample range with start/end (within assumed data),
     * steps (must be positive int), and segment (present within assumed data).
-    * In contrast to [[getSampleRangeReal()]], the resulting sample range here cuts off overhangs.
+    * In contrast to [[nounou.elements.ranges.SampleRangeSpecifier.getSampleRangeReal]], the resulting sample range here cuts off overhangs.
     */
   def getSampleRangeValid(nnDataTiming: NNDataTiming): SampleRangeValid
   final def getSampleRangeValid(nnDataTimingElement: NNDataTimingElement): SampleRangeValid =
     getSampleRangeValid(nnDataTimingElement.timing())
 
-  /** Returns [[getSampleRangeValid]], along with pre- and post- padding sample counts
+  /** Returns [[nounou.elements.ranges.SampleRangeSpecifier.getSampleRangeValid(NNDataTiming)]],
+    * along with pre- and post- padding sample counts
     * for when the original sample range exceeds/overhangs the available data.
     */
   def getSampleRangeValidPrePost(nnDataTiming: NNDataTiming): (Int, SampleRangeValid, Int) =

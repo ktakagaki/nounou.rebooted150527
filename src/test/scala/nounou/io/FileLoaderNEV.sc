@@ -5,7 +5,7 @@ import nounou.io.neuralynx.FileAdapterNCS
 
 /**
  * @author ktakagaki
- * @date 1/30/14.
+ * //@date 1/30/14.
  */
 
 val file = new File( getClass.getResource("/_testFiles/Neuralynx/t130911/Events.nev").getPath() )

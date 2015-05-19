@@ -52,7 +52,7 @@ It allows specification of ranges such as &quot;all samples&quot;
 (<a href="SampleRangeAll.html" class="extype" name="nounou.elements.ranges.SampleRangeAll">nounou.elements.ranges.SampleRangeAll</a>) and millisecond- or timestamp(Long)-
 dependent sample ranges. These latter specifications can only be resolved to real data frame
 ranges using sampling information given in the actual data
-(<span class="extype" name="NNDataTiming">NNDataTiming</span>).
+(<a href="../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">nounou.elements.traits.NNDataTiming</a>).
 </p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a>, <span class="extype" name="com.typesafe.scalalogging.slf4j.LazyLogging">LazyLogging</span>, <span class="extype" name="com.typesafe.scalalogging.Logging">Logging</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
@@ -173,7 +173,7 @@ steps (must be positive int), and segment (present within assumed data).</p>
       <p class="shortcomment cmt">Returns the concrete valid sample range with start/end (within assumed data),
 steps (must be positive int), and segment (present within assumed data).</p><div class="fullcomment"><div class="comment cmt"><p>Returns the concrete valid sample range with start/end (within assumed data),
 steps (must be positive int), and segment (present within assumed data).
-In contrast to <span class="extype" name="getSampleRangeReal()">getSampleRangeReal()</span>, the resulting sample range here cuts off overhangs.
+In contrast to <a href="#getSampleRangeReal(nnDataTimingElement:nounou.elements.traits.NNDataTimingElement):nounou.elements.ranges.SampleRangeReal" class="extmbr" name="nounou.elements.ranges.SampleRangeSpecifier#getSampleRangeReal">nounou.elements.ranges.SampleRangeSpecifier.getSampleRangeReal</a>, the resulting sample range here cuts off overhangs.
 </p></div></div>
     </li></ol>
             </div>
@@ -446,7 +446,8 @@ In contrast to <span class="extype" name="getSampleRangeReal()">getSampleRangeRe
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">Returns <a href="#getSampleRangeValid(nnDataTimingElement:nounou.elements.traits.NNDataTimingElement):nounou.elements.ranges.SampleRangeValid" class="extmbr" name="nounou.elements.ranges.SampleRangeSpecifier#getSampleRangeValid">getSampleRangeValid</a>, along with pre- and post- padding sample counts
+      <p class="shortcomment cmt">Returns <span class="extype" name="nounou.elements.ranges.SampleRangeSpecifier.getSampleRangeValid(NNDataTiming)">nounou.elements.ranges.SampleRangeSpecifier.getSampleRangeValid(NNDataTiming)</span>,
+along with pre- and post- padding sample counts
 for when the original sample range exceeds/overhangs the available data.</p>
     </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="hashCode():Int"></a>
@@ -515,7 +516,7 @@ for when the original sample range exceeds/overhangs the available data.</p>
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p>Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.
+      <p class="shortcomment cmt"><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.
 Use as follows:
 <code><code><code><code>
 throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
@@ -536,7 +537,7 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">If input 'boolean' is false, logs a message using slf4j and throws an error.</p><div class="fullcomment"><div class="comment cmt"><p>If input 'boolean' is false, logs a message using slf4j and throws an error.
+      <p class="shortcomment cmt"><b>[LoggingExt]</b> If input 'boolean' is false, logs a message using slf4j and throws an error.</p><div class="fullcomment"><div class="comment cmt"><p><b>[LoggingExt]</b> If input 'boolean' is false, logs a message using slf4j and throws an error.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       

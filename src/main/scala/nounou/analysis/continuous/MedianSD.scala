@@ -8,16 +8,10 @@ import nounou.elements.data.NNData
 import nounou.elements.ranges.SampleRangeSpecifier
 import nounou.util.LoggingExt
 
-object TraceMedianSD extends LoggingExt {
-
-  //ToDo2: better options handling?
-  //    for( opt <- opts ) opt match {
-  //      case OptTraceSDReadLengthFr( fr ) => sampleLength = fr
-  //      case _ => {}
-  //    }
-
-//  def apply(data: NNData, channel: Int, frameRange: SampleRangeSpecifier): Int =
-//    apply(data: NNData, channel: Int, frameRange: SampleRangeSpecifier, 6400)
+/**Calculates the median-based standard deviation estimate for input data.
+ * This estimate is less biased by transient extreme values such as spiking events in neurons.
+ */
+object MedianSD extends LoggingExt {
 
   def apply(data: NNData, channel: Int, frameRange: SampleRangeSpecifier, sampleLength: Int ): Int ={
 
@@ -37,5 +31,15 @@ object TraceMedianSD extends LoggingExt {
       (median( DenseVector(samp) ).toDouble / 0.6745).intValue
     }
   }
+
+  //  def apply(data: NNData, channel: Int, frameRange: SampleRangeSpecifier): Int =
+  //    apply(data: NNData, channel: Int, frameRange: SampleRangeSpecifier, 6400)
+
+
+  //ToDo2: better options handling?
+  //    for( opt <- opts ) opt match {
+  //      case OptTraceSDReadLengthFr( fr ) => sampleLength = fr
+  //      case _ => {}
+  //    }
 
 }

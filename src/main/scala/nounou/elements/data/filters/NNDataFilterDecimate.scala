@@ -9,7 +9,7 @@ import nounou.NN._
 
 /**
  * @author ktakagaki
- * @date 2/1314.
+ * //@date 2/1314.
  */
 class NNDataFilterDecimate( parentVar: NNData )
     extends NNDataFilterDownsample( parentVar ) {

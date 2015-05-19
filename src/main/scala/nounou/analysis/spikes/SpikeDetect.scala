@@ -11,7 +11,6 @@ import scala.collection.mutable.ArrayBuffer
 
 /**
 * @author ktakagaki
-* @date 07/13/2014.
 */
 object SpikeDetect extends SpikeDetect {
 

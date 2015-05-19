@@ -10,7 +10,7 @@
 //  *The `_parent` variable is not valid in the usual sense, and everything is redirected to the
 //  * variable `heldData`. Overwrite `heldData` to change the output of this class.
 // * @author ktakagaki
-// * @date 2/15/14.
+// * //@date 2/15/14.
 //  */
 //class NNDataFilterHolder extends NNData with NNDataAux {
 //

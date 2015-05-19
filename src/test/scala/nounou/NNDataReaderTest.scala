@@ -7,7 +7,7 @@
 //
 ///**
 // * @author ktakagaki
-// * @date 2/14/14.
+// * // //@date 2/14/14.
 // */
 //@RunWith(classOf[JUnitRunner])
 //class NNDataReaderTest extends FunSuite {

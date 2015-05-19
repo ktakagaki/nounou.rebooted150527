@@ -2,13 +2,13 @@ package nounou.util
 
 import com.typesafe.scalalogging.slf4j.LazyLogging
 
-/**
+/**Trait to implement logging within [[nounou.elements.NNElement]] children.
  * @author ktakagaki
- * @date 07/15/2014.
+ * //@date 07/15/2014.
  */
 trait LoggingExt extends LazyLogging {
 
-  /** Logs a message using slf4j, and returns a new [[IllegalArgumentException]].
+  /** '''[LoggingExt]''' Logs a message using slf4j, and returns a new [[IllegalArgumentException]].
     * Use as follows:
     * ````
     * throw loggerError("This is an error with params {}", param1.toString)
@@ -21,7 +21,7 @@ trait LoggingExt extends LazyLogging {
   }
 
 
-  /** If input 'boolean' is false, logs a message using slf4j and throws an error.
+  /** '''[LoggingExt]''' If input 'boolean' is false, logs a message using slf4j and throws an error.
    */
   @throws[IllegalArgumentException]
   def loggerRequire(boolean: Boolean, message: String, params: AnyRef*): Unit = {

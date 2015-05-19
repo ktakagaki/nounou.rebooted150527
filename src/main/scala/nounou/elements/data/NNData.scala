@@ -21,17 +21,10 @@ abstract class NNData extends NNElement
 
   override def toString(): String =
     s"NNData(${channelCount} ch, ${timing().segmentCount} seg, fs=${timing().sampleRate})"
-  override def toStringFull(): String = {
-    var tempout = toString().dropRight(1) + s" $gitHeadShort)/n" //+
-    //"============================================================/n" +
-    //"seg#/tsegmentLength/tsegmentStartTs/n"
-    tempout.dropRight(1)
-  }
 
   /** Provides a textual representation of the child hierarchy starting from this data object.
-    * If multiple XDataFilter objects (e.g. an [[nounou.elements.data.filters.NNDataFilterFIR]] object)
-    * are chained after this data,
-    * this method will show the chained objects and their tree hierarchy.
+    * If multiple NNDataFilter objects (e.g. an [[nounou.elements.data.filters.NNDataFilterFIR]] object)
+    * are chained after this data, this method will show the chained objects and their tree hierarchy.
     * @return
     */
   final def toStringChain(): String = {
@@ -45,39 +38,47 @@ abstract class NNData extends NNElement
   // <editor-fold defaultstate="collapsed" desc=" DataSource related ">
 
   private val _children = scala.collection.mutable.Set[NNData]()
+  /**'''[NNData: data source]''' Adds a new child to this data source, which will be notified for changes.
+    * Be sure to clear children if the children are to be garbage collected.*/
   def setChild(x: NNData): Unit = _children.+=(x)
+  /**'''[NNData: data source]''' Adds new children to this data source, which will be notified for changes.
+    * Be sure to clear children if the children are to be garbage collected.*/
   final def setChildren(xs: TraversableOnce[NNData]): Unit = xs.map( setChild(_) )
+  /**'''[NNData: data source]''' Children of this data source which should be notified upon changes.*/
   def getChildren() = _children
+  /**'''[NNData: data source]''' Clear all children of this data source.*/
   def clearChildren(): Unit = _children.clear()
+  /**'''[NNData: data source]''' Clear specified child of this data source.*/
   def clearChild(x: NNData): Unit = _children.-=(x)
+  /**'''[NNData: data source]''' Clear specified children of this data source.*/
   final def clearChildren(xs: TraversableOnce[NNData]): Unit = xs.map( clearChild(_) )
 
-  /** Must be overriden and expanded, especially by buffering functions
+  /** '''__SHOULD OVERRIDE__''' especially by buffering functions
     * and display functions which have an internal state to update.
     * Always remember to start with super.changedData(), in order to
     * map to all children.
     */
   def changedData(): Unit = _children.map(_.changedData())
-  /** Must be overriden and expanded, especially by buffering functions
+  /** '''__SHOULD OVERRIDE__''' especially by buffering functions
     * and display functions which have an internal state to update.
     * Always remember to start with super.changedData(Int), in order to
     * map to all children.
     */
   def changedData(channel: Int): Unit = _children.map(_.changedData(channel))
-  /** Must be overriden and expanded, especially by buffering functions
+  /** '''__SHOULD OVERRIDE__''' especially by buffering functions
     * and display functions which have an internal state to update.
     * Always remember to start with super.changedData(Array[Int]), in order to
     * map to all children.
     */
   def changedData(channels: Array[Int]): Unit = _children.map(_.changedData(channels))
-  /** Must be overriden and expanded, especially by buffering functions
+  /** '''__SHOULD OVERRIDE__''' especially by buffering functions
     * and display functions which have an internal state to update.
     * Covers sampleRate, segmentLengths, segmentEndTSs, segmentStartTSs, segmentCount
     * Always remember to start with super.changedTiming(), in order to
     * map to all children.
     */
   def changedTiming(): Unit = _children.map(_.changedTiming())
-  /** Must be overriden and expanded, especially by buffering functions
+  /** '''__SHOULD OVERRIDE__'''  especially by buffering functions
     * and display functions which have an internal state to update.
     * Always remember to start with super.changedLayout(), in order to
     * map to all children.
@@ -133,14 +134,14 @@ abstract class NNData extends NNElement
 
   //</editor-fold>
 
-  /** MUST OVERRIDE: Read a single point from the data, in internal integer scaling.
+  /** '''__MUST OVERRIDE__''' Read a single point from the data, in internal integer scaling.
     * Assumes that channel, frame, and segment are all valid and within range.
     */
   def readPointImpl(channel: Int, frame: Int, segment: Int): Int
 
   //<editor-fold defaultstate="collapsed" desc="reading a trace">
 
-  /**  CAN OVERRIDE: Read a single trace from the data, in internal integer scaling.
+  /** '''__CAN OVERRIDE__''' Read a single trace from the data, in internal integer scaling.
     */
   def readTraceDV(channel: Int, range: SampleRangeSpecifier): DV[Int] = {
 
@@ -156,8 +157,7 @@ abstract class NNData extends NNElement
     }
 
   }
-  /** CAN OVERRIDE:
-    *
+  /** '''__CAN OVERRIDE__''' by default, calls [[nounou.elements.data.NNData.readTraceDV(Int, SampleRangeSpecifier)]]
     */
   def readTraceDV(channels: Array[Int],  range: SampleRangeSpecifier): Array[DV[Int]] = {
     val preValidPost = range.getSampleRangeValidPrePost(this)
@@ -181,12 +181,13 @@ abstract class NNData extends NNElement
     */
   final def readTraceDV(channel: Int): DV[Int] = readTraceDV(channel, NN.SampleRangeAll())
 
-  /** Read a single trace in absolute unit scaling (as recorded).
-    */
+  /** Read a single trace in absolute unit scaling (as recorded).*/
   final def readTraceAbsDV(channel: Int): DV[Double]
     = scale.convertIntToAbsolute(readTraceDV(channel))
+  /** Read a single trace in absolute unit scaling (as recorded).*/
   final def readTraceAbsDV(channel: Int,         range: SampleRangeSpecifier): DV[Double]
     = scale.convertIntToAbsolute(readTraceDV(channel, range))
+  /** Read multiple traces in absolute unit scaling (as recorded).*/
   final def readTraceAbsDV(channels: Array[Int], range: SampleRangeSpecifier): Array[DV[Double]]
     = readTraceDV(channels, range).map( scale.convertIntToAbsolute(_) )
 

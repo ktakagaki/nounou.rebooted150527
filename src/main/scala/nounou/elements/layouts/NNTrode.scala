@@ -34,7 +34,7 @@
 //
 ///**Immutable class to encapsulate trode layouts.
 // * @author ktakagaki
-// * @date 3/14/14.
+// * //@date 3/14/14.
 // */
 //
 //abstract class NNTrodes extends NNElement {

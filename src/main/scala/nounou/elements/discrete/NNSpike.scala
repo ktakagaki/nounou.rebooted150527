@@ -24,7 +24,7 @@ object NNSpike extends LoggingExt {
 
 /**
 * @author ktakagaki
-* @date 07/14/2014.
+* //@date 07/14/2014.
 */
 abstract class NNSpike(val time: Long, val waveform: Array[Array[Int]], var unitNo: Int = 0)
   extends NNElement {

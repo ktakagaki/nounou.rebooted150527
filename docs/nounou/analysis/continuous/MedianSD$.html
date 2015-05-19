@@ -1,22 +1,22 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>FileLoader - nounou documentation - nounou.io.FileLoader</title>
-          <meta name="description" content="FileLoader - nounou documentation - nounou.io.FileLoader" />
-          <meta name="keywords" content="FileLoader nounou documentation nounou.io.FileLoader" />
+          <title>MedianSD - nounou documentation - nounou.analysis.continuous.MedianSD</title>
+          <meta name="description" content="MedianSD - nounou documentation - nounou.analysis.continuous.MedianSD" />
+          <meta name="keywords" content="MedianSD nounou documentation nounou.analysis.continuous.MedianSD" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
-      <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
-      <link href="../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
-      <script type="text/javascript" src="../../lib/jquery.js" id="jquery-js"></script>
-      <script type="text/javascript" src="../../lib/jquery-ui.js"></script>
-      <script type="text/javascript" src="../../lib/template.js"></script>
-      <script type="text/javascript" src="../../lib/tools.tooltip.js"></script>
+      <link href="../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
       
       <script type="text/javascript">
          if(top === self) {
-            var url = '../../index.html';
-            var hash = 'nounou.io.FileLoader$';
+            var url = '../../../index.html';
+            var hash = 'nounou.analysis.continuous.MedianSD$';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -28,11 +28,11 @@
         </head>
         <body class="value">
       <div id="definition">
-        <a href="FileLoader.html" title="Go to companion"><img src="../../lib/object_to_trait_big.png" /></a>
-        <p id="owner"><a href="../package.html" class="extype" name="nounou">nounou</a>.<a href="package.html" class="extype" name="nounou.io">io</a></p>
-        <h1><a href="FileLoader.html" title="Go to companion">FileLoader</a></h1> <span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../../lib/object_big.png" />
+        <p id="owner"><a href="../../package.html" class="extype" name="nounou">nounou</a>.<a href="../package.html" class="extype" name="nounou.analysis">analysis</a>.<a href="package.html" class="extype" name="nounou.analysis.continuous">continuous</a></p>
+        <h1>MedianSD</h1> <span class="permalink">
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       </div>
@@ -43,13 +43,15 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <span class="name">FileLoader</span><span class="result"> extends <a href="../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></span>
+        <span class="name">MedianSD</span><span class="result"> extends <a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Calculates the median-based standard deviation estimate for input data.
+This estimate is less biased by transient extreme values such as spiking events in neurons.
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a href="../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a>, <span class="extype" name="com.typesafe.scalalogging.slf4j.LazyLogging">LazyLogging</span>, <span class="extype" name="com.typesafe.scalalogging.Logging">Logging</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a>, <span class="extype" name="com.typesafe.scalalogging.slf4j.LazyLogging">LazyLogging</span>, <span class="extype" name="com.typesafe.scalalogging.Logging">Logging</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -67,7 +69,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="nounou.io.FileLoader"><span>FileLoader</span></li><li class="in" name="nounou.util.LoggingExt"><span>LoggingExt</span></li><li class="in" name="com.typesafe.scalalogging.slf4j.LazyLogging"><span>LazyLogging</span></li><li class="in" name="com.typesafe.scalalogging.Logging"><span>Logging</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="nounou.analysis.continuous.MedianSD"><span>MedianSD</span></li><li class="in" name="nounou.util.LoggingExt"><span>LoggingExt</span></li><li class="in" name="com.typesafe.scalalogging.slf4j.LazyLogging"><span>LazyLogging</span></li><li class="in" name="com.typesafe.scalalogging.Logging"><span>Logging</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -105,8 +107,8 @@
         <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@!=(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -122,8 +124,8 @@
         <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@##():Int" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@##():Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -139,11 +141,28 @@
         <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@==(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="nounou.analysis.continuous.MedianSD#apply" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="apply(data:nounou.elements.data.NNData,channel:Int,frameRange:nounou.elements.ranges.SampleRangeSpecifier,sampleLength:Int):Int"></a>
+      <a id="apply(NNData,Int,SampleRangeSpecifier,Int):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">apply</span><span class="params">(<span name="data">data: <a href="../../elements/data/NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></span>, <span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>, <span name="frameRange">frameRange: <a href="../../elements/ranges/SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a></span>, <span name="sampleLength">sampleLength: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@apply(data:nounou.elements.data.NNData,channel:Int,frameRange:nounou.elements.ranges.SampleRangeSpecifier,sampleLength:Int):Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      
     </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <a id="asInstanceOf[T0]:T0"></a>
@@ -156,8 +175,8 @@
         <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@asInstanceOf[T0]:T0" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
@@ -173,11 +192,11 @@
         <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@clone():Object" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@clone():Object" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
@@ -196,8 +215,8 @@
         <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -213,8 +232,8 @@
         <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@equals(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -230,11 +249,11 @@
         <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@finalize():Unit" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[java.lang.Throwable]</span>
@@ -253,8 +272,8 @@
         <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@getClass():Class[_]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -270,8 +289,8 @@
         <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@hashCode():Int" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@hashCode():Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -287,28 +306,11 @@
         <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="nounou.io.FileLoader#load" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="load(fileName:String):Array[nounou.elements.NNElement]"></a>
-      <a id="load(String):Array[NNElement]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">final </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">load</span><span class="params">(<span name="fileName">fileName: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<a href="../elements/NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@load(fileName:String):Array[nounou.elements.NNElement]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
-      </a>
-    </span>
-      
     </li><li name="com.typesafe.scalalogging.slf4j.LazyLogging#logger" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="logger:com.typesafe.scalalogging.slf4j.Logger"></a>
       <a id="logger:Logger"></a>
@@ -321,8 +323,8 @@
         <span class="name">logger</span><span class="result">: <span class="extype" name="com.typesafe.scalalogging.slf4j.Logger">Logger</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@logger:com.typesafe.scalalogging.slf4j.Logger" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@logger:com.typesafe.scalalogging.slf4j.Logger" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>LazyLogging → Logging</dd></dl></div>
@@ -338,15 +340,15 @@
         <span class="name">loggerError</span><span class="params">(<span name="message">message: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="params">params: <span class="extype" name="scala.AnyRef">AnyRef</span>*</span>)</span><span class="result">: <span class="extype" name="scala.IllegalArgumentException">IllegalArgumentException</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@loggerError(message:String,params:AnyRef*):IllegalArgumentException" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@loggerError(message:String,params:AnyRef*):IllegalArgumentException" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <p class="shortcomment cmt"><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.
 Use as follows:
 <code><code><code><code>
 throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
-<code><code><code><code></code></code></code></code></code></code></code></code></p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></dd></dl></div>
+<code><code><code><code></code></code></code></code></code></code></code></code></p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></dd></dl></div>
     </li><li name="nounou.util.LoggingExt#loggerRequire" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="loggerRequire(boolean:Boolean,message:String,params:AnyRef*):Unit"></a>
       <a id="loggerRequire(Boolean,String,AnyRef*):Unit"></a>
@@ -359,12 +361,12 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
         <span class="name">loggerRequire</span><span class="params">(<span name="boolean">boolean: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="message">message: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="params">params: <span class="extype" name="scala.AnyRef">AnyRef</span>*</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@loggerRequire(boolean:Boolean,message:String,params:AnyRef*):Unit" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@loggerRequire(boolean:Boolean,message:String,params:AnyRef*):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <p class="shortcomment cmt"><b>[LoggingExt]</b> If input 'boolean' is false, logs a message using slf4j and throws an error.</p><div class="fullcomment"><div class="comment cmt"><p><b>[LoggingExt]</b> If input 'boolean' is false, logs a message using slf4j and throws an error.
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></dd><dt>Annotations</dt><dd>
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="defval" name="scala.this.throws.&lt;init&gt;$default$1[IllegalArgumentException]">...</span>
@@ -383,8 +385,8 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
         <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -400,8 +402,8 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
         <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@notify():Unit" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@notify():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -417,8 +419,8 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
         <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@notifyAll():Unit" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -434,8 +436,8 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
         <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -451,8 +453,8 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
         <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@toString():String" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@toString():String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -468,8 +470,8 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
         <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@wait():Unit" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@wait():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -491,8 +493,8 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -514,8 +516,8 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileLoader$@wait(x$1:Long):Unit" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../../index.html#nounou.analysis.continuous.MedianSD$@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -535,7 +537,7 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
 
         <div id="inheritedMembers">
         <div class="parent" name="nounou.util.LoggingExt">
-              <h3>Inherited from <a href="../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></h3>
+              <h3>Inherited from <a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></h3>
             </div><div class="parent" name="com.typesafe.scalalogging.slf4j.LazyLogging">
               <h3>Inherited from <span class="extype" name="com.typesafe.scalalogging.slf4j.LazyLogging">LazyLogging</span></h3>
             </div><div class="parent" name="com.typesafe.scalalogging.Logging">

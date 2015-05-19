@@ -5,7 +5,7 @@ import nounou.elements.traits.NNDataTiming
 
 /**Encapsulates a TS(timestamp, Long)-based frame range, with appropriate values.
  * @author ktakagaki
- * @date 3/19/14.
+ * //@date 3/19/14.
  */
 class SampleRangeTS(val startTS: Long, val lastTS: Long, val stepTS: Long) extends SampleRangeSpecifier {
 

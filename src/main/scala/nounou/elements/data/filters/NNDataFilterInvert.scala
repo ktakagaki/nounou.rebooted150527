@@ -7,7 +7,7 @@ import breeze.linalg.DenseVector
 
 /**
  * @author ktakagaki
- * @date 04/16/2014.
+ * //@date 04/16/2014.
  */
 class NNDataFilterInvert(private var _parent: NNData ) extends NNDataFilter( _parent ) {
 

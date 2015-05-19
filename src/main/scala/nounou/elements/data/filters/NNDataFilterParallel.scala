@@ -8,7 +8,7 @@
 //  * parallelize the computation.
 //  *
 //  * @author ktakagaki
-//  * @date 08/15/2014.
+//  * //@date 08/15/2014.
 //  */
 //trait NNDataFilterParallel extends NNDataFilter {
 //

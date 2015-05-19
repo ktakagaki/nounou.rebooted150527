@@ -15,7 +15,7 @@ import nounou.util.{LoggingExt, NNGit}
 /**A static class which encapsulates convenience functions for using nounou, with
  * an emphasis on use from Mathematica/MatLab/Java
  * @author ktakagaki
- * @date 2/17/14.
+ * //@date 2/17/14.
  */
 object NN extends LoggingExt {
 

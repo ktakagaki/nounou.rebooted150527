@@ -12,7 +12,7 @@
 ///**Reader for MiCAM unified form data (gsd/gsh).
 //  * Currently, it actually only reads from the gsd, and ignores the accompanying gsh file.
 // * @author ktakagaki
-// * @date 2/25/14.
+// * //@date 2/25/14.
 // */
 //object FileAdapterGSDGSH extends FileAdapter {
 //

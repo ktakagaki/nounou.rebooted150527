@@ -9,7 +9,7 @@ import nounou.elements.traits.NNDataTiming
 
 /**
  * @author ktakagaki
- * @date 2/16/14.
+ * //@date 2/16/14.
  */
 class NNDataFilterDownsample( private val parentVal: NNData, protected var factorVar: Int )
   extends NNDataFilter( parentVal ) {

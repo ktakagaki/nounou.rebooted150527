@@ -10,7 +10,7 @@ import nounou.util.LoggingExt
   * convenience class [[nounou.NN]].
   *
  * @author ktakagaki
- * @date 2/9/14.
+ * //@date 2/9/14.
  */
 object SampleRange {
 

@@ -10,15 +10,20 @@ trait NNDataScaleElement extends NNElement {
 
   private var _scale: NNDataScale = null //  NNDataScale.raw
 
+  /**'''[NNDataScaleElement]''' Alias for [[nounou.elements.traits.NNDataScaleElement.getScale()]].*/
   final def scale(): NNDataScale = getScale()
-  def getScale(): NNDataScale = {
+  /**'''[NNDataScaleElement]''' Get physical scaling information for data.*/
+  final def getScale(): NNDataScale = {
     if(  _scale == null ) throw loggerError(
       s"Cannot use timing-related functions in ${this.getClass.getCanonicalName} without first calling setTiming()")
     else  _scale
   }
+  /**'''[NNDataScaleElement]''' Set physical scaling information for data.*/
   def setScale(scale: NNDataScale) = {
     _scale = scale
+
     //ToDo 2: child change hierarchy in NNElement
+    logger.trace("child hierarchy update has not been implemented yet!")
   }
 
   override def isCompatible(x: NNElement) = x match {

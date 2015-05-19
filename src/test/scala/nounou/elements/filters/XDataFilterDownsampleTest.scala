@@ -8,7 +8,7 @@
 //
 ///**
 // * @author ktakagaki
-// * @date 2/19/14.
+// * //@date 2/19/14.
 // */
 //class XDataFilterDownsampleTest extends FunSuite {
 //

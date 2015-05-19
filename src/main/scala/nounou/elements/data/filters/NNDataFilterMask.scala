@@ -7,7 +7,7 @@
 //
 ///**
 // * @author ktakagaki
-// * @date 2/19/14.
+// * //@date 2/19/14.
 // */
 //class NNDataFilterMask(private var _parent: NNData, private var initialMask: XSampleMask = new XSampleMask()) extends NNDataFilter(_parent) {
 //

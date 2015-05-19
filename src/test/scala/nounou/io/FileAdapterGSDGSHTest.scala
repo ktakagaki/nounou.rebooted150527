@@ -7,7 +7,7 @@
 //
 ///**
 // * @author ktakagaki
-// * @date 2/26/14.
+// * //@date 2/26/14.
 // */
 //class FileAdapterGSDGSHTest extends FunSuite {
 //

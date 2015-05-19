@@ -11,12 +11,17 @@ import nounou.util.LoggingExt
  */
 trait NNChannelsElement extends NNElement {
 
-  /** Number of channels for this layout. Note that [[nounou.elements.data.NNData]] and [[nounou.elements.layouts.NNDataLayout]]
+  /** '''[NNDataScaleElement]''' Get physical scaling information for data.
+    * Number of channels for this layout. Note that [[nounou.elements.data.NNData]] and
+    * [[nounou.elements.layouts.NNDataLayout]]
     * both keep local channel counts,
     * so equality should be tested before setting/using a certain [[nounou.elements.layouts.NNDataLayout]]
     * to plot or interpret a certain [[nounou.elements.data.NNData]].
     */
   def getChannelCount: Int
+
+  /** '''[NNChannelsElement]''' Alias for [[nounou.elements.traits.NNChannelsElement!.getChannelCount]].
+    */
   final def channelCount(): Int = getChannelCount
 
 //  /**Get the name of a given channel.
@@ -27,10 +32,10 @@ trait NNChannelsElement extends NNElement {
 //  }
 //  def channelNameImpl(channel: Int): String = s"Class ${this.getClass}, channel #${channel}"
 
-  /** Is this channel valid?
+  /** '''[NNChannelsElement]''' Is this channel valid?
     */
   final def isValidChannel(channel: Int) = (0 <= channel && channel < channelCount)
-  /** Log error if !isValidChannel(channel)
+  /** '''[NNChannelsElement]''' Log error if !isValidChannel(channel)
     */
   final def requireValidChannel(channel: Int) =
     loggerRequire(isValidChannel(channel), s"Incorrect channel: ${channel} (channelCount = ${channelCount})")

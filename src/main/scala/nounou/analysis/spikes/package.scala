@@ -4,7 +4,6 @@ import nounou.Opt
 
 /**
  * @author ktakagaki
- * @date 07/14/2014.
  */
 package object spikes {
 

@@ -5,7 +5,7 @@
 //
 ///**For specifying data extraction range in Ms.
 // * @author ktakagaki
-// * @date 2/17/14.
+// * //@date 2/17/14.
 // */
 //object RangeMs {
 //  def apply(startMs: Double, endMs: Double, stepMs: Double, optSegment: OptSegment) = new RangeMs(startMs, endMs, stepMs, optSegment)

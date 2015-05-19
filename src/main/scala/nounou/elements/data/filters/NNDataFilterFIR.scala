@@ -11,7 +11,7 @@ import scala.beans.BeanProperty
 
 /**
  * @author ktakagaki
- * @date 2/4/14.
+ * //@date 2/4/14.
  */
 class NNDataFilterFIR(private var _parent: NNData ) extends NNDataFilter( _parent ) {
 

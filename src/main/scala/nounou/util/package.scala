@@ -2,7 +2,7 @@ package nounou
 
 /**
  * @author ktakagaki
- * @date 07/15/2014.
+ * //@date 07/15/2014.
  */
 package object util {
 

@@ -15,7 +15,7 @@
 //
 ///**
 // * @author ktakagaki
-// * @date 3/14/14.
+// * //@date 3/14/14.
 // */
 //abstract class SpikeDetector extends LoggingExt {
 //

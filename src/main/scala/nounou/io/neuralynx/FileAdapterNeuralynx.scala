@@ -7,7 +7,7 @@ import nounou.util.LoggingExt
 
 /**
 * @author ktakagaki
-* @date 12/16/13
+* //@date 12/16/13
 */
 abstract class FileAdapterNeuralynx extends LoggingExt with FileLoader  {
 

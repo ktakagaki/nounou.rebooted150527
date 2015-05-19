@@ -8,7 +8,7 @@
 //
 ///**
 // * @author ktakagaki
-// * @date 2/16/14.
+// * //@date 2/16/14.
 // */
 //class NNDataFilterStatistics( private var _parent: NNData ) extends NNDataFilter( _parent ) {
 //

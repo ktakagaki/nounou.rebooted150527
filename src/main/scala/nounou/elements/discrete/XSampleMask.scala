@@ -10,7 +10,7 @@
 //
 ///**
 //   * @author ktakagaki
-//   * @date 1/30/14.
+//   * //@date 1/30/14.
 //   */
 //  class XSampleMask extends X {
 //

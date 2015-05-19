@@ -131,7 +131,8 @@
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt"><u><b>SHOULD OVERRIDE</b></u><u> Whether an NNElement is compatible with another for merging, etc.
+</u></p>
     </li></ol>
             </div>
 
@@ -221,7 +222,7 @@
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt"><b>[NNElement]</b> getCanonicalName, buffered</p>
     </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a>
       <a id="clone():AnyRef"></a>
@@ -335,7 +336,7 @@
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt"><b>[NNElement]</b> Git HEAD of the current revision.</p>
     </li><li name="nounou.elements.NNElement#gitHeadShort" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="gitHeadShort:String"></a>
       <a id="gitHeadShort:String"></a>
@@ -352,7 +353,7 @@
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt"><b>[NNElement]</b> Git HEAD shortened to first 10 characters.</p>
     </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="hashCode():Int"></a>
       <a id="hashCode():Int"></a>
@@ -386,7 +387,8 @@
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt"><u><b>SHOULD OVERRIDE</b></u><u> Whether NNElements are compatible with another for merging, etc.
+</u></p>
     </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <a id="isInstanceOf[T0]:Boolean"></a>
@@ -437,7 +439,7 @@
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p>Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.
+      <p class="shortcomment cmt"><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.
 Use as follows:
 <code><code><code><code>
 throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
@@ -458,7 +460,7 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">If input 'boolean' is false, logs a message using slf4j and throws an error.</p><div class="fullcomment"><div class="comment cmt"><p>If input 'boolean' is false, logs a message using slf4j and throws an error.
+      <p class="shortcomment cmt"><b>[LoggingExt]</b> If input 'boolean' is false, logs a message using slf4j and throws an error.</p><div class="fullcomment"><div class="comment cmt"><p><b>[LoggingExt]</b> If input 'boolean' is false, logs a message using slf4j and throws an error.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
@@ -550,7 +552,7 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt"><b>[NNElement]</b></p>
     </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="toString():String"></a>
       <a id="toString():String"></a>
@@ -568,7 +570,7 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="nounou.elements.NNElement#toStringFull" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="nounou.elements.NNElement#toStringFull" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="toStringFull():String"></a>
       <a id="toStringFull():String"></a>
       <h4 class="signature">
@@ -584,7 +586,9 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">Output string with short git head.</p><div class="fullcomment"><div class="comment cmt"><p>Output string with short git head. Each implementation (eg <a href="data/filters/NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">nounou.elements.data.filters.NNDataFilter</a>
+objects should update this to provide information specific to the specific filter, etc.
+</p></div></div>
     </li><li name="nounou.elements.NNElement#version" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="version:Double"></a>
       <a id="version:Double"></a>
@@ -601,7 +605,7 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt"><b>[NNElement]</b> Reads global <a href="../package.html" class="extype" name="nounou">nounou</a> version number.</p>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>

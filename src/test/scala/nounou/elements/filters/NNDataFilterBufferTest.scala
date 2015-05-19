@@ -8,7 +8,7 @@
 //
 ///**
 // * @author ktakagaki
-// * @date 05/29/2014.
+// * //@date 05/29/2014.
 // */
 //@RunWith(classOf[JUnitRunner])
 //class NNDataFilterBufferTest  extends FunSuite {

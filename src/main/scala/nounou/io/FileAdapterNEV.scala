@@ -9,7 +9,7 @@
 //
 ///**
 // * @author ktakagaki
-// * @date 1/30/14.
+// * //@date 1/30/14.
 // */
 //object FileAdapterNEV extends FileAdapterNLX {
 //

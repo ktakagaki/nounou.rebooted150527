@@ -7,7 +7,7 @@
 //
 ///**
 // * @author ktakagaki
-// * @date 03/31/2014.
+// * //@date 03/31/2014.
 // */
 //@RunWith(classOf[JUnitRunner])
 //class NNDataTrodesTest extends FunSuite {

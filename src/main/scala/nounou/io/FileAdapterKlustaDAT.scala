@@ -9,7 +9,7 @@
 //
 ///**
 // * @author ktakagaki
-// * @date 2/2/14.
+// * //@date 2/2/14.
 // */
 //object FileAdapterKlustaDAT extends FileAdapter {
 //

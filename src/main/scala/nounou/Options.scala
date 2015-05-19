@@ -2,7 +2,7 @@ package nounou
 
 ///**
 // * @author ktakagaki
-// * @date 3/17/14.
+// * // //@date 3/17/14.
 // */
 ///**Base class for all options*/
 //abstract class Opt

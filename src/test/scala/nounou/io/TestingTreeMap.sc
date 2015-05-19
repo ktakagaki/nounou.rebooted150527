@@ -3,7 +3,7 @@ import scala.collection.mutable
 
 /**
  * @author ktakagaki
- * @date 1/31/14.
+ * //@date 1/31/14.
  */
 val tempMap = TreeMap[Int, String]( 1->"one", 2->"two", 1->"not one")
 
