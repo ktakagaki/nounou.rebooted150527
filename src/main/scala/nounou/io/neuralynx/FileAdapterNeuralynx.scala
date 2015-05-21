@@ -11,20 +11,17 @@ import nounou.util.LoggingExt
 */
 abstract class FileAdapterNeuralynx extends LoggingExt with FileLoader  {
 
-//  //saving not implemented yet
-//  //override
-//  def saveImpl(data: NNElement, fileName: String/*, options: OptFileAdapter*/) =
-//    throw loggerError("not implemented yet!")
-//    //saveCannotImpl(data, fileName/*, options*/)
-
-  /** File handle for the file to be read.
-    *
+  /** Temporary file handle for the file to be read.
+    * Should be updated for each new file read.
     */
-  var fHand: RandomAccessFile = _
+  protected var fHand: RandomAccessFile = _
 
   /**The total number of bytes in the initial Neuralynx text header.*/
   final val headerBytes = 16384
+  /**Size of each record, in bytes*/
   val recordBytes: Int
+  /**Function to calculate start of each record within the file, in bytes*/
+  def recordStartByte(record: Int): Int
   //  val neuralynxTextHeader: String
 
   var nlxHeaderText: String = "Inital"

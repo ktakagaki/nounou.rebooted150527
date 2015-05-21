@@ -42,6 +42,8 @@ class NNDataTiming( val sampleRate: Double,
     */
   lazy val segmentCount: Int = segmentLengths.length
 
+  val defaultStep: Int = 1
+
   // <editor-fold defaultstate="collapsed" desc=" functions for reading segment lengths ">
 
   /** Length of a given segment. If you are dealing with 1 segment data,

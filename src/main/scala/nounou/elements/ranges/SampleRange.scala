@@ -5,13 +5,6 @@ import nounou._
 import nounou.elements.traits.NNDataTiming
 import nounou.util.LoggingExt
 
-/**FrameRange is the central class for specifying frame-based
-  * data sample timepoints. Constructor methods are located within the
-  * convenience class [[nounou.NN]].
-  *
- * @author ktakagaki
- * //@date 2/9/14.
- */
 object SampleRange {
 
   def convertArrayToSampleRange(array: Array[Int], segment: Int): SampleRangeSpecifier = {
@@ -29,6 +22,19 @@ object SampleRange {
 
 }
 
+/**SampleRange is the central class for specifying frame-based
+  * data sample timepoints (trait [[nounou.elements.ranges.SampleRangeSpecifier SampleRangeSpecifier]]).
+  * Various constructor methods for this and other [[nounou.elements.ranges.SampleRangeSpecifier SampleRangeSpecifier]]s
+  * are located within the convenience class [[nounou.NN]].
+  *
+  * @see [[nounou.elements.ranges.SampleRangeReal SampleRangeReal]] marked to be a real range (not default, etc.)
+  * @see [[nounou.elements.ranges.SampleRangeValid SampleRangeValid]] marked to be a valid range (not outside of defined data)
+  * @see [[nounou.elements.ranges.SampleRangeAll SampleRangeAll]] marker for total sample range
+  * @see [[nounou.elements.ranges.SampleRangeTS SampleRangeTS]] range defined in timestamp units
+  *
+  * @author ktakagaki
+  * //@date 2/9/14.
+  */
 class SampleRange(val start: Int, val last: Int, val step: Int, val segment: Int)
   extends SampleRangeSpecifier with LoggingExt {
 
@@ -40,34 +46,34 @@ class SampleRange(val start: Int, val last: Int, val step: Int, val segment: Int
 
   // <editor-fold defaultstate="collapsed" desc=" range info accessors ">
 
-  override final def getSampleRangeReal(xDataTiming: NNDataTiming): SampleRangeReal = { //Range.Inclusive = {
-    val realSegment = getRealSegment(xDataTiming)
+  override final def getSampleRangeReal(timing: NNDataTiming): SampleRangeReal = { //Range.Inclusive = {
+    val realSegment = getRealSegment(timing)
     if(0<=start){
-      val segmentLength = xDataTiming.segmentLength(realSegment)
+      val segmentLength = timing.segmentLength(realSegment)
       if( last < segmentLength){
-        new SampleRangeValid( start, last, getRealStep(xDataTiming), realSegment)
+        new SampleRangeValid( start, last, getRealStep(timing), realSegment)
       }
-      else new SampleRangeReal( start, last, getRealStep(xDataTiming), realSegment)
+      else new SampleRangeReal( start, last, getRealStep(timing), realSegment)
     }
-    else new SampleRangeReal( start, last, getRealStep(xDataTiming), realSegment)
+    else new SampleRangeReal( start, last, getRealStep(timing), realSegment)
   }
 
-  override final def getSampleRangeValid(xDataTiming: NNDataTiming): SampleRangeValid = { //Range.Inclusive = {
-    new SampleRangeValid( firstValid(xDataTiming), lastValid(xDataTiming), getRealStep(xDataTiming), getRealSegment(xDataTiming) )
+  override final def getSampleRangeValid(timing: NNDataTiming): SampleRangeValid = { //Range.Inclusive = {
+    new SampleRangeValid( firstValid(timing), lastValid(timing), getRealStep(timing), getRealSegment(timing) )
   }
 
-  override final def getSampleRangeValidPrePost(xDataTiming: NNDataTiming): (Int, SampleRangeValid, Int) = {
-    val totalLength =  xDataTiming.segmentLength( getRealSegment(xDataTiming) )
+  override final def getSampleRangeValidPrePost(timing: NNDataTiming): (Int, SampleRangeValid, Int) = {
+    val totalLength =  timing.segmentLength( getRealSegment(timing) )
     val preL = preLength( totalLength )
     val postL = postLength( totalLength )
-    (preL, getSampleRangeValid(xDataTiming), postL)
+    (preL, getSampleRangeValid(timing), postL)
   }
 
-  /** For FrameRange, just read -1 as 1 (default).
+  /** Read -1 as the default value for the timing.
     */
-  override final def getRealStep(xDataTiming: NNDataTiming): Int =  if ( step == -1 ) 1 else step
+  override final def getRealStep(timing: NNDataTiming): Int =  if ( step == -1 ) timing.defaultStep else step
 
-  override final def getRealSegment(xDataTiming: NNDataTiming) = xDataTiming.getRealSegment( segment )
+  override final def getRealSegment(timing: NNDataTiming) = timing.getRealSegment( segment )
 
   // </editor-fold>
 

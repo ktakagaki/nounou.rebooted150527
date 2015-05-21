@@ -6,6 +6,8 @@ import java.util.ServiceLoader
 
 import com.google.gson.Gson
 import nounou.elements.NNElement
+import nounou.elements.data.NNData
+import nounou.elements.data.filters.NNDataFilterMedianSubtract
 import nounou.io.FileLoader
 import nounou.elements.ranges._
 import breeze.linalg.DenseVector
@@ -68,7 +70,12 @@ object NN extends LoggingExt {
 
   // </editor-fold>
 
+  // <editor-fold defaultstate="collapsed" desc=" filters ">
+
+  def filterMedianSubtract(data: NNData) = new NNDataFilterMedianSubtract(data)
+
   // </editor-fold>
+
 
   // <editor-fold defaultstate="collapsed" desc=" toArray methods ">
 

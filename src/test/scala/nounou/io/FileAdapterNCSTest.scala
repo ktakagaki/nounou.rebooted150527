@@ -15,7 +15,7 @@ import java.io.File
 class FileAdapterNCSTest extends FunSuite {
 
   //val testFileTet4a = getClass.getResource("/_testFiles/Neuralynx/t130911/Tet4a.ncs").getPath()
-  val testFileE04LC_CSC1 = getClass.getResource("/_testFiles/Neuralynx/E04LC/CSC1.ncs").getPath()
+  val testFileE04LC_CSC1 = getClass.getResource("/neurophysiology-test-files/nounou/Neuralynx/E04LC/CSC1.ncs").getPath()
   //new File( "C:\\prog\\_gh\\_kt\\nounou.testfiles\\Neuralynx\\E04LC\\CSC1.ncs" )
   val data = NN.load(testFileE04LC_CSC1).apply(0)
   assert( data.isInstanceOf[NNDataChannelNCS] )
@@ -25,12 +25,13 @@ class FileAdapterNCSTest extends FunSuite {
 
     assert( dataObj.scale.absGain == 1.4901660156250002E-5 ) //1.0E6* 3.05185E-8 / 1024d )
     assert( dataObj.scale.absOffset == 0d )
-    assert( dataObj.scale.absUnit.contentEquals("mV") )
+    assert( dataObj.scale.absUnit.contentEquals("microV") )
 
     //trait XFrames
-    assert( dataObj.timing.segmentCount == 94 )
-    assert( dataObj.timing.segmentLength(0) == 2546176 && dataObj.timing.segmentLength(8) == 3902976 )
+    assert( dataObj.timing.segmentLength(0) == 2546176 )
+    assert( dataObj.timing.segmentLength(8) == 3902976 )
     assert( dataObj.timing.segmentStartFrames(1) == 2546176)
+    assert( dataObj.timing.segmentCount == 94 )
 //    intercept[IllegalArgumentException] {
 //      dataObj.timing.length
 //    }
@@ -52,7 +53,6 @@ class FileAdapterNCSTest extends FunSuite {
     assert(dataObj.timing.segmentLength(0)==2546176)
     assert(dataObj.readPoint(0,0) == -1528*dataObj.scale.xBits)
     assert(dataObj.readPoint(512,0) == -1908*dataObj.scale.xBits)
-
 
   }
 

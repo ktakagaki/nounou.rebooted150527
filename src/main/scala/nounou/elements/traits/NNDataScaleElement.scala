@@ -12,11 +12,14 @@ trait NNDataScaleElement extends NNElement {
 
   /**'''[NNDataScaleElement]''' Alias for [[nounou.elements.traits.NNDataScaleElement.getScale()]].*/
   final def scale(): NNDataScale = getScale()
-  /**'''[NNDataScaleElement]''' Get physical scaling information for data.*/
-  final def getScale(): NNDataScale = {
-    if(  _scale == null ) throw loggerError(
+  /**'''[NNDataScaleElement]''' Get physical scaling information for data.
+    * This is not made final, because it will be overriden by some filters which pass through
+    * upstream scale information.
+    */
+  def getScale(): NNDataScale = {
+    if( _scale == null ) throw loggerError(
       s"Cannot use timing-related functions in ${this.getClass.getCanonicalName} without first calling setTiming()")
-    else  _scale
+    else _scale
   }
   /**'''[NNDataScaleElement]''' Set physical scaling information for data.*/
   def setScale(scale: NNDataScale) = {

@@ -5,10 +5,10 @@ import nounou.util.LoggingExt
 
 /** This trait specifies a range of data samples to extract, for instance, when reading data traces.
   * It allows specification of ranges such as "all samples"
-  * ([[nounou.elements.ranges.SampleRangeAll]]) and millisecond- or timestamp(Long)-
+  * ([[nounou.elements.ranges.SampleRangeAll SampleRangeAll]]) and millisecond- or timestamp(Long)-
   * dependent sample ranges. These latter specifications can only be resolved to real data frame
   * ranges using sampling information given in the actual data
-  * ([[nounou.elements.traits.NNDataTiming]]).
+  * ([[nounou.elements.traits.NNDataTiming NNDataTiming]]).
   */
 trait SampleRangeSpecifier extends LoggingExt {
 
