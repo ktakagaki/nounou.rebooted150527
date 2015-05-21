@@ -66,7 +66,7 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="nounou.elements.ranges.SampleRange" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="nounou.elements.ranges.SampleRange" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="SampleRangeextendsSampleRangeSpecifierwithLoggingExt"></a>
       <a id="SampleRange:SampleRange"></a>
       <h4 class="signature">
@@ -82,7 +82,13 @@
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">SampleRange is the central class for specifying frame-based
+data sample timepoints (trait <a href="SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a>).</p><div class="fullcomment"><div class="comment cmt"><p>SampleRange is the central class for specifying frame-based
+data sample timepoints (trait <a href="SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a>).
+Various constructor methods for this and other <a href="SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a>s
+are located within the convenience class <a href="../../NN$.html" class="extype" name="nounou.NN">nounou.NN</a>.
+</p></div><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p><a href="SampleRangeTS.html" class="extype" name="nounou.elements.ranges.SampleRangeTS">SampleRangeTS</a> range defined in timestamp units
+</p></span><span class="cmt"><p><a href="SampleRangeAll.html" class="extype" name="nounou.elements.ranges.SampleRangeAll">SampleRangeAll</a> marker for total sample range</p></span><span class="cmt"><p><a href="SampleRangeValid.html" class="extype" name="nounou.elements.ranges.SampleRangeValid">SampleRangeValid</a> marked to be a valid range (not outside of defined data)</p></span><span class="cmt"><p><a href="SampleRangeReal.html" class="extype" name="nounou.elements.ranges.SampleRangeReal">SampleRangeReal</a> marked to be a real range (not default, etc.)</p></span></dd></dl></div>
     </li><li name="nounou.elements.ranges.SampleRangeAll" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="SampleRangeAllextendsSampleRangeSpecifier"></a>
       <a id="SampleRangeAll:SampleRangeAll"></a>
@@ -135,10 +141,10 @@
     </span>
       <p class="shortcomment cmt">This trait specifies a range of data samples to extract, for instance, when reading data traces.</p><div class="fullcomment"><div class="comment cmt"><p>This trait specifies a range of data samples to extract, for instance, when reading data traces.
 It allows specification of ranges such as &quot;all samples&quot;
-(<a href="SampleRangeAll.html" class="extype" name="nounou.elements.ranges.SampleRangeAll">nounou.elements.ranges.SampleRangeAll</a>) and millisecond- or timestamp(Long)-
+(<a href="SampleRangeAll.html" class="extype" name="nounou.elements.ranges.SampleRangeAll">SampleRangeAll</a>) and millisecond- or timestamp(Long)-
 dependent sample ranges. These latter specifications can only be resolved to real data frame
 ranges using sampling information given in the actual data
-(<a href="../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">nounou.elements.traits.NNDataTiming</a>).
+(<a href="../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a>).
 </p></div></div>
     </li><li name="nounou.elements.ranges.SampleRangeTS" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="SampleRangeTSextendsSampleRangeSpecifier"></a>
@@ -181,7 +187,7 @@ ranges using sampling information given in the actual data
 
         <div id="values" class="values members">
               <h3>Value Members</h3>
-              <ol><li name="nounou.elements.ranges.SampleRange" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+              <ol><li name="nounou.elements.ranges.SampleRange" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="SampleRange"></a>
       <a id="SampleRange:SampleRange"></a>
       <h4 class="signature">
@@ -197,11 +203,7 @@ ranges using sampling information given in the actual data
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">FrameRange is the central class for specifying frame-based
-data sample timepoints.</p><div class="fullcomment"><div class="comment cmt"><p>FrameRange is the central class for specifying frame-based
-data sample timepoints. Constructor methods are located within the
-convenience class <a href="../../NN$.html" class="extype" name="nounou.NN">nounou.NN</a>.
-</p></div></div>
+      
     </li></ol>
             </div>
 

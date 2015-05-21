@@ -57,7 +57,7 @@ sampling, start, length, xBits, absGain, absOffset, absUnit
           <div class="superTypes hiddenContent"><a href="../traits/NNDataTimingElement.html" class="extype" name="nounou.elements.traits.NNDataTimingElement">NNDataTimingElement</a>, <a href="../traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a>, <a href="../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a>, <a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a>, <a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a>, <span class="extype" name="com.typesafe.scalalogging.slf4j.LazyLogging">LazyLogging</span>, <span class="extype" name="com.typesafe.scalalogging.Logging">Logging</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div><div class="toggleContainer block">
             <span class="toggle">Known Subclasses</span>
-            <div class="subClasses hiddenContent"><a href="NNDataAux.html" class="extype" name="nounou.elements.data.NNDataAux">NNDataAux</a>, <a href="NNDataChannelArray.html" class="extype" name="nounou.elements.data.NNDataChannelArray">NNDataChannelArray</a>, <a href="filters/NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a>, <a href="filters/NNDataFilterBuffer.html" class="extype" name="nounou.elements.data.filters.NNDataFilterBuffer">NNDataFilterBuffer</a>, <a href="filters/NNDataFilterDecimate.html" class="extype" name="nounou.elements.data.filters.NNDataFilterDecimate">NNDataFilterDecimate</a>, <a href="filters/NNDataFilterDownsample.html" class="extype" name="nounou.elements.data.filters.NNDataFilterDownsample">NNDataFilterDownsample</a>, <a href="filters/NNDataFilterFIR.html" class="extype" name="nounou.elements.data.filters.NNDataFilterFIR">NNDataFilterFIR</a>, <a href="filters/NNDataFilterInvert.html" class="extype" name="nounou.elements.data.filters.NNDataFilterInvert">NNDataFilterInvert</a>, <a href="NNDataPreloaded.html" class="extype" name="nounou.elements.data.NNDataPreloaded">NNDataPreloaded</a></div>
+            <div class="subClasses hiddenContent"><a href="NNDataAux.html" class="extype" name="nounou.elements.data.NNDataAux">NNDataAux</a>, <a href="NNDataChannelArray.html" class="extype" name="nounou.elements.data.NNDataChannelArray">NNDataChannelArray</a>, <a href="filters/NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a>, <a href="filters/NNDataFilterBuffer.html" class="extype" name="nounou.elements.data.filters.NNDataFilterBuffer">NNDataFilterBuffer</a>, <a href="filters/NNDataFilterDecimate.html" class="extype" name="nounou.elements.data.filters.NNDataFilterDecimate">NNDataFilterDecimate</a>, <a href="filters/NNDataFilterDownsample.html" class="extype" name="nounou.elements.data.filters.NNDataFilterDownsample">NNDataFilterDownsample</a>, <a href="filters/NNDataFilterFIR.html" class="extype" name="nounou.elements.data.filters.NNDataFilterFIR">NNDataFilterFIR</a>, <a href="filters/NNDataFilterInvert.html" class="extype" name="nounou.elements.data.filters.NNDataFilterInvert">NNDataFilterInvert</a>, <a href="filters/NNDataFilterMedianSubtract.html" class="extype" name="nounou.elements.data.filters.NNDataFilterMedianSubtract">NNDataFilterMedianSubtract</a>, <a href="NNDataPreloaded.html" class="extype" name="nounou.elements.data.NNDataPreloaded">NNDataPreloaded</a></div>
           </div></div>
         
 
@@ -135,9 +135,9 @@ sampling, start, length, xBits, absGain, absOffset, absUnit
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">  /**<b>[NNDataScaleElement]</b> Get physical scaling information for data.*/
- Number of channels for this layout.</p><div class="fullcomment"><div class="comment cmt"><p>  /**<b>[NNDataScaleElement]</b> Get physical scaling information for data.*/
- Number of channels for this layout. Note that <a href="" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a> and <a href="../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>
+      <p class="shortcomment cmt"><b>[NNDataScaleElement]</b> Get physical scaling information for data.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNDataScaleElement]</b> Get physical scaling information for data.
+Number of channels for this layout. Note that <a href="" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a> and
+<a href="../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>
 both keep local channel counts,
 so equality should be tested before setting/using a certain <a href="../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>
 to plot or interpret a certain <a href="" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a>.
@@ -158,7 +158,7 @@ to plot or interpret a certain <a href="" class="extype" name="nounou.elements.d
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">MUST OVERRIDE: Read a single point from the data, in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p>MUST OVERRIDE: Read a single point from the data, in internal integer scaling.
+      <p class="shortcomment cmt"><b><u>MUST OVERRIDE</u></b> Read a single point from the data, in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p><b><u>MUST OVERRIDE</u></b> Read a single point from the data, in internal integer scaling.
 Assumes that channel, frame, and segment are all valid and within range.
 </p></div></div>
     </li></ol>
@@ -1159,7 +1159,7 @@ when possible, as these will avoid repeated function calling overhead.
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">CAN OVERRIDE: by default, calls <span class="extype" name="nounou.elements.data.NNData.readTraceDV(Int,">SampleRangeSpecifier)</span>
+      <p class="shortcomment cmt"><b><u>CAN OVERRIDE</u></b> by default, calls <span class="extype" name="nounou.elements.data.NNData.readTraceDV(Int,">SampleRangeSpecifier)</span>
 </p>
     </li><li name="nounou.elements.data.NNData#readTraceDV" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="readTraceDV(channel:Int,range:nounou.elements.ranges.SampleRangeSpecifier):breeze.linalg.DenseVector[Int]"></a>
@@ -1177,7 +1177,7 @@ when possible, as these will avoid repeated function calling overhead.
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">CAN OVERRIDE: Read a single trace from the data, in internal integer scaling.</p>
+      <p class="shortcomment cmt"><b><u>CAN OVERRIDE</u></b> Read a single trace from the data, in internal integer scaling.</p>
     </li><li name="nounou.elements.data.NNData#readTraceDVImpl" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readTraceDVImpl(channel:Int,rangeFrValid:nounou.elements.ranges.SampleRangeValid):breeze.linalg.DenseVector[Int]"></a>
       <a id="readTraceDVImpl(Int,SampleRangeValid):DenseVector[Int]"></a>

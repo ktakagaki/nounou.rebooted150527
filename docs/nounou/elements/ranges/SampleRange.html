@@ -47,7 +47,12 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>SampleRange is the central class for specifying frame-based
+data sample timepoints (trait <a href="SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a>).
+Various constructor methods for this and other <a href="SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a>s
+are located within the convenience class <a href="../../NN$.html" class="extype" name="nounou.NN">nounou.NN</a>.
+</p></div><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p><a href="SampleRangeTS.html" class="extype" name="nounou.elements.ranges.SampleRangeTS">SampleRangeTS</a> range defined in timestamp units
+</p></span><span class="cmt"><p><a href="SampleRangeAll.html" class="extype" name="nounou.elements.ranges.SampleRangeAll">SampleRangeAll</a> marker for total sample range</p></span><span class="cmt"><p><a href="SampleRangeValid.html" class="extype" name="nounou.elements.ranges.SampleRangeValid">SampleRangeValid</a> marked to be a valid range (not outside of defined data)</p></span><span class="cmt"><p><a href="SampleRangeReal.html" class="extype" name="nounou.elements.ranges.SampleRangeReal">SampleRangeReal</a> marked to be a real range (not default, etc.)</p></span></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a>, <a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a>, <span class="extype" name="com.typesafe.scalalogging.slf4j.LazyLogging">LazyLogging</span>, <span class="extype" name="com.typesafe.scalalogging.Logging">Logging</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -315,7 +320,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="nounou.elements.ranges.SampleRange#getRealSegment" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="getRealSegment(xDataTiming:nounou.elements.traits.NNDataTiming):Int"></a>
+      <a id="getRealSegment(timing:nounou.elements.traits.NNDataTiming):Int"></a>
       <a id="getRealSegment(NNDataTiming):Int"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -323,10 +328,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getRealSegment</span><span class="params">(<span name="xDataTiming">xDataTiming: <a href="../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+        <span class="name">getRealSegment</span><span class="params">(<span name="timing">timing: <a href="../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#nounou.elements.ranges.SampleRange@getRealSegment(xDataTiming:nounou.elements.traits.NNDataTiming):Int" title="Permalink" target="_top">
+      <a href="../../../index.html#nounou.elements.ranges.SampleRange@getRealSegment(timing:nounou.elements.traits.NNDataTiming):Int" title="Permalink" target="_top">
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
@@ -350,7 +355,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a></dd></dl></div>
     </li><li name="nounou.elements.ranges.SampleRange#getRealStep" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="getRealStep(xDataTiming:nounou.elements.traits.NNDataTiming):Int"></a>
+      <a id="getRealStep(timing:nounou.elements.traits.NNDataTiming):Int"></a>
       <a id="getRealStep(NNDataTiming):Int"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -358,14 +363,14 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getRealStep</span><span class="params">(<span name="xDataTiming">xDataTiming: <a href="../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+        <span class="name">getRealStep</span><span class="params">(<span name="timing">timing: <a href="../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#nounou.elements.ranges.SampleRange@getRealStep(xDataTiming:nounou.elements.traits.NNDataTiming):Int" title="Permalink" target="_top">
+      <a href="../../../index.html#nounou.elements.ranges.SampleRange@getRealStep(timing:nounou.elements.traits.NNDataTiming):Int" title="Permalink" target="_top">
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">For FrameRange, just read -1 as 1 (default).</p><div class="fullcomment"><div class="comment cmt"><p>For FrameRange, just read -1 as 1 (default).
+      <p class="shortcomment cmt">Read -1 as the default value for the timing.</p><div class="fullcomment"><div class="comment cmt"><p>Read -1 as the default value for the timing.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounou.elements.ranges.SampleRange">SampleRange</a> → <a href="SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a></dd></dl></div>
     </li><li name="nounou.elements.ranges.SampleRangeSpecifier#getRealStep" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getRealStep(nnDataTimingElement:nounou.elements.traits.NNDataTimingElement):Int"></a>
@@ -385,7 +390,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a></dd></dl></div>
     </li><li name="nounou.elements.ranges.SampleRange#getSampleRangeReal" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="getSampleRangeReal(xDataTiming:nounou.elements.traits.NNDataTiming):nounou.elements.ranges.SampleRangeReal"></a>
+      <a id="getSampleRangeReal(timing:nounou.elements.traits.NNDataTiming):nounou.elements.ranges.SampleRangeReal"></a>
       <a id="getSampleRangeReal(NNDataTiming):SampleRangeReal"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -393,10 +398,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getSampleRangeReal</span><span class="params">(<span name="xDataTiming">xDataTiming: <a href="../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>)</span><span class="result">: <a href="SampleRangeReal.html" class="extype" name="nounou.elements.ranges.SampleRangeReal">SampleRangeReal</a></span>
+        <span class="name">getSampleRangeReal</span><span class="params">(<span name="timing">timing: <a href="../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>)</span><span class="result">: <a href="SampleRangeReal.html" class="extype" name="nounou.elements.ranges.SampleRangeReal">SampleRangeReal</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#nounou.elements.ranges.SampleRange@getSampleRangeReal(xDataTiming:nounou.elements.traits.NNDataTiming):nounou.elements.ranges.SampleRangeReal" title="Permalink" target="_top">
+      <a href="../../../index.html#nounou.elements.ranges.SampleRange@getSampleRangeReal(timing:nounou.elements.traits.NNDataTiming):nounou.elements.ranges.SampleRangeReal" title="Permalink" target="_top">
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
@@ -424,7 +429,7 @@ steps (must be positive int), and segment (present within assumed data).
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a></dd></dl></div>
     </li><li name="nounou.elements.ranges.SampleRange#getSampleRangeValid" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="getSampleRangeValid(xDataTiming:nounou.elements.traits.NNDataTiming):nounou.elements.ranges.SampleRangeValid"></a>
+      <a id="getSampleRangeValid(timing:nounou.elements.traits.NNDataTiming):nounou.elements.ranges.SampleRangeValid"></a>
       <a id="getSampleRangeValid(NNDataTiming):SampleRangeValid"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -432,10 +437,10 @@ steps (must be positive int), and segment (present within assumed data).
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getSampleRangeValid</span><span class="params">(<span name="xDataTiming">xDataTiming: <a href="../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>)</span><span class="result">: <a href="SampleRangeValid.html" class="extype" name="nounou.elements.ranges.SampleRangeValid">SampleRangeValid</a></span>
+        <span class="name">getSampleRangeValid</span><span class="params">(<span name="timing">timing: <a href="../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>)</span><span class="result">: <a href="SampleRangeValid.html" class="extype" name="nounou.elements.ranges.SampleRangeValid">SampleRangeValid</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#nounou.elements.ranges.SampleRange@getSampleRangeValid(xDataTiming:nounou.elements.traits.NNDataTiming):nounou.elements.ranges.SampleRangeValid" title="Permalink" target="_top">
+      <a href="../../../index.html#nounou.elements.ranges.SampleRange@getSampleRangeValid(timing:nounou.elements.traits.NNDataTiming):nounou.elements.ranges.SampleRangeValid" title="Permalink" target="_top">
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
@@ -462,7 +467,7 @@ In contrast to <a href="SampleRangeSpecifier.html#getSampleRangeReal(nnDataTimin
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="SampleRangeSpecifier.html" class="extype" name="nounou.elements.ranges.SampleRangeSpecifier">SampleRangeSpecifier</a></dd></dl></div>
     </li><li name="nounou.elements.ranges.SampleRange#getSampleRangeValidPrePost" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="getSampleRangeValidPrePost(xDataTiming:nounou.elements.traits.NNDataTiming):(Int,nounou.elements.ranges.SampleRangeValid,Int)"></a>
+      <a id="getSampleRangeValidPrePost(timing:nounou.elements.traits.NNDataTiming):(Int,nounou.elements.ranges.SampleRangeValid,Int)"></a>
       <a id="getSampleRangeValidPrePost(NNDataTiming):(Int,SampleRangeValid,Int)"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -470,10 +475,10 @@ In contrast to <a href="SampleRangeSpecifier.html#getSampleRangeReal(nnDataTimin
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getSampleRangeValidPrePost</span><span class="params">(<span name="xDataTiming">xDataTiming: <a href="../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>)</span><span class="result">: (<span class="extype" name="scala.Int">Int</span>, <a href="SampleRangeValid.html" class="extype" name="nounou.elements.ranges.SampleRangeValid">SampleRangeValid</a>, <span class="extype" name="scala.Int">Int</span>)</span>
+        <span class="name">getSampleRangeValidPrePost</span><span class="params">(<span name="timing">timing: <a href="../traits/NNDataTiming.html" class="extype" name="nounou.elements.traits.NNDataTiming">NNDataTiming</a></span>)</span><span class="result">: (<span class="extype" name="scala.Int">Int</span>, <a href="SampleRangeValid.html" class="extype" name="nounou.elements.ranges.SampleRangeValid">SampleRangeValid</a>, <span class="extype" name="scala.Int">Int</span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#nounou.elements.ranges.SampleRange@getSampleRangeValidPrePost(xDataTiming:nounou.elements.traits.NNDataTiming):(Int,nounou.elements.ranges.SampleRangeValid,Int)" title="Permalink" target="_top">
+      <a href="../../../index.html#nounou.elements.ranges.SampleRange@getSampleRangeValidPrePost(timing:nounou.elements.traits.NNDataTiming):(Int,nounou.elements.ranges.SampleRangeValid,Int)" title="Permalink" target="_top">
         <img src="../../../lib/permalink.png" />
       </a>
     </span>

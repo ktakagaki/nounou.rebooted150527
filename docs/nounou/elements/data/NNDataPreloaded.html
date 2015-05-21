@@ -492,9 +492,9 @@ map to all children.
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">  /**<b>[NNDataScaleElement]</b> Get physical scaling information for data.*/
- Number of channels for this layout.</p><div class="fullcomment"><div class="comment cmt"><p>  /**<b>[NNDataScaleElement]</b> Get physical scaling information for data.*/
- Number of channels for this layout. Note that <a href="NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a> and <a href="../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>
+      <p class="shortcomment cmt"><b>[NNDataScaleElement]</b> Get physical scaling information for data.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNDataScaleElement]</b> Get physical scaling information for data.
+Number of channels for this layout. Note that <a href="NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a> and
+<a href="../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>
 both keep local channel counts,
 so equality should be tested before setting/using a certain <a href="../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>
 to plot or interpret a certain <a href="NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a>.
@@ -928,7 +928,7 @@ when possible, as these will avoid repeated function calling overhead.
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">MUST OVERRIDE: Read a single point from the data, in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p>MUST OVERRIDE: Read a single point from the data, in internal integer scaling.
+      <p class="shortcomment cmt"><b><u>MUST OVERRIDE</u></b> Read a single point from the data, in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p><b><u>MUST OVERRIDE</u></b> Read a single point from the data, in internal integer scaling.
 Assumes that channel, frame, and segment are all valid and within range.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="nounou.elements.data.NNDataPreloaded">NNDataPreloaded</a> → <a href="NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
     </li><li name="nounou.elements.data.NNData#readTrace" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -1169,8 +1169,8 @@ Assumes that channel, frame, and segment are all valid and within range.
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">CAN OVERRIDE: by default, calls <span class="extype" name="nounou.elements.data.NNData.readTraceDV(Int,">SampleRangeSpecifier)</span>
-</p><div class="fullcomment"><div class="comment cmt"><p>CAN OVERRIDE: by default, calls <span class="extype" name="nounou.elements.data.NNData.readTraceDV(Int,">SampleRangeSpecifier)</span>
+      <p class="shortcomment cmt"><b><u>CAN OVERRIDE</u></b> by default, calls <span class="extype" name="nounou.elements.data.NNData.readTraceDV(Int,">SampleRangeSpecifier)</span>
+</p><div class="fullcomment"><div class="comment cmt"><p><b><u>CAN OVERRIDE</u></b> by default, calls <span class="extype" name="nounou.elements.data.NNData.readTraceDV(Int,">SampleRangeSpecifier)</span>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
     </li><li name="nounou.elements.data.NNData#readTraceDV" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readTraceDV(channel:Int,range:nounou.elements.ranges.SampleRangeSpecifier):breeze.linalg.DenseVector[Int]"></a>
@@ -1188,7 +1188,7 @@ Assumes that channel, frame, and segment are all valid and within range.
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">CAN OVERRIDE: Read a single trace from the data, in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p>CAN OVERRIDE: Read a single trace from the data, in internal integer scaling.
+      <p class="shortcomment cmt"><b><u>CAN OVERRIDE</u></b> Read a single trace from the data, in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p><b><u>CAN OVERRIDE</u></b> Read a single trace from the data, in internal integer scaling.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
     </li><li name="nounou.elements.data.NNDataPreloaded#readTraceDVImpl" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readTraceDVImpl(channel:Int,rangeFrValid:nounou.elements.ranges.SampleRangeValid):breeze.linalg.DenseVector[Int]"></a>
