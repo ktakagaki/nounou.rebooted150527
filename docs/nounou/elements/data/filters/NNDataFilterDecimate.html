@@ -310,6 +310,42 @@ map to all children.
     </span>
       <p class="shortcomment cmt"><b>[NNChannelsElement]</b> Alias for <a href="../../traits/NNChannelsElement.html#getChannelCount:Int" class="extmbr" name="nounou.elements.traits.NNChannelsElement#getChannelCount">nounou.elements.traits.NNChannelsElement!.getChannelCount</a>.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNChannelsElement]</b> Alias for <a href="../../traits/NNChannelsElement.html#getChannelCount:Int" class="extmbr" name="nounou.elements.traits.NNChannelsElement#getChannelCount">nounou.elements.traits.NNChannelsElement!.getChannelCount</a>.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a></dd></dl></div>
+    </li><li name="nounou.elements.traits.NNChannelsElement#channelName" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="channelName(channel:Int):String"></a>
+      <a id="channelName(Int):String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">channelName</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterDecimate@channelName(channel:Int):String" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"><b>[NNChannelsElement]</b> Get the name of a given channel.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNChannelsElement]</b> Get the name of a given channel.
+Throws error if channel out of range and not valid</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a></dd></dl></div>
+    </li><li name="nounou.elements.traits.NNChannelsElement#channelNameImpl" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="channelNameImpl(channel:Int):String"></a>
+      <a id="channelNameImpl(Int):String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">channelNameImpl</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterDecimate@channelNameImpl(channel:Int):String" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"><b><u>SHOULD OVERRIDE</u></b> <b>[NNChannelsElement]</b> Get the name of a given channel.</p><div class="fullcomment"><div class="comment cmt"><p><b><u>SHOULD OVERRIDE</u></b> <b>[NNChannelsElement]</b> Get the name of a given channel.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a></dd></dl></div>
     </li><li name="nounou.elements.NNElement#className" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="className:String"></a>
       <a id="className:String"></a>
@@ -326,7 +362,7 @@ map to all children.
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[NNElement]</b> getCanonicalName, buffered</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> getCanonicalName, buffered</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+      <p class="shortcomment cmt"><b>[NNElement]</b> getCanonicalName, buffered for serialization with GSON.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> getCanonicalName, buffered for serialization with GSON.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
     </li><li name="nounou.elements.data.NNData#clearChild" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clearChild(x:nounou.elements.data.NNData):Unit"></a>
       <a id="clearChild(NNData):Unit"></a>
@@ -508,32 +544,27 @@ map to all children.
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">See <span class="extype" name="nounou.elements.data.filters.NNDataFilter.setActive()">nounou.elements.data.filters.NNDataFilter.setActive()</span>
-</p><div class="fullcomment"><div class="comment cmt"><p>See <span class="extype" name="nounou.elements.data.filters.NNDataFilter.setActive()">nounou.elements.data.filters.NNDataFilter.setActive()</span>
+      <p class="shortcomment cmt">See <a href="NNDataFilter.html#setActive(active:Boolean):Unit" class="extmbr" name="nounou.elements.data.filters.NNDataFilter#setActive">nounou.elements.data.filters.NNDataFilter.setActive</a>
+</p><div class="fullcomment"><div class="comment cmt"><p>See <a href="NNDataFilter.html#setActive(active:Boolean):Unit" class="extmbr" name="nounou.elements.data.filters.NNDataFilter#setActive">nounou.elements.data.filters.NNDataFilter.setActive</a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a></dd></dl></div>
     </li><li name="nounou.elements.data.filters.NNDataFilter#getChannelCount" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="getChannelCount():Int"></a>
-      <a id="getChannelCount():Int"></a>
+      <a id="getChannelCount:Int"></a>
+      <a id="getChannelCount:Int"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getChannelCount</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+        <span class="name">getChannelCount</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterDecimate@getChannelCount():Int" title="Permalink" target="_top">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterDecimate@getChannelCount:Int" title="Permalink" target="_top">
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[NNDataScaleElement]</b> Get physical scaling information for data.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNDataScaleElement]</b> Get physical scaling information for data.
-Number of channels for this layout. Note that <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a> and
-<a href="../../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>
-both keep local channel counts,
-so equality should be tested before setting/using a certain <a href="../../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>
-to plot or interpret a certain <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a>.
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a> → <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a> → <a href="../../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a></dd></dl></div>
+      <p class="shortcomment cmt"><b>[NNChannelsElement]</b> Number of data channels in this layout.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNChannelsElement]</b> Number of data channels in this layout.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a> → <a href="../../traits/NNChannelsElement.html" class="extype" name="nounou.elements.traits.NNChannelsElement">NNChannelsElement</a></dd></dl></div>
     </li><li name="nounou.elements.data.NNData#getChildren" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getChildren():scala.collection.mutable.Set[nounou.elements.data.NNData]"></a>
       <a id="getChildren():Set[NNData]"></a>
@@ -636,7 +667,10 @@ to plot or interpret a certain <a href="../NNData.html" class="extype" name="nou
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[NNDataScaleElement]</b> Get physical scaling information for data.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNDataScaleElement]</b> Get physical scaling information for data.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a> → <a href="../../traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a></dd></dl></div>
+      <p class="shortcomment cmt"><b>[NNDataScaleElement]</b> Get physical scaling information for data.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNDataScaleElement]</b> Get physical scaling information for data.
+This is not made final, because it will be overriden by some filters which pass through
+upstream scale information.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a> → <a href="../../traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a></dd></dl></div>
     </li><li name="nounou.elements.data.filters.NNDataFilterDownsample#getTiming" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getTiming():nounou.elements.traits.NNDataTiming"></a>
       <a id="getTiming():NNDataTiming"></a>
@@ -660,7 +694,7 @@ to plot or interpret a certain <a href="../NNData.html" class="extype" name="nou
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
-        <span class="kind">val</span>
+        <span class="kind">lazy val</span>
       </span>
       <span class="symbol">
         <span class="name">gitHead</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
@@ -670,7 +704,7 @@ to plot or interpret a certain <a href="../NNData.html" class="extype" name="nou
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[NNElement]</b> Git HEAD of the current revision.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> Git HEAD of the current revision.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+      <p class="shortcomment cmt"><b>[NNElement]</b> Git HEAD of the current revision, buffered for serialization with GSON.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> Git HEAD of the current revision, buffered for serialization with GSON.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
     </li><li name="nounou.elements.NNElement#gitHeadShort" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="gitHeadShort:String"></a>
       <a id="gitHeadShort:String"></a>
@@ -846,7 +880,7 @@ to plot or interpret a certain <a href="../NNData.html" class="extype" name="nou
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.
+      <p class="shortcomment cmt"><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="scala.IllegalArgumentException">scala.IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="scala.IllegalArgumentException">scala.IllegalArgumentException</span>.
 Use as follows:
 <code><code><code><code>
 throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
@@ -892,6 +926,23 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="nounou.elements.NNElement#nnGitObj" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="nnGitObj:nounou.util.NNGit.type"></a>
+      <a id="nnGitObj:NNGit.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">nnGitObj</span><span class="result">: <a href="../../../util/NNGit$.html" class="extype" name="nounou.util.NNGit">NNGit</a>.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#nounou.elements.data.filters.NNDataFilterDecimate@nnGitObj:nounou.util.NNGit.type" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
     </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notify():Unit"></a>
       <a id="notify():Unit"></a>
@@ -943,7 +994,9 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
       </a>
     </span>
       <p class="shortcomment cmt">Read a single point from the data, in internal integer scaling, after checking values.</p><div class="fullcomment"><div class="comment cmt"><p>Read a single point from the data, in internal integer scaling, after checking values.
-Implement via readPointImpl. Prefer <a href="../NNData.html#readTraceDV(channel:Int):breeze.linalg.DenseVector[Int]" class="extmbr" name="nounou.elements.data.NNData#readTraceDV">nounou.elements.data.NNData!.readTraceDV</a> and readFrame()
+Implement via readPointImpl. Prefer
+<a href="../NNData.html#readTraceDV(channel:Int,range:nounou.elements.ranges.SampleRangeSpecifier):breeze.linalg.DenseVector[Int]" class="extmbr" name="nounou.elements.data.NNData#readTraceDV">readTraceDV</a>
+and readFrame()
 when possible, as these will avoid repeated function calling overhead.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="NNDataFilter.html" class="extype" name="nounou.elements.data.filters.NNDataFilter">NNDataFilter</a> → <a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
     </li><li name="nounou.elements.data.NNData#readPoint" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -979,7 +1032,9 @@ when possible, as these will avoid repeated function calling overhead.
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><a href="../NNData.html#readPoint(channel:Int,frame:Int):Int" class="extmbr" name="nounou.elements.data.NNData#readPoint">readPoint</a> but in physical units.</p><div class="fullcomment"><div class="comment cmt"><p><a href="../NNData.html#readPoint(channel:Int,frame:Int):Int" class="extmbr" name="nounou.elements.data.NNData#readPoint">readPoint</a> but in physical units.
+      <p class="shortcomment cmt"><a href="../NNData.html#readPoint(channel:Int,frame:Int):Int" class="extmbr" name="nounou.elements.data.NNData#readPoint">readPoint</a>
+but in physical units.</p><div class="fullcomment"><div class="comment cmt"><p><a href="../NNData.html#readPoint(channel:Int,frame:Int):Int" class="extmbr" name="nounou.elements.data.NNData#readPoint">readPoint</a>
+but in physical units.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
     </li><li name="nounou.elements.data.NNData#readPointAbs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readPointAbs(channel:Int,frame:Int,segment:Int):Double"></a>
@@ -997,7 +1052,7 @@ when possible, as these will avoid repeated function calling overhead.
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><a href="../NNData.html#readPoint(channel:Int,frame:Int):Int" class="extmbr" name="nounou.elements.data.NNData#readPoint">readPoint</a> but in physical units.</p><div class="fullcomment"><div class="comment cmt"><p><a href="../NNData.html#readPoint(channel:Int,frame:Int):Int" class="extmbr" name="nounou.elements.data.NNData#readPoint">readPoint</a> but in physical units.
+      <p class="shortcomment cmt"><a href="../NNData.html#readPoint(channel:Int,frame:Int,segment:Int):Int" class="extmbr" name="nounou.elements.data.NNData#readPoint">readPoint</a> but in physical units.</p><div class="fullcomment"><div class="comment cmt"><p><a href="../NNData.html#readPoint(channel:Int,frame:Int,segment:Int):Int" class="extmbr" name="nounou.elements.data.NNData#readPoint">readPoint</a> but in physical units.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
     </li><li name="nounou.elements.data.filters.NNDataFilterDecimate#readPointImpl" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readPointImpl(channel:Int,frame:Int,segment:Int):Int"></a>
@@ -1102,7 +1157,9 @@ Assumes that channel, frame, and segment are all valid and within range.
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+      <p class="shortcomment cmt">Read a single trace (whole range) in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p>Read a single trace (whole range) in internal integer scaling.
+This should only be used for data with only 1 segment.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
     </li><li name="nounou.elements.data.NNData#readTraceAbs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readTraceAbs(channel:Int,range:Array[Int]):Array[Double]"></a>
       <a id="readTraceAbs(Int,Array[Int]):Array[Double]"></a>
@@ -1170,7 +1227,9 @@ Assumes that channel, frame, and segment are all valid and within range.
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+      <p class="shortcomment cmt">Read a single trace in absolute unit scaling (as recorded).</p><div class="fullcomment"><div class="comment cmt"><p>Read a single trace in absolute unit scaling (as recorded).
+This should only be used for data with only 1 segment.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
     </li><li name="nounou.elements.data.NNData#readTraceAbsDV" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readTraceAbsDV(channels:Array[Int],range:nounou.elements.ranges.SampleRangeSpecifier):Array[breeze.linalg.DenseVector[Double]]"></a>
       <a id="readTraceAbsDV(Array[Int],SampleRangeSpecifier):Array[DenseVector[Double]]"></a>
@@ -1221,7 +1280,7 @@ Assumes that channel, frame, and segment are all valid and within range.
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">Read a single trace in absolute unit scaling (as recorded).</p><div class="fullcomment"><div class="comment cmt"><p>Read a single trace in absolute unit scaling (as recorded).</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
     </li><li name="nounou.elements.data.filters.NNDataFilter#readTraceDV" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readTraceDV(channel:Int,range:nounou.elements.ranges.SampleRangeSpecifier):breeze.linalg.DenseVector[Int]"></a>
       <a id="readTraceDV(Int,SampleRangeSpecifier):DenseVector[Int]"></a>
@@ -1256,7 +1315,9 @@ Assumes that channel, frame, and segment are all valid and within range.
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">Read a single trace in internal integer scaling.</p><div class="fullcomment"><div class="comment cmt"><p>Read a single trace in internal integer scaling.
+      <p class="shortcomment cmt">Internal implementation for <a href="../NNData.html#readTrace(channel:Int):Array[Int]" class="extmbr" name="nounou.elements.data.NNData#readTrace">readTrace</a>
+to return a breeze.linalg.DenseVector.</p><div class="fullcomment"><div class="comment cmt"><p>Internal implementation for <a href="../NNData.html#readTrace(channel:Int):Array[Int]" class="extmbr" name="nounou.elements.data.NNData#readTrace">readTrace</a>
+to return a breeze.linalg.DenseVector.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
     </li><li name="nounou.elements.data.NNData#readTraceDV" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readTraceDV(channels:Array[Int],range:nounou.elements.ranges.SampleRangeSpecifier):Array[breeze.linalg.DenseVector[Int]]"></a>
@@ -1274,8 +1335,10 @@ Assumes that channel, frame, and segment are all valid and within range.
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b><u>CAN OVERRIDE</u></b> by default, calls <span class="extype" name="nounou.elements.data.NNData.readTraceDV(Int,">SampleRangeSpecifier)</span>
-</p><div class="fullcomment"><div class="comment cmt"><p><b><u>CAN OVERRIDE</u></b> by default, calls <span class="extype" name="nounou.elements.data.NNData.readTraceDV(Int,">SampleRangeSpecifier)</span>
+      <p class="shortcomment cmt"><b><u>CAN OVERRIDE</u></b> by default, calls
+<a href="../NNData.html#readTraceDV(channel:Int,range:nounou.elements.ranges.SampleRangeSpecifier):breeze.linalg.DenseVector[Int]" class="extmbr" name="nounou.elements.data.NNData#readTraceDV">readTraceDV </a>
+</p><div class="fullcomment"><div class="comment cmt"><p><b><u>CAN OVERRIDE</u></b> by default, calls
+<a href="../NNData.html#readTraceDV(channel:Int,range:nounou.elements.ranges.SampleRangeSpecifier):breeze.linalg.DenseVector[Int]" class="extmbr" name="nounou.elements.data.NNData#readTraceDV">readTraceDV </a>
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNData.html" class="extype" name="nounou.elements.data.NNData">NNData</a></dd></dl></div>
     </li><li name="nounou.elements.data.filters.NNDataFilterDecimate#readTraceDVImpl" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readTraceDVImpl(channel:Int,range:nounou.elements.ranges.SampleRangeValid):breeze.linalg.DenseVector[Int]"></a>
@@ -1331,7 +1394,7 @@ Should return a defensive clone. Assumes that channel and range are within the d
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[NNDataScaleElement]</b> Alias for <span class="extype" name="nounou.elements.traits.NNDataScaleElement.getScale()">nounou.elements.traits.NNDataScaleElement.getScale()</span>.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNDataScaleElement]</b> Alias for <span class="extype" name="nounou.elements.traits.NNDataScaleElement.getScale()">nounou.elements.traits.NNDataScaleElement.getScale()</span>.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a></dd></dl></div>
+      <p class="shortcomment cmt"><b>[NNDataScaleElement]</b> Alias for <a href="../../traits/NNDataScaleElement.html#getScale():nounou.elements.traits.NNDataScale" class="extmbr" name="nounou.elements.traits.NNDataScaleElement#getScale">nounou.elements.traits.NNDataScaleElement.getScale</a>.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNDataScaleElement]</b> Alias for <a href="../../traits/NNDataScaleElement.html#getScale():nounou.elements.traits.NNDataScale" class="extmbr" name="nounou.elements.traits.NNDataScaleElement#getScale">nounou.elements.traits.NNDataScaleElement.getScale</a>.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../traits/NNDataScaleElement.html" class="extype" name="nounou.elements.traits.NNDataScaleElement">NNDataScaleElement</a></dd></dl></div>
     </li><li name="nounou.elements.data.filters.NNDataFilter#setActive" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="setActive(active:Boolean):Unit"></a>
       <a id="setActive(Boolean):Unit"></a>
@@ -1522,7 +1585,7 @@ Be sure to clear children if the children are to be garbage collected.</p></div>
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"> <b>[NNDataTimingElement]</b> Alias for <span class="extype" name="nounou.elements.traits.NNDataTimingElement.getTiming()">nounou.elements.traits.NNDataTimingElement.getTiming()</span>.</p><div class="fullcomment"><div class="comment cmt"><p> <b>[NNDataTimingElement]</b> Alias for <span class="extype" name="nounou.elements.traits.NNDataTimingElement.getTiming()">nounou.elements.traits.NNDataTimingElement.getTiming()</span>.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../traits/NNDataTimingElement.html" class="extype" name="nounou.elements.traits.NNDataTimingElement">NNDataTimingElement</a></dd></dl></div>
+      <p class="shortcomment cmt"> <b>[NNDataTimingElement]</b> Alias for <a href="../../traits/NNDataTimingElement.html#getTiming():nounou.elements.traits.NNDataTiming" class="extmbr" name="nounou.elements.traits.NNDataTimingElement#getTiming">nounou.elements.traits.NNDataTimingElement.getTiming</a>.</p><div class="fullcomment"><div class="comment cmt"><p> <b>[NNDataTimingElement]</b> Alias for <a href="../../traits/NNDataTimingElement.html#getTiming():nounou.elements.traits.NNDataTiming" class="extmbr" name="nounou.elements.traits.NNDataTimingElement#getTiming">nounou.elements.traits.NNDataTimingElement.getTiming</a>.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../traits/NNDataTimingElement.html" class="extype" name="nounou.elements.traits.NNDataTimingElement">NNDataTimingElement</a></dd></dl></div>
     </li><li name="nounou.elements.data.filters.NNDataFilterDownsample#timingBuffer" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="timingBuffer:nounou.elements.traits.NNDataTiming"></a>
       <a id="timingBuffer:NNDataTiming"></a>
@@ -1629,7 +1692,7 @@ objects should update this to provide information specific to the specific filte
         <img src="../../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[NNElement]</b> Reads global <a href="../../../package.html" class="extype" name="nounou">nounou</a> version number.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> Reads global <a href="../../../package.html" class="extype" name="nounou">nounou</a> version number.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+      <p class="shortcomment cmt"><b>[NNElement]</b> Reads global <a href="../../../package.html" class="extype" name="nounou">nounou</a> version number, buffered for serialization with GSON.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> Reads global <a href="../../../package.html" class="extype" name="nounou">nounou</a> version number, buffered for serialization with GSON.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>

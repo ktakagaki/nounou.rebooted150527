@@ -26,6 +26,7 @@ object NN extends LoggingExt {
       NNGit.infoPrintout
 
   def load(fileName: String): Array[NNElement] = FileLoader.load(fileName)
+  def load(fileNames: Array[String]): Array[NNElement] = FileLoader.load(fileNames)
 
 
 

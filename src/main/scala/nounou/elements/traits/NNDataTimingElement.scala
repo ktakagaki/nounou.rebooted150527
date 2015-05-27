@@ -9,7 +9,7 @@ trait NNDataTimingElement extends NNElement {
 
   private var _timing: NNDataTiming = null
 
-  /**  '''[NNDataTimingElement]''' Alias for [[nounou.elements.traits.NNDataTimingElement.getTiming()]].*/
+  /**  '''[NNDataTimingElement]''' Alias for [[nounou.elements.traits.NNDataTimingElement.getTiming]].*/
   final def timing(): NNDataTiming = getTiming()
   /**'''[NNDataTimingElement]''' */
   def getTiming(): NNDataTiming = {

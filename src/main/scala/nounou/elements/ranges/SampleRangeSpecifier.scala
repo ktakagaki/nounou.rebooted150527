@@ -35,13 +35,13 @@ trait SampleRangeSpecifier extends LoggingExt {
 
   /** Returns the concrete valid sample range with start/end (within assumed data),
     * steps (must be positive int), and segment (present within assumed data).
-    * In contrast to [[nounou.elements.ranges.SampleRangeSpecifier.getSampleRangeReal]], the resulting sample range here cuts off overhangs.
+    * In contrast to [[nounou.elements.ranges.SampleRangeSpecifier.getSampleRangeReal(nnDataTiming:nounou.elements.traits.NNDataTimingElement* getSampleRangeReal]], the resulting sample range here cuts off overhangs.
     */
   def getSampleRangeValid(nnDataTiming: NNDataTiming): SampleRangeValid
   final def getSampleRangeValid(nnDataTimingElement: NNDataTimingElement): SampleRangeValid =
     getSampleRangeValid(nnDataTimingElement.timing())
 
-  /** Returns [[nounou.elements.ranges.SampleRangeSpecifier.getSampleRangeValid(NNDataTiming)]],
+  /** Returns [[nounou.elements.ranges.SampleRangeSpecifier.getSampleRangeValid(nnDataTiming:* getSampleRangeValid]],
     * along with pre- and post- padding sample counts
     * for when the original sample range exceeds/overhangs the available data.
     */

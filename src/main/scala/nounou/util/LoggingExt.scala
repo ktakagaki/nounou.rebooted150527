@@ -8,7 +8,7 @@ import com.typesafe.scalalogging.slf4j.LazyLogging
  */
 trait LoggingExt extends LazyLogging {
 
-  /** '''[LoggingExt]''' Logs a message using slf4j, and returns a new [[IllegalArgumentException]].
+  /** '''[LoggingExt]''' Logs a message using slf4j, and returns a new [[scala.IllegalArgumentException]].
     * Use as follows:
     * ````
     * throw loggerError("This is an error with params {}", param1.toString)

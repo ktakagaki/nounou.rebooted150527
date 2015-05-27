@@ -1,5 +1,6 @@
-package nounou.elements
+package nounou.elements.discrete
 
+import nounou.elements.NNElement
 import nounou.util.LoggingExt
 import breeze.linalg.{DenseVector, DenseMatrix}
 import nounou.NN._
@@ -22,7 +23,8 @@ object NNSpike extends LoggingExt {
 
 }
 
-/**
+/**Encapsulates a single spike waveform which will be accumulated into
+  * [[nounou.elements.discrete.NNSpikes]] database of spikes.
 * @author ktakagaki
 * //@date 07/14/2014.
 */

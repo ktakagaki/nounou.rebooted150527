@@ -99,7 +99,7 @@ objects which conduct binning and therefore may change dynamically.
 
         <div id="values" class="values members">
               <h3>Abstract Value Members</h3>
-              <ol><li name="nounou.elements.traits.NNChannelsElement#getChannelCount" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+              <ol><li name="nounou.elements.traits.NNChannelsElement#getChannelCount" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="getChannelCount:Int"></a>
       <a id="getChannelCount:Int"></a>
       <h4 class="signature">
@@ -115,13 +115,7 @@ objects which conduct binning and therefore may change dynamically.
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[NNDataScaleElement]</b> Get physical scaling information for data.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNDataScaleElement]</b> Get physical scaling information for data.
-Number of channels for this layout. Note that <a href="../data/NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a> and
-<a href="../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>
-both keep local channel counts,
-so equality should be tested before setting/using a certain <a href="../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>
-to plot or interpret a certain <a href="../data/NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a>.
-</p></div></div>
+      <p class="shortcomment cmt"><b>[NNChannelsElement]</b> Number of data channels in this layout.</p>
     </li><li name="nounou.elements.NNElement#isCompatible" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="isCompatible(that:nounou.elements.NNElement):Boolean"></a>
       <a id="isCompatible(NNElement):Boolean"></a>
@@ -231,6 +225,41 @@ to plot or interpret a certain <a href="../data/NNData.html" class="extype" name
       </a>
     </span>
       <p class="shortcomment cmt"><b>[NNChannelsElement]</b> Alias for <a href="#getChannelCount:Int" class="extmbr" name="nounou.elements.traits.NNChannelsElement#getChannelCount">nounou.elements.traits.NNChannelsElement!.getChannelCount</a>.</p>
+    </li><li name="nounou.elements.traits.NNChannelsElement#channelName" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="channelName(channel:Int):String"></a>
+      <a id="channelName(Int):String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">channelName</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.NNChannelsElement@channelName(channel:Int):String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"><b>[NNChannelsElement]</b> Get the name of a given channel.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNChannelsElement]</b> Get the name of a given channel.
+Throws error if channel out of range and not valid</p></div></div>
+    </li><li name="nounou.elements.traits.NNChannelsElement#channelNameImpl" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="channelNameImpl(channel:Int):String"></a>
+      <a id="channelNameImpl(Int):String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">channelNameImpl</span><span class="params">(<span name="channel">channel: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.NNChannelsElement@channelNameImpl(channel:Int):String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"><b><u>SHOULD OVERRIDE</u></b> <b>[NNChannelsElement]</b> Get the name of a given channel.</p>
     </li><li name="nounou.elements.NNElement#className" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="className:String"></a>
       <a id="className:String"></a>
@@ -247,7 +276,7 @@ to plot or interpret a certain <a href="../data/NNData.html" class="extype" name
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[NNElement]</b> getCanonicalName, buffered</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> getCanonicalName, buffered</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+      <p class="shortcomment cmt"><b>[NNElement]</b> getCanonicalName, buffered for serialization with GSON.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> getCanonicalName, buffered for serialization with GSON.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
     </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a>
       <a id="clone():AnyRef"></a>
@@ -351,7 +380,7 @@ to plot or interpret a certain <a href="../data/NNData.html" class="extype" name
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
-        <span class="kind">val</span>
+        <span class="kind">lazy val</span>
       </span>
       <span class="symbol">
         <span class="name">gitHead</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
@@ -361,7 +390,7 @@ to plot or interpret a certain <a href="../data/NNData.html" class="extype" name
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[NNElement]</b> Git HEAD of the current revision.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> Git HEAD of the current revision.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+      <p class="shortcomment cmt"><b>[NNElement]</b> Git HEAD of the current revision, buffered for serialization with GSON.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> Git HEAD of the current revision, buffered for serialization with GSON.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
     </li><li name="nounou.elements.NNElement#gitHeadShort" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="gitHeadShort:String"></a>
       <a id="gitHeadShort:String"></a>
@@ -483,7 +512,7 @@ to plot or interpret a certain <a href="../data/NNData.html" class="extype" name
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.
+      <p class="shortcomment cmt"><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="scala.IllegalArgumentException">scala.IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="scala.IllegalArgumentException">scala.IllegalArgumentException</span>.
 Use as follows:
 <code><code><code><code>
 throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
@@ -529,6 +558,23 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="nounou.elements.NNElement#nnGitObj" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="nnGitObj:nounou.util.NNGit.type"></a>
+      <a id="nnGitObj:NNGit.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">nnGitObj</span><span class="result">: <a href="../../util/NNGit$.html" class="extype" name="nounou.util.NNGit">NNGit</a>.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.NNChannelsElement@nnGitObj:nounou.util.NNGit.type" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
     </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notify():Unit"></a>
       <a id="notify():Unit"></a>
@@ -667,7 +713,7 @@ objects should update this to provide information specific to the specific filte
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[NNElement]</b> Reads global <a href="../../package.html" class="extype" name="nounou">nounou</a> version number.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> Reads global <a href="../../package.html" class="extype" name="nounou">nounou</a> version number.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+      <p class="shortcomment cmt"><b>[NNElement]</b> Reads global <a href="../../package.html" class="extype" name="nounou">nounou</a> version number, buffered for serialization with GSON.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> Reads global <a href="../../package.html" class="extype" name="nounou">nounou</a> version number, buffered for serialization with GSON.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>

@@ -41,11 +41,12 @@ class NNDataFilterDownsample( private val parentVal: NNData, protected var facto
       logger.trace( "factor is already {}, not changing. ", factor.toString )
     } else {
       factorVar = factor
-      timingBuffer = NNDataTiming.apply(
+      timingBuffer = new NNDataTiming(
         parentVal.timing.sampleRate / factor,
         (for(seg <- 0 until parentVal.timing.segmentCount)
         yield ( (parentVal.timing.segmentLength(seg) - 1).toDouble/factor).round.toInt + 1 ).toArray,
-        parentVal.timing.segmentStartTss
+        parentVal.timing.segmentStartTss,
+        parentVal.timing.timestampOffset
         )
       //logger.info( "changed factor to {}", factor.toString )
       changedData()

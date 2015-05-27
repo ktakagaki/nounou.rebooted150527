@@ -3,6 +3,7 @@ package nounou.io
 import java.io.File
 import java.util.ServiceLoader
 
+import nounou.elements.data.{NNDataChannelArray, NNDataChannel}
 import nounou.util.LoggingExt
 import scala.collection.JavaConverters._
 import nounou.elements.NNElement
@@ -59,5 +60,21 @@ object FileLoader extends LoggingExt {
     }
     loader.load(fileName)
   }
+  final def load(fileNames: Array[String]): Array[NNElement] = {
+    var tempElements = fileNames.flatMap( load(_) ).toVector
 
+    //filters out NNDataChannel objects and joins them into one NNData if they are compatible
+    val tempElementsNNDC = tempElements.filter(_.isInstanceOf[NNDataChannel])
+    if( tempElementsNNDC.length > 1 ){
+      if( tempElementsNNDC(0).isCompatible(tempElementsNNDC.tail) ) {
+      tempElements = tempElements.filter(!_.isInstanceOf[NNDataChannel]).+:(
+          new NNDataChannelArray(tempElementsNNDC.map(_.asInstanceOf[NNDataChannel]))
+      )} else {
+        loggerError("multiple files containing data channels were not compatible with each other!")
+      }
+    }
+
+    tempElements.toArray
+
+  }
 }

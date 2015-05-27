@@ -87,7 +87,7 @@ class SampleRange(val start: Int, val last: Int, val step: Int, val segment: Int
     else (end - start)/step + 1
   }
 
-  /** How many units to
+  /** How many units to:
     * = add to the end (when counting from start) or
     * = to subtract from the start (when counting backwards from end)
     * to get to the next step value

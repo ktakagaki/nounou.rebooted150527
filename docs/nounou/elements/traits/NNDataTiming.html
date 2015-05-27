@@ -28,9 +28,9 @@
         </head>
         <body class="type">
       <div id="definition">
-        <a href="NNDataTiming$.html" title="Go to companion"><img src="../../../lib/class_to_object_big.png" /></a>
+        <img src="../../../lib/class_big.png" />
         <p id="owner"><a href="../../package.html" class="extype" name="nounou">nounou</a>.<a href="../package.html" class="extype" name="nounou.elements">elements</a>.<a href="package.html" class="extype" name="nounou.elements.traits">traits</a></p>
-        <h1><a href="NNDataTiming$.html" title="Go to companion">NNDataTiming</a></h1> <span class="permalink">
+        <h1>NNDataTiming</h1> <span class="permalink">
       <a href="../../../index.html#nounou.elements.traits.NNDataTiming" title="Permalink" target="_top">
         <img src="../../../lib/permalink.png" />
       </a>
@@ -49,7 +49,7 @@
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>This trait of NNElement objects (especially <a href="../data/NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a> encapsulates
 segment, frame, and sampling information for electrophysiological and imaging data.</p><p>Envisioned uses are for <a href="../data/NNData.html" class="extype" name="nounou.elements.data.NNData">nounou.elements.data.NNData</a>,
-<span class="extype" name="nounou.elements.traits.layouts.NNDataLayout">nounou.elements.traits.layouts.NNDataLayout</span>, and <span class="extype" name="nounou.elements.NNSpikes">nounou.elements.NNSpikes</span>.
+<a href="../layouts/NNDataLayout.html" class="extype" name="nounou.elements.layouts.NNDataLayout">nounou.elements.layouts.NNDataLayout</a>, and <span class="extype" name="nounou.elements.discrete.NNSpikes">nounou.elements.discrete.NNSpikes</span>.
 </p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a>, <a href="../../util/LoggingExt.html" class="extype" name="nounou.util.LoggingExt">LoggingExt</a>, <span class="extype" name="com.typesafe.scalalogging.slf4j.LazyLogging">LazyLogging</span>, <span class="extype" name="com.typesafe.scalalogging.Logging">Logging</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
@@ -90,8 +90,8 @@ segment, frame, and sampling information for electrophysiological and imaging da
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="nounou.elements.traits.NNDataTiming#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(sampleRate:Double,segmentLengths:Array[Int],segmentStartTss:Array[Long]):nounou.elements.traits.NNDataTiming"></a>
+              <ol><li name="nounou.elements.traits.NNDataTiming#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(sampleRate:Double,segmentLengths:Array[Int],segmentStartTss:Array[Long],timestampOffset:java.math.BigInteger):nounou.elements.traits.NNDataTiming"></a>
       <a id="&lt;init&gt;:NNDataTiming"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -99,14 +99,36 @@ segment, frame, and sampling information for electrophysiological and imaging da
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">NNDataTiming</span><span class="params">(<span name="sampleRate">sampleRate: <span class="extype" name="scala.Double">Double</span></span>, <span name="segmentLengths">segmentLengths: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="segmentStartTss">segmentStartTss: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Long">Long</span>]</span>)</span>
+        <span class="name">NNDataTiming</span><span class="params">(<span name="sampleRate">sampleRate: <span class="extype" name="scala.Double">Double</span></span>, <span name="segmentLengths">segmentLengths: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="segmentStartTss">segmentStartTss: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Long">Long</span>]</span>, <span name="timestampOffset">timestampOffset: <span class="extype" name="java.math.BigInteger">BigInteger</span></span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#nounou.elements.traits.NNDataTiming@&lt;init&gt;(sampleRate:Double,segmentLengths:Array[Int],segmentStartTss:Array[Long]):nounou.elements.traits.NNDataTiming" title="Permalink" target="_top">
+      <a href="../../../index.html#nounou.elements.traits.NNDataTiming@&lt;init&gt;(sampleRate:Double,segmentLengths:Array[Int],segmentStartTss:Array[Long],timestampOffset:java.math.BigInteger):nounou.elements.traits.NNDataTiming" title="Permalink" target="_top">
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">sampleRate</dt><dd class="cmt"><p>Sample rate in Hz.</p></dd><dt class="param">segmentLengths</dt><dd class="cmt"><p>Total number of frames in each segment.</p></dd><dt class="param">segmentStartTss</dt><dd class="cmt"><p>List of starting timestamps for each segment.</p></dd></dl></div>
+      
+    </li><li name="nounou.elements.traits.NNDataTiming#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="&lt;init&gt;(sampleRate:Double,segmentLengths:Array[Int],segmentStartTss:Array[Long],timestampOffset:BigInt):nounou.elements.traits.NNDataTiming"></a>
+      <a id="&lt;init&gt;:NNDataTiming"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">NNDataTiming</span><span class="params">(<span name="sampleRate">sampleRate: <span class="extype" name="scala.Double">Double</span></span>, <span name="segmentLengths">segmentLengths: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="segmentStartTss">segmentStartTss: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Long">Long</span>]</span>, <span name="timestampOffset">timestampOffset: <span class="extype" name="scala.BigInt">BigInt</span></span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.NNDataTiming@&lt;init&gt;(sampleRate:Double,segmentLengths:Array[Int],segmentStartTss:Array[Long],timestampOffset:BigInt):nounou.elements.traits.NNDataTiming" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">sampleRate</dt><dd class="cmt"><p>Sample rate in Hz.</p></dd><dt class="param">segmentLengths</dt><dd class="cmt"><p>Total number of frames in each segment.</p></dd><dt class="param">segmentStartTss</dt><dd class="cmt"><p>List of starting timestamps for each segment.</p></dd><dt class="param">timestampOffset</dt><dd class="cmt"><p>Timestamp offset to obtain external timestamps by adding to
+                        internal representation. For example, many formats represent
+                        timestamps as U64, which is not present in JVM, so they are
+                        internally shifted to Long (S64), and therefore have
+                        an offset of + pow(2,63).
+</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -200,7 +222,7 @@ segment, frame, and sampling information for electrophysiological and imaging da
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[NNElement]</b> getCanonicalName, buffered</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> getCanonicalName, buffered</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+      <p class="shortcomment cmt"><b>[NNElement]</b> getCanonicalName, buffered for serialization with GSON.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> getCanonicalName, buffered for serialization with GSON.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
     </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a>
       <a id="clone():AnyRef"></a>
@@ -345,6 +367,24 @@ out of range.
       </a>
     </span>
       <p class="shortcomment cmt">Closest segment index to the given timestamp.</p>
+    </li><li name="nounou.elements.traits.NNDataTiming#convertTsToFileTimestamp" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="convertTsToFileTimestamp(ts:Long):java.math.BigInteger"></a>
+      <a id="convertTsToFileTimestamp(Long):BigInteger"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">convertTsToFileTimestamp</span><span class="params">(<span name="ts">ts: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="java.math.BigInteger">BigInteger</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.NNDataTiming@convertTsToFileTimestamp(ts:Long):java.math.BigInteger" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Converts the internal timestamp (kept in Long) to file timestamps,
+which are often in U64.</p>
     </li><li name="nounou.elements.traits.NNDataTiming#convertTsToFr" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="convertTsToFr(timestamp:Long):Int"></a>
       <a id="convertTsToFr(Long):Int"></a>
@@ -547,7 +587,7 @@ if necessary.
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
-        <span class="kind">val</span>
+        <span class="kind">lazy val</span>
       </span>
       <span class="symbol">
         <span class="name">gitHead</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
@@ -557,7 +597,7 @@ if necessary.
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[NNElement]</b> Git HEAD of the current revision.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> Git HEAD of the current revision.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+      <p class="shortcomment cmt"><b>[NNElement]</b> Git HEAD of the current revision, buffered for serialization with GSON.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> Git HEAD of the current revision, buffered for serialization with GSON.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
     </li><li name="nounou.elements.NNElement#gitHeadShort" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="gitHeadShort:String"></a>
       <a id="gitHeadShort:String"></a>
@@ -732,7 +772,7 @@ if necessary.
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.
+      <p class="shortcomment cmt"><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="scala.IllegalArgumentException">scala.IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="scala.IllegalArgumentException">scala.IllegalArgumentException</span>.
 Use as follows:
 <code><code><code><code>
 throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
@@ -778,6 +818,23 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="nounou.elements.NNElement#nnGitObj" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="nnGitObj:nounou.util.NNGit.type"></a>
+      <a id="nnGitObj:NNGit.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">nnGitObj</span><span class="result">: <a href="../../util/NNGit$.html" class="extype" name="nounou.util.NNGit">NNGit</a>.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.NNDataTiming@nnGitObj:nounou.util.NNGit.type" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
     </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notify():Unit"></a>
       <a id="notify():Unit"></a>
@@ -863,6 +920,23 @@ throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)
       </a>
     </span>
       <p class="shortcomment cmt">Number of segments in data.</p>
+    </li><li name="nounou.elements.traits.NNDataTiming#segmentEndFileTimestamps" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="segmentEndFileTimestamps(seg:Int):java.math.BigInteger"></a>
+      <a id="segmentEndFileTimestamps(Int):BigInteger"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">segmentEndFileTimestamps</span><span class="params">(<span name="seg">seg: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="java.math.BigInteger">BigInteger</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.NNDataTiming@segmentEndFileTimestamps(seg:Int):java.math.BigInteger" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      
     </li><li name="nounou.elements.traits.NNDataTiming#segmentEndTss" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="segmentEndTss:Array[Long]"></a>
       <a id="segmentEndTss:Array[Long]"></a>
@@ -919,6 +993,23 @@ only be used if the data only contains one segment.
       <p class="shortcomment cmt">Length of a given segment.</p><div class="fullcomment"><div class="comment cmt"><p>Length of a given segment. If you are dealing with 1 segment data,
 a value of -1 (default) is also possible.
 </p></div></div>
+    </li><li name="nounou.elements.traits.NNDataTiming#segmentLengthReal" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="segmentLengthReal(segment:Int):Int"></a>
+      <a id="segmentLengthReal(Int):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">segmentLengthReal</span><span class="params">(<span name="segment">segment: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.NNDataTiming@segmentLengthReal(segment:Int):Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      
     </li><li name="nounou.elements.traits.NNDataTiming#segmentLengths" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="segmentLengths:Array[Int]"></a>
       <a id="segmentLengths:Array[Int]"></a>
@@ -936,6 +1027,23 @@ a value of -1 (default) is also possible.
       </a>
     </span>
       <p class="shortcomment cmt">Total number of frames in each segment.</p>
+    </li><li name="nounou.elements.traits.NNDataTiming#segmentStartFileTimestamps" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="segmentStartFileTimestamps(seg:Int):java.math.BigInteger"></a>
+      <a id="segmentStartFileTimestamps(Int):BigInteger"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">segmentStartFileTimestamps</span><span class="params">(<span name="seg">seg: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="java.math.BigInteger">BigInteger</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.NNDataTiming@segmentStartFileTimestamps(seg:Int):java.math.BigInteger" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      
     </li><li name="nounou.elements.traits.NNDataTiming#segmentStartFrame" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="segmentStartFrame(segment:Int):Int"></a>
       <a id="segmentStartFrame(Int):Int"></a>
@@ -1021,6 +1129,29 @@ a value of -1 (default) is also possible.
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="nounou.elements.traits.NNDataTiming#timestampOffset" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="timestampOffset:BigInt"></a>
+      <a id="timestampOffset:BigInt"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">timestampOffset</span><span class="result">: <span class="extype" name="scala.BigInt">BigInt</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.elements.traits.NNDataTiming@timestampOffset:BigInt" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Timestamp offset to obtain external timestamps by adding to
+                        internal representation.</p><div class="fullcomment"><div class="comment cmt"><p>Timestamp offset to obtain external timestamps by adding to
+                        internal representation. For example, many formats represent
+                        timestamps as U64, which is not present in JVM, so they are
+                        internally shifted to Long (S64), and therefore have
+                        an offset of + pow(2,63).
+</p></div></div>
     </li><li name="nounou.elements.NNElement#toJsonString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="toJsonString:String"></a>
       <a id="toJsonString:String"></a>
@@ -1090,7 +1221,9 @@ objects should update this to provide information specific to the specific filte
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">Total length in frames of data.</p><div class="fullcomment"><div class="comment cmt"><p>Total length in frames of data. Use <a href="#segmentLength():Int" class="extmbr" name="nounou.elements.traits.NNDataTiming#segmentLength">segmentLength</a> instead, for data which has more than one segment.
+      <p class="shortcomment cmt">Total length in frames of data.</p><div class="fullcomment"><div class="comment cmt"><p>Total length in frames of data. Use
+<a href="#segmentLength(segment:Int):Int" class="extmbr" name="nounou.elements.traits.NNDataTiming#segmentLength">segmentLength(Int)</a> to
+get the length of specific segments, for data which have more than one segment.
 </p></div></div>
     </li><li name="nounou.elements.NNElement#version" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="version:Double"></a>
@@ -1108,7 +1241,7 @@ objects should update this to provide information specific to the specific filte
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[NNElement]</b> Reads global <a href="../../package.html" class="extype" name="nounou">nounou</a> version number.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> Reads global <a href="../../package.html" class="extype" name="nounou">nounou</a> version number.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
+      <p class="shortcomment cmt"><b>[NNElement]</b> Reads global <a href="../../package.html" class="extype" name="nounou">nounou</a> version number, buffered for serialization with GSON.</p><div class="fullcomment"><div class="comment cmt"><p><b>[NNElement]</b> Reads global <a href="../../package.html" class="extype" name="nounou">nounou</a> version number, buffered for serialization with GSON.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>

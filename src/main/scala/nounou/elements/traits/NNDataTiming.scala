@@ -1,25 +1,48 @@
 package nounou.elements.traits
 
+import java.math.BigInteger
 import breeze.numerics.round
 import nounou.elements.NNElement
 import nounou.elements.ranges.SampleRangeSpecifier
-import nounou.util.NNGit
 
 /**This trait of NNElement objects (especially [[nounou.elements.data.NNData]] encapsulates
   * segment, frame, and sampling information for electrophysiological and imaging data.
   *
   * Envisioned uses are for [[nounou.elements.data.NNData]],
-  * [[nounou.elements.traits.layouts.NNDataLayout]], and [[nounou.elements.NNSpikes]].
+  * [[nounou.elements.layouts.NNDataLayout]], and [[nounou.elements.discrete.NNSpikes]].
   *
   * @param sampleRate Sample rate in Hz.
   * @param segmentLengths Total number of frames in each segment.
   * @param segmentStartTss  List of starting timestamps for each segment.
-  *
+  * @param timestampOffset  Timestamp offset to obtain external timestamps by adding to
+  *                         internal representation. For example, many formats represent
+  *                         timestamps as U64, which is not present in JVM, so they are
+  *                         internally shifted to Long (S64), and therefore have
+  *                         an offset of + pow(2,63).
   */
 class NNDataTiming( val sampleRate: Double,
                     val segmentLengths: Array[Int],
-                    val segmentStartTss: Array[Long]
+                    val segmentStartTss: Array[Long],
+                    val timestampOffset: BigInt
                     ) extends NNElement {
+
+  // <editor-fold defaultstate="collapsed" desc=" extra constructors ">
+
+  def this( sampleRate: Double, segmentLengths: Array[Int], segmentStartTss: Array[Long], timestampOffset: BigInteger) =
+              this( sampleRate, segmentLengths, segmentStartTss, new BigInt(timestampOffset))
+// These convenience constructors just serve to make you forget timestampOffset
+// when it's necessary. This class shouldn't really be constructed outside of the
+// library anyway, so convenience is not that critical.
+//  def this( sampleRate: Double, segmentLengths: Array[Int], segmentStartTss: Array[Long]) =
+//              this( sampleRate, segmentLengths, segmentStartTss, BigInteger.ZERO)
+//  def this( sampleRate: Double, segmentLength: Int, startTs: Long) =
+//              this( sampleRate, Array[Int](segmentLength), Array[Long](startTs) )
+//  def this( sampleRate: Double, segmentLength: Int ) =
+//              this( sampleRate, segmentLength, 0L)
+
+  // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc=" utility error function (private) ">
 
   /** Throws IllegalArgumentException if segmentCount != 1... use as check for functions which assume segment = 0.
     * @param func name of current function/signature called (which assumes segment = 0 )
@@ -33,7 +56,26 @@ class NNDataTiming( val sampleRate: Double,
     )
   }
 
+  // </editor-fold>
+
   final lazy val sampleInterval = 1.0/sampleRate
+
+  // <editor-fold defaultstate="collapsed" desc=" internal representation for timestamps ">
+
+  private val zeroBI = BigInt( BigInteger.ZERO )
+
+  /** Converts the internal timestamp (kept in Long) to file timestamps,
+    * which are often in U64.
+    */
+  final def convertTsToFileTimestamp(ts: Long): BigInteger = {
+    if(timestampOffset == zeroBI ) BigInteger.valueOf(ts)
+    else timestampOffset.bigInteger.add( BigInteger.valueOf(ts) )
+  }
+
+  // </editor-fold>
+
+  // </editor-fold>
+
 
   // <editor-fold defaultstate="collapsed" desc="segment related: segmentCount, segmentLength/length ">
   
@@ -43,6 +85,20 @@ class NNDataTiming( val sampleRate: Double,
   lazy val segmentCount: Int = segmentLengths.length
 
   val defaultStep: Int = 1
+
+  // </editor-fold>
+  // <editor-fold defaultstate="collapsed" desc=" segmentStartFrames  ">
+
+  /**Cumulative frame numbers for segment starts.
+    */
+  final lazy val segmentStartFrames: Array[Int] = {
+    var sum = 0
+    ( for(seg <- 0 until segmentCount) yield {sum += segmentLength(seg); sum} ).toArray.+:(0).dropRight(1)
+  }
+  final def segmentStartFrame(segment: Int) = segmentStartFrames.apply(segment)
+
+  // </editor-fold>
+
 
   // <editor-fold defaultstate="collapsed" desc=" functions for reading segment lengths ">
 
@@ -54,7 +110,10 @@ class NNDataTiming( val sampleRate: Double,
     * only be used if the data only contains one segment.
     */
   final def segmentLength(): Int = segmentLength( -1 )
-  /** Implement of [[segmentLength(Int)]]Segment number must be a valid number
+  final def segmentLengthReal( segment: Int ): Int =
+    segmentLengthImpl( segmentLength(segment) )
+
+  /** Implementation of [[segmentLength(Int)]]. Segment number must be a valid number
     * in the range [0, segmentCount).
     */
   private def segmentLengthImpl( segment: Int ): Int = segmentLengths( segment )
@@ -68,22 +127,15 @@ class NNDataTiming( val sampleRate: Double,
       segment
     }
 
-  /**Total length in frames of data. Use [[segmentLength]] instead, for data which has more than one segment.
+  /**Total length in frames of data. Use
+    * [[nounou.elements.traits.NNDataTiming.segmentLength(seg* segmentLength(Int)]] to
+    * get the length of specific segments, for data which have more than one segment.
     */
   lazy val totalLength: Int = segmentLengths.foldLeft(0)( _ + _ )
 
   // </editor-fold>
 
-  /**Cumulative frame numbers for segment starts.
-    */
-  final lazy val segmentStartFrames: Array[Int] = {
-    var sum = 0
-    ( for(seg <- 0 until segmentCount) yield {sum += segmentLength(seg); sum} ).toArray.+:(0).dropRight(1)
-  }
-  final def segmentStartFrame(segment: Int) = segmentStartFrames.apply(segment)
-
-  // </editor-fold>
-  // <editor-fold defaultstate="collapsed" desc="segment timestamps: segmentStartTs/startTs/segmentEndTs/lastTs ">
+  // <editor-fold defaultstate="collapsed" desc="segment timestamp buffered arrays: segmentStartTss/startTs/segmentEndTss/lastTs ">
 
 
   lazy val startTs: Long = {
@@ -104,6 +156,12 @@ class NNDataTiming( val sampleRate: Double,
   }
 
   // </editor-fold>
+  // <editor-fold defaultstate="collapsed" desc=" segmentStartFileTimestamps/segmentEndFileTimestamps ">
+
+  final def segmentStartFileTimestamps(seg: Int) = convertTsToFileTimestamp(segmentStartTss(seg))
+
+  final def segmentEndFileTimestamps(seg: Int) = convertTsToFileTimestamp(segmentStartTss(seg))
+
 
   // <editor-fold defaultstate="collapsed" desc="isValidFrsg/isRealisticFrsg">
 
@@ -129,7 +187,7 @@ class NNDataTiming( val sampleRate: Double,
   private final lazy val factorFrPerTs = 1D/factorTsPerFr
 
   final def convertFrToTs(frame:Int): Long = {
-    errorIfMultipleSegments("convertFrToTs(frame: Int)", "convertFsToTs(frame: Int, segment: Int)")
+    errorIfMultipleSegments("convertFrToTs(frame: Int)", "convertFrsgToTs(frame: Int, segment: Int)")
     convertFrsgToTs(frame, 0)
   }
 
@@ -200,7 +258,7 @@ class NNDataTiming( val sampleRate: Double,
     Array[Int]( tempret._1, tempret._2 )
   }
   final def convertTsToFr(timestamp: Long): Int = {
-    errorIfMultipleSegments("length", "segmentLength(segment: Int)")
+    errorIfMultipleSegments("convertTsToFr", "convertTsToFrsg")
     convertTsToFrsg(timestamp)._1
   }
 
@@ -227,7 +285,6 @@ class NNDataTiming( val sampleRate: Double,
   final def convertMsToTs(ms: Double): Long = convertFrToTs( convertMsToFr(ms) )
 
   // </editor-fold>
-
   // <editor-fold defaultstate="collapsed" desc="Time specification: convertTsToClosestSegment">
 
   /** Closest segment index to the given timestamp.
@@ -270,14 +327,15 @@ class NNDataTiming( val sampleRate: Double,
   }
 
   override def toString(): String =
-    s"NNDataTiming(fs=$sampleRate, segmentCount=$segmentCount)"
+    this.getClass.getName + s"(fs=$sampleRate, segmentCount=$segmentCount, $gitHeadShort)"
 
   override def toStringFull(): String = {
-    var tempout = toString().dropRight(1) + s", $gitHeadShort)\n"    +
-    "   seg#\t\tsegLen\t\tsegStartTs\n"
+    var tempout = toString()+ "\n"    +
+    "   seg#\t\tsegLen\t\tsegStartTs\t\t(Internal)\n"
 
     for( seg <- 0 until segmentCount) {
-      tempout = tempout + s"   $seg\t\t	${segmentLength(seg)}\t${segmentStartTss(seg)}\n"
+      tempout = tempout + s"   $seg\t\t	${segmentLength(seg)}\t" +
+        s"${segmentStartFileTimestamps(seg)}\t${segmentStartTss(seg)}\n"
     }
     tempout.dropRight(1)
   }
@@ -285,13 +343,13 @@ class NNDataTiming( val sampleRate: Double,
 
 }
 
-object NNDataTiming {
-  def apply( sampleRate: Double, segmentLengths: Array[Int], segmentStartTs: Array[Long] ): NNDataTiming =
-    new NNDataTiming( sampleRate, segmentLengths, segmentStartTs )
-  def singleSegment( sampleRate: Double, segmentLength: Int, startTs: Long ): NNDataTiming =
-    new NNDataTiming( sampleRate, Array[Int](segmentLength), Array[Long](startTs) )
-  def singleSegment( sampleRate: Double, segmentLength: Int ): NNDataTiming = singleSegment( sampleRate, segmentLength, 0L)
-}
+//object NNDataTiming {
+//  def apply( sampleRate: Double, segmentLengths: Array[Int], segmentStartTs: Array[Long] ): NNDataTiming =
+//    new NNDataTiming( sampleRate, segmentLengths, segmentStartTs )
+//  def singleSegment( sampleRate: Double, segmentLength: Int, startTs: Long ): NNDataTiming =
+//    new NNDataTiming( sampleRate, Array[Int](segmentLength), Array[Long](startTs) )
+//  def singleSegment( sampleRate: Double, segmentLength: Int ): NNDataTiming = singleSegment( sampleRate, segmentLength, 0L)
+//}
 
 //trait NNDataTimingImmutable extends NNDataTiming {
 //

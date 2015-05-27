@@ -47,11 +47,15 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Created by ktakagaki on 15/03/24.
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>This trait marks individual file adapter classes as being able to handle
+the saving of certain objects.</p><p>Created by ktakagaki on 15/03/24.
 </p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
-        </div></div>
+        </div><div class="toggleContainer block">
+            <span class="toggle">Known Subclasses</span>
+            <div class="subClasses hiddenContent"><a href="neuralynx/FileAdapterNCS.html" class="extype" name="nounou.io.neuralynx.FileAdapterNCS">FileAdapterNCS</a></div>
+          </div></div>
         
 
       <div id="mbrsel">
@@ -92,24 +96,24 @@
 
         <div id="values" class="values members">
               <h3>Abstract Value Members</h3>
-              <ol><li name="nounou.io.FileSaver#canSaveExtensions" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="canSaveExtensions:Array[String]"></a>
-      <a id="canSaveExtensions:Array[String]"></a>
+              <ol><li name="nounou.io.FileSaver#canSaveClass" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="canSaveClass(obj:nounou.elements.NNElement):Boolean"></a>
+      <a id="canSaveClass(NNElement):Boolean"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
-        <span class="kind">val</span>
+        <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">canSaveExtensions</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+        <span class="name">canSaveClass</span><span class="params">(<span name="obj">obj: <a href="../elements/NNElement.html" class="extype" name="nounou.elements.NNElement">NNElement</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileSaver@canSaveExtensions:Array[String]" title="Permalink" target="_top">
+      <a href="../../index.html#nounou.io.FileSaver@canSaveClass(obj:nounou.elements.NNElement):Boolean" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">A list of lower-case extensions which can be loaded.</p>
-    </li><li name="nounou.io.FileSaver#save" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Whether a certain class can be saved, implement with match.</p>
+    </li><li name="nounou.io.FileSaver#save" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="save(data:Array[nounou.elements.NNElement],fileName:String):Unit"></a>
       <a id="save(Array[NNElement],String):Unit"></a>
       <h4 class="signature">
@@ -125,7 +129,8 @@
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">Actual saving of file.</p><div class="fullcomment"><div class="comment cmt"><p>Actual saving of file.</p></div><dl class="paramcmts block"><dt class="param">fileName</dt><dd class="cmt"><p>if the filename does not end with the correct extension, it will be appended. If it exists, it will be given a postscript.
+</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -199,57 +204,6 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="nounou.io.FileSaver#canSaveExtensions" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="canSaveExtensions(extension:String):Boolean"></a>
-      <a id="canSaveExtensions(String):Boolean"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">final </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">canSaveExtensions</span><span class="params">(<span name="extension">extension: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileSaver@canSaveExtensions(extension:String):Boolean" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li><li name="nounou.io.FileSaver#canSaveFile" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="canSaveFile(fileName:String):Boolean"></a>
-      <a id="canSaveFile(String):Boolean"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">final </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">canSaveFile</span><span class="params">(<span name="fileName">fileName: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileSaver@canSaveFile(fileName:String):Boolean" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li><li name="nounou.io.FileSaver#canSaveFile" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="canSaveFile(file:java.io.File):Boolean"></a>
-      <a id="canSaveFile(File):Boolean"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">final </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">canSaveFile</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#nounou.io.FileSaver@canSaveFile(file:java.io.File):Boolean" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
-      </a>
-    </span>
-      
     </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a>
       <a id="clone():AnyRef"></a>

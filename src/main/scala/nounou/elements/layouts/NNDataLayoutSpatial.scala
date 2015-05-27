@@ -72,7 +72,7 @@ abstract class NNDataLayoutSpatial extends NNDataLayout {
     getChannelCoordinatesImpl(ch)
   }
 
-  /** Implementation for [[getChannelCoordinates(Int)]].
+  /** Implementation for [[nounou.elements.layouts.NNDataLayoutSpatial.getChannelCoordinates getChannelCoordinates]].
     * Will return Array for Java compatibility, but this should be a newly generated
     * copy Array with immutable intent.
     */

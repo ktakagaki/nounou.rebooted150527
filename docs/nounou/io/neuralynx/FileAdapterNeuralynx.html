@@ -147,7 +147,7 @@
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../FileLoader.html" class="extype" name="nounou.io.FileLoader">FileLoader</a></dd></dl></div>
+      <p class="shortcomment cmt">Actual loading of file.</p><div class="fullcomment"><div class="comment cmt"><p>Actual loading of file.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../FileLoader.html" class="extype" name="nounou.io.FileLoader">FileLoader</a></dd></dl></div>
     </li><li name="nounou.io.neuralynx.FileAdapterNeuralynx#recordBytes" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="recordBytes:Int"></a>
       <a id="recordBytes:Int"></a>
@@ -164,7 +164,24 @@
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">Size of each record, in bytes</p>
+    </li><li name="nounou.io.neuralynx.FileAdapterNeuralynx#recordStartByte" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="recordStartByte(record:Int):Int"></a>
+      <a id="recordStartByte(Int):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">recordStartByte</span><span class="params">(<span name="record">record: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#nounou.io.neuralynx.FileAdapterNeuralynx@recordStartByte(record:Int):Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Function to calculate start of each record within the file, in bytes</p>
     </li></ol>
             </div>
 
@@ -254,7 +271,7 @@
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../FileLoader.html" class="extype" name="nounou.io.FileLoader">FileLoader</a></dd></dl></div>
+      <p class="shortcomment cmt">Whether the given extension can be loaded.</p><div class="fullcomment"><div class="comment cmt"><p>Whether the given extension can be loaded. For now, based simply on a match with the file extension.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../FileLoader.html" class="extype" name="nounou.io.FileLoader">FileLoader</a></dd></dl></div>
     </li><li name="nounou.io.FileLoader#canLoadFile" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="canLoadFile(fileName:String):Boolean"></a>
       <a id="canLoadFile(String):Boolean"></a>
@@ -271,7 +288,7 @@
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../FileLoader.html" class="extype" name="nounou.io.FileLoader">FileLoader</a></dd></dl></div>
+      <p class="shortcomment cmt">Whether the given file can be loaded.</p><div class="fullcomment"><div class="comment cmt"><p>Whether the given file can be loaded. For now, based simply on a match with the file extension.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../FileLoader.html" class="extype" name="nounou.io.FileLoader">FileLoader</a></dd></dl></div>
     </li><li name="nounou.io.FileLoader#canLoadFile" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="canLoadFile(file:java.io.File):Boolean"></a>
       <a id="canLoadFile(File):Boolean"></a>
@@ -288,7 +305,7 @@
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../FileLoader.html" class="extype" name="nounou.io.FileLoader">FileLoader</a></dd></dl></div>
+      <p class="shortcomment cmt">Whether the given file can be loaded.</p><div class="fullcomment"><div class="comment cmt"><p>Whether the given file can be loaded. For now, based simply on a match with the file extension.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../FileLoader.html" class="extype" name="nounou.io.FileLoader">FileLoader</a></dd></dl></div>
     </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a>
       <a id="clone():AnyRef"></a>
@@ -346,7 +363,7 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="nounou.io.neuralynx.FileAdapterNeuralynx#fHand" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="nounou.io.neuralynx.FileAdapterNeuralynx#fHand" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="fHand:breeze.io.RandomAccessFile"></a>
       <a id="fHand:RandomAccessFile"></a>
       <h4 class="signature">
@@ -362,7 +379,9 @@
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">File handle for the file to be read.</p>
+      <p class="shortcomment cmt">Temporary file handle for the file to be read.</p><div class="fullcomment"><div class="comment cmt"><p>Temporary file handle for the file to be read.
+Should be updated for each new file read.
+</p></div><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
     </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <a id="finalize():Unit"></a>
@@ -470,7 +489,7 @@
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../FileLoader.html" class="extype" name="nounou.io.FileLoader">FileLoader</a></dd></dl></div>
+      <p class="shortcomment cmt">Actual loading of file.</p><div class="fullcomment"><div class="comment cmt"><p>Actual loading of file.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../FileLoader.html" class="extype" name="nounou.io.FileLoader">FileLoader</a></dd></dl></div>
     </li><li name="com.typesafe.scalalogging.slf4j.LazyLogging#logger" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="logger:com.typesafe.scalalogging.slf4j.Logger"></a>
       <a id="logger:Logger"></a>
@@ -504,7 +523,7 @@
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt"><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="IllegalArgumentException">IllegalArgumentException</span>.
+      <p class="shortcomment cmt"><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="scala.IllegalArgumentException">scala.IllegalArgumentException</span>.</p><div class="fullcomment"><div class="comment cmt"><p><b>[LoggingExt]</b> Logs a message using slf4j, and returns a new <span class="extype" name="scala.IllegalArgumentException">scala.IllegalArgumentException</span>.
 Use as follows:
 <code><code><code><code>
 throw loggerError(&quot;This is an error with params {}&quot;, param1.toString)

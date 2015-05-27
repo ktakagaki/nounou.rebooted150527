@@ -24,13 +24,16 @@ abstract class FileAdapterNeuralynx extends LoggingExt with FileLoader  {
   def recordStartByte(record: Int): Int
   //  val neuralynxTextHeader: String
 
-  var nlxHeaderText: String = "Inital"
+  var nlxHeaderText: String = "Initial"
 
   def nlxHeaderLoad(): Unit = {
     fHand.seek(0)
     nlxHeaderText = new String(fHand.readUInt8(headerBytes).map(_.toChar))
     //nlxHeader = new String(fHand.readChar(headerBytes))
   }
+
+  // <editor-fold defaultstate="collapsed" desc=" header parsing ">
+
   def nlxHeaderParserS(valueName: String, default: String): String = {
     val pattern = ("-" + valueName + """[ ]+(\S+)""").r
     pattern.findFirstIn(nlxHeaderText) match {
@@ -40,6 +43,8 @@ abstract class FileAdapterNeuralynx extends LoggingExt with FileLoader  {
   }
   def nlxHeaderParserD(valueName: String, default: String) = nlxHeaderParserS(valueName: String, default: String).toDouble
   def nlxHeaderParserI(valueName: String, default: String) = nlxHeaderParserS(valueName: String, default: String).toInt
+
+  // </editor-fold>
 
   //ToDo 4: should one even attempt to parse the text output? or just pass it along?
 //  def simpleParser(text: String, valueName: String, default: String) = {

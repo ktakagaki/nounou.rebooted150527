@@ -10,7 +10,7 @@ trait NNDataScaleElement extends NNElement {
 
   private var _scale: NNDataScale = null //  NNDataScale.raw
 
-  /**'''[NNDataScaleElement]''' Alias for [[nounou.elements.traits.NNDataScaleElement.getScale()]].*/
+  /**'''[NNDataScaleElement]''' Alias for [[nounou.elements.traits.NNDataScaleElement.getScale]].*/
   final def scale(): NNDataScale = getScale()
   /**'''[NNDataScaleElement]''' Get physical scaling information for data.
     * This is not made final, because it will be overriden by some filters which pass through

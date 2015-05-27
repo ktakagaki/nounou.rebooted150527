@@ -1,9 +1,12 @@
 package nounou.io
 
+import java.math.BigInteger
+
 import breeze.linalg.DenseVector
 import breeze.numerics.pow
 import nounou._
 import nounou.elements.NNElement
+import nounou.elements.data.NNDataChannel
 import nounou.io.neuralynx.NNDataChannelNCS
 import org.scalatest.FunSuite
 import java.io.File
@@ -18,6 +21,7 @@ class FileAdapterNCSTest extends FunSuite {
   val testFileE04LC_CSC1 = getClass.getResource("/neurophysiology-test-files/nounou/Neuralynx/E04LC/CSC1.ncs").getPath()
   //new File( "C:\\prog\\_gh\\_kt\\nounou.testfiles\\Neuralynx\\E04LC\\CSC1.ncs" )
   val data = NN.load(testFileE04LC_CSC1).apply(0)
+  assert( data.isInstanceOf[NNDataChannel] )
   assert( data.isInstanceOf[NNDataChannelNCS] )
   val dataObj = data.asInstanceOf[NNDataChannelNCS]
 
@@ -40,6 +44,7 @@ class FileAdapterNCSTest extends FunSuite {
     //assert(dataObj.timing.factorTSperFR == 1000000D/dataObj.timing.sampleRate)
 
     assert(dataObj.timing.segmentStartTss(0) == (10237373715L - 9223372036854775807L-1/*2^63*/))
+    assert(dataObj.timing.segmentStartFileTimestamps(0) == BigInteger.valueOf(10237373715L))
     assert(dataObj.timing.convertTsToFrsg(10245373715L - 9223372036854775807L-1/*2^63*/) == (500*512, 0))
     assert(dataObj.timing.segmentStartTss(1) == (10664246433L - 9223372036854775807L-1/*2^63*/))
     assert(dataObj.timing.convertTsToFrsg(10664246433L - 9223372036854775807L-1/*2^63*/) == (0, 1))

@@ -8,8 +8,8 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "2.1.7" % "test",
   "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
   "com.typesafe.scala-logging" %% "scala-logging-api" % "2.1.2",
-  "com.github.fommil.netlib" % "core" % "1.1.2",
-  "org.scalafx" % "scalafx_2.11" % "8.0.0-R4",
+  //"com.github.fommil.netlib" % "core" % "1.1.2",
+  //"org.scalafx" % "scalafx_2.11" % "8.0.0-R4",
   "org.scalanlp" %% "breeze" % "0.8.1",
   "org.scalanlp" %% "breeze-natives" % "0.8.1",
   "org.scalanlp" %% "breeze-macros" % "0.3.1"

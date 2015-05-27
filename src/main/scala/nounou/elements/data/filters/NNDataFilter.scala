@@ -42,7 +42,7 @@ class NNDataFilter( private var parenVar: NNData ) extends NNData {
     changedData()
   }
 
-  /** See [[nounou.elements.data.filters.NNDataFilter.setActive()]]
+  /** See [[nounou.elements.data.filters.NNDataFilter.setActive]]
     */
   def getActive() = _active
 

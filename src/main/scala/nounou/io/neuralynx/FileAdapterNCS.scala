@@ -37,6 +37,7 @@ class FileAdapterNCS extends FileAdapterNeuralynx with FileSaver {
 
   // </editor-fold>
 
+  // <editor-fold defaultstate="collapsed" desc=" load ">
 
   override def load( file: File ): Array[NNElement] = {
 
@@ -254,7 +255,8 @@ class FileAdapterNCS extends FileAdapterNeuralynx with FileSaver {
 
     val nnDataChannelNCS = new NNDataChannelNCS(
                   fileHandle = fHand,
-                  NNDataTiming.apply(sampleRate, tempLengths.toArray, tempStartTimestamps.toArray),
+                  new NNDataTiming(sampleRate, tempLengths.toArray,
+                      tempStartTimestamps.toArray, BigInt(9223372036854775807L)+1),
                   NNDataScale.apply(Short.MinValue.toInt*xBits, Short.MaxValue.toInt*xBits,
                           absGain = 1.0E6 * tempADBitVolts / xBitsD,
                           absOffset = 0d,
@@ -266,11 +268,15 @@ class FileAdapterNCS extends FileAdapterNeuralynx with FileSaver {
 
   }
 
+  // </editor-fold>
+  // <editor-fold defaultstate="collapsed" desc=" save ">
 
   /** Actual saving of file.
     * @param fileName if the filename does not end with the correct extension, it will be appended. If it exists, it will be given a postscript.
     */
   override def save(data: Array[NNElement], fileName: String): Unit = ???
+
+  // </editor-fold>
 
 //  /** Factory method returning single instance. */
 //  override def create(): FileLoader = FileAdapterNCS.instance
@@ -278,6 +284,10 @@ class FileAdapterNCS extends FileAdapterNeuralynx with FileSaver {
 
 object FileAdapterNCS {
   val instance = new FileAdapterNCS
+
+  def load( file: String ): Array[NNElement] = instance.load(file)
+  def save(data: Array[NNElement], fileName: String): Unit = instance.save(data, fileName)
+
 }
 
 
@@ -286,7 +296,8 @@ object FileAdapterNCS {
   */
 class NNDataChannelNCS( override val fileHandle: RandomAccessFile,
                         timingEntry: NNDataTiming, scaleEntry: NNDataScale,
-                        override val channelName: String) extends NNDataChannelFilestream {
+                        override val channelName: String)
+  extends NNDataChannelFilestream{
 
   val t = FileAdapterNCS.instance
 
@@ -319,8 +330,8 @@ class NNDataChannelNCS( override val fileHandle: RandomAccessFile,
     var (currentRecord: Int, currentIndex: Int) = fsToRecordIndex(range.start, range.segment)
     val (endReadRecord: Int, endReadIndex: Int) = fsToRecordIndex(range.last, range.segment) //range is inclusive of lastValid
 
-    println( "curr " + (currentRecord, currentIndex).toString )
-    println( "end " + (endReadRecord, endReadIndex).toString )
+    //println( "curr " + (currentRecord, currentIndex).toString )
+    //println( "end " + (endReadRecord, endReadIndex).toString )
     //ToDo1 program step
     //val step = range.step
 
